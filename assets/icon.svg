@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="92" fill="#2b3747"/>
+  <g fill="none" stroke="#c8ba7a" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" transform="translate(256 72)">
+    <path d="M0 0C-78 65-112 140-62 195-34 226 0 230 0 230s34-4 62-35C112 140 78 65 0 0Z"/>
+    <path d="M0 25v260M0 62l-45 42M0 62l45 42M0 112l-62 56M0 112l62 56M0 166l-52 44M0 166l52 44M-56 306h112M-36 330h72"/>
+  </g>
+  <text x="256" y="456" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-weight="700" font-size="54" letter-spacing="6">GA</text>
+</svg>
