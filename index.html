@@ -1,86 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gralha Azul — Plataforma Integrada</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='92' fill='%232b3747'/%3E%3Cg fill='none' stroke='%23c8ba7a' stroke-width='18' stroke-linecap='round' stroke-linejoin='round' transform='translate(256 72)'%3E%3Cpath d='M0 0C-78 65-112 140-62 195-34 226 0 230 0 230s34-4 62-35C112 140 78 65 0 0Z'/%3E%3Cpath d='M0 25v260M0 62l-45 42M0 62l45 42M0 112l-62 56M0 112l62 56M0 166l-52 44M0 166l52 44M-56 306h112M-36 330h72'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<meta http-equiv="refresh" content="0; url=./rescisoes.html">
+<link rel="canonical" href="./rescisoes.html">
+<script>location.replace('./rescisoes.html');</script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100vh;width:100vw;overflow:hidden;background:#0b1220;font-family:"DM Sans",system-ui,sans-serif}
-#ga-navbar{position:fixed;top:0;left:0;right:0;height:48px;background:linear-gradient(180deg,#0d1626,#0a111e);border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;z-index:999999;padding:0 20px;gap:0;box-shadow:0 2px 14px rgba(0,0,0,.28)}
-.ga-logo{display:flex;align-items:center;gap:10px;padding-right:20px;margin-right:8px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0}
-.ga-logo-icon{width:30px;height:30px;background:#2b3747;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.ga-logo-name{font-size:12.5px;font-weight:600;color:#e2e8f0;letter-spacing:.2px}
-.ga-logo-sub{font-size:9px;color:rgba(255,255,255,0.30);letter-spacing:0.8px;text-transform:uppercase}
-.ga-tabs{display:flex;align-items:stretch;height:48px;margin-left:4px}
-.ga-tab{display:flex;align-items:center;gap:9px;padding:0 22px;height:100%;font-size:12.5px;font-weight:500;color:rgba(255,255,255,0.40);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.18s;user-select:none;flex-shrink:0}
-.ga-tab:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.03)}
-.ga-tab.act-r{color:#fff;border-bottom-color:#e8720c;background:rgba(232,114,12,0.06)}
-.ga-tab.act-g{color:#fff;border-bottom-color:#4f8ef7;background:rgba(79,142,247,0.06)}
-.ga-tab-ico{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;background:rgba(255,255,255,0.06)}
-.act-r .ga-tab-ico{background:rgba(232,114,12,0.2)}
-.act-g .ga-tab-ico{background:rgba(79,142,247,0.2)}
-.ga-divider{width:1px;height:20px;background:rgba(255,255,255,0.07);margin:0 4px;align-self:center}
-.ga-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.ga-online{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.32)}
-.ga-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 2px rgba(34,197,94,0.2)}
-.ga-frame{position:fixed;top:48px;left:0;right:0;bottom:0;width:100%;height:calc(100vh - 48px);border:none;display:none;opacity:0;transition:opacity 0.18s;background:#eef1f6}
-.ga-frame.ga-on{display:block;opacity:1}
+html,body{height:100%;margin:0;background:#0f172a;color:#e2e8f0;font-family:system-ui,sans-serif}
+.box{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.spin{width:34px;height:34px;border:3px solid rgba(255,255,255,.15);border-top-color:#c8ba7a;border-radius:50%;animation:r .8s linear infinite}
+@keyframes r{to{transform:rotate(360deg)}}
+a{color:#c8ba7a}
 </style>
 </head>
 <body>
-
-<div id="ga-navbar">
-  <div class="ga-logo">
-    <div class="ga-logo-icon"><svg viewBox="0 0 512 380" width="22" height="20" fill="none" stroke="#c8ba7a" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(256 30)"><path d="M0 0C-78 65-112 140-62 195-34 226 0 230 0 230s34-4 62-35C112 140 78 65 0 0Z"/><path d="M0 25v260M0 62l-45 42M0 62l45 42M0 112l-62 56M0 112l62 56M0 166l-52 44M0 166l52 44M-56 306h112M-36 330h72"/></g></svg></div>
-    <div>
-      <div class="ga-logo-name">Gralha Azul</div>
-      <div class="ga-logo-sub">Plataforma Integrada</div>
-    </div>
-  </div>
-  <div class="ga-tabs">
-    <div class="ga-tab act-r" id="ga-tab-r" onclick="gaSw('r')">
-      <div class="ga-tab-ico">📋</div>
-      <span>Rescisões</span>
-    </div>
-    <div class="ga-divider"></div>
-    <div class="ga-tab" id="ga-tab-g" onclick="gaSw('g')">
-      <div class="ga-tab-ico">🏢</div>
-      <span>Gestão Administrativa</span>
-    </div>
-  </div>
-  <div class="ga-right">
-    <div class="ga-online"><div class="ga-dot"></div><span>Nuvem conectada</span></div>
-  </div>
+<div class="box">
+  <div class="spin"></div>
+  <div>Abrindo a plataforma…</div>
+  <div><a href="./rescisoes.html">Clique aqui se não abrir automaticamente</a></div>
 </div>
-
-<iframe id="ga-frame-r" class="ga-frame ga-on" src="./rescisoes.html" title="Rescisões"></iframe>
-<iframe id="ga-frame-g" class="ga-frame" src="./gestao.html" title="Gestão Administrativa"></iframe>
-
-<script>
-var gaCur = 'r';
-function gaApply(which){
-  ['r','g'].forEach(function(k){
-    var f=document.getElementById('ga-frame-'+k);
-    var on=(k===which);
-    f.style.display=on?'block':'none';
-    f.style.opacity=on?'1':'0';
-    f.classList.toggle('ga-on',on);
-    document.getElementById('ga-tab-'+k).className='ga-tab'+(on?' act-'+k:'');
-  });
-  gaCur=which;
-  try{localStorage.setItem('ga_tab',which);}catch(e){}
-}
-function gaSw(which){ gaApply(which); }
-(function(){
-  var t='r';
-  try{t=localStorage.getItem('ga_tab')||'r';}catch(e){}
-  gaApply(t==='g'?'g':'r');
-})();
-</script>
-
 </body>
 </html>

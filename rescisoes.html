@@ -202,33 +202,8 @@ td.ora{color:var(--o);font-weight:600}
 .modelo-card{background:#f8fafc;border:1px solid var(--bd);border-radius:8px;padding:12px;margin-bottom:8px;font-size:11.5px;line-height:1.6;white-space:pre-wrap}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
-/* ============================================================ */
-/* REFINO PROFISSIONAL — Gralha Azul (camada de acabamento)     */
-/* ============================================================ */
-.hdr{background:linear-gradient(180deg,#21456e 0%,#1a3357 100%);box-shadow:0 2px 12px rgba(11,18,32,.22)}
-.logo-nm{letter-spacing:.3px}
-.sb{background:linear-gradient(180deg,#16283f 0%,#11202f 100%);border-right:1px solid rgba(255,255,255,.05)}
-.sb-lbl{color:rgba(255,255,255,.30)}
-.nav{border-radius:0 7px 7px 0;margin-right:8px;transition:background .12s,color .12s,border-color .12s}
-.nav:hover{background:rgba(255,255,255,.06)}
-.nav.active{background:linear-gradient(90deg,rgba(232,114,12,.20),rgba(232,114,12,.03));border-left-color:#e8720c;color:#fff;font-weight:600}
-.content{background:#eef1f6}
-.mhd{box-shadow:0 1px 2px rgba(16,32,56,.05)}
-.ptit{font-size:15px;letter-spacing:-.2px}
-.cards{gap:12px}
-.card{border:1px solid #e7ebf1;border-top:1px solid #e7ebf1;border-left-width:3px;border-radius:11px;padding:14px 16px;min-width:122px;box-shadow:0 1px 2px rgba(16,32,56,.05);transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
-.card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,32,56,.11);border-color:#e7ebf1}
-.card.c-g{border-left-color:var(--g)}.card.c-o{border-left-color:var(--o)}.card.c-r{border-left-color:var(--r)}.card.c-b{border-left-color:var(--pl)}.card.c-y{border-left-color:var(--y)}.card.c-gy{border-left-color:var(--gy)}
-.card-n{font-size:26px;letter-spacing:-.5px;color:#16263d}
-.card-l{font-size:10.5px;color:#64748b}
-.btn{border-radius:8px;font-weight:600;box-shadow:0 1px 2px rgba(16,32,56,.06)}
-.btn-p{background:linear-gradient(180deg,#2a5298,#234584)}.btn-p:hover{background:#1e3a5f}
-.btn-o{border:1.5px solid #dbe2ea}.btn-o:hover{border-color:#2a5298;color:#1e3a5f}
-.tw{border-radius:11px;box-shadow:0 1px 2px rgba(16,32,56,.05);border-color:#e7ebf1}
-thead{background:#f6f8fb}
-.content::-webkit-scrollbar{width:10px}.content::-webkit-scrollbar-thumb{background:#d4dbe5;border-radius:8px;border:2px solid #eef1f6}
-.sb::-webkit-scrollbar{width:8px}.sb::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:8px}
 </style>
+<link rel="stylesheet" href="./enterprise-premium.css">
 </head>
 <body>
 
@@ -245,6 +220,15 @@ thead{background:#f6f8fb}
 
 <div class="lay" style="opacity: 1;">
 <div class="sb">
+  <div class="sb-logo">
+    <div class="sb-brand">Rescisão<br><span>Imobiliária</span></div>
+    <div class="sb-tag">Plataforma Imobiliária</div>
+  </div>
+  <div class="sb-sec">
+    <div class="sb-lbl">Sistemas Fixos</div>
+    <a class="nav ga-module-link active-system" href="./rescisoes.html"><span class="ni-dot"></span>Rescisão</a>
+    <a class="nav ga-module-link" href="./gestao.html"><span class="ni-dot"></span>Manut./Gestão Adm.</a>
+  </div>
   <div class="sb-sec">
     <div class="sb-lbl">Painel</div>
     <div class="nav active" onclick="go(&#39;dash&#39;,this)">📊 Panorama Geral</div>
@@ -281,10 +265,10 @@ thead{background:#f6f8fb}
     <div class="nav" onclick="exportar()">📥 Exportar Dados</div>
     <div class="nav" onclick="document.getElementById(&#39;fi&#39;).click()">📤 Importar Dados</div>
   </div>
-  <div id="user-bar" style="display: flex;">
+  <div id="user-bar" style="display: none;">
     <span id="ub-name">👤 Administrador</span>
     <button onclick="logoutUser()">Sair</button>
-    <button class="btn-admin" id="ub-admin-btn" style="display: inline-block;" onclick="openAdmin()">Admin</button>
+    <button class="btn-admin" id="ub-admin-btn" style="display: none;" onclick="openAdmin()">Admin</button>
   </div>
 </div>
 
@@ -1298,12 +1282,7 @@ Qualquer dúvida, fico à disposição!</textarea>
   </div>
   <div class="sdiv">Chaves e Motivo</div>
   <div class="fr" style="margin-bottom:10px">
-    <div class="fg"><label>🔑 Status das Chaves</label><select id="r-chv-sta">
-      <option value="">-- Selecionar --</option>
-      <option value="Entregues">Entregues</option>
-      <option value="Pendente de entrega">Pendente de entrega</option>
-      <option value="Com locador">Com locador</option>
-    </select></div>
+    <div class="fg"><label>🔑 Chaves — Observações</label><input id="r-chv-sta" placeholder="Ex: Entregues em 10/06, com locador, 2 cópias..."></div>
     <div class="fg"><label>📝 Motivo da Desocupação</label><input id="r-motivo" placeholder="Escreva o motivo manualmente..."></div>
   </div>
   <div class="sdiv">Forma de Pagamento</div>
@@ -1937,9 +1916,26 @@ const MODELOS=[
 // STORAGE
 // ============================================================
 function save(){localStorage.setItem('ga_v3',JSON.stringify(S));}
+function fixNomeDebora(){
+  const corrige=v=>String(v||'').replace(/DÃ©bora|DÁ©bora|Debora/g,'Débora');
+  if(S.resps&&Array.isArray(S.resps.resc)){
+    S.resps.resc=[...new Set(S.resps.resc.map(corrige))];
+    if(!S.resps.resc.includes('Débora'))S.resps.resc.unshift('Débora');
+  }
+  Object.values(S.dados||{}).forEach(ano=>{
+    Object.values(ano||{}).forEach(lista=>{
+      if(Array.isArray(lista))lista.forEach(item=>{
+        if(item&&typeof item==='object'){
+          ['responsavel','resp','usuario'].forEach(k=>{if(item[k])item[k]=corrige(item[k]);});
+        }
+      });
+    });
+  });
+}
 function load(){
   const d=localStorage.getItem('ga_v3');
   if(d){try{const p=JSON.parse(d);S={...S,...p,resps:{...S.resps,...(p.resps||{})}};}catch(e){}}
+  fixNomeDebora();
   S.anos=(S.anos||[2026]).filter(a=>!isNaN(parseInt(a))&&String(a).length===4).map(a=>parseInt(a));
   if(!S.anos.length)S.anos=[2026];
   dadosAno(S.anoAtivo);
@@ -2534,7 +2530,7 @@ function rDash(){
   }).length;
   const sanP=d.sanepar.filter(s=>s.status!=='Desligado').length;
   const mktP=d.marketing.filter(m=>!isMktDone(m)).length;
-  const chvPend=d.rescisoes.filter(r=>r.status!=='Saiu da Imob'&&(r.chavesStatus==='Pendente de entrega'||r.chavesStatus==='Com locador')).length;
+  const chvPend=d.rescisoes.filter(r=>r.status!=='Saiu da Imob'&&r.chavesStatus&&r.chavesStatus.toLowerCase().includes('pendente')).length;
   const loftConcl2=D().loftConcl||{};
   const cartasConcl2=D().cartasConcl||{};
   document.getElementById('dash-cards').innerHTML=`
@@ -2547,7 +2543,7 @@ function rDash(){
     <div class="card" style="border-left-color:#a855f7;cursor:pointer" onclick="go('manutencoes',null)"><div class="card-n" style="color:${vaFazer>0?'var(--r)':'inherit'}">${vaFazer}</div><div class="card-l">🔍 V. Antecip. a Fazer</div></div>
     <div class="card c-b" onclick="go('sanepar',null)"><div class="card-n">${sanP}</div><div class="card-l">💧 Sanepar Pend.</div></div>
     <div class="card c-gy" onclick="go('marketing',null)"><div class="card-n">${mktP}</div><div class="card-l">📢 Mkt Pend.</div></div>
-    <div class="card c-y" onclick="go('rescisoes',null)"><div class="card-n" style="color:${chvPend>0?'var(--o)':'inherit'}">${chvPend}</div><div class="card-l">🔑 Chaves Pendentes / C. Locador</div></div>
+    <div class="card c-y" onclick="go('rescisoes',null)"><div class="card-n" style="color:${chvPend>0?'var(--o)':'inherit'}">${chvPend}</div><div class="card-l">🔑 Chaves Pendentes</div></div>
   `;
   // alertas
   const al=d.rescisoes.filter(r=>r.status==='Inadimplente'||getP(r.id).pct<30).slice(0,8);
@@ -2651,7 +2647,7 @@ function rResc(){
     <td>${r.inquilino||'-'}</td>
     <td><span class="badge bb" style="font-size:9px">${r.responsavel||'-'}</span></td>
     <td style="font-size:11px;white-space:nowrap">${r.vis2?fd(r.vis2):r.vis1?fd(r.vis1):'<span style="color:var(--tl)">—</span>'}</td>
-    <td>${(()=>{const cs=r.chavesStatus;const b=cs==='Entregues'?'<span class="badge bg" style="font-size:9px">🔑 Entregues</span>':cs==='Pendente de entrega'?'<span class="badge bo" style="font-size:9px">🔑 Pendente</span>':cs==='Com locador'?'<span class="badge bb" style="font-size:9px">🔑 C/ locador</span>':'';const dt=r.chaves?`<span style="font-size:10px;display:block">${fd(r.chaves)}</span>`:'';return (b||dt)?b+dt:'—';})()}</td>
+    <td style="font-size:11px;max-width:110px">${(()=>{const parts=[];if(r.chaves)parts.push('🔑 '+fd(r.chaves));if(r.chavesStatus)parts.push(r.chavesStatus);return parts.length?parts.join('<br>'):'—';})()}</td>
     <td>${sbadge(r.status)}</td>
     <td style="font-size:10px;max-width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.tipoSaida||'-'}</td>
     <td><span class="badge bgy" style="font-size:9px">${r.pagamento||'-'}</span></td>
@@ -3089,7 +3085,7 @@ function resetRescModal(){
   document.getElementById('r-save-btn').onclick=salResc;
   ['r-cod','r-inq','r-vis1','r-vis2','r-chv','r-obs','r-prop-dt','r-motivo',
    'r-carta-envio','r-carta-venc','r-carta-not',   'r-carta-vis1','r-carta-vis2','r-carta-loc-dt'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  ['r-gar','r-pgt','r-tip','r-sta','r-res','r-com','r-prop','r-agua','r-energia','r-gas','r-chv-sta'].forEach(id=>{const el=document.getElementById(id);if(el)el.selectedIndex=0;});
+  ['r-gar','r-pgt','r-tip','r-sta','r-res','r-com','r-prop','r-agua','r-energia','r-gas'].forEach(id=>{const el=document.getElementById(id);if(el)el.selectedIndex=0;});const _rchvSta=document.getElementById('r-chv-sta');if(_rchvSta)_rchvSta.value='';
   const rResEl=document.getElementById('r-res');if(rResEl){const debOpt=rResEl.querySelector('option[value="Débora"]');if(debOpt)rResEl.value='Débora';}
   ['pgto-boleto','pgto-confissao','pgto-cartao','gar-caucao-fields','gar-loft-fields','carta-fields','saiu-data-row','com-data-row'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.style.display='none';
@@ -5251,7 +5247,7 @@ async function doLogin(){
     await logEvent('login','Entrou no sistema');
     document.getElementById('login-overlay').classList.add('hidden');
     document.querySelectorAll('.hdr,.lay').forEach(el=>el.style.opacity='1');
-    document.getElementById('user-bar').style.display='flex';
+    document.getElementById('user-bar').style.display='none';
     document.getElementById('ub-name').textContent='👤 '+data.nome;
     if(data.role==='admin'){document.getElementById('ub-admin-btn').style.display='inline-block';}else{const cn=document.getElementById('admin-config-nav');if(cn)cn.style.display='none';}
     await loadFromSupabase();
@@ -5513,7 +5509,8 @@ function gerarRelatorioPanorama(){
   // Em andamento UNIFICADO: todas as manutenções (pendentes, em andamento e concluídas) sem V. Antecip. feita
   const vaAnd   = (d.manutencoes||[]).filter(m => (m.soVAntecip||m.soManutencao) && !m.vaOk && isAtivoMan(m));
   // Rescisões em andamento — APENAS multa / sem multa (cartas têm seção própria)
-  const rescAnd = (d.rescisoes||[]).filter(r => r.status==='Em Andamento' && !isCartaTipo(r));
+  // Rescisões em andamento — inclui qualquer status exceto Concluída / Saiu da Imob
+  const rescAnd = (d.rescisoes||[]).filter(r => r.status!=='Concluída' && r.status!=='Saiu da Imob' && !isCartaTipo(r));
   // Cartas 30 dias em andamento — sai quando a rescisão vinculada é concluída
   const cartasPend = (d.cartas||[]).filter(c => {
     if((D().cartasConcl||{})[c.id])return false;
@@ -5553,7 +5550,7 @@ function gerarRelatorioPanorama(){
       const manCell = m.soVAntecip
         ? `<span style="color:${C.gray};font-size:11px">Sem manutenção</span>`
         : (m.recibo
-          ? `<span style="background:${C.bgGreen};color:${C.green};padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">✅ Manutenções finalizadas</span>`
+          ? `<span style="background:${C.bgGreen};color:${C.green};padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">✅ Finalizada</span>`
           : `<span style="background:${C.bgOrange};color:${C.orange};padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">🔧 Com manutenções em andamento</span>`);
       return trRow([`<b>${m.codigo||'—'}</b>`,r?r.inquilino:'—',r?r.responsavel:'—',fmtDt(m.dtVist)!=='—'?fmtDt(m.dtVist):fmtDt(m.dtRepasse),manCell,ni>0?`${ni} item(s)`:'—'],'#faf5ff');
     }),
@@ -5561,25 +5558,25 @@ function gerarRelatorioPanorama(){
 
   // ── SEÇÃO 2: Prontos para locação imediata ──
   const s1 = secHdr('✅','Manutenções finalizadas e Vistoria de Antecipação Concluída','Prontos para a locação imediata',C.green,C.bgGreen,C.borderGreen,vaConc.length)
-  + tbl(['Código','Inquilino','Responsável','Data V. Antecip.','Prestador','Status'],
-    vaConc.map(m=>{const r=getResc(m.codigo);return trRow([`<b>${m.codigo||'—'}</b>`,r?r.inquilino:'—',r?r.responsavel:'—',fmtDt(m.dtVist),m.prestador||'—',`<span style="background:${C.bgGreen};color:${C.green};padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">✅ Pronto p/ locação</span>`],C.bgGreen);}),
+  + tbl(['Código','Inquilino','Responsável','Data V. Antecip.','Status Manutenção','Status'],
+    vaConc.map(m=>{const r=getResc(m.codigo);const manStaCell=m.soVAntecip?`<span style="color:${C.gray};font-size:11px">Sem manutenção</span>`:(m.recibo?`<span style="background:${C.bgGreen};color:${C.green};padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">✅ Finalizada</span>`:`<span style="background:${C.bgOrange};color:${C.orange};padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">🔧 Com manutenções em andamento</span>`);return trRow([`<b>${m.codigo||'—'}</b>`,r?r.inquilino:'—',r?r.responsavel:'—',fmtDt(m.dtVist),manStaCell,`<span style="background:${C.bgGreen};color:${C.green};padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">✅ Pronto p/ locação</span>`],C.bgGreen);}),
     'Nenhum imóvel pronto para locação imediata.');
 
   // ── SEÇÃO 3: Rescisões Em Andamento (multa / sem multa) ──
   const s5 = secHdr('📋','Rescisões Em Andamento','Processos de desocupação ativos (multa / sem multa)',C.navy,C.bgLight,C.border,rescAnd.length)
-  + tbl(['Código','Inquilino','Responsável','Tipo de Saída','Chaves','Previsão de Saída','Motivo'],
+  + tbl(['Código','Inquilino','Responsável','Tipo de Saída','Previsão de Saída','Chaves','Motivo'],
     rescAnd.map(r=>{
       const prev=r.vis2||r.vis1||r.cartaVenc;
       const prevCell=prev?fmtDt(prev):`<span style="color:${C.orange};font-size:11px;font-weight:600">Aguard. confirmação do locatário</span>`;
       const cs=r.chavesStatus;
-      const chvCell=(cs?`<span style="background:${cs==='Entregues'?C.bgGreen:C.bgOrange};color:${cs==='Entregues'?C.green:C.orange};padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600">🔑 ${cs}</span>`:'')+(r.chaves?` ${fmtDt(r.chaves)}`:(cs?'':`<span style="color:#94a3b8">Pendente</span>`));
-      return trRow([`<b>${r.codigo||'—'}</b>`,r.inquilino||'—',r.responsavel||'—',r.tipoSaida||'—',chvCell,prevCell,r.motivo||'—']);
+      const chvParts=[];if(r.chaves)chvParts.push(`🔑 ${fmtDt(r.chaves)}`);if(cs)chvParts.push(cs);const chvCell=chvParts.length?chvParts.join(' — '):`<span style="color:#94a3b8">—</span>`;
+      return trRow([`<b>${r.codigo||'—'}</b>`,r.inquilino||'—',r.responsavel||'—',r.tipoSaida||'—',prevCell,chvCell,r.motivo||'—']);
     }),
     'Nenhuma rescisão em andamento.');
 
   // ── SEÇÃO 4: Cartas 30 Dias — Em Andamento ──
   const s6 = secHdr('✉️','Cartas 30 Dias — Em Andamento','Aviso-prévio de desocupação em andamento',C.blue,C.bgBlue,C.borderBlue,cartasPend.length)
-  + tbl(['Código','Inquilino','Responsável','Tipo','Data Final (30d)','Data da Vistoria','Locador Avisado','Motivo'],
+  + tbl(['Código','Inquilino','Responsável','Tipo','Locador Avisado','Data Final (30d)','Data da Vistoria','Chaves','Motivo'],
     cartasPend.map(c=>{
       const hoje=new Date();hoje.setHours(0,0,0,0);
       const venc=c.vencimento?new Date(c.vencimento+'T12:00:00'):null;
@@ -5589,7 +5586,8 @@ function gerarRelatorioPanorama(){
       const visData=c.vis2||c.vistoria;
       const visCell=visData?fmtDt(visData):`<span style="color:${C.orange};font-size:11px;font-weight:600">Aguard. marcação do inquilino</span>`;
       const r=getResc(c.codigo);
-      return trRow([`<b>${c.codigo||'—'}</b>`,c.inquilino||'—',c.responsavel||'—',c.tipo||'—',vs,visCell,c.locadorAvisado==='Sim'?`<span style="color:${C.green};font-weight:600">✅ Sim</span>`:`<span style="color:${C.red}">Não</span>`,(r&&r.motivo)||'—'],'#eff6ff');
+      const cs=r&&r.chavesStatus;const chvParts2=[];if(r&&r.chaves)chvParts2.push(`🔑 ${fmtDt(r.chaves)}`);if(cs)chvParts2.push(cs);const chvCell=chvParts2.length?chvParts2.join(' — '):`<span style="color:#94a3b8">—</span>`;
+      return trRow([`<b>${c.codigo||'—'}</b>`,c.inquilino||'—',c.responsavel||'—',c.tipo||'—',c.locadorAvisado==='Sim'?`<span style="color:${C.green};font-weight:600">✅ Sim</span>`:`<span style="color:${C.red}">Não</span>`,vs,visCell,chvCell,(r&&r.motivo)||'—'],'#eff6ff');
     }),
     'Nenhuma carta 30 dias em andamento.');
 
@@ -5639,7 +5637,7 @@ load();
     currentUser=sess;
     document.getElementById('login-overlay').classList.add('hidden');
     document.querySelectorAll('.hdr,.lay').forEach(el=>el.style.opacity='1');
-    document.getElementById('user-bar').style.display='flex';
+    document.getElementById('user-bar').style.display='none';
     document.getElementById('ub-name').textContent='👤 '+sess.nome;
     if(sess.role==='admin'){document.getElementById('ub-admin-btn').style.display='inline-block';}else{const cn=document.getElementById('admin-config-nav');if(cn)cn.style.display='none';}
     await loadFromSupabase();
@@ -5677,4 +5675,5 @@ load();
 .hist-when{color:#94a3b8;min-width:110px;text-align:right;flex-shrink:0;font-size:11px}
 </style>
 
+<script src="./cloud-sync.js"></script>
 </body></html>
