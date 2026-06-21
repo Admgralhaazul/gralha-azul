@@ -1837,3 +1837,20 @@ th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-we
 /* Selecao e foco de campos em azul (sem laranja) */
 ::selection{background:rgba(30,58,95,.16)!important;color:#0F172A!important}
 .login-field input:focus{border-bottom-color:#1E3A5F!important}
+
+/* ============================================================ */
+/* ICONES PROFISSIONAIS (SVG de traco, no lugar de emojis)      */
+/* ============================================================ */
+.nav svg.ico,.ni svg.ico,.sb-item svg.ico{
+  width:17px!important;height:17px!important;flex:0 0 auto!important;
+  stroke:currentColor!important;stroke-width:1.9!important;fill:none!important;
+  stroke-linecap:round!important;stroke-linejoin:round!important;opacity:.92!important;
+}
+.card-l{display:inline-flex!important;align-items:center!important;gap:7px!important}
+.card-l svg.ico{
+  width:15px!important;height:15px!important;flex:0 0 auto!important;
+  stroke:currentColor!important;stroke-width:1.9!important;fill:none!important;
+  stroke-linecap:round!important;stroke-linejoin:round!important;opacity:.7!important;
+}
+/* Botoes de acao em texto (sem emoji) */
+.btn .ico,.abt .ico{vertical-align:-2px;margin-right:5px}
