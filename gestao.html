@@ -319,7 +319,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=20">
+<link rel="stylesheet" href="./enterprise-premium.css?v=21">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -354,7 +354,7 @@ body{visibility:visible!important}
     <div class="sb-module-lbl">Módulos</div>
     <div class="sb-module-row">
       <a class="nav ga-module-link" href="./rescisoes.html">Rescisão</a>
-      <a class="nav ga-module-link active-system" href="./gestao.html">Manut./Gest.Adm</a>
+      <a class="nav ga-module-link active-system" href="./gestao.html">Manut./Adm</a>
     </div>
   </div>
   <div class="sb-nav">
@@ -1176,7 +1176,7 @@ body{visibility:visible!important}
         <div class="fg"><label class="fl">Data da Solicitação</label><input type="date" class="fc" id="nm-dt-sol"></div>
         <div class="fg"><label class="fl">Prev./Finalização</label><input type="date" class="fc" id="nm-dt-prev"></div>
         <div class="fg"><label class="fl">Responsável</label><input class="fc" id="nm-resp" placeholder="Nome do responsável..." autocomplete="off"></div>
-        <div class="fg"><label class="fl">Contrato / Condomínio</label><input class="fc" id="nm-cond" placeholder="Ex: Imperador, AP 12"></div>
+        <div class="fg"><label class="fl">Contrato / Condomínio *</label><input class="fc" id="nm-cond" placeholder="Ex: Imperador, AP 12" required></div>
         <div class="fg"><label class="fl">Prestador</label><select class="fc" id="nm-prest"><option value="Tiago Fermiano">Tiago Fermiano</option><option value="Rafael">Rafael</option><option value="Jeferson">Jeferson</option><option value="Rodrigo">Rodrigo</option><option value="Anderson BH">Anderson BH</option><option value="">— Outro —</option></select></div>
         <div class="fg" style="grid-column:1/-1"><label class="fl">Descrição do Serviço</label><input class="fc" id="nm-desc" placeholder="Descreva o serviço a ser realizado..."></div>
         <div class="fg"><label class="fl">Previsão de Conclusão</label><input type="date" class="fc" id="nm-dt-conc"></div>
@@ -1618,15 +1618,16 @@ function calcManutValEdit(){
 
 function saveManut(){
   const tipo=document.getElementById('nm-tipo').value||'imob';
+  const cond=(document.getElementById('nm-cond')||{}).value||'';
+  if(!cond.trim()){toast('Preencha o contrato / condomínio!');return;}
   const val=parseFloat(document.getElementById('nm-val').value)||0;
   const mat=parseFloat(document.getElementById('nm-mat').value)||0;
-  const m={id:ID(),tipo,status:document.getElementById('nm-status').value,dtSol:document.getElementById('nm-dt-sol').value,dtPrev:document.getElementById('nm-dt-prev').value,resp:document.getElementById('nm-resp').value,cond:document.getElementById('nm-cond').value,prest:document.getElementById('nm-prest').value,desc:document.getElementById('nm-desc').value,dtConc:document.getElementById('nm-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:document.getElementById('nm-loc-deb').value,contas:document.getElementById('nm-contas').value,recibo:document.getElementById('nm-recibo').value,obs:document.getElementById('nm-obs').value};
-  if(!m.desc){toast('Preencha a descrição!');return}
+  const m={id:ID(),tipo,status:document.getElementById('nm-status').value,dtSol:document.getElementById('nm-dt-sol').value,dtPrev:document.getElementById('nm-dt-prev').value,resp:document.getElementById('nm-resp').value,cond:cond.trim(),prest:document.getElementById('nm-prest').value,desc:document.getElementById('nm-desc').value,dtConc:document.getElementById('nm-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:(document.getElementById('nm-loc-deb')||{}).value||'',contas:(document.getElementById('nm-contas')||{}).value||'',recibo:document.getElementById('nm-recibo').value,obs:document.getElementById('nm-obs').value};
   if(!DB.manutencoes[tipo])DB.manutencoes[tipo]=[];
   DB.manutencoes[tipo].unshift(m);
   closeM('m-new-manut');
-  ['nm-desc','nm-cond','nm-obs'].forEach(id=>document.getElementById(id).value='');
-  ['nm-val','nm-mat','nm-rec-kenlo','nm-loc-deb','nm-contas'].forEach(id=>document.getElementById(id).value='');
+  ['nm-desc','nm-cond','nm-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['nm-val','nm-mat','nm-rec-kenlo'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   renderManut(tipo);updateDashboard();renderFin();toast('Chamado cadastrado!');logAccess('Criou chamado '+m.tipo,'Manutenções');
 }
 function filterManut(tipo){
@@ -3748,33 +3749,47 @@ function removeAno(a){
     const atl = document.getElementById('ag-today-lbl');
     if(atl) atl.textContent = fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
 
-    // Preenche selects
-    fillCondSelects();
-    fillChkCondSelects();
-    fillPrestSelects();
-    fillRelSelects();
-
-    // Renderiza dados
-    renderUsers();
-    updateDashboard();
-    renderManut('imob');
-    renderManut('cond');
-    renderManut('ocup');
-    renderManut('ager');
-    renderManutHome();
-    renderPrestCards();
-    renderGlobalChk();
-    renderColabs();
-    renderFin();
-    renderAgenda();
-    renderConds();
-    renderTasks();
-    renderNotifs();
-    renderLembretes();
+    loadManutSeed().finally(()=>{
+      fillCondSelects();
+      fillChkCondSelects();
+      fillPrestSelects();
+      fillRelSelects();
+      renderUsers();
+      updateDashboard();
+      renderManut('imob');
+      renderManut('cond');
+      renderManut('ocup');
+      renderManut('ager');
+      renderManutHome();
+      renderPrestCards();
+      renderGlobalChk();
+      renderColabs();
+      renderFin();
+      renderAgenda();
+      renderConds();
+      renderTasks();
+      renderNotifs();
+      renderLembretes();
+    });
   } catch(e) {
     console.error('Init error:', e);
   }
 })();
+
+const MANUT_SEED_VER='20260621';
+async function loadManutSeed(){
+  try{
+    if(localStorage.getItem('ga_manut_seed')===MANUT_SEED_VER)return;
+    const r=await fetch('./gestao-manut-seed.json?v='+MANUT_SEED_VER);
+    if(!r.ok)return;
+    const seed=await r.json();
+    ['imob','cond','ocup','ager'].forEach(k=>{
+      if(Array.isArray(seed[k])&&seed[k].length)DB.manutencoes[k]=seed[k];
+    });
+    localStorage.setItem('ga_manut_seed',MANUT_SEED_VER);
+    if(typeof window.gaCloudSave==='function')window.gaCloudSave();
+  }catch(e){console.warn('Manut seed:',e);}
+}
 
 // ─── LEMBRETES ────────────────────────────────────
 function openLembrete(){
@@ -3807,7 +3822,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=13"></script>
+<script src="./cloud-sync.js?v=14"></script>
 
 </div></body></html>
 

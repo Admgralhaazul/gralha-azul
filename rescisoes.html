@@ -203,7 +203,7 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=20">
+<link rel="stylesheet" href="./enterprise-premium.css?v=21">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
@@ -232,7 +232,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="sb-module-lbl">Módulos</div>
     <div class="sb-module-row">
       <a class="nav ga-module-link active-system" href="./rescisoes.html">Rescisão</a>
-      <a class="nav ga-module-link" href="./gestao.html">Manut./Gest.Adm</a>
+      <a class="nav ga-module-link" href="./gestao.html">Manut./Adm</a>
     </div>
   </div>
   <div class="sb-sec">
@@ -689,6 +689,11 @@ td.ora{color:var(--o);font-weight:600}
       <div class="ttbar" style="background:#fff;border-radius:9px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
         <span style="font-weight:700;font-size:12px">Jurídicos</span>
         <span style="font-size:11px;color:var(--tl);margin-left:8px">Casos repassados do Inadimp./Atrasos</span>
+        <div style="display:flex;gap:4px;margin-left:12px;align-items:center">
+          <button id="jur-tab-pend" onclick="setJurTab(false)" style="padding:4px 12px;border-radius:5px;border:1.5px solid #1e3a5f;font-size:11px;font-weight:600;cursor:pointer;background:#1e3a5f;color:#fff">Pendentes</button>
+          <button id="jur-tab-conc" onclick="setJurTab(true)" style="padding:4px 12px;border-radius:5px;border:1.5px solid var(--bd);font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#64748b">Concluídos</button>
+          <input type="hidden" id="jur-show-concl" value="0">
+        </div>
         <span style="flex:1"></span>
         <button class="btn btn-p btn-sm" onclick="newJur()">+ Adicionar</button>
       </div>
@@ -2428,6 +2433,14 @@ function manCell(codigo){
   if(allDone)return cellTd('Concluído','ok');
   return cellTd('Pendente','pend');
 }
+function loftSinCell(v){
+  if(v==='Sim')return cellTd('Sim','pend');
+  if(v==='Não precisou')return cellTd('Não precisou','ok');
+  if(v==='Não')return cellTd('Não','bn');
+  return cellTd('Aguardando','warn');
+}
+function mktSq(on,label){return `<span class="mkt-sq${on?' on':''}">${label}</span>`;}
+function mktFotosOn(m){return m.fotos==='Feitas'||m.fotos==='Recebidas'||m.fotos==='Não tem';}
 function sbadge(s){
   const m={'Em Andamento':'bo','Concluída':'bg','Inadimplente':'br','Saiu da Imob':'bgy','Pago':'bg','Pendente':'bo','Desligado':'bgy','Urgente':'br','Para fazer':'bo','Lembrar':'by','Sim':'bg','Não':'bn','Aprovado':'bg','Negado':'bn','Em análise':'by'};
   return`<span class="badge ${m[s]||'bgy'}">${s}</span>`;
@@ -3769,7 +3782,7 @@ function rMan(){
       <td>${m.alugado?`<span class="badge bg" style="font-size:9px">Alugado${m.alugadoDt?' '+fd(m.alugadoDt):''}</span>`:sbadge(m.status||'Pendente')}</td>
       <td><div class="abts">
         ${manutTab==='a'?`<button class="btn btn-sm" style="background:#fef3c7;color:#92400e;font-size:10px;padding:3px 8px;border:1px solid #d97706" onclick="reverterAlugado('${m.id}')">Voltar p/ Concluídas</button>`:manutTab==='va'?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="concluirVA('${m.id}')">Concluir</button>`:manutTab==='c'?selConcl(m)+`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px;border:1px solid #16a34a" onclick="reabrirVA('${m.id}')">Reabrir</button>`:''}
-        <button class="abt action-checklist" onclick="openManPanel('${m.id}')" title="Itens / Detalhes"></button>
+        <button class="abt action-wrench" onclick="openManPanel('${m.id}')" title="Itens / Detalhes"></button>
         <button class="abt action-edit" onclick="editMan('${m.id}')">Editar</button>
         <button class="abt action-delete" onclick="delR('manutencoes','${m.id}')">Excluir</button>
       </div></td>
@@ -4115,12 +4128,9 @@ function rMkt(){
     </td>
     <td>${m.proprietario||'-'}</td><td>${m.contato||'-'}</td>
     <td><b>${fm(m.aluguel)}</b></td><td>${m.cond||'-'}</td><td>${m.agua||'-'}</td><td>${m.energia||'-'}</td><td>${m.iptu||'-'}</td>
-    <td><button onclick="togMkt('${m.id}','mktAvisado')" style="min-width:100px;border:1.5px solid ${m.mktAvisado==='Sim'?'var(--g)':'var(--bd)'};background:${m.mktAvisado==='Sim'?'#f0fdf4':'#fff'};border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;padding:4px 8px;color:${m.mktAvisado==='Sim'?'var(--g)':'var(--gy)'}">
-      ${m.mktAvisado==='Sim'?'✅ Imóvel Liberado':'⬜ Pendente'}</button></td>
-    <td><button onclick="togMkt('${m.id}','site')" style="min-width:90px;border:1.5px solid ${m.site==='Sim'?'var(--g)':'var(--o)'};background:${m.site==='Sim'?'#f0fdf4':'#fff7ed'};border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;padding:4px 8px;color:${m.site==='Sim'?'var(--g)':'var(--o)'}">
-      ${m.site==='Sim'?'✅ Ativado':'⬜ Sem ativação'}</button></td>
-    <td><button onclick="togMkt('${m.id}','fotos')" style="width:36px;height:28px;border:1.5px solid ${(m.fotos==='Feitas'||m.fotos==='Recebidas'||m.fotos==='Não tem')?'var(--g)':'var(--bd)'};background:${(m.fotos==='Feitas'||m.fotos==='Recebidas'||m.fotos==='Não tem')?'#f0fdf4':'#fff'};border-radius:5px;cursor:pointer;font-size:15px;padding:0" title="Fotos">
-      ${(m.fotos==='Feitas'||m.fotos==='Recebidas'||m.fotos==='Não tem')?'✅':'⬜'}</button></td>
+    <td><button onclick="togMkt('${m.id}','mktAvisado')" class="mkt-sq-btn ${m.mktAvisado==='Sim'?'on':''}" style="min-width:100px">${m.mktAvisado==='Sim'?'Liberado':'Pendente'}</button></td>
+    <td><button onclick="togMkt('${m.id}','site')" class="mkt-sq-btn ${m.site==='Sim'?'on':''}" style="min-width:90px">${m.site==='Sim'?'Ativado':'Sem site'}</button></td>
+    <td><button onclick="togMkt('${m.id}','fotos')" class="mkt-sq-btn ${mktFotosOn(m)?'on':''}" style="width:36px;min-width:36px;padding:0" title="Fotos">${m.fotos==='Feitas'?'Feitas':m.fotos==='Recebidas'?'Receb.':m.fotos==='Não tem'?'N/A':'Pend.'}</button></td>
     <td>${m.ativDt?`<span style="font-size:11px">${fd(m.ativDt)}</span>`:'<span style="color:var(--tl);font-size:10px">—</span>'}<br><span style="font-size:9px;color:var(--tl)">${m.data?fd(m.data):''}</span></td>
     <td><div class="abts">
       ${!done?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="arquivarMkt('${m.id}')" title="Marcar como concluído manualmente">Concluído</button>`:`<button class="abt" onclick="desarquivarMkt('${m.id}')" title="Reabrir">↩</button>`}
@@ -4296,7 +4306,7 @@ function rInad(){
     if(!items.length)return'';
     return`<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:${color};padding:6px 0 5px;border-bottom:2px solid ${color};margin:14px 0 8px">${title}</div>`+items.join('');
   };
-  const card=(pago,borderColor,left,center,rightBtn)=>`<div class="ic" style="border-left-color:${borderColor};${pago?'opacity:.5;background:#f8fafc':''}">
+  const card=(pago,borderColor,left,center,rightBtn)=>`<div class="ic inad-row" style="border-left-color:${borderColor};background:#fff;${pago?'opacity:.72':''}">
     <div style="min-width:90px">${left}</div>
     <div style="flex:1">${center}</div>
     <div style="flex-shrink:0">${rightBtn}</div>
@@ -4328,7 +4338,7 @@ function rInad(){
       );
     })
   ];
-  html+=sec('⚠️ Boletos em Atraso','var(--r)',bolItems);
+  html+=sec('Boletos em Atraso','var(--r)',bolItems);
 
   // ── CONFISSÃO ───────────────────────────────────────────────────────
   const confItems=[];
@@ -4347,7 +4357,7 @@ function rInad(){
       ));
     });
   });
-  html+=sec('📝 Datas Vencidas — Confissão de Dívida','var(--y)',confItems);
+  html+=sec('Datas Vencidas — Confissão de Dívida','var(--y)',confItems);
 
   // ── CARTÃO ──────────────────────────────────────────────────────────
   const cartItems=[];
@@ -4359,14 +4369,14 @@ function rInad(){
       const pago=!!(ct.pago&&ct.pago[i]);
       if(!pago&&dv>=hoje)return;
       if(pago&&!showPagos)return;
-      cartItems.push(card(pago,'var(--pl)',
+      cartItems.push(card(pago,'#0891b2',
         `<b style="color:var(--p)">${ct.contrato}</b><div style="font-size:9px;color:var(--tl)">P${i+1}</div>`,
         `<div style="font-weight:600">Venceu: ${fd(dt)}</div><div style="font-size:11px;color:var(--tl)">${ct.tipo} · ${ct.parcelas}x</div>`,
         pago ? pagoTag : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="togCart('${ct.id}',${i})">Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('cart','${ct.id}',${i})" title="Passar para o Jurídico">p/ Jurídico</button></div>`
       ));
     });
   });
-  html+=sec('💳 Datas Vencidas — Cartão de Crédito','var(--pl)',cartItems);
+  html+=sec('Datas Vencidas — Cartão de Crédito','#0891b2',cartItems);
 
   // ── AGENDA ATRASADA ─────────────────────────────────────────────────
   const agItems=d.agenda.filter(a=>{const dv=ld(a.data)||ldNow();return dv<hoje;})
@@ -4376,7 +4386,7 @@ function rInad(){
       `<div style="font-weight:600">${a.tipo}${a.codigo?' · '+a.codigo:''}</div><div style="font-size:11px;color:var(--tl)">${a.descricao||''}</div>`,
       `<button class="abt action-delete" onclick="delR('agenda','${a.id}')">Excluir</button>`
     ));
-  html+=sec('📅 Datas Vencidas — Agenda','var(--gy)',agItems);
+  html+=sec('Datas Vencidas — Agenda','var(--gy)',agItems);
 
   if(!html){
     el.innerHTML=`<div class="empty"><div class="empty-mark"></div><p>Tudo em dia!</p><button class="btn btn-p btn-sm" style="margin-top:10px" onclick="openM('m-inad')">+ Inadimplente</button></div>`;
@@ -4430,15 +4440,40 @@ function salJur(){
   if(currentUser) logEvent('criacao',`${currentUser.nome} ${cod}, adicionou manualmente ao Jurídico`);
   save();closeM('m-jur');rJur();
 }
+function setJurTab(showConcl){
+  const el=document.getElementById('jur-show-concl');
+  if(el)el.value=showConcl?'1':'0';
+  const pb=document.getElementById('jur-tab-pend');
+  const cb=document.getElementById('jur-tab-conc');
+  if(pb){pb.style.background=showConcl?'#fff':'#1e3a5f';pb.style.color=showConcl?'#64748b':'#fff';}
+  if(cb){cb.style.background=showConcl?'#1e3a5f':'#fff';cb.style.color=showConcl?'#fff':'#64748b';}
+  rJur();
+}
+function concluirJur(jid){
+  const j=(D().juridicos||[]).find(x=>x.id===jid);if(!j)return;
+  j.concluido=true;j.concluidoEm=new Date().toISOString().split('T')[0];
+  if(currentUser)logEvent('alteracao',`${currentUser.nome} ${j.codigo}, concluiu caso jurídico`);
+  save();rJur();updHeader();
+}
+function reabrirJur(jid){
+  const j=(D().juridicos||[]).find(x=>x.id===jid);if(!j)return;
+  j.concluido=false;j.concluidoEm='';
+  save();rJur();
+}
 function rJur(){
   const el=document.getElementById('jur-list');if(!el)return;
   const d=D();d.juridicos=d.juridicos||[];
-  if(!d.juridicos.length){el.innerHTML=`<div class="empty"><div class="empty-i">⚖️</div>Nenhum caso no jurídico</div>`;return;}
-  el.innerHTML=d.juridicos.map(j=>`<div class="ic" style="border-left-color:#7c3aed">
+  const showConcl=document.getElementById('jur-show-concl')&&document.getElementById('jur-show-concl').value==='1';
+  const rows=d.juridicos.filter(j=>showConcl?!!j.concluido:!j.concluido);
+  if(!rows.length){el.innerHTML=`<div class="empty"><div class="empty-mark"></div><p>${showConcl?'Nenhum caso concluído':'Nenhum caso no jurídico'}</p></div>`;return;}
+  el.innerHTML=rows.map(j=>`<div class="ic inad-row" style="border-left-color:#7c3aed;background:#fff;${j.concluido?'opacity:.75':''}">
     <div style="min-width:90px"><b style="color:var(--p)">${j.codigo}</b><div style="font-size:9px;color:var(--tl)">desde ${fd(j.data)}</div></div>
-    <div style="flex:1"><div style="font-weight:600">${j.inquilino||'-'}</div><div style="font-size:11px;color:var(--tl)"><span class="badge" style="background:#ede9fe;color:#5b21b6;font-size:9px">${j.origem}</span> ${j.detalhe||''}</div></div>
+    <div style="flex:1"><div style="font-weight:600;color:var(--tx)">${j.inquilino||'-'}</div><div style="font-size:11px;color:var(--tl)"><span class="badge" style="background:#ede9fe;color:#5b21b6;font-size:9px">${j.origem}</span> ${j.detalhe||''}</div></div>
     <div style="flex-shrink:0;display:flex;gap:6px;align-items:center">
-      ${j.refTipo!=='manual'?`<button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;border:1px solid #7c3aed" onclick="voltarJuridico('${j.id}')">Voltar p/ Inadimp.</button>`:''}
+      ${j.concluido
+        ?`<button class="btn btn-sm" style="background:#fef3c7;color:#92400e;font-size:10px" onclick="reabrirJur('${j.id}')">Reabrir</button>`
+        :`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px" onclick="concluirJur('${j.id}')">Concluído</button>${j.refTipo!=='manual'?`<button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;border:1px solid #7c3aed" onclick="voltarJuridico('${j.id}')">Voltar p/ Inadimp.</button>`:''}`
+      }
       <button class="abt action-delete" onclick="delJur('${j.id}')">Excluir</button>
     </div>
   </div>`).join('');
@@ -4565,7 +4600,7 @@ function rLoft(){
         ${l.autoFromResc?'<span style="font-size:9px;color:var(--tl);display:block">da rescisão</span>':''}
       </td>
       <td>${l.inquilino||'-'}</td>
-      <td>${l.sinistro==='Sim'?'<span style="color:var(--r);font-weight:600">Sim</span>':l.sinistro==='Não precisou'?'<span style="color:var(--g);font-weight:600">Não precisou</span>':l.sinistro==='Não'?'❌ Não':'<span style="color:var(--o)">Aguardando</span>'}</td>
+      <td>${loftSinCell(l.sinistro)}</td>
       <td>${fd(l.data)}</td>
       <td>${sbadge(l.statusLoft)}</td>
       ${canCell}
@@ -5708,7 +5743,7 @@ load(true);
 .hist-when{color:#94a3b8;min-width:110px;text-align:right;flex-shrink:0;font-size:11px}
 </style>
 
-<script src="./cloud-sync.js?v=13"></script>
+<script src="./cloud-sync.js?v=14"></script>
 <div id="toast"></div>
 <script>
 let toastT;
