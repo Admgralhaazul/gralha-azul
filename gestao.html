@@ -509,7 +509,7 @@ body{visibility:visible!important}
 <div id="view-manut-imob" class="view">
   <div class="back-btn" onclick="nav(&#39;manut-home&#39;)">← Voltar para Manutenções</div>
   <div class="sh">
-    <div><div class="sh-t">🏠 Manutenções — Executadas pela Imobiliária</div><div class="sh-s">Chamados abertos, em andamento e concluídos</div></div>
+    <div><div class="sh-t">Manutenções — Executadas pela Imobiliária</div><div class="sh-s">Chamados abertos, em andamento e concluídos</div></div>
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mi-an">0</div></div>
@@ -667,7 +667,7 @@ body{visibility:visible!important}
 ══════════════════════════════════════════════════ -->
 <div id="view-processos" class="view">
   <div class="sh">
-    <div><div class="sh-t">📌 Processos Administrativos</div><div class="sh-s">Agenda, tarefas e controle operacional</div></div>
+    <div><div class="sh-t">Processos Administrativos</div><div class="sh-s">Agenda, tarefas e controle operacional</div></div>
   </div>
   <div class="tabs">
     <div class="tab active" onclick="switchTab(this,&#39;proc&#39;)">Agenda Semanal</div>
@@ -683,7 +683,7 @@ body{visibility:visible!important}
     <!-- Modal lembrete -->
     <div id="m-lembrete" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
       <div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:24px;width:380px;max-width:95vw">
-        <div style="font-size:14px;font-weight:600;margin-bottom:14px">📝 Novo Lembrete</div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px">Novo Lembrete</div>
         <input class="fc" id="lem-texto" placeholder="Digite o lembrete..." style="margin-bottom:10px;width:100%">
         <label style="font-size:12px;color:var(--t3);display:block;margin-bottom:4px">Data de vencimento</label>
         <input type="date" class="fc" id="lem-dt" style="margin-bottom:14px;width:100%">
@@ -697,13 +697,13 @@ body{visibility:visible!important}
       <div>
         <!-- Tarefas pendentes/em andamento -->
         <div class="ag-day" id="proc-tarefas-agenda-section">
-          <div class="ag-dh">📋 Tarefas em andamento</div>
+          <div class="ag-dh">Tarefas em andamento</div>
           <div id="proc-tarefas-agenda" style="margin-top:6px"></div>
         </div>
         <div id="proc-agenda-week" style="display:none"></div>
         <!-- Tarefas em andamento com data anterior a hoje -->
         <div id="proc-atrasadas-section" style="display:none;margin-top:14px">
-          <div class="ag-dh" style="color:var(--yellow)">⚠️ Em andamento — prazo anterior a hoje</div>
+          <div class="ag-dh" style="color:var(--yellow)">Em andamento — prazo anterior a hoje</div>
           <div id="proc-agenda-atrasadas" style="margin-top:8px"></div>
         </div>
       </div>
@@ -789,7 +789,7 @@ body{visibility:visible!important}
      PRESTADORES
 ══════════════════════════════════════════════════ -->
 <div id="view-prestadores" class="view">
-  <div class="sh"><div><div class="sh-t">👷 Prestadores</div><div class="sh-s">Gestão e relatórios individuais</div></div><button class="btn btn-p btn-s" onclick="openM(&#39;m-new-prest&#39;)">+ Novo Prestador</button></div>
+  <div class="sh"><div><div class="sh-t">Prestadores</div><div class="sh-s">Gestão e relatórios individuais</div></div><button class="btn btn-p btn-s" onclick="openM(&#39;m-new-prest&#39;)">+ Novo Prestador</button></div>
   <div class="g3" id="prest-cards"></div>
 </div>
 
@@ -803,7 +803,7 @@ body{visibility:visible!important}
      AGENDA GERAL
 ══════════════════════════════════════════════════ -->
 <div id="view-agenda" class="view">
-  <div class="sh"><div><div class="sh-t">📅 Agenda Geral</div><div class="sh-s">Calendário operacional</div></div><button class="btn btn-p btn-s" onclick="openM(&#39;m-new-event&#39;)">+ Novo Evento</button></div>
+  <div class="sh"><div><div class="sh-t">Agenda Geral</div><div class="sh-s">Calendário operacional</div></div><button class="btn btn-p btn-s" onclick="openM(&#39;m-new-event&#39;)">+ Novo Evento</button></div>
   <div class="g2">
     <div>
       <div class="ag-day"><div class="ag-dh">Hoje <span class="today-pill" id="ag-today-lbl">11/06/2026</span></div><div id="ag-today"><div class="empty" style="padding:20px"><div class="empty-ico">📅</div><p style="font-size:12px">Nenhum evento hoje</p></div></div></div>
@@ -825,7 +825,7 @@ body{visibility:visible!important}
   <div class="sh"><div><div class="sh-t">Prestadores / Relatórios</div><div class="sh-s">Gestão de prestadores e relatórios</div></div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-prest&#39;)">+ Novo Prestador</button>
-      <button class="btn btn-g btn-s" onclick="exportarDados()">📥 Exportar</button>
+      <button class="btn btn-g btn-s" onclick="exportarDados()">Exportar</button>
     </div>
   </div>
   <!-- Abas -->
@@ -835,8 +835,8 @@ body{visibility:visible!important}
   </div>
   <!-- Tab 0: Financeiro (começa escondida) -->
   <div id="fin-tab-0" style="display:none">
-  <div class="sh" style="margin-top:4px"><div><div class="sh-t" style="font-size:16px">📊 Relatórios</div><div class="sh-s">Geração e exportação de relatórios</div></div>
-    <button class="btn btn-p btn-s" onclick="gerarRelSemanal()">📄 Relatório Semanal</button>
+  <div class="sh" style="margin-top:4px"><div><div class="sh-t" style="font-size:16px">Relatórios</div><div class="sh-s">Geração e exportação de relatórios</div></div>
+    <button class="btn btn-p btn-s" onclick="gerarRelSemanal()">Relatório Semanal</button>
   </div>
   <!-- Relatório semanal -->
   <div id="rel-semanal-wrap" style="display:none;margin-bottom:20px">
@@ -891,7 +891,7 @@ body{visibility:visible!important}
     <div style="display:flex;gap:9px;margin-top:10px;flex-wrap:wrap">
       <button class="btn btn-p" onclick="gerarRel()">Gerar Relatório</button>
       <button class="btn btn-g" onclick="imprimirRel()">Imprimir</button>
-      <button class="btn btn-g btn-s" onclick="exportarRelCSV()">📊 CSV</button>
+      <button class="btn btn-g btn-s" onclick="exportarRelCSV()">CSV</button>
     </div>
   </div>
   <!-- Resultado -->
@@ -1173,7 +1173,7 @@ body{visibility:visible!important}
 <!-- Novo Chamado Manutenção -->
 <div class="moverlay" id="m-new-manut">
   <div class="modal modal-lg">
-    <div class="mh"><div class="mt" id="manut-modal-title">🔧 Novo Chamado</div><div class="mclose" onclick="closeM(&#39;m-new-manut&#39;)">✕</div></div>
+    <div class="mh"><div class="mt" id="manut-modal-title">Novo Chamado</div><div class="mclose" onclick="closeM(&#39;m-new-manut&#39;)">✕</div></div>
     <div class="mc">
       <input type="hidden" id="nm-tipo">
       <div class="fr">
@@ -1231,7 +1231,7 @@ body{visibility:visible!important}
 <!-- Nova Tarefa -->
 <div class="moverlay" id="m-new-task">
   <div class="modal">
-    <div class="mh"><div class="mt">📌 Nova Tarefa</div><div class="mclose" onclick="closeM(&#39;m-new-task&#39;)">✕</div></div>
+    <div class="mh"><div class="mt">Nova Tarefa</div><div class="mclose" onclick="closeM(&#39;m-new-task&#39;)">✕</div></div>
     <div class="mc">
       <div class="fr">
         <div class="fg" style="grid-column:1/-1"><label class="fl">Título da Tarefa *</label><input class="fc" id="nt-titulo" placeholder="Ex: Agendar limpeza caixa d&#39;água - Ed. Rocha"></div>
@@ -1269,7 +1269,7 @@ body{visibility:visible!important}
 <!-- Nova Notificação -->
 <div class="moverlay" id="m-new-notif">
   <div class="modal">
-    <div class="mh"><div class="mt">🔔 Registrar Notificação</div><div class="mclose" onclick="closeM(&#39;m-new-notif&#39;)">✕</div></div>
+    <div class="mh"><div class="mt">Registrar Notificação</div><div class="mclose" onclick="closeM(&#39;m-new-notif&#39;)">✕</div></div>
     <div class="mc">
       <div class="fr">
         <div class="fg"><label class="fl">Código da Notificação</label><input class="fc" id="nn-cod" placeholder="Ex: NOT-2026-001"></div>
@@ -1288,7 +1288,7 @@ body{visibility:visible!important}
 <!-- Novo Evento Agenda -->
 <div class="moverlay" id="m-new-event">
   <div class="modal">
-    <div class="mh"><div class="mt">📅 Novo Evento</div><div class="mclose" onclick="closeM(&#39;m-new-event&#39;)">✕</div></div>
+    <div class="mh"><div class="mt">Novo Evento</div><div class="mclose" onclick="closeM(&#39;m-new-event&#39;)">✕</div></div>
     <div class="mc">
       <div class="fr">
         <div class="fg" style="grid-column:1/-1"><label class="fl">Título *</label><input class="fc" id="ne-titulo" placeholder="Ex: Visita rotina — Condomínio X"></div>
@@ -1306,7 +1306,7 @@ body{visibility:visible!important}
 <!-- Novo Usuário -->
 <div class="moverlay" id="m-new-user">
   <div class="modal" style="max-width:440px">
-    <div class="mh"><div class="mt">👤 Adicionar Usuário</div><div class="mclose" onclick="closeM(&#39;m-new-user&#39;)">✕</div></div>
+    <div class="mh"><div class="mt">Adicionar Usuário</div><div class="mclose" onclick="closeM(&#39;m-new-user&#39;)">✕</div></div>
     <div class="mc">
       <div class="fg"><label class="fl">Nome completo *</label><input class="fc" id="nu-nome" placeholder="Ex: Ana Paula Silva"></div>
       <div class="fg"><label class="fl">Cargo / Setor</label><input class="fc" id="nu-cargo" placeholder="Ex: Assistente, Coordenadora, Vistoriadora..." autocomplete="off"></div>
@@ -1337,7 +1337,7 @@ body{visibility:visible!important}
 <!-- Novo Prestador -->
 <div class="moverlay" id="m-new-prest">
   <div class="modal" style="max-width:480px">
-    <div class="mh"><div class="mt">👷 Novo Prestador</div><div class="mclose" onclick="closeM(&#39;m-new-prest&#39;)">✕</div></div>
+    <div class="mh"><div class="mt">Novo Prestador</div><div class="mclose" onclick="closeM(&#39;m-new-prest&#39;)">✕</div></div>
     <div class="mc">
       <div class="fg"><label class="fl">Nome *</label><input class="fc" id="np-nome" placeholder="Nome do prestador"></div>
       <div class="fg"><label class="fl">Especialidade</label><input class="fc" id="np-esp" placeholder="Ex: Hidráulica, Elétrica"></div>
@@ -1352,7 +1352,7 @@ body{visibility:visible!important}
 <!-- Detalhe do Chamado (leitura) -->
 <div class="moverlay" id="m-view-manut">
   <div class="modal modal-lg">
-    <div class="mh"><div class="mt">📋 Detalhes do Chamado</div><div class="mclose" onclick="closeM(&#39;m-view-manut&#39;)">✕</div></div>
+    <div class="mh"><div class="mt">Detalhes do Chamado</div><div class="mclose" onclick="closeM(&#39;m-view-manut&#39;)">✕</div></div>
     <div class="mc" id="m-view-manut-body"></div>
     <div class="mf"><button class="btn btn-g" onclick="closeM(&#39;m-view-manut&#39;)">Fechar</button></div>
   </div>
@@ -1701,7 +1701,7 @@ function renderManutRows(arr,tipo){
     if(m._visita){
       const vcond=m.cond.length>14?m.cond.substring(0,13)+'…':m.cond;
       return `<tr style="background:rgba(251,146,60,.06);border-left:3px solid #fb923c">
-        <td><span style="font-size:10px;padding:2px 6px;border-radius:20px;background:rgba(251,146,60,.2);color:#fb923c;font-weight:700;white-space:nowrap">📅 V.Chk</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:1px">⚠${m._dias===0?'HOJE':m._dias<0?'VEN.':m._dias+'d'}</span>`:''}</td>
+        <td><span style="font-size:10px;padding:2px 6px;border-radius:20px;background:rgba(251,146,60,.2);color:#fb923c;font-weight:700;white-space:nowrap">V.Chk</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:1px">⚠${m._dias===0?'HOJE':m._dias<0?'VEN.':m._dias+'d'}</span>`:''}</td>
         <td style="font-size:11.5px;color:var(--t3)">${fmtDate(m.dtSol)}</td>
         <td style="font-size:11.5px;color:#fb923c;font-weight:600">${fmtDate(m.dtPrev)}</td>
         <td style="color:var(--t3);font-size:11px">—</td>
@@ -1820,7 +1820,7 @@ function renderTasks(){
         ${t.obs?`<div style="font-size:11.5px;color:var(--t2);margin-top:4px">${t.obs}</div>`:''}
       </div>
       <div style="display:flex;gap:6px;align-items:center">
-        ${t.status==='Concluída'?`<button class="btn btn-g btn-s" onclick="reopenTask('${t.id}')" style="color:var(--yellow)">↩ Reabrir</button>`:`<button class="btn btn-success btn-s" onclick="completeTask('${t.id}')">✓ Concluir</button>`}
+        ${t.status==='Concluída'?`<button class="btn btn-g btn-s" onclick="reopenTask('${t.id}')" style="color:var(--yellow)">Reabrir</button>`:`<button class="btn btn-success btn-s" onclick="completeTask('${t.id}')">✓ Concluir</button>`}
         <div class="btn-icon" onclick="editTask('${t.id}')" title="Editar">✏️</div>
       </div>
     </div>`).join('');
@@ -1874,7 +1874,7 @@ function renderProcHist(){
       <div style="flex:1"><div style="font-size:13px;font-weight:500">${t.titulo}</div><div style="font-size:11.5px;color:var(--t3)">${t.resp} · Concluída em ${fmtDate(t.concluidoEm||'')}</div></div>
       <div style="display:flex;align-items:center;gap:6px">
         <span class="bs bs-ok">Concluída</span>
-        <button class="btn btn-s" style="font-size:10px;background:rgba(251,191,36,.15);color:#f59e0b;border:1px solid rgba(251,191,36,.3)" onclick="reverterTaskHist('${t.id}')">↩ Reverter</button>
+        <button class="btn btn-s" style="font-size:10px;background:rgba(251,191,36,.15);color:#f59e0b;border:1px solid rgba(251,191,36,.3)" onclick="reverterTaskHist('${t.id}')">Reverter</button>
       </div>
     </div>`).join('');
 }
@@ -1948,7 +1948,7 @@ function renderProcTab3(){
   else if(sf==='concluido') filtered=arr.filter(m=>m.status==='Concluído');
   if(!filtered.length){tbody.innerHTML='';emp.style.display='flex';emp.querySelector('p').textContent=sf==='concluido'?'Nenhum processo concluído.':'Nenhum processo em andamento.';return}
   emp.style.display='none';
-  tbody.innerHTML=filtered.map(m=>`<tr><td><span class="bs ${MANUT_STATUS_CLS[m.status]}">${m.status}</span></td><td>${fmtDate(m.dtSol)}</td><td>${fmtDate(m.dtPrev)}</td><td>${fmt(m.resp)}</td><td>${fmt(m.cond)}</td><td>${fmt(m.prest)}</td><td>${fmt(m.desc)}</td><td>${fmtDate(m.dtConc)}</td><td>${fmtR(m.val)}</td><td>${fmtR(m.mat)}</td><td>${fmtR(m.recKenlo)}</td><td>${fmtR(m.manutKenlo)}</td><td>${fmtR(m.locDeb)}</td><td>${fmtR(m.contas)}</td><td>${m.recibo==='Sim'?'✓':'-'}</td><td style="color:var(--t3);font-size:12px">${m.obs||'—'}</td><td style="text-align:right"><div style="display:flex;gap:4px;justify-content:flex-end">${m.status==='Concluído'?`<button class="btn btn-s" style="font-size:10px;background:rgba(251,191,36,.15);color:#f59e0b;border:1px solid rgba(251,191,36,.3)" onclick="reverterProc('${m.id}')">↩ Reverter</button>`:''}<div class="btn-icon" onclick="editManut('${m.id}','proc')">✏️</div></div></td></tr>`).join('');
+  tbody.innerHTML=filtered.map(m=>`<tr><td><span class="bs ${MANUT_STATUS_CLS[m.status]}">${m.status}</span></td><td>${fmtDate(m.dtSol)}</td><td>${fmtDate(m.dtPrev)}</td><td>${fmt(m.resp)}</td><td>${fmt(m.cond)}</td><td>${fmt(m.prest)}</td><td>${fmt(m.desc)}</td><td>${fmtDate(m.dtConc)}</td><td>${fmtR(m.val)}</td><td>${fmtR(m.mat)}</td><td>${fmtR(m.recKenlo)}</td><td>${fmtR(m.manutKenlo)}</td><td>${fmtR(m.locDeb)}</td><td>${fmtR(m.contas)}</td><td>${m.recibo==='Sim'?'✓':'-'}</td><td style="color:var(--t3);font-size:12px">${m.obs||'—'}</td><td style="text-align:right"><div style="display:flex;gap:4px;justify-content:flex-end">${m.status==='Concluído'?`<button class="btn btn-s" style="font-size:10px;background:rgba(251,191,36,.15);color:#f59e0b;border:1px solid rgba(251,191,36,.3)" onclick="reverterProc('${m.id}')">Reverter</button>`:''}<div class="btn-icon" onclick="editManut('${m.id}','proc')">✏️</div></div></td></tr>`).join('');
 }
 function reverterProc(id){
   const arr=DB.manutencoes.proc||[];
@@ -2003,7 +2003,7 @@ function renderAgendaProc(){
         const atrasada=t.dtFim&&t.dtFim<td;
         const bg=atrasada?'background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2)':'background:var(--s2);border:1px solid var(--border)';
         if(t._tipo==='lembrete'){
-          return `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;${bg};border-radius:var(--rs);margin-bottom:6px"><div style="flex:1"><div style="font-size:13px;font-weight:500">${t.titulo}</div><div style="font-size:11.5px;color:var(--t3)">📝 Lembrete${t.dtFim?' · Prazo: '+fmtDate(t.dtFim)+(atrasada?' ⚠️':''):''}</div></div><button class="btn btn-success btn-s" onclick="concluirLembrete('${t.id}',true)">✓ Concluir</button></div>`;
+          return `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;${bg};border-radius:var(--rs);margin-bottom:6px"><div style="flex:1"><div style="font-size:13px;font-weight:500">${t.titulo}</div><div style="font-size:11.5px;color:var(--t3)">Lembrete${t.dtFim?' · Prazo: '+fmtDate(t.dtFim)+(atrasada?' ⚠️':''):''}</div></div><button class="btn btn-success btn-s" onclick="concluirLembrete('${t.id}',true)">✓ Concluir</button></div>`;
         } else {
           return `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;${bg};border-radius:var(--rs);margin-bottom:6px"><div style="flex:1"><div style="font-size:13px;font-weight:500">${t.titulo}</div><div style="font-size:11.5px;color:var(--t3)">👤 ${t.resp}${t.dtFim?' · Prazo: '+fmtDate(t.dtFim)+(atrasada?' ⚠️':''):''}</div></div><span class="prio ${prioC[t.prio]||'prio-m'}">${t.prio}</span><button class="btn btn-success btn-s" onclick="completeTask('${t.id}')">✓ Concluir</button></div>`;
         }
@@ -2071,21 +2071,21 @@ function showCondDetail(id){
   document.getElementById('cond-detail-body').innerHTML=`
     <div class="sh"><div><div class="sh-t">🏢 ${c.nome}</div><div class="sh-s">${c.unidades} · ${c.tipo}</div></div>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-g btn-s" onclick="exportCondPDF(${c.id})">📄 PDF Pendências</button>
+        <button class="btn btn-g btn-s" onclick="exportCondPDF(${c.id})">PDF Pendências</button>
       </div>
     </div>
     <div class="g2" style="margin-bottom:18px">
       <div class="card" data-info-card="${c.id}">
-        <div class="card-h"><div class="card-t">📋 Informações Básicas</div><span style="font-size:11px;color:var(--t3)">Clique para editar</span></div>
-        <div class="frow"><div class="flbl">💧 Água</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.agua||''}" onchange="editCondField(${c.id},'agua',this.value)"></div>
-        <div class="frow"><div class="flbl">🔥 Gás</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.gas||''}" onchange="editCondField(${c.id},'gas',this.value)"></div>
-        <div class="frow"><div class="flbl">⚡ Energia</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.energia||''}" onchange="editCondField(${c.id},'energia',this.value)"></div>
-        <div class="frow"><div class="flbl">🚗 Vagas</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.vagas||''}" onchange="editCondField(${c.id},'vagas',this.value)"></div>
-        <div class="frow" style="border:none"><div class="flbl">📝 Obs</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.obs||''}" onchange="editCondField(${c.id},'obs',this.value)"></div>
+        <div class="card-h"><div class="card-t">Informações Básicas</div><span style="font-size:11px;color:var(--t3)">Clique para editar</span></div>
+        <div class="frow"><div class="flbl">Água</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.agua||''}" onchange="editCondField(${c.id},'agua',this.value)"></div>
+        <div class="frow"><div class="flbl">Gás</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.gas||''}" onchange="editCondField(${c.id},'gas',this.value)"></div>
+        <div class="frow"><div class="flbl">Energia</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.energia||''}" onchange="editCondField(${c.id},'energia',this.value)"></div>
+        <div class="frow"><div class="flbl">Vagas</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.vagas||''}" onchange="editCondField(${c.id},'vagas',this.value)"></div>
+        <div class="frow" style="border:none"><div class="flbl">Obs</div><input class="fc" style="flex:1;max-width:180px;padding:4px 8px;font-size:13px" value="${c.obs||''}" onchange="editCondField(${c.id},'obs',this.value)"></div>
         <button class="btn btn-p btn-s" style="margin-top:10px" onclick="adicionarInfoCampo(${c.id})">+ Adicionar campo</button>
       </div>
       <div class="card">
-        <div class="card-h"><div class="card-t">👷 Prestadores do Condomínio</div>
+        <div class="card-h"><div class="card-t">Prestadores do Condomínio</div>
           <button class="btn btn-p btn-s" onclick="adicionarPrestCond(${c.id})">+ Prestador</button>
         </div>
         <div id="prest-cond-list-${c.id}">
@@ -2102,7 +2102,7 @@ function showCondDetail(id){
     <!-- Serviços com datas editáveis -->
     <div class="card" style="margin-bottom:18px">
       <div class="card-h">
-        <div class="card-t">🛠️ Controle de Serviços e Datas</div>
+        <div class="card-t">Controle de Serviços e Datas</div>
         <div style="display:flex;gap:8px">
           <select class="fc" id="svc-filter-ano-${c.id}" onchange="renderSvcTable(${c.id})" style="width:auto;min-width:90px;font-size:12px">
             <option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option>
@@ -2155,7 +2155,7 @@ function showCondDetail(id){
       </div>
       <div class="card">
         <div class="card-h">
-          <div class="card-t">📋 Histórico de Visitas (Checklist)</div>
+          <div class="card-t">Histórico de Visitas (Checklist)</div>
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
             <select class="fc" id="chkhist-ano-${id}" onchange="renderCondHist(${id})" style="width:auto;min-width:90px;font-size:12px">
               <option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option>
@@ -2185,7 +2185,7 @@ function showCondDetail(id){
             </div>
             <div style="font-size:10px;color:var(--t3)" id="chk-dias-lbl-${id}">Checklist a cada 40 dias</div>
           </div>
-          <div id="chk-alerta-${id}" style="display:none;font-size:12px;font-weight:700;color:var(--red);margin-left:auto">⚠ Visita próxima!</div>
+          <div id="chk-alerta-${id}" style="display:none;font-size:12px;font-weight:700;color:var(--red);margin-left:auto">Visita próxima!</div>
         </div>
         <div id="chk-hist-${id}">
           ${hist.length===0?'<div class="empty" style="padding:14px"><div class="empty-ico">📋</div><p style="font-size:12px">Nenhuma visita registrada</p></div>':
@@ -2392,7 +2392,7 @@ function showPrestDetail(pid,filtAno,filtMes,filtIni,filtFim,noDef){
           <input type="date" id="pd-fim-${p.id}" value="${filtFim||''}" onchange="pdRefresh('${p.id}')">
         </div>
         <button class="btn btn-g btn-s" onclick="showPrestDetail('${p.id}','','','','',1)">✕ Limpar</button>
-        <button class="btn btn-g btn-s" onclick="exportPrestPDF('${p.id}')">📄 PDF</button>
+        <button class="btn btn-g btn-s" onclick="exportPrestPDF('${p.id}')">PDF</button>
       </div>
     </div>
     <div class="stats-row">
@@ -3685,10 +3685,10 @@ function gerarRelManut(tipo){
     <div class="stat-b"><div class="n ok">${conc.length}</div><div class="l">Concluídos</div></div>
     <div class="stat-b"><div class="n" style="color:#06b6d4">R$${rec.toFixed(0)}</div><div class="l">Receita</div></div>
   </div>
-  <h2>⏳ Pendentes (${pend.length})</h2>
+  <h2>Pendentes (${pend.length})</h2>
   <table><thead><tr><th>Status</th><th>Data</th><th>Condomínio</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Receita</th></tr></thead>
   <tbody>${makeRows(pend)||'<tr><td colspan="7" style="text-align:center;color:#999">Nenhum pendente</td></tr>'}</tbody></table>
-  <h2>✅ Concluídos (${conc.length})</h2>
+  <h2>Concluídos (${conc.length})</h2>
   <table><thead><tr><th>Status</th><th>Data</th><th>Condomínio</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Receita</th></tr></thead>
   <tbody>${makeRows(conc)||'<tr><td colspan="7" style="text-align:center;color:#999">Nenhum concluído</td></tr>'}</tbody></table>
   <br><button onclick="window.print()">Imprimir</button>

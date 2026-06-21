@@ -266,7 +266,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="nav" onclick="document.getElementById(&#39;fi&#39;).click()"><svg class="ico" viewBox="0 0 24 24"><path d="M12 21V9M8 13l4-4 4 4M5 3h14"/></svg> Importar Dados</div>
   </div>
   <div id="user-bar" style="display: none;">
-    <span id="ub-name">👤 Administrador</span>
+    <span id="ub-name">Administrador</span>
     <button onclick="logoutUser()">Sair</button>
     <button class="btn-admin" id="ub-admin-btn" style="display: none;" onclick="openAdmin()">Admin</button>
   </div>
@@ -293,8 +293,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="card c-gy" onclick="go(&#39;marketing&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Mkt Pend.</div></div>
   </div>
       <div style="margin-bottom:14px;display:flex;align-items:center;gap:10px">
-        <button class="btn" style="background:#1e3a5f;color:#fff;padding:10px 22px;font-size:13px;font-weight:600;border-radius:6px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(30,58,95,.18);cursor:pointer" onclick="gerarRelatorioPanorama()">
-          📄 Gerar Relatório
+        <button class="btn" style="background:#1e3a5f;color:#fff;padding:10px 22px;font-size:13px;font-weight:600;border-radius:6px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(30,58,95,.18);cursor:pointer" onclick="gerarRelatorioPanorama()">Gerar Relatório
         </button>
         <span style="font-size:11px;color:var(--tl)">Gera PDF completo dos imóveis em desocupação</span>
       </div>
@@ -307,7 +306,7 @@ td.ora{color:var(--o);font-weight:600}
         </div>
         <div class="tw">
           <div style="padding:10px 14px;border-bottom:1px solid var(--bd);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:space-between">
-            <span>📅 Agenda</span>
+            <span>Agenda</span>
             <button class="btn btn-p btn-sm" onclick="openM(&#39;m-ag&#39;)">+ Prazo</button>
           </div>
           <div id="d-venc" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-i">📅</div>Sem itens</div></div>
@@ -320,7 +319,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="page" id="page-rescisoes">
       <div class="tw">
         <div class="ttbar" style="flex-wrap:wrap;gap:6px">
-          <input class="si" placeholder="🔍 Código, inquilino..." id="s-resc" oninput="rResc()" style="width:170px">
+          <input class="si" placeholder="Código, inquilino..." id="s-resc" oninput="rResc()" style="width:170px">
           <select class="fsel" id="f-sta" onchange="rResc()">
             <option value="">Todos status</option>
             <option>Em Andamento</option><option>Concluída</option><option>Inadimplente</option><option>Saiu da Imob</option>
@@ -358,11 +357,11 @@ td.ora{color:var(--o);font-weight:600}
         </div>
         <div>
           <div class="tw" style="padding:12px;margin-bottom:10px">
-            <div style="font-weight:700;font-size:12px;margin-bottom:8px">⏰ Hoje</div>
+            <div style="font-weight:700;font-size:12px;margin-bottom:8px">Hoje</div>
             <div id="ag-hoje"><div style="font-size:11px;color:var(--tl);padding:8px 0">Nada para hoje 🎉</div></div>
           </div>
           <div class="tw" style="padding:12px">
-            <div style="font-weight:700;font-size:12px;margin-bottom:8px">🔜 Próximos 7 dias</div>
+            <div style="font-weight:700;font-size:12px;margin-bottom:8px">Próximos 7 dias</div>
             <div id="ag-7d"><div style="font-size:11px;color:var(--tl);padding:8px 0">Tudo ok ✅</div></div>
           </div>
         </div>
@@ -373,12 +372,12 @@ td.ora{color:var(--o);font-weight:600}
     <div class="page" id="page-agdiaria">
       <div class="tw" style="padding:14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
         <div>
-          <div style="font-weight:700;font-size:13px;color:var(--p);margin-bottom:4px">🕐 Agenda Diária — Fluxo Operacional</div>
+          <div style="font-weight:700;font-size:13px;color:var(--p);margin-bottom:4px">Agenda Diária — Fluxo Operacional</div>
           <div style="font-size:11px;color:var(--tl)">Rotina padrão do setor de rescisões. Clique em ✏️ para editar qualquer bloco.</div>
         </div>
         <div style="display:flex;gap:6px">
           <button class="btn btn-p btn-sm" onclick="addAgdSlot()">+ Novo Horário</button>
-          <button class="btn btn-o btn-sm" onclick="resetAgd()">↩ Restaurar Padrão</button>
+          <button class="btn btn-o btn-sm" onclick="resetAgd()">Restaurar Padrão</button>
         </div>
       </div>
       <div id="agd-slots">
@@ -550,7 +549,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="page" id="page-cartao">
       <div class="tw">
         <div class="ttbar">
-          <input class="si" placeholder="🔍 Contrato..." id="s-cart" oninput="rCart()" style="width:140px">
+          <input class="si" placeholder="Contrato..." id="s-cart" oninput="rCart()" style="width:140px">
           <select class="fsel" id="f-cart-ano" onchange="onCartAnoChange()" style="width:80px"><option value="">Todos anos</option><option value="2026">2026</option></select>
           <select class="fsel" id="f-cart-mes" onchange="onCartMesChange()" style="width:120px"><option value="">Todos os meses</option><option value="Jan/2026">Jan/2026</option><option value="Fev/2026">Fev/2026</option><option value="Mar/2026">Mar/2026</option><option value="Abr/2026">Abr/2026</option><option value="Mai/2026">Mai/2026</option><option value="Jun/2026">Jun/2026</option><option value="Jul/2026">Jul/2026</option><option value="Ago/2026">Ago/2026</option><option value="Set/2026">Set/2026</option><option value="Out/2026">Out/2026</option><option value="Nov/2026">Nov/2026</option><option value="Dez/2026">Dez/2026</option></select>
           <button class="btn btn-sm" style="background:#f1f5f9;color:var(--tl);border:1.5px solid var(--bd)" onclick="clearCartFilter()">✕ Todos</button>
@@ -571,7 +570,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="page" id="page-confissao">
       <div class="tw">
         <div class="ttbar">
-          <input class="si" placeholder="🔍 Código..." id="s-conf" oninput="rConf()" style="width:140px">
+          <input class="si" placeholder="Código..." id="s-conf" oninput="rConf()" style="width:140px">
           <select class="fsel" id="f-conf-ano" onchange="onConfAnoChange()" style="width:80px"><option value="">Todos anos</option><option value="2026">2026</option></select>
           <select class="fsel" id="f-conf-mes" onchange="onConfMesChange()" style="width:120px" data-cleared="1"><option value="">Todos os meses</option><option value="Jan/2026">Jan/2026</option><option value="Fev/2026">Fev/2026</option><option value="Mar/2026">Mar/2026</option><option value="Abr/2026">Abr/2026</option><option value="Mai/2026">Mai/2026</option><option value="Jun/2026">Jun/2026</option><option value="Jul/2026">Jul/2026</option><option value="Ago/2026">Ago/2026</option><option value="Set/2026">Set/2026</option><option value="Out/2026">Out/2026</option><option value="Nov/2026">Nov/2026</option><option value="Dez/2026">Dez/2026</option></select>
           <button class="btn btn-sm" style="background:#f1f5f9;color:var(--tl);border:1.5px solid var(--bd)" onclick="clearConfFilter()" title="Limpar filtro">✕ Todos</button>
@@ -593,13 +592,13 @@ td.ora{color:var(--o);font-weight:600}
       <div class="tabs" id="mtabs">
         <div class="tab active" onclick="setMT(&#39;t&#39;,0)">Todas</div>
         <div class="tab" onclick="setMT(&#39;p&#39;,1)">Pendente de Manut.</div>
-        <div class="tab" onclick="setMT(&#39;va&#39;,2)">🔍 V. Antecip.</div>
+        <div class="tab" onclick="setMT(&#39;va&#39;,2)">V. Antecip.</div>
         <div class="tab" onclick="setMT(&#39;c&#39;,3)">Concluídas</div>
-        <div class="tab" onclick="setMT(&#39;a&#39;,4)">🏠 Alugados</div>
+        <div class="tab" onclick="setMT(&#39;a&#39;,4)">Alugados</div>
       </div>
       <div class="tw">
         <div class="ttbar">
-          <input class="si" placeholder="🔍 Código..." id="s-man" oninput="rMan()" style="width:130px">
+          <input class="si" placeholder="Código..." id="s-man" oninput="rMan()" style="width:130px">
           <select id="f-man-ano" onchange="onManAnoChange()" style="padding:4px 8px;border:1.5px solid var(--bd);border-radius:5px;font-size:11px"><option value="">Todos anos</option><option value="2026">2026</option></select>
           <select id="f-man-mes" onchange="onManMesChange()" style="padding:4px 8px;border:1.5px solid var(--bd);border-radius:5px;font-size:11px"><option value="">Todos os meses</option><option value="Jan/2026">Jan/2026</option><option value="Fev/2026">Fev/2026</option><option value="Mar/2026">Mar/2026</option><option value="Abr/2026">Abr/2026</option><option value="Mai/2026">Mai/2026</option><option value="Jun/2026">Jun/2026</option><option value="Jul/2026">Jul/2026</option><option value="Ago/2026">Ago/2026</option><option value="Set/2026">Set/2026</option><option value="Out/2026">Out/2026</option><option value="Nov/2026">Nov/2026</option><option value="Dez/2026">Dez/2026</option></select>
           <button onclick="clearManFilter()" style="padding:4px 8px;border:1.5px solid var(--bd);border-radius:5px;font-size:11px;cursor:pointer;background:#fff">✕ Limpar</button>
@@ -620,7 +619,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="page" id="page-sanepar">
       <div class="tw">
         <div class="ttbar">
-          <input class="si" placeholder="🔍 Código, matrícula..." id="s-san" oninput="rSan()" style="width:160px">
+          <input class="si" placeholder="Código, matrícula..." id="s-san" oninput="rSan()" style="width:160px">
           <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer"><input type="checkbox" id="san-show-concl" onchange="rSan()"> Ver concluídos</label>
           <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openM(&#39;m-san&#39;)">+ Adicionar</button>
         </div>
@@ -638,7 +637,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="page" id="page-marketing">
       <div class="tw">
         <div class="ttbar">
-          <input class="si" placeholder="🔍 Código, proprietário..." id="s-mkt" oninput="rMkt()" style="width:140px">
+          <input class="si" placeholder="Código, proprietário..." id="s-mkt" oninput="rMkt()" style="width:140px">
           <select id="f-mkt-ano" onchange="rMkt()" style="padding:4px 8px;border:1.5px solid var(--bd);border-radius:5px;font-size:11px"><option value="">Todos anos</option></select>
           <select id="f-mkt-mes" onchange="rMkt()" style="padding:4px 8px;border:1.5px solid var(--bd);border-radius:5px;font-size:11px"><option value="">Todos meses</option><option value="Jan/2026">Jan/2026</option><option value="Fev/2026">Fev/2026</option><option value="Mar/2026">Mar/2026</option><option value="Abr/2026">Abr/2026</option><option value="Mai/2026">Mai/2026</option><option value="Jun/2026">Jun/2026</option><option value="Jul/2026">Jul/2026</option><option value="Ago/2026">Ago/2026</option><option value="Set/2026">Set/2026</option><option value="Out/2026">Out/2026</option><option value="Nov/2026">Nov/2026</option><option value="Dez/2026">Dez/2026</option></select>
           <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer"><input type="checkbox" id="mkt-show-concl" onchange="rMkt()"> Concluídos</label>
@@ -657,7 +656,7 @@ td.ora{color:var(--o);font-weight:600}
     <!-- CARTAS 30 DIAS -->
     <div class="page" id="page-cartas">
       <div class="ttbar" style="background:#fff;border-radius:9px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
-        <span style="font-weight:700;font-size:12px">✉️ Cartas 30 Dias</span>
+        <span style="font-weight:700;font-size:12px">Cartas 30 Dias</span>
         <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer"><input type="checkbox" id="ct-show-concl" onchange="rCartas()"> Mostrar concluídas</label>
         <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openM(&#39;m-carta&#39;)">+ Carta 30 Dias</button>
       </div>
@@ -668,7 +667,7 @@ td.ora{color:var(--o);font-weight:600}
     <!-- INADIMPLENTES -->
     <div class="page" id="page-inadimplentes">
       <div class="ttbar" style="background:#fff;border-radius:9px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
-        <span style="font-weight:700;font-size:12px">⚠️ Inadimplentes</span>
+        <span style="font-weight:700;font-size:12px">Inadimplentes</span>
         <div style="display:flex;gap:4px;margin-left:auto;align-items:center">
           <button id="inad-tab-pend" onclick="setInadTab(false)" style="padding:4px 12px;border-radius:5px;border:1.5px solid #1e3a5f;font-size:11px;font-weight:600;cursor:pointer;background:#1e3a5f;color:#fff">Pendentes</button>
           <button id="inad-tab-conc" onclick="setInadTab(true)" style="padding:4px 12px;border-radius:5px;border:1.5px solid var(--bd);font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#64748b">Concluídos</button>
@@ -682,7 +681,7 @@ td.ora{color:var(--o);font-weight:600}
     <!-- JURÍDICOS -->
     <div class="page" id="page-juridicos">
       <div class="ttbar" style="background:#fff;border-radius:9px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
-        <span style="font-weight:700;font-size:12px">⚖️ Jurídicos</span>
+        <span style="font-weight:700;font-size:12px">Jurídicos</span>
         <span style="font-size:11px;color:var(--tl);margin-left:8px">Casos repassados do Inadimp./Atrasos</span>
         <span style="flex:1"></span>
         <button class="btn btn-p btn-sm" onclick="newJur()">+ Adicionar</button>
@@ -694,7 +693,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="page" id="page-loft">
       <div class="tw">
         <div class="ttbar">
-          <input class="si" placeholder="🔍 Código..." id="s-loft" oninput="rLoft()" style="width:180px">
+          <input class="si" placeholder="Código..." id="s-loft" oninput="rLoft()" style="width:180px">
           <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer"><input type="checkbox" id="loft-show-concl" onchange="rLoft()"> Mostrar concluídas</label>
           <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openM(&#39;m-loft&#39;)">+ Caso Loft</button>
         </div>
@@ -713,7 +712,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="page" id="page-saiuimob">
       <div class="tw">
         <div class="ttbar">
-          <input class="si" placeholder="🔍 Código..." id="s-saiu" oninput="rSaiu()" style="width:180px">
+          <input class="si" placeholder="Código..." id="s-saiu" oninput="rSaiu()" style="width:180px">
           <select class="fsel" id="saiu-fano" onchange="rSaiu()"><option value="">Todos anos</option></select>
           <button class="btn btn-p btn-sm" onclick="newSaiu()">+ Registrar Saída</button>
         </div>
@@ -730,18 +729,18 @@ td.ora{color:var(--o);font-weight:600}
     <!-- RELATÓRIO -->
     <div class="page" id="page-relatorio">
       <div class="tw" style="margin-bottom:12px;padding:14px">
-        <div style="font-weight:700;font-size:13px;margin-bottom:10px">📄 Gerar Relatório</div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:10px">Gerar Relatório</div>
         <div id="rel-btns-wrap" style="display:flex;gap:8px;flex-wrap:wrap">
-    <button class="btn btn-p btn-sm" onclick="gerarRel(&#39;diario&#39;)">📋 Resumo Diário <span style="background:rgba(255,255,255,.3);border-radius:10px;padding:1px 6px;font-size:10px">1</span></button>
-    <button class="btn btn-sm" style="background:#f3e8ff;color:#6b21a8" onclick="gerarRel(&#39;manut&#39;)">🔧 Manutenções <span style="background:rgba(168,85,247,.2);border-radius:10px;padding:1px 6px;font-size:10px">2</span></button>
-    <button class="btn btn-sm" style="background:#dbeafe;color:#1e40af" onclick="gerarRel(&#39;sanepar&#39;)">💧 Sanepar <span style="background:rgba(37,99,168,.2);border-radius:10px;padding:1px 6px;font-size:10px">1</span></button>
-    <button class="btn btn-sm" style="background:#fee2e2;color:#991b1b" onclick="gerarRel(&#39;inad&#39;)">⚠️ Inadimplentes <span style="background:rgba(220,38,38,.2);border-radius:10px;padding:1px 6px;font-size:10px">1</span></button>
-    <button class="btn btn-sm" style="background:#fef9c3;color:#713f12" onclick="gerarRel(&#39;cartas&#39;)">✉️ Cartas <span style="background:rgba(202,138,4,.2);border-radius:10px;padding:1px 6px;font-size:10px">1</span></button>
-    <button class="btn btn-sm" style="background:#f0fdf4;color:#166534" onclick="gerarRel(&#39;completo&#39;)">📊 Completo</button>
-    <button class="btn btn-sm" style="background:#fef3c7;color:#92400e" onclick="gerarRel(&#39;financeiro&#39;)">💰 Financeiro Manutenções</button></div>
+    <button class="btn btn-p btn-sm" onclick="gerarRel(&#39;diario&#39;)">Resumo Diário <span style="background:rgba(255,255,255,.3);border-radius:10px;padding:1px 6px;font-size:10px">1</span></button>
+    <button class="btn btn-sm" style="background:#f3e8ff;color:#6b21a8" onclick="gerarRel(&#39;manut&#39;)">Manutenções <span style="background:rgba(168,85,247,.2);border-radius:10px;padding:1px 6px;font-size:10px">2</span></button>
+    <button class="btn btn-sm" style="background:#dbeafe;color:#1e40af" onclick="gerarRel(&#39;sanepar&#39;)">Sanepar <span style="background:rgba(37,99,168,.2);border-radius:10px;padding:1px 6px;font-size:10px">1</span></button>
+    <button class="btn btn-sm" style="background:#fee2e2;color:#991b1b" onclick="gerarRel(&#39;inad&#39;)">Inadimplentes <span style="background:rgba(220,38,38,.2);border-radius:10px;padding:1px 6px;font-size:10px">1</span></button>
+    <button class="btn btn-sm" style="background:#fef9c3;color:#713f12" onclick="gerarRel(&#39;cartas&#39;)">Cartas <span style="background:rgba(202,138,4,.2);border-radius:10px;padding:1px 6px;font-size:10px">1</span></button>
+    <button class="btn btn-sm" style="background:#f0fdf4;color:#166534" onclick="gerarRel(&#39;completo&#39;)">Completo</button>
+    <button class="btn btn-sm" style="background:#fef3c7;color:#92400e" onclick="gerarRel(&#39;financeiro&#39;)">Financeiro Manutenções</button></div>
         <!-- período -->
         <div style="margin-top:10px;background:#f8fafc;border-radius:8px;padding:10px;border:1px solid var(--bd)">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tl);margin-bottom:8px">📅 Filtrar por Período</div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tl);margin-bottom:8px">Filtrar por Período</div>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <div class="fg" style="margin:0">
               <label style="font-size:10px;color:var(--tl)">Ano</label>
@@ -777,14 +776,14 @@ td.ora{color:var(--o);font-weight:600}
     <input type="checkbox" id="rel-todos-meses" onchange="toggleTodosMeses(this)"> Todos
   </label></div>
             </div>
-            <button class="btn btn-sm" style="background:#0369a1;color:#fff;margin-top:14px" onclick="gerarRelPeriodo()">📊 Gerar por Período</button>
+            <button class="btn btn-sm" style="background:#0369a1;color:#fff;margin-top:14px" onclick="gerarRelPeriodo()">Gerar por Período</button>
             <button class="btn btn-o btn-sm" style="margin-top:14px" onclick="resetRelPeriodo()">✕ Limpar</button>
           </div>
         </div>
         <div style="display:flex;gap:6px;margin-top:8px">
           <button class="btn btn-o btn-sm" onclick="copiarRel()">Copiar</button>
           <button class="btn btn-sm" style="background:var(--acc);color:#1a1a1a" onclick="imprimirRel()">Imprimir / PDF</button>
-          <button class="btn btn-sm" style="background:#f1f5f9;color:var(--gy);border:1.5px solid var(--bd)" onclick="atualizarRelatorio()">🔄 Atualizar</button>
+          <button class="btn btn-sm" style="background:#f1f5f9;color:var(--gy);border:1.5px solid var(--bd)" onclick="atualizarRelatorio()">Atualizar</button>
         </div>
       </div>
       <div class="tw" style="padding:14px">
@@ -795,53 +794,53 @@ td.ora{color:var(--o);font-weight:600}
     <!-- MODELOS DE TEXTO -->
     <div class="page" id="page-modelos">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div style="font-weight:700;font-size:12px;color:var(--p)">📨 Modelos de Texto</div>
+        <div style="font-weight:700;font-size:12px;color:var(--p)">Modelos de Texto</div>
         <button class="btn btn-p btn-sm" onclick="addNovoModelo()">+ Novo Modelo</button>
       </div>
       <!-- DOCUMENTOS GOOGLE -->
       <div class="tw" style="margin-bottom:12px;padding:14px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-          <div style="font-weight:700;font-size:12px;color:var(--p)">📁 Documentos Oficiais — abre no Google Docs</div>
+          <div style="font-weight:700;font-size:12px;color:var(--p)">Documentos Oficiais — abre no Google Docs</div>
           <button class="btn btn-p btn-sm" onclick="addDocLink()">+ Incluir Link</button>
         </div>
         <div id="doc-links-list"><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-    <a href="https://docs.google.com/document/d/1hAKxw1WVeX-xi65vZDD3hs5oGhnPLAVoLCMBnUkLyuQ/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">📄 Termo Entrega Provisória de Chaves</a>
+    <a href="https://docs.google.com/document/d/1hAKxw1WVeX-xi65vZDD3hs5oGhnPLAVoLCMBnUkLyuQ/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">Termo Entrega Provisória de Chaves</a>
     <button class="abt" onclick="editDocLink(0)" title="Editar">Editar</button>
     <button class="abt" onclick="delDocLink(0)" title="Excluir">Excluir</button>
   </div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-    <a href="https://docs.google.com/document/d/1Qry5kuVsVBc_jDTZ5Bl1c-9eN6ZMz16Z/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">📄 Carta de Desocupação</a>
+    <a href="https://docs.google.com/document/d/1Qry5kuVsVBc_jDTZ5Bl1c-9eN6ZMz16Z/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">Carta de Desocupação</a>
     <button class="abt" onclick="editDocLink(1)" title="Editar">Editar</button>
     <button class="abt" onclick="delDocLink(1)" title="Excluir">Excluir</button>
   </div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-    <a href="https://docs.google.com/spreadsheets/d/1SrKCMNPfZJiIg71l3mS0aUqIOZpdIqKPV9lujN6Www8/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">📄 Termo de Rescisão</a>
+    <a href="https://docs.google.com/spreadsheets/d/1SrKCMNPfZJiIg71l3mS0aUqIOZpdIqKPV9lujN6Www8/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">Termo de Rescisão</a>
     <button class="abt" onclick="editDocLink(2)" title="Editar">Editar</button>
     <button class="abt" onclick="delDocLink(2)" title="Excluir">Excluir</button>
   </div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-    <a href="https://docs.google.com/document/d/1GNazrOMZ4GSSpKDpvj1TSdahy7RSv_KM6HxJz8zRt6c/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">📄 Modelo Sanepar</a>
+    <a href="https://docs.google.com/document/d/1GNazrOMZ4GSSpKDpvj1TSdahy7RSv_KM6HxJz8zRt6c/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">Modelo Sanepar</a>
     <button class="abt" onclick="editDocLink(3)" title="Editar">Editar</button>
     <button class="abt" onclick="delDocLink(3)" title="Excluir">Excluir</button>
   </div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-    <a href="https://docs.google.com/document/d/1CzB--Yf6N9n4917GYFL99pTJ08kY3LFL/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">📄 Recibo Devolução de Caução</a>
+    <a href="https://docs.google.com/document/d/1CzB--Yf6N9n4917GYFL99pTJ08kY3LFL/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">Recibo Devolução de Caução</a>
     <button class="abt" onclick="editDocLink(4)" title="Editar">Editar</button>
     <button class="abt" onclick="delDocLink(4)" title="Excluir">Excluir</button>
   </div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-    <a href="https://docs.google.com/document/d/142y4_ZtRX4OVKClZcUtswQkCvdDhLnp1/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">📄 Confissão de Dívidas</a>
+    <a href="https://docs.google.com/document/d/142y4_ZtRX4OVKClZcUtswQkCvdDhLnp1/edit" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">Confissão de Dívidas</a>
     <button class="abt" onclick="editDocLink(5)" title="Editar">Editar</button>
     <button class="abt" onclick="delDocLink(5)" title="Excluir">Excluir</button>
   </div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-    <a href="https://drive.google.com/drive/folders/1SVEtI37UCKQATDL2Sv1AxmGAU5EGnn1d" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">📁 Modelos de Notificações</a>
+    <a href="https://drive.google.com/drive/folders/1SVEtI37UCKQATDL2Sv1AxmGAU5EGnn1d" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">Modelos de Notificações</a>
     <button class="abt" onclick="editDocLink(6)" title="Editar">Editar</button>
     <button class="abt" onclick="delDocLink(6)" title="Excluir">Excluir</button>
   </div><div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-    <a href="https://drive.google.com/drive/folders/1vDpmgJvOyB2hXTa8_7VxcJs37wMZw4o5" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">📁 Modelos Pedidos do Imóvel</a>
+    <a href="https://drive.google.com/drive/folders/1vDpmgJvOyB2hXTa8_7VxcJs37wMZw4o5" target="_blank" class="btn btn-o btn-sm" style="flex:1;text-align:left">Modelos Pedidos do Imóvel</a>
     <button class="abt" onclick="editDocLink(7)" title="Editar">Editar</button>
     <button class="abt" onclick="delDocLink(7)" title="Excluir">Excluir</button>
   </div></div>
       </div>
       <div id="modelos-list"><div class="tw" style="margin-bottom:10px" id="mod-card-0">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-0" style="font-weight:700;font-size:12px;color:var(--p);flex:1">🔹 Rescisão com Multa — Proprietário</div>
-      <input id="mod-tit-0" value="🔹 Rescisão com Multa — Proprietário" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(0)">
+      <div id="mod-tit-view-0" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Rescisão com Multa — Proprietário</div>
+      <input id="mod-tit-0" value="Rescisão com Multa — Proprietário" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(0)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-0" onclick="toggleModEdit(0)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-0" onclick="copyModText(0)">Copiar</button>
@@ -853,8 +852,8 @@ td.ora{color:var(--o);font-weight:600}
     <textarea id="mod-txt-0" rows="7" style="width:100%;padding:12px 14px;border:none;border-top:1px solid var(--bd);font-family:inherit;font-size:11.5px;line-height:1.6;resize:vertical;outline:none;background:#fffbeb;display:none" onchange="saveModelo(0)">Prezado(a) proprietário(a), informamos que o locatário [nome], do imóvel [endereço + código], comunicou a desocupação antecipada, caracterizando rescisão contratual com multa. Já iniciamos o processo de encerramento e, paralelamente, nosso setor comercial está cuidando da nova locação, com a divulgação do imóvel em nossos canais e atendimento aos interessados. Assim que o levantamento financeiro e a vistoria final estiverem concluídos, repassaremos o demonstrativo de valores e repasse. Seguiremos acompanhando de perto cada etapa, garantindo que tudo ocorra da forma mais organizada e transparente possível. 🤝</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-1">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-1" style="font-weight:700;font-size:12px;color:var(--p);flex:1">🔹 Carta 30 Dias — Contrato Indeterminado</div>
-      <input id="mod-tit-1" value="🔹 Carta 30 Dias — Contrato Indeterminado" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(1)">
+      <div id="mod-tit-view-1" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Carta 30 Dias — Contrato Indeterminado</div>
+      <input id="mod-tit-1" value="Carta 30 Dias — Contrato Indeterminado" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(1)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-1" onclick="toggleModEdit(1)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-1" onclick="copyModText(1)">Copiar</button>
@@ -866,8 +865,8 @@ td.ora{color:var(--o);font-weight:600}
     <textarea id="mod-txt-1" rows="7" style="width:100%;padding:12px 14px;border:none;border-top:1px solid var(--bd);font-family:inherit;font-size:11.5px;line-height:1.6;resize:vertical;outline:none;background:#fffbeb;display:none" onchange="saveModelo(1)">Prezado(a) proprietário(a), o locatário [nome], do imóvel [endereço + código], comunicou a intenção de desocupar o imóvel em 30 dias. Como o contrato encontra-se por prazo indeterminado, não há multa rescisória, apenas o aviso prévio. Já iniciamos os trâmites de rescisão e nosso setor comercial está cuidando para divulgar e reposicionar o imóvel o quanto antes. Durante esse período, acompanharemos todas as etapas da desocupação, incluindo vistoria e levantamento final, para garantir uma transição tranquila e segura. Quando finalizarmos com o inquilino, estaremos lhe encaminhando o extrato do repasse final. Qualquer dúvida, fico à disposição. 🤝</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-2">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-2" style="font-weight:700;font-size:12px;color:var(--p);flex:1">🔹 Carta 30 Dias — Aniversário de Contrato</div>
-      <input id="mod-tit-2" value="🔹 Carta 30 Dias — Aniversário de Contrato" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(2)">
+      <div id="mod-tit-view-2" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Carta 30 Dias — Aniversário de Contrato</div>
+      <input id="mod-tit-2" value="Carta 30 Dias — Aniversário de Contrato" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(2)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-2" onclick="toggleModEdit(2)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-2" onclick="copyModText(2)">Copiar</button>
@@ -879,8 +878,8 @@ td.ora{color:var(--o);font-weight:600}
     <textarea id="mod-txt-2" rows="7" style="width:100%;padding:12px 14px;border:none;border-top:1px solid var(--bd);font-family:inherit;font-size:11.5px;line-height:1.6;resize:vertical;outline:none;background:#fffbeb;display:none" onchange="saveModelo(2)">Prezado(a) proprietário(a), informamos que o locatário [nome], do imóvel [endereço + código], comunicou a intenção de desocupação em 30 dias, conforme previsto no aniversário contratual, sem multa rescisória. Já iniciamos os trâmites de rescisão e nosso setor comercial está cuidando para divulgar e reposicionar o imóvel o quanto antes. Durante esse período, acompanharemos todas as etapas da desocupação, incluindo vistoria e levantamento final, para garantir uma transição tranquila e segura. Quando finalizarmos com o inquilino, estaremos lhe encaminhando o extrato do repasse final. Qualquer dúvida, fico à disposição. 🤝</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-3">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-3" style="font-weight:700;font-size:12px;color:var(--p);flex:1">🏡 Contrato Residencial — 12 Meses (Inquilino)</div>
-      <input id="mod-tit-3" value="🏡 Contrato Residencial — 12 Meses (Inquilino)" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(3)">
+      <div id="mod-tit-view-3" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Contrato Residencial — 12 Meses (Inquilino)</div>
+      <input id="mod-tit-3" value="Contrato Residencial — 12 Meses (Inquilino)" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(3)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-3" onclick="toggleModEdit(3)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-3" onclick="copyModText(3)">Copiar</button>
@@ -892,8 +891,8 @@ td.ora{color:var(--o);font-weight:600}
     <textarea id="mod-txt-3" rows="7" style="width:100%;padding:12px 14px;border:none;border-top:1px solid var(--bd);font-family:inherit;font-size:11.5px;line-height:1.6;resize:vertical;outline:none;background:#fffbeb;display:none" onchange="saveModelo(3)">Seu contrato ainda está dentro do prazo determinado, e a saída neste momento gera multa proporcional aos meses restantes. Caso opte pela quebra contratual o valor da multa rescisória será do seguinte valor: .... Se preferir aguardar o término do prazo que será em .............., poderá sair sem multa. Caso ultrapasse o último dia da finalização do contrato deverá fazer a carta para a saída nos próximos 30 dias. Após esse período, o contrato passa a ser indeterminado, mantendo apenas a exigência obrigatória do aviso prévio para desocupação. O que me diz? Prefere que eu calcule a multa ou deseja já deixar programado o aviso sem custo para o período correto?</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-4">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-4" style="font-weight:700;font-size:12px;color:var(--p);flex:1">🏡 Contrato Residencial — 36 Meses (Inquilino)</div>
-      <input id="mod-tit-4" value="🏡 Contrato Residencial — 36 Meses (Inquilino)" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(4)">
+      <div id="mod-tit-view-4" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Contrato Residencial — 36 Meses (Inquilino)</div>
+      <input id="mod-tit-4" value="Contrato Residencial — 36 Meses (Inquilino)" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(4)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-4" onclick="toggleModEdit(4)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-4" onclick="copyModText(4)">Copiar</button>
@@ -905,8 +904,8 @@ td.ora{color:var(--o);font-weight:600}
     <textarea id="mod-txt-4" rows="7" style="width:100%;padding:12px 14px;border:none;border-top:1px solid var(--bd);font-family:inherit;font-size:11.5px;line-height:1.6;resize:vertical;outline:none;background:#fffbeb;display:none" onchange="saveModelo(4)">Verificamos que o seu contrato está em prazo determinado, e os períodos de saída sem multa ocorrem nos aniversários de 12 e 24 meses, mediante aviso por carta com 30 dias de antecedência. Fora dessas datas, é aplicada multa rescisória proporcional aos meses restantes. Posso realizar o cálculo aproximado da multa para que possa avaliar. Caso opte pela quebra contratual o valor da multa rescisória será do seguinte valor: ..... Se preferir aguardar o período de aniversário contratual, poderá sair sem multa, bastando encaminhar o aviso até a data limite de: .......... O que me diz? Deseja que eu verifique o valor aproximado da multa ou prefere que já programe sua saída sem custo no próximo período possível?</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-5">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-5" style="font-weight:700;font-size:12px;color:var(--p);flex:1">🏡 Contrato Comercial — 36 e 12 Meses (Inquilino)</div>
-      <input id="mod-tit-5" value="🏡 Contrato Comercial — 36 e 12 Meses (Inquilino)" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(5)">
+      <div id="mod-tit-view-5" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Contrato Comercial — 36 e 12 Meses (Inquilino)</div>
+      <input id="mod-tit-5" value="Contrato Comercial — 36 e 12 Meses (Inquilino)" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(5)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-5" onclick="toggleModEdit(5)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-5" onclick="copyModText(5)">Copiar</button>
@@ -918,8 +917,8 @@ td.ora{color:var(--o);font-weight:600}
     <textarea id="mod-txt-5" rows="7" style="width:100%;padding:12px 14px;border:none;border-top:1px solid var(--bd);font-family:inherit;font-size:11.5px;line-height:1.6;resize:vertical;outline:none;background:#fffbeb;display:none" onchange="saveModelo(5)">Seu contrato ainda está dentro do prazo determinado, e a saída neste momento gera multa proporcional aos meses restantes. Caso opte pela quebra contratual o valor da multa rescisória será do seguinte valor: .... Se preferir aguardar o término do prazo que será em .............., poderá sair sem multa. Caso ultrapasse o último dia da finalização do contrato deverá fazer a carta para a saída nos próximos 30 dias. Após esse período, o contrato passa a ser indeterminado, mantendo apenas a exigência obrigatória do aviso prévio para desocupação. O que me diz? Prefere que eu calcule a multa ou deseja já deixar programado o aviso sem custo para o período correto?</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-6">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-6" style="font-weight:700;font-size:12px;color:var(--p);flex:1">🏡 Contrato Indeterminado — Carta de Aviso (Inquilino)</div>
-      <input id="mod-tit-6" value="🏡 Contrato Indeterminado — Carta de Aviso (Inquilino)" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(6)">
+      <div id="mod-tit-view-6" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Contrato Indeterminado — Carta de Aviso (Inquilino)</div>
+      <input id="mod-tit-6" value="Contrato Indeterminado — Carta de Aviso (Inquilino)" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(6)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-6" onclick="toggleModEdit(6)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-6" onclick="copyModText(6)">Copiar</button>
@@ -935,8 +934,8 @@ td.ora{color:var(--o);font-weight:600}
 💡 Agende a vistoria entre 5 e 10 dias antes do fim da carta, assim conseguimos verificar possíveis manutenções, pintura e débitos com tranquilidade, evitando custos extras. Ou se preferir, podemos cuidar de tudo com nossos prestadores parceiros.</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-7">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-7" style="font-weight:700;font-size:12px;color:var(--p);flex:1">📋 Procedimento ao Inquilino — Após Informar Saída</div>
-      <input id="mod-tit-7" value="📋 Procedimento ao Inquilino — Após Informar Saída" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(7)">
+      <div id="mod-tit-view-7" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Procedimento ao Inquilino — Após Informar Saída</div>
+      <input id="mod-tit-7" value="Procedimento ao Inquilino — Após Informar Saída" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(7)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-7" onclick="toggleModEdit(7)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-7" onclick="copyModText(7)">Copiar</button>
@@ -964,8 +963,8 @@ td.ora{color:var(--o);font-weight:600}
 💡 Recomendamos acertar conosco para execução e liberação rápida.</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-8">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-8" style="font-weight:700;font-size:12px;color:var(--p);flex:1">💧 Desligamentos — Texto ao Inquilino</div>
-      <input id="mod-tit-8" value="💧 Desligamentos — Texto ao Inquilino" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(8)">
+      <div id="mod-tit-view-8" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Desligamentos — Texto ao Inquilino</div>
+      <input id="mod-tit-8" value="Desligamentos — Texto ao Inquilino" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(8)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-8" onclick="toggleModEdit(8)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-8" onclick="copyModText(8)">Copiar</button>
@@ -989,8 +988,8 @@ Condomínio: verificar eventuais débitos e taxa de mudança.
 Gás (se houver): solicitar desligamento e enviar foto do protocolo de encerramento + declaração de inexistência de débitos.</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-9">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-9" style="font-weight:700;font-size:12px;color:var(--p);flex:1">📱 Resposta Automática WhatsApp</div>
-      <input id="mod-tit-9" value="📱 Resposta Automática WhatsApp" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(9)">
+      <div id="mod-tit-view-9" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Resposta Automática WhatsApp</div>
+      <input id="mod-tit-9" value="Resposta Automática WhatsApp" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(9)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-9" onclick="toggleModEdit(9)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-9" onclick="copyModText(9)">Copiar</button>
@@ -1014,8 +1013,8 @@ Assim, já conseguimos lhe orientar da melhor forma e agilizar todo o processo! 
 Assim, já conseguimos lhe orientar da melhor forma e agilizar todo o processo! 😊🤝</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-10">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-10" style="font-weight:700;font-size:12px;color:var(--p);flex:1">📌 Repasse Final — Sem Residual de Condomínio</div>
-      <input id="mod-tit-10" value="📌 Repasse Final — Sem Residual de Condomínio" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(10)">
+      <div id="mod-tit-view-10" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Repasse Final — Sem Residual de Condomínio</div>
+      <input id="mod-tit-10" value="Repasse Final — Sem Residual de Condomínio" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(10)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-10" onclick="toggleModEdit(10)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-10" onclick="copyModText(10)">Copiar</button>
@@ -1033,8 +1032,8 @@ Nosso time de marketing e corretores já está atuando na divulgação do imóve
 Qualquer dúvida, fico à disposição!</textarea>
   </div><div class="tw" style="margin-bottom:10px" id="mod-card-11">
     <div style="padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <div id="mod-tit-view-11" style="font-weight:700;font-size:12px;color:var(--p);flex:1">📌 Repasse Final — Com Residual de Condomínio</div>
-      <input id="mod-tit-11" value="📌 Repasse Final — Com Residual de Condomínio" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(11)">
+      <div id="mod-tit-view-11" style="font-weight:700;font-size:12px;color:var(--p);flex:1">Repasse Final — Com Residual de Condomínio</div>
+      <input id="mod-tit-11" value="Repasse Final — Com Residual de Condomínio" style="font-weight:700;font-size:12px;border:1.5px solid var(--bd);border-radius:5px;padding:3px 8px;flex:1;outline:none;color:var(--p);display:none" onchange="saveModelo(11)">
       <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn btn-p btn-sm" id="mod-edit-btn-11" onclick="toggleModEdit(11)">Editar</button>
         <button class="btn btn-o btn-sm" id="mod-copy-btn-11" onclick="copyModText(11)">Copiar</button>
@@ -1059,14 +1058,14 @@ Qualquer dúvida, fico à disposição!</textarea>
     <div class="page" id="page-config">
       <div style="max-width:640px">
         <div class="set-item">
-          <div style="font-weight:600;margin-bottom:8px">🏠 Nome da Imobiliária</div>
+          <div style="font-weight:600;margin-bottom:8px">Nome da Imobiliária</div>
           <div style="display:flex;gap:8px">
             <input class="si" id="cfg-nm" style="flex:1" placeholder="Nome...">
             <button class="btn btn-p btn-sm" onclick="salNome()">Salvar</button>
           </div>
         </div>
         <div class="set-item">
-          <div style="font-weight:600;margin-bottom:4px">👤 Responsáveis — Rescisão</div>
+          <div style="font-weight:600;margin-bottom:4px">Responsáveis — Rescisão</div>
           <div class="tag-list" id="resp-resc"><div class="tag">Kamile<button class="tag-del" onclick="delResp(&#39;resc&#39;,&#39;Kamile&#39;)">×</button></div><div class="tag">Joslaine<button class="tag-del" onclick="delResp(&#39;resc&#39;,&#39;Joslaine&#39;)">×</button></div><div class="tag">Débora<button class="tag-del" onclick="delResp(&#39;resc&#39;,&#39;Débora&#39;)">×</button></div><div class="tag">Ana Fernanda<button class="tag-del" onclick="delResp(&#39;resc&#39;,&#39;Ana Fernanda&#39;)">×</button></div><div class="tag">Patrick<button class="tag-del" onclick="delResp(&#39;resc&#39;,&#39;Patrick&#39;)">×</button></div></div>
           <div style="display:flex;gap:6px;margin-top:8px">
             <input class="si" id="new-resp" placeholder="Nome..." style="width:200px">
@@ -1074,7 +1073,7 @@ Qualquer dúvida, fico à disposição!</textarea>
           </div>
         </div>
         <div class="set-item">
-          <div style="font-weight:600;margin-bottom:4px">🔧 Prestadores — Manutenção</div>
+          <div style="font-weight:600;margin-bottom:4px">Prestadores — Manutenção</div>
           <div class="tag-list" id="resp-manut"><div class="tag">Tiago<button class="tag-del" onclick="delResp(&#39;manut&#39;,&#39;Tiago&#39;)">×</button></div><div class="tag">Reverton<button class="tag-del" onclick="delResp(&#39;manut&#39;,&#39;Reverton&#39;)">×</button></div></div>
           <div style="display:flex;gap:6px;margin-top:8px">
             <input class="si" id="new-prest" placeholder="Nome..." style="width:200px">
@@ -1082,7 +1081,7 @@ Qualquer dúvida, fico à disposição!</textarea>
           </div>
         </div>
         <div class="set-item">
-          <div style="font-weight:600;margin-bottom:4px">🔍 Vistoriadores</div>
+          <div style="font-weight:600;margin-bottom:4px">Vistoriadores</div>
           <div class="tag-list" id="resp-vist"><div class="tag">Eduardo<button class="tag-del" onclick="delResp(&#39;vist&#39;,&#39;Eduardo&#39;)">×</button></div><div class="tag">Gabriel<button class="tag-del" onclick="delResp(&#39;vist&#39;,&#39;Gabriel&#39;)">×</button></div></div>
           <div style="display:flex;gap:6px;margin-top:8px">
             <input class="si" id="new-vist" placeholder="Nome..." style="width:200px">
@@ -1090,7 +1089,7 @@ Qualquer dúvida, fico à disposição!</textarea>
           </div>
         </div>
         <div class="set-item" style="flex-direction:column;align-items:flex-start">
-          <div style="font-weight:600;margin-bottom:8px">📅 Anos</div>
+          <div style="font-weight:600;margin-bottom:8px">Anos</div>
           <div class="tag-list" id="anos-list"><div onclick="setAno(2026)" style="cursor:pointer;padding:8px 16px;border-radius:8px;border:2px solid var(--g);background:#dcfce7;font-size:14px;font-weight:700;color:var(--g);display:flex;align-items:center;gap:6px">
         2026<span style="font-size:10px;font-weight:700;color:var(--g)">● ativo</span>
         <button onclick="event.stopPropagation();delAno(2026)" style="background:none;border:none;cursor:pointer;color:var(--tl);font-size:14px;padding:0 2px">×</button>
@@ -1101,7 +1100,7 @@ Qualquer dúvida, fico à disposição!</textarea>
           <button class="btn btn-p btn-sm" style="margin-top:8px" onclick="addAno()">+ Novo Ano</button>
         </div>
         <div class="set-item" style="flex-direction:column;align-items:flex-start">
-          <div style="font-weight:600;margin-bottom:6px">📆 Meses de Referência
+          <div style="font-weight:600;margin-bottom:6px">Meses de Referência
             <span style="font-size:10px;font-weight:400;color:var(--tl);margin-left:6px">Clique para ativar. Itens do mês anterior não concluídos ficam em ⚠️ vermelho.</span>
           </div>
           <div style="font-size:11px;color:var(--tl);margin-bottom:8px">Mês ativo: <b id="mes-ativo-label" style="color:var(--pl)">Todos (2026)</b></div>
@@ -1174,7 +1173,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- ========== CHECKLIST PANEL ========== -->
 <div class="spanel" id="cpanel">
   <div class="sph">
-    <div><div class="sph-t">📋 Checklist Rescisão</div><div class="sph-sub" id="cp-cod">-</div></div>
+    <div><div class="sph-t">Checklist Rescisão</div><div class="sph-sub" id="cp-cod">-</div></div>
     <button class="spclose" onclick="closeCP()">✕</button>
   </div>
   <div class="spbody" id="cp-body"></div>
@@ -1203,7 +1202,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- MANUTENÇÃO DETAIL PANEL -->
 <div class="spanel" id="manpanel">
   <div class="sph">
-    <div><div class="sph-t" id="man-pan-tit">🔧 Manutenções</div><div class="sph-sub" id="man-pan-sub">-</div></div>
+    <div><div class="sph-t" id="man-pan-tit">Manutenções</div><div class="sph-sub" id="man-pan-sub">-</div></div>
     <button class="spclose" onclick="closeManPanel()">✕</button>
   </div>
   <div class="spbody" id="man-pan-body"></div>
@@ -1218,7 +1217,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- NOVA RESCISÃO -->
 <div class="overlay" id="m-resc" style="display: none;" onclick="if(event.target===this)closeM(&#39;m-resc&#39;)">
 <div class="modal wide">
-<div class="mhd"><span id="m-resc-tit">🏠 Nova Rescisão</span><button class="spclose" onclick="closeM(&#39;m-resc&#39;)">✕</button></div>
+<div class="mhd"><span id="m-resc-tit">Nova Rescisão</span><button class="spclose" onclick="closeM(&#39;m-resc&#39;)">✕</button></div>
 <div class="mbd">
   <div class="sdiv">Identificação</div>
   <div class="fr3">
@@ -1246,7 +1245,7 @@ Qualquer dúvida, fico à disposição!</textarea>
   </div>
   <!-- CARTA 30 DIAS specific dates -->
   <div id="carta-fields" style="display: block; background: rgb(255, 251, 235); border: 1.5px solid var(--acc); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-    <div style="font-size:11px;font-weight:700;color:var(--y);margin-bottom:10px">✉️ Datas da Carta 30 Dias — preenchidas aqui e sincronizadas automaticamente com Atenção › Cartas 30 dias</div>
+    <div style="font-size:11px;font-weight:700;color:var(--y);margin-bottom:10px">Datas da Carta 30 Dias — preenchidas aqui e sincronizadas automaticamente com Atenção › Cartas 30 dias</div>
     <div class="fr3">
       <div class="fg"><label>Data de Envio da Carta</label><input type="date" id="r-carta-envio" oninput="autoCalcCartaVenc()"></div>
       <div class="fg"><label>Data Final da Carta (30 dias — auto) ★</label><input type="date" id="r-carta-venc"></div>
@@ -1282,8 +1281,8 @@ Qualquer dúvida, fico à disposição!</textarea>
   </div>
   <div class="sdiv">Chaves e Motivo</div>
   <div class="fr" style="margin-bottom:10px">
-    <div class="fg"><label>🔑 Chaves — Observações</label><input id="r-chv-sta" placeholder="Ex: Entregues em 10/06, com locador, 2 cópias..."></div>
-    <div class="fg"><label>📝 Motivo da Desocupação</label><input id="r-motivo" placeholder="Escreva o motivo manualmente..."></div>
+    <div class="fg"><label>Chaves — Observações</label><input id="r-chv-sta" placeholder="Ex: Entregues em 10/06, com locador, 2 cópias..."></div>
+    <div class="fg"><label>Motivo da Desocupação</label><input id="r-motivo" placeholder="Escreva o motivo manualmente..."></div>
   </div>
   <div class="sdiv">Forma de Pagamento</div>
   <div class="fr">
@@ -1324,20 +1323,20 @@ Qualquer dúvida, fico à disposição!</textarea>
   </div>
   <div class="sdiv">Utilities</div>
   <div class="fr3">
-    <div class="fg"><label>💧 Água</label><select id="r-agua">
+    <div class="fg"><label>Água</label><select id="r-agua">
       <option value="">-- Selecionar --</option>
       <option value="sanepar-pend">Sanepar — desligar (pendente)</option>
       <option value="sanepar-ok">Sanepar — desligada ✓</option>
       <option value="cond">Condomínio (não desliga) ✓</option>
       <option value="prop-nome">Água sem desligar — alterada para nome do proprietário ✓</option>
     </select></div>
-    <div class="fg"><label>⚡ Energia</label><select id="r-energ">
+    <div class="fg"><label>Energia</label><select id="r-energ">
       <option value="">-- Selecionar --</option>
       <option value="ind-ok">Individual — protocolo enviado ✓</option>
       <option value="ind-pend">Individual — pedir desligamento ⚠️</option>
       <option value="cond">Condomínio (não desliga) ✓</option>
     </select></div>
-    <div class="fg"><label>🔥 Gás</label><select id="r-gas">
+    <div class="fg"><label>Gás</label><select id="r-gas">
       <option value="">-- Selecionar --</option>
       <option value="cond">Gás cobrado junto com cond ✓</option>
       <option value="terc-ok">Empresa terceirizada — protocolo enviado ✓</option>
@@ -1356,7 +1355,7 @@ Qualquer dúvida, fico à disposição!</textarea>
     </select></div>
   </div>
   <div id="com-data-row" style="display: none; background: rgb(240, 253, 244); border: 1.5px solid var(--g); border-radius: 8px; padding: 10px; margin-bottom: 10px;">
-    <div style="font-size:11px;font-weight:700;color:var(--g);margin-bottom:8px">📢 Dados para Marketing — serão sincronizados automaticamente com Controles › Marketing</div>
+    <div style="font-size:11px;font-weight:700;color:var(--g);margin-bottom:8px">Dados para Marketing — serão sincronizados automaticamente com Controles › Marketing</div>
     <div class="fr3">
       <div class="fg"><label>Proprietário</label><input id="r-mkt-prop" placeholder="Nome do proprietário"></div>
       <div class="fg"><label>Contato WhatsApp</label><input id="r-mkt-con" placeholder="(xx) 9xxxx-xxxx"></div>
@@ -1371,7 +1370,7 @@ Qualquer dúvida, fico à disposição!</textarea>
   </div>
   <!-- SAIU DE LOCAÇÃO specific fields -->
   <div id="saiu-data-row" style="display: none; background: rgb(255, 247, 237); border: 1.5px solid var(--o); border-radius: 8px; padding: 10px; margin-bottom: 10px;">
-    <div style="font-size:11px;font-weight:700;color:var(--o);margin-bottom:8px">🚪 Dados para Saiu da Imob — sincronizados automaticamente</div>
+    <div style="font-size:11px;font-weight:700;color:var(--o);margin-bottom:8px">Dados para Saiu da Imob — sincronizados automaticamente</div>
     <div class="fr">
       <div class="fg"><label>Proprietário</label><input id="r-saiu-prop" placeholder="Nome do proprietário"></div>
       <div class="fg"><label>Motivo</label><input id="r-saiu-mot" placeholder="Ex: Locador vendeu, uso próprio..."></div>
@@ -1380,15 +1379,13 @@ Qualquer dúvida, fico à disposição!</textarea>
   <div class="fg" style="margin-bottom:10px"><label>Observação <span style="font-weight:400;color:var(--tl);font-size:10px">(aparece no Saiu da Imob quando aplicável)</span></label><textarea id="r-obs" rows="2"></textarea></div>
   <!-- MANUTENÇÃO / V.ANTECIP inline -->
   <div style="background:#f3e8ff;border:1.5px solid #a855f7;border-radius:8px;padding:12px;margin-bottom:0">
-    <div style="font-size:11px;font-weight:700;color:#6b21a8;margin-bottom:10px">🔧 Manutenção / V. Antecipação</div>
+    <div style="font-size:11px;font-weight:700;color:#6b21a8;margin-bottom:10px">Manutenção / V. Antecipação</div>
     <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
       <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;padding:6px 10px;border-radius:6px;border:1.5px solid #a855f7;background:#fff">
-        <input type="radio" name="r-man-tipo" value="manutencao" id="r-man-tipo-man" onchange="toggleRescManTipo()" style="accent-color:#a855f7">
-        🔧 Tem Manutenção
+        <input type="radio" name="r-man-tipo" value="manutencao" id="r-man-tipo-man" onchange="toggleRescManTipo()" style="accent-color:#a855f7">Tem Manutenção
       </label>
       <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;padding:6px 10px;border-radius:6px;border:1.5px solid #a855f7;background:#fff">
-        <input type="radio" name="r-man-tipo" value="vantecip" id="r-man-tipo-va" onchange="toggleRescManTipo()" style="accent-color:#a855f7">
-        🔍 Sem Manut. — só V. Antecip.
+        <input type="radio" name="r-man-tipo" value="vantecip" id="r-man-tipo-va" onchange="toggleRescManTipo()" style="accent-color:#a855f7">Sem Manut. — só V. Antecip.
       </label>
       <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;padding:6px 10px;border-radius:6px;border:1.5px solid var(--bd);background:#fff">
         <input type="radio" name="r-man-tipo" value="nenhum" id="r-man-tipo-nenhum" onchange="toggleRescManTipo()" checked="" style="accent-color:#a855f7">
@@ -1411,7 +1408,7 @@ Qualquer dúvida, fico à disposição!</textarea>
     </div>
     <!-- Campos só V. Antecipação (sem manutenção) -->
     <div id="r-va-fields" style="display:none;background:#ede9fe;border-radius:6px;padding:10px;margin-top:4px;">
-      <div style="font-size:11px;color:#6b21a8;font-weight:700;margin-bottom:8px">🔍 V. Antecip./Placa — vai para Controles &gt; V. Antecip. a Fazer</div>
+      <div style="font-size:11px;color:#6b21a8;font-weight:700;margin-bottom:8px">V. Antecip./Placa — vai para Controles &gt; V. Antecip. a Fazer</div>
       <div class="fr">
         <div class="fg"><label>Data V. Antecip./Placa</label><input type="date" id="r-va-dt"></div>
 <div class="fg"></div>
@@ -1428,7 +1425,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- MANUTENÇÃO -->
 <div class="overlay" id="m-man" style="display: none;" onclick="if(event.target===this)closeM(&#39;m-man&#39;)">
 <div class="modal">
-<div class="mhd"><span id="man-tit">🔧 Nova Manutenção</span><button class="spclose" onclick="closeM(&#39;m-man&#39;)">✕</button></div>
+<div class="mhd"><span id="man-tit">Nova Manutenção</span><button class="spclose" onclick="closeM(&#39;m-man&#39;)">✕</button></div>
 <div class="mbd">
   <div class="sdiv">Identificação</div>
   <div class="fr3">
@@ -1440,7 +1437,7 @@ Qualquer dúvida, fico à disposição!</textarea>
     <div class="fg"><label>Data Recebimento do Recibo</label><input type="date" id="mn-dt-rec"></div>
     <div class="fg"><label>Data V. Antecipação/Placa</label><input type="date" id="mn-dt-vist"></div>
   </div>
-  <p style="font-size:11px;color:var(--tl);background:#fef3c7;padding:7px 10px;border-radius:6px;margin-bottom:10px">💡 Após salvar, abra o 📋 para adicionar os itens de manutenção.</p>
+  <p style="font-size:11px;color:var(--tl);background:#fef3c7;padding:7px 10px;border-radius:6px;margin-bottom:10px">Após salvar, abra o 📋 para adicionar os itens de manutenção.</p>
   <div class="sdiv">Confirmações</div>
   <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:8px 0">
     <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
@@ -1460,7 +1457,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- SANEPAR -->
 <div class="overlay" id="m-san" style="display:none" onclick="if(event.target===this)closeM(&#39;m-san&#39;)">
 <div class="modal narrow">
-<div class="mhd"><span id="san-tit">💧 Desligamento Sanepar</span><button class="spclose" onclick="closeM(&#39;m-san&#39;)">✕</button></div>
+<div class="mhd"><span id="san-tit">Desligamento Sanepar</span><button class="spclose" onclick="closeM(&#39;m-san&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr3">
     <div class="fg"><label>Código *</label><input id="s-cod"></div>
@@ -1482,7 +1479,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- CARTÃO -->
 <div class="overlay" id="m-cart" style="display:none" onclick="if(event.target===this)closeM(&#39;m-cart&#39;)">
 <div class="modal narrow">
-<div class="mhd"><span id="cart-tit">💳 Cartão de Crédito</span><button class="spclose" onclick="closeM(&#39;m-cart&#39;)">✕</button></div>
+<div class="mhd"><span id="cart-tit">Cartão de Crédito</span><button class="spclose" onclick="closeM(&#39;m-cart&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr">
     <div class="fg"><label>Contrato *</label><input id="c-con"></div>
@@ -1501,7 +1498,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- CONFISSÃO -->
 <div class="overlay" id="m-conf" style="display:none" onclick="if(event.target===this)closeM(&#39;m-conf&#39;)">
 <div class="modal">
-<div class="mhd"><span id="conf-tit">📝 Confissão de Dívida</span><button class="spclose" onclick="closeM(&#39;m-conf&#39;)">✕</button></div>
+<div class="mhd"><span id="conf-tit">Confissão de Dívida</span><button class="spclose" onclick="closeM(&#39;m-conf&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr">
     <div class="fg"><label>Código *</label><input id="cf-cod"></div>
@@ -1556,7 +1553,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- CARTA 30 DIAS -->
 <div class="overlay" id="m-carta" style="display:none" onclick="if(event.target===this)closeM(&#39;m-carta&#39;)">
 <div class="modal">
-<div class="mhd"><span id="carta-tit">✉️ Carta 30 Dias</span><button class="spclose" onclick="closeM(&#39;m-carta&#39;)">✕</button></div>
+<div class="mhd"><span id="carta-tit">Carta 30 Dias</span><button class="spclose" onclick="closeM(&#39;m-carta&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr">
     <div class="fg"><label>Código *</label><input id="ct-cod"></div>
@@ -1588,7 +1585,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- INADIMPLENTE -->
 <div class="overlay" id="m-inad" style="display:none" onclick="if(event.target===this)closeM(&#39;m-inad&#39;)">
 <div class="modal narrow">
-<div class="mhd"><span id="inad-tit">⚠️ Inadimplente</span><button class="spclose" onclick="closeM(&#39;m-inad&#39;)">✕</button></div>
+<div class="mhd"><span id="inad-tit">Inadimplente</span><button class="spclose" onclick="closeM(&#39;m-inad&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr">
     <div class="fg"><label>Código *</label><input id="in-cod"></div>
@@ -1614,7 +1611,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- LOFT -->
 <div class="overlay" id="m-loft" style="display:none" onclick="if(event.target===this)closeM(&#39;m-loft&#39;)">
 <div class="modal narrow">
-<div class="mhd"><span id="loft-tit">🏢 Caso Loft</span><button class="spclose" onclick="closeM(&#39;m-loft&#39;)">✕</button></div>
+<div class="mhd"><span id="loft-tit">Caso Loft</span><button class="spclose" onclick="closeM(&#39;m-loft&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr">
     <div class="fg"><label>Código *</label><input id="l-cod"></div>
@@ -1634,7 +1631,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- SAIU DA IMOB -->
 <div class="overlay" id="m-saiu" style="display:none" onclick="if(event.target===this)closeM(&#39;m-saiu&#39;)">
 <div class="modal narrow">
-<div class="mhd"><span id="si-tit">🚪 Saiu da Imob</span><button class="spclose" onclick="closeM(&#39;m-saiu&#39;)">✕</button></div>
+<div class="mhd"><span id="si-tit">Saiu da Imob</span><button class="spclose" onclick="closeM(&#39;m-saiu&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr">
     <div class="fg"><label>Código *</label><input id="si-cod"></div>
@@ -1656,7 +1653,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- JURÍDICO MANUAL -->
 <div class="overlay" id="m-jur" style="display:none" onclick="if(event.target===this)closeM(&#39;m-jur&#39;)">
 <div class="modal narrow">
-<div class="mhd"><span>⚖️ Adicionar ao Jurídico</span><button class="spclose" onclick="closeM(&#39;m-jur&#39;)">✕</button></div>
+<div class="mhd"><span>Adicionar ao Jurídico</span><button class="spclose" onclick="closeM(&#39;m-jur&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr">
     <div class="fg"><label>Código do Contrato *</label><input id="ju-cod" placeholder="Ex: AP0123"></div>
@@ -1670,7 +1667,7 @@ Qualquer dúvida, fico à disposição!</textarea>
 <!-- AGENDA -->
 <div class="overlay" id="m-ag" style="display: none;" onclick="if(event.target===this)closeM(&#39;m-ag&#39;)">
 <div class="modal narrow">
-<div class="mhd"><span id="ag-tit">📅 Novo Compromisso</span><button class="spclose" onclick="closeM(&#39;m-ag&#39;)">✕</button></div>
+<div class="mhd"><span id="ag-tit">Novo Compromisso</span><button class="spclose" onclick="closeM(&#39;m-ag&#39;)">✕</button></div>
 <div class="mbd">
   <div class="fr">
     <div class="fg"><label>Código</label><input id="ag-cod" placeholder="ex: AP0001/1"></div>
@@ -1737,7 +1734,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
 <div id="admin-overlay" class="hidden">
   <div class="admin-card">
     <div class="admin-hdr">
-      <div class="admin-hdr-t">⚙️ Painel Administrativo</div>
+      <div class="admin-hdr-t">Painel Administrativo</div>
       <button class="admin-close" onclick="closeAdmin()">×</button>
     </div>
     <div class="admin-body">
@@ -2403,7 +2400,7 @@ function manCell(codigo){
     const resc=D().rescisoes.find(rx=>rx.codigo===codigo);
     if(resc&&resc.manTipo==='vantecip'&&resc.comercial!=='saiu'&&resc.status!=='Saiu da Imob')return'<td style="color:var(--g);font-size:10px;font-weight:600">Só v. antecipação</td>';
   if(resc&&(resc.comercial==='saiu'||resc.status==='Saiu da Imob'))return'<td style="color:var(--tl);font-size:10px">—</td>';
-    return'<td><span style="color:var(--g);font-size:10px;font-weight:600">✅ Sem manut.</span></td>';
+    return'<td><span style="color:var(--g);font-size:10px;font-weight:600">Sem manut.</span></td>';
   }
   // Separate real manutencoes from soVAntecip
   const realMans=mans.filter(m=>!m.soVAntecip);
@@ -2424,24 +2421,24 @@ function sbadge(s){
 // Água cell
 function aguaCell(v){
   if(!v)return'<td>—</td>';
-  if(v==='sanepar-pend')return'<td class="pend">💧 Sanepar desligar</td>';
-  if(v==='sanepar-ok')return'<td class="ok">💧 Sanepar ✓</td>';
-  if(v==='cond')return'<td class="ok">💧 Cond. ✓</td>';
+  if(v==='sanepar-pend')return'<td class="pend">Sanepar desligar</td>';
+  if(v==='sanepar-ok')return'<td class="ok">Sanepar ✓</td>';
+  if(v==='cond')return'<td class="ok">Cond. ✓</td>';
   return`<td>${v}</td>`;
 }
 function energCell(v){
   if(!v)return'<td>—</td>';
-  if(v==='ind-pend')return'<td class="pend">⚡ Protocolo pendente</td>';
-  if(v==='ind-ok')return'<td class="ok">⚡ Protocolo ✓</td>';
-  if(v==='cond')return'<td class="ok">⚡ Cond. ✓</td>';
+  if(v==='ind-pend')return'<td class="pend">Protocolo pendente</td>';
+  if(v==='ind-ok')return'<td class="ok">Protocolo ✓</td>';
+  if(v==='cond')return'<td class="ok">Cond. ✓</td>';
   return`<td>${v}</td>`;
 }
 function gasCell(v){
   if(!v)return'<td>—</td>';
-  if(v==='cond')return'<td class="ok">🔥 Cond. ✓</td>';
-  if(v==='terc-ok')return'<td class="ok">🔥 Protocolo ✓</td>';
-  if(v==='terc-pend')return'<td class="pend">🔥 Solicitar</td>';
-  if(v==='botijao')return'<td class="ok">🔥 Botijão ✓</td>';
+  if(v==='cond')return'<td class="ok">Cond. ✓</td>';
+  if(v==='terc-ok')return'<td class="ok">Protocolo ✓</td>';
+  if(v==='terc-pend')return'<td class="pend">Solicitar</td>';
+  if(v==='botijao')return'<td class="ok">Botijão ✓</td>';
   return`<td>${v}</td>`;
 }
 function comCell(v){
@@ -2643,7 +2640,7 @@ function rResc(){
     <td>
       <b style="color:var(--p)">${r.codigo}</b>
       ${resMes?`<span style="font-size:9px;color:var(--tl);display:block">${resMes}</span>`:''}
-      ${outraMes&&(hasManPend||r.status==='Em Andamento')?`<span class="badge br" style="font-size:9px;display:block;margin-top:1px">⚠️ mês ant.</span>`:''}
+      ${outraMes&&(hasManPend||r.status==='Em Andamento')?`<span class="badge br" style="font-size:9px;display:block;margin-top:1px">mês ant.</span>`:''}
     </td>
     <td>${r.inquilino||'-'}</td>
     <td><span class="badge bb" style="font-size:9px">${r.responsavel||'-'}</span></td>
@@ -2655,7 +2652,7 @@ function rResc(){
     ${aguaCell(r.agua)}
     ${energCell(r.energia)}
     ${gasCell(r.gas)}
-    <td>${(()=>{const isCT=r.tipoSaida==='Carta 30 dias - Aniversário'||r.tipoSaida==='Carta 30 dias - Indeterminado';const val=isCT?(r.cartaLocAvisado||r.propAvisado||'Não'):r.propAvisado;return val==='Sim'?'<span class="badge bg" style="font-size:10px">✅ Sim</span>':val==='Não'?'<span class="badge br" style="font-size:10px">✗ Não</span>':'<span style="color:var(--tl);font-size:11px">—</span>';})()}</td>
+    <td>${(()=>{const isCT=r.tipoSaida==='Carta 30 dias - Aniversário'||r.tipoSaida==='Carta 30 dias - Indeterminado';const val=isCT?(r.cartaLocAvisado||r.propAvisado||'Não'):r.propAvisado;return val==='Sim'?'<span class="badge bg" style="font-size:10px">Sim</span>':val==='Não'?'<span class="badge br" style="font-size:10px">✗ Não</span>':'<span style="color:var(--tl);font-size:11px">—</span>';})()}</td>
     ${comCell(r.comercial)}
     ${garantiaCell(r)}
     ${manCell(r.codigo)}
@@ -3257,7 +3254,7 @@ function rAg(){
     const k=agKey(a);
     const bgColor=concl?'#f0fdf4':isPast?'#fee2e2':isT?'#ffedd5':diff===1?'#fef9c3':'#fff';
     const borderColor=concl?'var(--g)':isPast?'var(--r)':isT?'var(--o)':diff===1?'var(--y)':'var(--pl)';
-    const diffLabel=concl?'<span class="badge bg" style="font-size:9px">✅ Concluído</span>':isPast?`<span class="badge br" style="font-size:9px">ATRASADO ${Math.abs(diff)}d</span>`:isT?'<span class="badge bo" style="font-size:9px">HOJE</span>':diff===1?'<span class="badge by" style="font-size:9px">AMANHÃ</span>':diff<=7?`<span class="badge bo" style="font-size:9px">${diff}d</span>`:`<span class="badge bg" style="font-size:9px">${diff}d</span>`;
+    const diffLabel=concl?'<span class="badge bg" style="font-size:9px">Concluído</span>':isPast?`<span class="badge br" style="font-size:9px">ATRASADO ${Math.abs(diff)}d</span>`:isT?'<span class="badge bo" style="font-size:9px">HOJE</span>':diff===1?'<span class="badge by" style="font-size:9px">AMANHÃ</span>':diff<=7?`<span class="badge bo" style="font-size:9px">${diff}d</span>`:`<span class="badge bg" style="font-size:9px">${diff}d</span>`;
     return`<div class="ai" style="border-left-color:${borderColor};background:${bgColor};${concl?'opacity:.7':''}">
       <div class="adt"><div class="ady">${dv.getDate()}</div><div class="adm">${dv.toLocaleDateString('pt-BR',{month:'short'})}</div></div>
       <div style="flex:1">
@@ -3539,7 +3536,7 @@ function rConf(){
     <td class="${cf.locatario==='Sim'?'ok':'pend'}">${cf.locatario==='Sim'?'✅':'Pend.'}</td>
     <td class="${cf.fiadores==='Sim'?'ok':cf.fiadores==='N/A'?'':'pend'}">${cf.fiadores==='N/A'?'N/A':cf.fiadores==='Sim'?'✅':'Pend.'}</td>
     <td>${(cf.boletos||[]).map((b,i)=>`<span class="badge ${b.pago==='Sim'?'bg':'bo'}" style="margin:1px;font-size:9px">B${i+1}:${fd(b.venc)}</span>`).join('')||'-'}</td>
-    <td>${done?'<span class="badge bg">✅ Quitado</span>':sbadge(cf.status)}</td>
+    <td>${done?'<span class="badge bg">Quitado</span>':sbadge(cf.status)}</td>
     <td><div class="abts">
       <button class="abt" onclick="editConf('${cf.id}')">Editar</button>
       <button class="abt" onclick="delR('confissao','${cf.id}')">Excluir</button>
@@ -3582,8 +3579,8 @@ function setMT(t,i){manutTab=t;document.querySelectorAll('#mtabs .tab').forEach(
 function selConcl(m){
   return `<select onchange="acaoConcluida('${m.id}',this.value);this.value='ativo'" title="Destino do imóvel" style="font-size:10px;padding:3px 5px;border:1.5px solid #a855f7;border-radius:5px;background:#faf5ff;color:#6b21a8;cursor:pointer;font-weight:600">
     <option value="ativo" selected>Ativo, sem locação</option>
-    <option value="alugado">🏠 Imóvel alugado</option>
-    <option value="saiu">🚪 Saiu da Imob</option>
+    <option value="alugado">Imóvel alugado</option>
+    <option value="saiu">Saiu da Imob</option>
   </select>`;
 }
 function acaoConcluida(id,acao){
@@ -3707,8 +3704,8 @@ function rMan(){
         <td>—</td>
         <td><button onclick="togManVA('${m.id}')" style="border:none;background:none;cursor:pointer;font-size:18px" title="V. Antecip. Concluída">${m.vaOk?'✅':'⬜'}</button></td>
         <td>—</td>
-        <td>${m.alugado?`<span class="badge bg" style="font-size:9px">🏠 Alugado${m.alugadoDt?' '+fd(m.alugadoDt):''}</span>`:m.vaOk?sbadge('Concluído'):sbadge('Pendente')}</td>
-        <td><div class="abts">${manutTab==='a'?`<button class="btn btn-sm" style="background:#fef3c7;color:#92400e;font-size:10px;padding:3px 8px;border:1px solid #d97706" onclick="reverterAlugado('${m.id}')">↩ Voltar p/ Concluídas</button>`:manutTab==='c'?selConcl(m)+`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px;border:1px solid #16a34a" onclick="reabrirVA('${m.id}')">↩ Reabrir</button>`:`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="concluirVA('${m.id}')">✅ Concluir</button>`}<button class="abt" onclick="delR('manutencoes','${m.id}')">Excluir</button></div></td>
+        <td>${m.alugado?`<span class="badge bg" style="font-size:9px">Alugado${m.alugadoDt?' '+fd(m.alugadoDt):''}</span>`:m.vaOk?sbadge('Concluído'):sbadge('Pendente')}</td>
+        <td><div class="abts">${manutTab==='a'?`<button class="btn btn-sm" style="background:#fef3c7;color:#92400e;font-size:10px;padding:3px 8px;border:1px solid #d97706" onclick="reverterAlugado('${m.id}')">Voltar p/ Concluídas</button>`:manutTab==='c'?selConcl(m)+`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px;border:1px solid #16a34a" onclick="reabrirVA('${m.id}')">Reabrir</button>`:`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="concluirVA('${m.id}')">Concluir</button>`}<button class="abt" onclick="delR('manutencoes','${m.id}')">Excluir</button></div></td>
       </tr>`;
     }
     const rescForMan=D().rescisoes.find(rx=>rx.codigo===m.codigo);
@@ -3734,9 +3731,9 @@ function rMan(){
       <td><button onclick="togManRec('${m.id}')" style="border:none;background:none;cursor:pointer;font-size:16px">${m.recibo?'✅':'⬜'}</button></td>
       <td>${saiuLocacao?'<span style="color:var(--tl)">—</span>':`<button onclick="togManVA('${m.id}')" style="border:none;background:none;cursor:pointer;font-size:16px" title="V. Antecip. Concluída">${m.vaOk?'✅':'⬜'}</button>`}</td>
       <td><button onclick="togManPago('${m.id}')" style="border:none;background:none;cursor:pointer;font-size:16px">${m.pago?'✅':'⬜'}</button></td>
-      <td>${m.alugado?`<span class="badge bg" style="font-size:9px">🏠 Alugado${m.alugadoDt?' '+fd(m.alugadoDt):''}</span>`:sbadge(m.status||'Pendente')}</td>
+      <td>${m.alugado?`<span class="badge bg" style="font-size:9px">Alugado${m.alugadoDt?' '+fd(m.alugadoDt):''}</span>`:sbadge(m.status||'Pendente')}</td>
       <td><div class="abts">
-        ${manutTab==='a'?`<button class="btn btn-sm" style="background:#fef3c7;color:#92400e;font-size:10px;padding:3px 8px;border:1px solid #d97706" onclick="reverterAlugado('${m.id}')">↩ Voltar p/ Concluídas</button>`:manutTab==='va'?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="concluirVA('${m.id}')">✅ Concluir</button>`:manutTab==='c'?selConcl(m)+`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px;border:1px solid #16a34a" onclick="reabrirVA('${m.id}')">↩ Reabrir</button>`:''}
+        ${manutTab==='a'?`<button class="btn btn-sm" style="background:#fef3c7;color:#92400e;font-size:10px;padding:3px 8px;border:1px solid #d97706" onclick="reverterAlugado('${m.id}')">Voltar p/ Concluídas</button>`:manutTab==='va'?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="concluirVA('${m.id}')">Concluir</button>`:manutTab==='c'?selConcl(m)+`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px;border:1px solid #16a34a" onclick="reabrirVA('${m.id}')">Reabrir</button>`:''}
         <button class="abt" onclick="openManPanel('${m.id}')" title="Itens / Detalhes">📋</button>
         <button class="abt" onclick="editMan('${m.id}')">Editar</button>
         <button class="abt" onclick="delR('manutencoes','${m.id}')">Excluir</button>
@@ -4016,7 +4013,7 @@ function rSan(){
     <td><div class="abts">
       ${s.status==='Desligado'
         ?`<button class="abt" onclick="togSan('${s.id}')" title="Reabrir">↩</button>`
-        :`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="togSan('${s.id}')">✅ Concluir</button>`
+        :`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="togSan('${s.id}')">Concluir</button>`
       }
       <button class="abt" onclick="editSan('${s.id}')">Editar</button>
       <button class="abt" onclick="delR('sanepar','${s.id}')">Excluir</button>
@@ -4076,8 +4073,8 @@ function rMkt(){
     <td>
       <span style="color:var(--tl);font-size:10px">${idx+1}</span>
       <b style="color:var(--p);display:block">${m.codigo}</b>
-      ${(m.mktAvisado==='Sim'||m.tiekoAvisado==='Sim')?'<span class="badge bg" style="font-size:9px">✅ Imóvel liberado</span>':'<span class="badge bo" style="font-size:9px">🟠 Liberação em breve</span>'}
-      ${done?'<span class="badge bg" style="font-size:9px">✅ Concluído</span>':''}
+      ${(m.mktAvisado==='Sim'||m.tiekoAvisado==='Sim')?'<span class="badge bg" style="font-size:9px">Imóvel liberado</span>':'<span class="badge bo" style="font-size:9px">Liberação em breve</span>'}
+      ${done?'<span class="badge bg" style="font-size:9px">Concluído</span>':''}
     </td>
     <td>${m.proprietario||'-'}</td><td>${m.contato||'-'}</td>
     <td><b>${fm(m.aluguel)}</b></td><td>${m.cond||'-'}</td><td>${m.agua||'-'}</td><td>${m.energia||'-'}</td><td>${m.iptu||'-'}</td>
@@ -4089,7 +4086,7 @@ function rMkt(){
       ${(m.fotos==='Feitas'||m.fotos==='Recebidas'||m.fotos==='Não tem')?'✅':'⬜'}</button></td>
     <td>${m.ativDt?`<span style="font-size:11px">${fd(m.ativDt)}</span>`:'<span style="color:var(--tl);font-size:10px">—</span>'}<br><span style="font-size:9px;color:var(--tl)">${m.data?fd(m.data):''}</span></td>
     <td><div class="abts">
-      ${!done?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="arquivarMkt('${m.id}')" title="Marcar como concluído manualmente">✅ Concluído</button>`:`<button class="abt" onclick="desarquivarMkt('${m.id}')" title="Reabrir">↩</button>`}
+      ${!done?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="arquivarMkt('${m.id}')" title="Marcar como concluído manualmente">Concluído</button>`:`<button class="abt" onclick="desarquivarMkt('${m.id}')" title="Reabrir">↩</button>`}
       <button class="abt" onclick="editMkt('${m.id}')">Editar</button>
       <button class="abt" onclick="delR('marketing','${m.id}')">Excluir</button>
     </div></td>
@@ -4199,7 +4196,7 @@ function rCartas(){
         <div style="font-size:12px;font-weight:600;${concl?'text-decoration:line-through;color:var(--tl)':''}">${c.codigo} · ${c.inquilino||'Inquilino'}</div>
         <div style="font-size:11px;color:var(--tl)">Tipo: ${c.tipo} · Resp.: ${c.responsavel||'-'}</div>
         <div class="atags">
-          ${concl?'<span class="badge bg" style="font-size:9px">✅ Concluída</span>':(venc?'<span class="badge br">🚨 VENCIDA</span>':urg?`<span class="badge bo">⚠️ ${diff}d</span>`:`<span class="badge bg">✅ ${diff}d</span>`)}
+          ${concl?'<span class="badge bg" style="font-size:9px">Concluída</span>':(venc?'<span class="badge br">VENCIDA</span>':urg?`<span class="badge bo">⚠️ ${diff}d</span>`:`<span class="badge bg">✅ ${diff}d</span>`)}
           <span class="badge bb" style="font-size:9px">Etapa: ${etapa}</span>
           ${c.notData?`<span class="badge bgy" style="font-size:9px">Aviso: ${fd(c.notData)}</span>`:''}
           ${c.vistoria?`<span class="badge bgy" style="font-size:9px">Vist: ${fd(c.vistoria)}</span>`:''}
@@ -4210,7 +4207,7 @@ function rCartas(){
       <div class="abts">
         ${concl
           ?`<button class="abt" onclick="togCartaConcl('${c.id}')" title="Reabrir">↩</button>`
-          :`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="togCartaConcl('${c.id}')">✅ Concluir</button>`
+          :`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="togCartaConcl('${c.id}')">Concluir</button>`
         }
         <button class="abt" onclick="editCarta('${c.id}')">Editar</button>
         <button class="abt" onclick="delR('cartas','${c.id}')">Excluir</button>
@@ -4267,7 +4264,7 @@ function rInad(){
     <div style="flex:1">${center}</div>
     <div style="flex-shrink:0">${rightBtn}</div>
   </div>`;
-  const pagoTag='<span class="badge bg" style="font-size:10px">✅ Pago</span>';
+  const pagoTag='<span class="badge bg" style="font-size:10px">Pago</span>';
 
   let html='';
 
@@ -4282,7 +4279,7 @@ function rInad(){
       return card(pago,'var(--r)',
         `<b style="color:var(--p)">${r.codigo}</b><div style="font-size:9px;color:var(--tl)">${fd(r.bolVenc)}</div>`,
         `<div style="font-weight:600">${r.inquilino||'-'}</div><div style="font-size:11px;color:var(--tl)">${r.responsavel||'-'}</div>`,
-        pago ? `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">${pagoTag}<button onclick="unmarkBolPago('${r.id}')" style="padding:3px 10px;border:1.5px solid #16a34a;background:#dcfce7;color:#166534;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer">↩ Reabrir</button></div>` : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="markBolPago('${r.id}')">✅ Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('bol','${r.id}')" title="Passar para o Jurídico">⚖️ p/ Jurídico</button></div>`
+        pago ? `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">${pagoTag}<button onclick="unmarkBolPago('${r.id}')" style="padding:3px 10px;border:1.5px solid #16a34a;background:#dcfce7;color:#166534;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer">Reabrir</button></div>` : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="markBolPago('${r.id}')">Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('bol','${r.id}')" title="Passar para o Jurídico">p/ Jurídico</button></div>`
       );
     }),
     ...inadAtivos.map(i=>{
@@ -4290,7 +4287,7 @@ function rInad(){
       return card(pago,'var(--r)',
         `<b style="color:var(--p)">${i.codigo}</b><div style="font-size:9px;color:var(--tl)">${i.venc?fd(i.venc):''}</div>`,
         `<div style="font-weight:600">${i.inquilino||'-'}</div><div style="font-size:11px;color:var(--tl)">${i.meses||1}m · ${i.responsavel||'-'}${i.observacao?' · '+i.observacao:''}</div>`,
-        pago ? `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">${pagoTag}<button onclick="unmarkInadPago('${i.id}')" style="padding:3px 10px;border:1.5px solid #16a34a;background:#dcfce7;color:#166534;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer">↩ Reabrir</button></div>` : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="markInadPago('${i.id}')">✅ Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('inad','${i.id}')" title="Passar para o Jurídico">⚖️ p/ Jurídico</button></div>`
+        pago ? `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">${pagoTag}<button onclick="unmarkInadPago('${i.id}')" style="padding:3px 10px;border:1.5px solid #16a34a;background:#dcfce7;color:#166534;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer">Reabrir</button></div>` : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="markInadPago('${i.id}')">Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('inad','${i.id}')" title="Passar para o Jurídico">p/ Jurídico</button></div>`
       );
     })
   ];
@@ -4309,7 +4306,7 @@ function rInad(){
       confItems.push(card(pago,'var(--y)',
         `<b style="color:var(--p)">${cf.codigo}</b><div style="font-size:9px;color:var(--tl)">Bol.${bi+1}</div>`,
         `<div style="font-weight:600">${cf.inquilino||'-'}</div><div style="font-size:11px;color:var(--tl)">Venceu: ${fd(b.venc)}</div>`,
-        pago ? `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">${pagoTag}<button onclick="unmarkConfBolPago('${cf.id}',${bi})" style="padding:3px 10px;border:1.5px solid #16a34a;background:#dcfce7;color:#166634;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer">↩ Reabrir</button></div>` : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="markConfBolPago('${cf.id}',${bi})">✅ Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('conf','${cf.id}',${bi})" title="Passar para o Jurídico">⚖️ p/ Jurídico</button></div>`
+        pago ? `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">${pagoTag}<button onclick="unmarkConfBolPago('${cf.id}',${bi})" style="padding:3px 10px;border:1.5px solid #16a34a;background:#dcfce7;color:#166634;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer">Reabrir</button></div>` : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="markConfBolPago('${cf.id}',${bi})">Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('conf','${cf.id}',${bi})" title="Passar para o Jurídico">p/ Jurídico</button></div>`
       ));
     });
   });
@@ -4328,7 +4325,7 @@ function rInad(){
       cartItems.push(card(pago,'var(--pl)',
         `<b style="color:var(--p)">${ct.contrato}</b><div style="font-size:9px;color:var(--tl)">P${i+1}</div>`,
         `<div style="font-weight:600">Venceu: ${fd(dt)}</div><div style="font-size:11px;color:var(--tl)">${ct.tipo} · ${ct.parcelas}x</div>`,
-        pago ? pagoTag : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="togCart('${ct.id}',${i})">✅ Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('cart','${ct.id}',${i})" title="Passar para o Jurídico">⚖️ p/ Jurídico</button></div>`
+        pago ? pagoTag : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="togCart('${ct.id}',${i})">Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('cart','${ct.id}',${i})" title="Passar para o Jurídico">p/ Jurídico</button></div>`
       ));
     });
   });
@@ -4404,7 +4401,7 @@ function rJur(){
     <div style="min-width:90px"><b style="color:var(--p)">${j.codigo}</b><div style="font-size:9px;color:var(--tl)">desde ${fd(j.data)}</div></div>
     <div style="flex:1"><div style="font-weight:600">${j.inquilino||'-'}</div><div style="font-size:11px;color:var(--tl)"><span class="badge" style="background:#ede9fe;color:#5b21b6;font-size:9px">${j.origem}</span> ${j.detalhe||''}</div></div>
     <div style="flex-shrink:0;display:flex;gap:6px;align-items:center">
-      ${j.refTipo!=='manual'?`<button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;border:1px solid #7c3aed" onclick="voltarJuridico('${j.id}')">↩ Voltar p/ Inadimp.</button>`:''}
+      ${j.refTipo!=='manual'?`<button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;border:1px solid #7c3aed" onclick="voltarJuridico('${j.id}')">Voltar p/ Inadimp.</button>`:''}
       <button class="abt" onclick="delJur('${j.id}')">Excluir</button>
     </div>
   </div>`).join('');
@@ -4523,7 +4520,7 @@ function rLoft(){
     const concl=!!loftConcl[l.id];
     // "Cancelada?" display: Sim=verde, Não=vermelho
     const canCell=l.cancelado==='Sim'
-      ?`<td style="color:var(--g);font-weight:600">✅ Sim</td>`
+      ?`<td style="color:var(--g);font-weight:600">Sim</td>`
       :`<td style="color:var(--r);font-weight:600">✗ Não</td>`;
     return`<tr class="${concl?'rg':''}">
       <td style="color:var(--tl);font-size:11px">${i+1}</td>
@@ -4531,7 +4528,7 @@ function rLoft(){
         ${l.autoFromResc?'<span style="font-size:9px;color:var(--tl);display:block">da rescisão</span>':''}
       </td>
       <td>${l.inquilino||'-'}</td>
-      <td>${l.sinistro==='Sim'?'<span style="color:var(--r);font-weight:600">🔴 Sim</span>':l.sinistro==='Não precisou'?'<span style="color:var(--g);font-weight:600">✅ Não precisou</span>':l.sinistro==='Não'?'❌ Não':'<span style="color:var(--o)">⏳ Aguardando</span>'}</td>
+      <td>${l.sinistro==='Sim'?'<span style="color:var(--r);font-weight:600">Sim</span>':l.sinistro==='Não precisou'?'<span style="color:var(--g);font-weight:600">Não precisou</span>':l.sinistro==='Não'?'❌ Não':'<span style="color:var(--o)">Aguardando</span>'}</td>
       <td>${fd(l.data)}</td>
       <td>${sbadge(l.statusLoft)}</td>
       ${canCell}
@@ -4539,7 +4536,7 @@ function rLoft(){
       <td><div class="abts">
         ${concl
           ?`<button class="abt" onclick="togLoftConcl('${l.id}')" title="Reabrir">↩</button>`
-          :`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="togLoftConcl('${l.id}')">✅ Concluir</button>`
+          :`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="togLoftConcl('${l.id}')">Concluir</button>`
         }
         <button class="abt" onclick="openDet('loft','${l.id}')">💬</button>
         <button class="abt" onclick="editLoft('${l.id}')">Editar</button>
@@ -4694,7 +4691,7 @@ function openCP(id){
   if(!D().checklists[id])D().checklists[id]={};
   const cl=D().checklists[id];
   document.getElementById('cp-body').innerHTML=
-    `<div style="font-size:11px;background:#fef3c7;padding:8px 10px;border-radius:6px;margin-bottom:10px;border-left:3px solid var(--acc)">📌 Itens com risco = concluídos.</div>`+
+    `<div style="font-size:11px;background:#fef3c7;padding:8px 10px;border-radius:6px;margin-bottom:10px;border-left:3px solid var(--acc)">Itens com risco = concluídos.</div>`+
     CL.map(g=>`<div class="cg"><div class="cg-t">${g.g}</div>${g.items.map((it,i)=>{const k=g.g+'_'+i;return`<div class="ci"><input type="checkbox" id="ck_${k}" ${cl[k]?'checked':''} onchange="togCL('${k}')"/><label for="ck_${k}" id="lb_${k}" class="${cl[k]?'done':''}">${it}</label></div>`;}).join('')}</div>`).join('');
   updCP(id);
   document.getElementById('cpanel').classList.add('open');
@@ -4728,13 +4725,13 @@ function buildRelBtns(){
   const cartas=d.cartas.filter(c=>!(D().cartasConcl||{})[c.id]).length;
   const resc=d.rescisoes.filter(r=>r.status==='Em Andamento').length;
   wrap.innerHTML=`
-    <button class="btn btn-p btn-sm" onclick="gerarRel('diario')">📋 Resumo Diário <span style="background:rgba(255,255,255,.3);border-radius:10px;padding:1px 6px;font-size:10px">${resc}</span></button>
-    <button class="btn btn-sm" style="background:#f3e8ff;color:#6b21a8" onclick="gerarRel('manut')">🔧 Manutenções <span style="background:rgba(168,85,247,.2);border-radius:10px;padding:1px 6px;font-size:10px">${man}</span></button>
-    <button class="btn btn-sm" style="background:#dbeafe;color:#1e40af" onclick="gerarRel('sanepar')">💧 Sanepar <span style="background:rgba(37,99,168,.2);border-radius:10px;padding:1px 6px;font-size:10px">${san}</span></button>
-    <button class="btn btn-sm" style="background:#fee2e2;color:#991b1b" onclick="gerarRel('inad')">⚠️ Inadimplentes <span style="background:rgba(220,38,38,.2);border-radius:10px;padding:1px 6px;font-size:10px">${inad}</span></button>
-    <button class="btn btn-sm" style="background:#fef9c3;color:#713f12" onclick="gerarRel('cartas')">✉️ Cartas <span style="background:rgba(202,138,4,.2);border-radius:10px;padding:1px 6px;font-size:10px">${cartas}</span></button>
-    <button class="btn btn-sm" style="background:#f0fdf4;color:#166534" onclick="gerarRel('completo')">📊 Completo</button>
-    <button class="btn btn-sm" style="background:#fef3c7;color:#92400e" onclick="gerarRel('financeiro')">💰 Financeiro Manutenções</button>`;
+    <button class="btn btn-p btn-sm" onclick="gerarRel('diario')">Resumo Diário <span style="background:rgba(255,255,255,.3);border-radius:10px;padding:1px 6px;font-size:10px">${resc}</span></button>
+    <button class="btn btn-sm" style="background:#f3e8ff;color:#6b21a8" onclick="gerarRel('manut')">Manutenções <span style="background:rgba(168,85,247,.2);border-radius:10px;padding:1px 6px;font-size:10px">${man}</span></button>
+    <button class="btn btn-sm" style="background:#dbeafe;color:#1e40af" onclick="gerarRel('sanepar')">Sanepar <span style="background:rgba(37,99,168,.2);border-radius:10px;padding:1px 6px;font-size:10px">${san}</span></button>
+    <button class="btn btn-sm" style="background:#fee2e2;color:#991b1b" onclick="gerarRel('inad')">Inadimplentes <span style="background:rgba(220,38,38,.2);border-radius:10px;padding:1px 6px;font-size:10px">${inad}</span></button>
+    <button class="btn btn-sm" style="background:#fef9c3;color:#713f12" onclick="gerarRel('cartas')">Cartas <span style="background:rgba(202,138,4,.2);border-radius:10px;padding:1px 6px;font-size:10px">${cartas}</span></button>
+    <button class="btn btn-sm" style="background:#f0fdf4;color:#166534" onclick="gerarRel('completo')">Completo</button>
+    <button class="btn btn-sm" style="background:#fef3c7;color:#92400e" onclick="gerarRel('financeiro')">Financeiro Manutenções</button>`;
 }
 function populateRelPeriodo(){
   buildRelBtns();
