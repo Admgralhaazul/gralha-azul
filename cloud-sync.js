@@ -83,30 +83,30 @@
       }
       if(MODULE === 'gestao' && typeof DB !== 'undefined'){
         Object.assign(DB, next || {});
-        if(typeof fillCondSelects === 'function') fillCondSelects();
-        if(typeof fillChkCondSelects === 'function') fillChkCondSelects();
-        if(typeof fillPrestSelects === 'function') fillPrestSelects();
-        if(typeof fillRelSelects === 'function') fillRelSelects();
-        if(typeof renderUsers === 'function') renderUsers();
-        if(typeof updateDashboard === 'function') updateDashboard();
-        if(typeof renderManut === 'function'){
-          renderManut('imob'); renderManut('cond'); renderManut('ocup'); renderManut('ager');
-        }
-        if(typeof renderManutHome === 'function') renderManutHome();
-        if(typeof renderPrestCards === 'function') renderPrestCards();
-        if(typeof renderGlobalChk === 'function') renderGlobalChk();
-        if(typeof renderColabs === 'function') renderColabs();
-        if(typeof renderFin === 'function') renderFin();
-        if(typeof renderAgenda === 'function') renderAgenda();
-        if(typeof renderLembretes === 'function') renderLembretes();
-        if(typeof renderTasks === 'function') renderTasks();
-        if(typeof renderProcHist === 'function') renderProcHist();
-        if(MODULE==='gestao' && typeof window.ensureManutSeed==='function'){
-          window.ensureManutSeed().then(()=>{
-            if(typeof updateDashboard==='function')updateDashboard();
-            if(typeof renderManut==='function'){renderManut('imob');renderManut('cond');renderManut('ocup');renderManut('ager');}
-            if(typeof renderManutHome==='function')renderManutHome();
-          });
+        const refreshGestao=()=>{
+          if(typeof fillCondSelects === 'function') fillCondSelects();
+          if(typeof fillChkCondSelects === 'function') fillChkCondSelects();
+          if(typeof fillPrestSelects === 'function') fillPrestSelects();
+          if(typeof fillRelSelects === 'function') fillRelSelects();
+          if(typeof renderUsers === 'function') renderUsers();
+          if(typeof updateDashboard === 'function') updateDashboard();
+          if(typeof renderManut === 'function'){
+            renderManut('imob'); renderManut('cond'); renderManut('ocup'); renderManut('ager');
+          }
+          if(typeof renderManutHome === 'function') renderManutHome();
+          if(typeof renderPrestCards === 'function') renderPrestCards();
+          if(typeof renderGlobalChk === 'function') renderGlobalChk();
+          if(typeof renderColabs === 'function') renderColabs();
+          if(typeof renderFin === 'function') renderFin();
+          if(typeof renderAgenda === 'function') renderAgenda();
+          if(typeof renderLembretes === 'function') renderLembretes();
+          if(typeof renderTasks === 'function') renderTasks();
+          if(typeof renderProcHist === 'function') renderProcHist();
+        };
+        if(typeof window.ensureManutSeed==='function'){
+          window.ensureManutSeed().finally(refreshGestao);
+        } else {
+          refreshGestao();
         }
       }
     }finally{
@@ -153,6 +153,10 @@
     if(!ready || applyingRemote || !client) return;
     const state = getState();
     if(!state) return;
+    if(MODULE==='gestao' && typeof window.ensureManutSeed==='function'){
+      const mt=(state.manutencoes&&['imob','cond','ocup','ager'].reduce((s,k)=>s+((state.manutencoes[k]||[]).length),0))||0;
+      if(mt<100) await window.ensureManutSeed();
+    }
     const json = JSON.stringify(state);
     if(json === lastJson) return;
     lastJson = json;
@@ -257,14 +261,13 @@
       await ensureClient();
       await pullState();
       ready = true;
+      if(MODULE==='gestao' && typeof window.ensureManutSeed==='function'){
+        await window.ensureManutSeed();
+      }
       subscribeRealtime();
       watchChanges();
       addCloudTools();
       showStatus('Nuvem conectada', true);
-      if(MODULE==='gestao' && typeof window.ensureManutSeed==='function'){
-        await window.ensureManutSeed();
-        if(typeof updateDashboard==='function')updateDashboard();
-      }
       await audit('open', 'Abriu o módulo');
     }catch(e){
       showStatus('Nuvem não configurada', false);

@@ -3750,43 +3750,8 @@ function removeAno(a){
   renderAnos();toast('Ano removido!');
 }
 
-(function init(){
-  try {
-    const td = today();
-    // Preenche labels de data
-    const ptl = document.getElementById('proc-today-label');
-    if(ptl) ptl.textContent = fmtDate(td).substring(0,5);
-    const atl = document.getElementById('ag-today-lbl');
-    if(atl) atl.textContent = fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
-
-    loadManutSeed().finally(()=>{
-      fillCondSelects();
-      fillChkCondSelects();
-      fillPrestSelects();
-      fillRelSelects();
-      renderUsers();
-      updateDashboard();
-      renderManut('imob');
-      renderManut('cond');
-      renderManut('ocup');
-      renderManut('ager');
-      renderManutHome();
-      renderPrestCards();
-      renderGlobalChk();
-      renderColabs();
-      renderFin();
-      renderAgenda();
-      renderConds();
-      renderTasks();
-      renderNotifs();
-      renderLembretes();
-    });
-  } catch(e) {
-    console.error('Init error:', e);
-  }
-})();
-
-const MANUT_SEED_VER='20260621b';
+// ─── SEED MANUTENÇÕES (planilhas PDF) ───────────
+const MANUT_SEED_VER='20260622';
 
 function manutTotal(){
   return ['imob','cond','ocup','ager'].reduce((s,k)=>s+((DB.manutencoes[k]||[]).length),0);
@@ -3804,17 +3769,55 @@ async function loadManutSeed(){
   try{
     if(manutTotal()>=100)return false;
     const r=await fetch('./gestao-manut-seed.json?v='+MANUT_SEED_VER);
-    if(!r.ok)return false;
+    if(!r.ok){console.warn('Manut seed HTTP',r.status);return false;}
     const seed=await r.json();
+    if(!DB.manutencoes)DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
     ['imob','cond','ocup','ager'].forEach(k=>{
       if(Array.isArray(seed[k])&&seed[k].length)DB.manutencoes[k]=seed[k];
     });
     localStorage.setItem('ga_manut_seed',MANUT_SEED_VER);
+    console.info('Manut seed OK:',manutTotal(),'registros');
     afterManutSeedLoaded();
     return true;
   }catch(e){console.warn('Manut seed:',e);return false;}
 }
 window.ensureManutSeed=loadManutSeed;
+
+function renderGestaoAll(){
+  fillCondSelects();
+  fillChkCondSelects();
+  fillPrestSelects();
+  fillRelSelects();
+  renderUsers();
+  updateDashboard();
+  renderManut('imob');
+  renderManut('cond');
+  renderManut('ocup');
+  renderManut('ager');
+  renderManutHome();
+  renderPrestCards();
+  renderGlobalChk();
+  renderColabs();
+  renderFin();
+  renderAgenda();
+  renderConds();
+  renderTasks();
+  renderNotifs();
+  renderLembretes();
+}
+
+(function init(){
+  try {
+    const td = today();
+    const ptl = document.getElementById('proc-today-label');
+    if(ptl) ptl.textContent = fmtDate(td).substring(0,5);
+    const atl = document.getElementById('ag-today-lbl');
+    if(atl) atl.textContent = fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
+    loadManutSeed().finally(()=>renderGestaoAll());
+  } catch(e) {
+    console.error('Init error:', e);
+  }
+})();
 
 // ─── LEMBRETES ────────────────────────────────────
 function openLembrete(){
@@ -3847,7 +3850,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=15"></script>
+<script src="./cloud-sync.js?v=16"></script>
 
 </div></body></html>
 
