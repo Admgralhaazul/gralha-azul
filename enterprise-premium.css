@@ -1995,7 +1995,9 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
   border-radius:5px!important;
   overflow:hidden!important;
 }
-.sb-module-row .ga-module-link{
+.sb-module-row .ga-module-link,
+.sb-module-row .nav.ga-module-link,
+.sb-module-row .ni.ga-module-link{
   flex:1!important;
   justify-content:center!important;
   min-height:30px!important;
