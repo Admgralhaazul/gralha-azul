@@ -1,5 +1,6 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
 :root{
   --premium-bg:#F8FAFC!important;
@@ -1810,3 +1811,29 @@ body,.nav,.ni,.sb-item,input,select,textarea,button,td,.badge,.psub{
 /* Tabelas mais legiveis */
 table{font-size:12.5px!important}
 th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-weight:700!important;text-transform:uppercase!important;font-size:10.5px!important;color:#64748B!important}
+
+/* ============================================================ */
+/* TEMA SOBRIO: Manrope (titulos) + azul-marinho corporativo    */
+/* (remove laranja e dourado dos detalhes de marca/interacao)   */
+/* ============================================================ */
+.sb-brand,body:has(.sb) .sb-brand,
+.logo-nm,body:has(.sb) .logo-nm,
+.ptit,body:has(.sb) .ptit,
+.sh-t,.card-t,.mhd .ptit,
+.admin-hdr-t,.modal-title,.mtitle,
+.card-n,.stat-val{
+  font-family:Manrope,Inter,"Segoe UI",sans-serif!important;
+}
+/* Marca: segunda linha em azul claro sobrio (sem dourado) */
+.sb-brand span,body:has(.sb) .sb-brand span{color:#AEC2D8!important}
+/* Fio do topo em azul (sem laranja) */
+.hdr:after{background:linear-gradient(90deg,#1E3A5F,#4F7BB0 55%,#1E3A5F)!important;opacity:.85!important}
+/* Item ativo da lateral em azul (sem laranja) */
+.nav.active,.sb-item.active,#sidebar .ni.active,.ni.active,#sidebar .ni.on,.ni.on{
+  background:linear-gradient(90deg,rgba(79,123,176,.22),rgba(255,255,255,.02))!important;
+  box-shadow:inset 3px 0 0 #6F9FD0,0 6px 16px rgba(0,0,0,.14)!important;
+  color:#FFFFFF!important;
+}
+/* Selecao e foco de campos em azul (sem laranja) */
+::selection{background:rgba(30,58,95,.16)!important;color:#0F172A!important}
+.login-field input:focus{border-bottom-color:#1E3A5F!important}
