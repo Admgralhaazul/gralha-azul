@@ -2018,11 +2018,11 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 .sb-module-row .ga-module-link:not(.active-system){opacity:.72!important}
 .sb-module-row .ga-module-link:hover{opacity:1!important;background:rgba(255,255,255,.09)!important}
 
-/* Tipografia lateral por módulo */
-.mod-resc .nav,.mod-resc .sb-item{font-size:11.5px!important}
-.mod-resc .sb-lbl{font-size:9.5px!important}
-.mod-gest #sidebar .ni,.mod-gest .sb-item{font-size:11.5px!important}
-.mod-gest .sb-sec{font-size:9.5px!important}
+/* Tipografia lateral — mesmo tamanho nos dois sistemas */
+.mod-resc .nav,.mod-resc .sb-item,.mod-resc .sb .nav{font-size:11px!important;font-weight:500!important;padding:7px 14px!important}
+.mod-resc .sb-lbl{font-size:9px!important;letter-spacing:.12em!important}
+.mod-gest #sidebar .ni,.mod-gest .sb-item,.mod-gest #sidebar .nav{font-size:11px!important;font-weight:500!important;padding:7px 12px!important}
+.mod-gest .sb-sec,.mod-gest .sb-lbl{font-size:9px!important;letter-spacing:.12em!important}
 
 /* Botões retos (não pills) */
 .abt,.btn-icon,.btn-sm{border-radius:5px!important}
@@ -2046,16 +2046,25 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 /* Tags menos arredondadas */
 .cell-tag,.badge,.bs,.mbadge{border-radius:4px!important}
 
-/* Ícones de módulo — só traço SVG, sem caixa */
+/* Ícones de módulo — círculo suave (estilo SaaS) */
 .mico{
-  width:auto!important;
-  height:auto!important;
+  width:36px!important;
+  height:36px!important;
   padding:0!important;
-  background:none!important;
   border:none!important;
-  border-radius:0!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-shrink:0!important;
+  background:rgba(100,116,139,.09)!important;
 }
-.mico svg.ico{width:26px!important;height:26px!important;opacity:.88!important}
+.mico svg.ico{width:18px!important;height:18px!important;opacity:1!important}
+.mcard.mc-gr .mico{background:rgba(22,163,74,.11)!important}
+.mcard.mc-yl .mico{background:rgba(217,119,6,.11)!important}
+.mcard.mc-cy .mico{background:rgba(14,165,233,.11)!important}
+.mcard.mc-pu .mico{background:rgba(139,92,246,.11)!important}
+.mcard.mc-bl .mico{background:rgba(59,130,246,.11)!important}
 .mcard{border-radius:10px!important}
 
 /* Nuvem oculta */
