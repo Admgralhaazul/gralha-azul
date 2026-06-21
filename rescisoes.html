@@ -203,7 +203,7 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=6">
+<link rel="stylesheet" href="./enterprise-premium.css?v=7">
 </head>
 <body>
 
@@ -240,7 +240,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="sb-lbl">Controles</div>
     <div class="nav" onclick="go(&#39;cartao&#39;,this)">💳 Cartão de Crédito</div>
     <div class="nav" onclick="go(&#39;manutencoes&#39;,this);setMT(&#39;p&#39;,1);updHeader()">🔧 Manutenções <span class="nbadge nb-ora" id="nb-mn">0</span></div>
-    <div class="nav" onclick="go(&#39;manutencoes&#39;,this);setTimeout(()=&gt;setMT(&#39;va&#39;,2),80)" style="padding-left:28px;font-size:11px">↳ V. Antecip. a Fazer <span class="nbadge" id="nb-va">0</span></div>
+    <div class="nav" onclick="go(&#39;manutencoes&#39;,this);setTimeout(()=&gt;setMT(&#39;va&#39;,2),80)" style="padding-left:30px;font-size:11px">V. Antecip. a Fazer <span class="nbadge" id="nb-va">0</span></div>
     <div class="nav" onclick="go(&#39;sanepar&#39;,this)">💧 Sanepar <span class="nbadge nb-red" id="nb-sn">0</span></div>
     <div class="nav" onclick="go(&#39;marketing&#39;,this)">📢 Marketing <span class="nbadge nb-ora" id="nb-mk">0</span></div>
   </div>
@@ -249,7 +249,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="nav" onclick="go(&#39;confissao&#39;,this)">📝 Confissão de Dívida <span class="nbadge nb-ora" id="nb-conf">0</span></div>
     <div class="nav" onclick="go(&#39;cartas&#39;,this)">✉️ Cartas 30 dias <span class="nbadge nb-ora" id="nb-ct">0</span></div>
     <div class="nav" onclick="go(&#39;inadimplentes&#39;,this)">⚠️ Inadimp./Atrasos <span class="nbadge nb-red" id="nb-in">0</span></div>
-    <div class="nav" onclick="go(&#39;juridicos&#39;,this)" style="padding-left:28px;font-size:11px">↳ ⚖️ Jurídicos</div>
+    <div class="nav" onclick="go(&#39;juridicos&#39;,this)" style="padding-left:30px;font-size:11px">⚖️ Jurídicos</div>
     <div class="nav" onclick="go(&#39;loft&#39;,this)">🏢 Casos Loft <span class="nbadge nb-ora" id="nb-loft">0</span></div>
     <div class="nav" onclick="go(&#39;saiuimob&#39;,this)">🚪 Saiu da Imob</div>
   </div>
@@ -1411,7 +1411,7 @@ Qualquer dúvida, fico à disposição!</textarea>
     </div>
     <!-- Campos só V. Antecipação (sem manutenção) -->
     <div id="r-va-fields" style="display:none;background:#ede9fe;border-radius:6px;padding:10px;margin-top:4px;">
-      <div style="font-size:11px;color:#6b21a8;font-weight:700;margin-bottom:8px">🔍 V. Antecip./Placa — vai para Controles ↳ V. Antecip. a Fazer</div>
+      <div style="font-size:11px;color:#6b21a8;font-weight:700;margin-bottom:8px">🔍 V. Antecip./Placa — vai para Controles &gt; V. Antecip. a Fazer</div>
       <div class="fr">
         <div class="fg"><label>Data V. Antecip./Placa</label><input type="date" id="r-va-dt"></div>
 <div class="fg"></div>
@@ -5675,5 +5675,5 @@ load();
 .hist-when{color:#94a3b8;min-width:110px;text-align:right;flex-shrink:0;font-size:11px}
 </style>
 
-<script src="./cloud-sync.js?v=6"></script>
+<script src="./cloud-sync.js?v=7"></script>
 </body></html>
