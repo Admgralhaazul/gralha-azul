@@ -137,7 +137,7 @@ html,body{
 .nav .nbadge,.nbadge{
   background:#E2E8F0!important;
   color:#334155!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   font-weight:700!important;
 }
 
@@ -345,7 +345,7 @@ tbody tr:hover td{
 
 /* Badges / statuses */
 .badge,.bs,.status-pill{
-  border-radius:999px!important;
+  border-radius:5px!important;
   font-weight:700!important;
   border:1px solid transparent!important;
   padding:4px 9px!important;
@@ -748,7 +748,7 @@ body:has(.sb) .sb-tag{
   min-width:7px!important;
   min-height:7px!important;
   display:inline-block!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   background:#1E3A5F!important;
   box-shadow:0 0 0 4px rgba(30,58,95,.10)!important;
 }
@@ -934,7 +934,7 @@ body:has(.sb) .sb-tag{
   background:#F7FBFF!important;
   color:#24384E!important;
   border:1px solid #C5D9EC!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   box-shadow:0 1px 0 rgba(255,255,255,.95) inset!important;
 }
 
@@ -1041,7 +1041,7 @@ td{
 body:has(.sb) .nav:not(.ga-module-link)::first-letter{
   background:rgba(255,255,255,.16)!important;
   color:#FFFFFF!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   padding:3px 5px!important;
   margin-right:8px!important;
   font-size:12px!important;
@@ -1061,7 +1061,7 @@ body:has(.sb) .nav.active:not(.ga-module-link)::first-letter{
 
 body:has(.sb) .card-l::first-letter{
   background:#EAF3FB!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   padding:3px 5px!important;
   margin-right:6px!important;
 }
@@ -1168,7 +1168,7 @@ html,body,#app,.lay,.main,main,.content,#content,.page,.view{
   height:7px!important;
   min-width:7px!important;
   min-height:7px!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   background:#1E3A5F!important;
   box-shadow:0 0 0 4px rgba(30,58,95,.10)!important;
 }
@@ -1223,7 +1223,7 @@ html,body,#app,.lay,.main,main,.content,#content,.page,.view{
   width:26px!important;
   height:26px!important;
   min-width:26px!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   display:inline-flex!important;
   align-items:center!important;
   justify-content:center!important;
@@ -1286,7 +1286,7 @@ input:focus,select:focus,textarea:focus{
 }
 
 .badge,.bs,.status-pill{
-  border-radius:999px!important;
+  border-radius:5px!important;
   font-weight:700!important;
 }
 
@@ -1434,7 +1434,7 @@ body:has(.hstats) .hstats{
   gap:4px!important;
   align-items:center!important;
   padding:3px 8px!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   background:rgba(255,255,255,.58)!important;
   border:1px solid rgba(141,172,201,.34)!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.74)!important;
@@ -1443,7 +1443,7 @@ body:has(.hstats) .hstats{
 body:has(.hstats) .hs{
   padding:1px 7px!important;
   min-width:42px!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   background:transparent!important;
 }
 
@@ -1609,7 +1609,7 @@ th{
   min-height:28px!important;
   padding:5px 9px!important;
   border:1px solid #D7E4F0!important;
-  border-radius:999px!important;
+  border-radius:5px!important;
   background:#F8FBFE!important;
   color:#21476B!important;
   font-size:11px!important;
@@ -1629,11 +1629,10 @@ th{
 
 .abt.action-checklist::before,.abt[data-action="checklist"]::before{
   content:"";
-  width:8px;
-  height:8px;
-  border-radius:2px;
-  background:#21476B;
-  box-shadow:inset 0 0 0 2px #fff;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#0F172A;
 }
 
 .abt.action-edit::before,.abt[data-action="edit"]::before{
@@ -1641,7 +1640,7 @@ th{
   width:9px;
   height:9px;
   border-radius:50%;
-  background:#E8720C;
+  background:#0F172A;
 }
 
 .abt.action-delete,.abt[data-action="delete"]{
@@ -1889,7 +1888,7 @@ th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-we
 /* Pills de acao na tabela */
 .abt,.btn-icon{
   min-height:28px!important;padding:5px 12px!important;
-  border-radius:999px!important;font-size:10.5px!important;font-weight:700!important;
+  border-radius:5px!important;font-size:10.5px!important;font-weight:700!important;
   line-height:1.2!important;letter-spacing:.15px!important;
   border:1px solid #CBD5E1!important;background:#F8FAFC!important;color:#334155!important;
   display:inline-flex!important;align-items:center!important;gap:5px!important;
@@ -1910,7 +1909,7 @@ th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-we
 .abt.action-delete:hover{background:#FEE2E2!important;border-color:#FCA5A5!important;color:#991B1B!important}
 
 /* Tags de status nas celulas (protocolo verde, pendente laranja) */
-.cell-tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap;line-height:1.35}
+.cell-tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:4px;font-size:10px;font-weight:700;white-space:nowrap;line-height:1.35}
 .cell-ok,.cell-tag.cell-ok{background:#DCFCE7!important;color:#166534!important;border:1px solid #86EFAC!important}
 .cell-pend,.cell-tag.cell-pend{background:#FFEDD5!important;color:#C2410C!important;border:1px solid #FDBA74!important}
 .cell-warn,.cell-tag.cell-warn{background:#FEF9C3!important;color:#A16207!important;border:1px solid #FDE047!important}
@@ -1919,11 +1918,12 @@ th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-we
 /* STATUS — CORES FORTES: PENDENTE x CONCLUIDO (foco executivo) */
 /* ============================================================ */
 /* Rescisoes: badges viram pills coloridos e com enfoque */
-.badge{border-radius:20px!important;font-weight:700!important;padding:3px 10px!important;letter-spacing:.2px}
-.badge.bg{background:#DCFCE7!important;color:#166534!important;border:1px solid #86EFAC!important}   /* concluido / sim / pago */
-.badge.bo{background:#FFEDD5!important;color:#C2410C!important;border:1px solid #FDBA74!important}   /* pendente / em andamento */
+.badge{border-radius:4px!important;font-weight:700!important;padding:3px 10px!important;letter-spacing:.2px}
+.badge.bg{background:#DCFCE7!important;color:#166534!important;border:1px solid #86EFAC!important}
+.badge.bo{background:#FFEDD5!important;color:#C2410C!important;border:1px solid #FDBA74!important}
 .badge.bacc{background:#FFEDD5!important;color:#C2410C!important;border:1px solid #FDBA74!important}
-.badge.br{background:#FEE2E2!important;color:#B91C1C!important;border:1px solid #FCA5A5!important}   /* atrasado / inadimplente / nao */
+.badge.br{background:#FEE2E2!important;color:#B91C1C!important;border:1px solid #FCA5A5!important}
+.badge.bn{background:#F1F5F9!important;color:#64748B!important;border:1px solid #E2E8F0!important;font-weight:600!important}
 .badge.by{background:#FEF9C3!important;color:#A16207!important;border:1px solid #FDE047!important}   /* lembrar / amanha */
 .badge.bb{background:#DBEAFE!important;color:#1D4ED8!important;border:1px solid #93C5FD!important}   /* responsavel */
 .badge.bp{background:#EDE9FE!important;color:#6D28D9!important;border:1px solid #C4B5FD!important}
@@ -1964,3 +1964,85 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 .mcard.mc-yl .mico{color:#D97706!important}
 .mcard.mc-cy .mico{color:#0EA5E9!important}
 .mcard.mc-pu .mico{color:#8B5CF6!important}
+
+/* ============================================================ */
+/* POLISH v13 — módulo switch, tipografia, botões, nuvem oculta */
+/* ============================================================ */
+
+/* Sem flash ao carregar / trocar de página */
+.hdr,.lay{opacity:1!important}
+.content,.cards .card,.stats-row .stat,.view.active{animation:none!important}
+
+/* Escolher sistema — painel distinto do menu */
+.sb-module-switch{
+  margin:10px 8px 14px!important;
+  padding:10px 10px 8px!important;
+  background:rgba(0,0,0,.30)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  border-radius:6px!important;
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.22)!important;
+}
+.sb-module-lbl{
+  font-size:9px!important;
+  letter-spacing:1.5px!important;
+  text-transform:uppercase!important;
+  color:rgba(255,255,255,.40)!important;
+  font-weight:700!important;
+  padding:0 6px 8px!important;
+}
+.sb-module-switch .ga-module-link{
+  border-radius:4px!important;
+  font-size:12px!important;
+  min-height:36px!important;
+  padding:8px 10px!important;
+  margin-bottom:3px!important;
+  background:rgba(255,255,255,.05)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:none!important;
+}
+.sb-module-switch .ga-module-link.active-system{
+  background:rgba(255,255,255,.15)!important;
+  border-color:rgba(255,255,255,.20)!important;
+}
+.sb-module-switch .ga-module-link:hover{
+  background:rgba(255,255,255,.11)!important;
+  border-color:rgba(255,255,255,.14)!important;
+}
+
+/* Tipografia unificada lateral */
+.nav,.ni,.sb-item{font-size:12px!important;font-weight:600!important}
+.sb-lbl,.sb-sec,.sb-section{font-size:10px!important;letter-spacing:1.4px!important}
+
+/* Botões retos (não pills) */
+.abt,.btn-icon,.btn-sm{border-radius:5px!important}
+.btn{border-radius:6px!important}
+
+/* Ícones de ação */
+.abt.action-checklist::before,.abt[data-action="checklist"]::before{
+  width:7px!important;height:7px!important;
+  border-radius:50%!important;
+  background:#0F172A!important;
+  box-shadow:none!important;
+  border:none!important;
+}
+.abt.action-edit::before,.abt[data-action="edit"]::before{
+  background:#0F172A!important;
+}
+
+/* Badge "Não" neutro e profissional */
+.badge.bn{background:#F1F5F9!important;color:#64748B!important;border:1px solid #E2E8F0!important;font-weight:600!important}
+
+/* Tags menos arredondadas */
+.cell-tag,.badge,.bs,.mbadge{border-radius:4px!important}
+
+/* Ícones de módulo — quadrado, não pill */
+.mico{
+  border-radius:3px!important;
+  background:#F1F5F9!important;
+  border:1px solid #E2E8F0!important;
+}
+.mcard{border-radius:8px!important}
+
+/* Nuvem oculta */
+#ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important;pointer-events:none!important}
+.ga-hide-cloud{display:none!important}

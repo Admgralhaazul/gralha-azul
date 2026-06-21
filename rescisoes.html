@@ -8,7 +8,7 @@
 :root{--p:#1e3a5f;--pl:#2a5298;--acc:#e8720c;--g:#16a34a;--o:#e8720c;--r:#dc2626;--y:#ca8a04;--gy:#64748b;--bg:#f3f5f8;--w:#fff;--bd:#e2e8f0;--tx:#1e293b;--tl:#64748b}
 /* ===== LOGIN ===== */
 #login-overlay{position:fixed;inset:0;background:#fff;display:flex;align-items:stretch;z-index:99999}
-.hdr,.lay{opacity:0;transition:opacity .2s}
+.hdr,.lay{opacity:1}
 #login-overlay.hidden{display:none}
 .login-left{flex:0 0 400px;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:56px 52px;border-right:1px solid #eaecf0}
 .login-right{flex:1;background:#2b3747;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
@@ -203,7 +203,20 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=11">
+<link rel="stylesheet" href="./enterprise-premium.css?v=14">
+<style id="ga-live-fixes">
+.sb-module-switch{background:rgba(0,0,0,.32)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:6px!important;padding:10px!important;margin:10px 8px 14px!important;box-shadow:inset 0 2px 8px rgba(0,0,0,.25)!important}
+.sb-module-lbl{font-size:9px!important;letter-spacing:1.5px!important;text-transform:uppercase;color:rgba(255,255,255,.45)!important;font-weight:700;padding:0 6px 8px!important}
+.nav,.ni,.sb-item{font-size:12px!important}
+.abt,.btn-icon,.btn-sm{border-radius:5px!important}
+.abt.action-edit::before{background:#0F172A!important}
+.abt.action-checklist::before{width:7px!important;height:7px!important;border-radius:50%!important;background:#0F172A!important;box-shadow:none!important;border:none!important}
+.badge,.cell-tag{border-radius:4px!important}
+.badge.bn{background:#F1F5F9!important;color:#64748B!important;border:1px solid #E2E8F0!important;font-weight:600!important}
+.mico{border-radius:3px!important;background:#F1F5F9!important;border:1px solid #E2E8F0!important}
+#ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
+.hdr,.lay{opacity:1!important}
+</style>
 </head>
 <body>
 
@@ -224,10 +237,10 @@ td.ora{color:var(--o);font-weight:600}
     <div class="sb-brand">Rescisão<br><span>Imobiliária</span></div>
     <div class="sb-tag">Plataforma Imobiliária</div>
   </div>
-  <div class="sb-sec">
-    <div class="sb-lbl">Sistemas Fixos</div>
-    <a class="nav ga-module-link active-system" href="./rescisoes.html"><span class="ni-dot"></span>Rescisão</a>
-    <a class="nav ga-module-link" href="./gestao.html"><span class="ni-dot"></span>Manut./Gestão Adm.</a>
+  <div class="sb-module-switch">
+    <div class="sb-module-lbl">Escolher sistema</div>
+    <a class="nav ga-module-link active-system" href="./rescisoes.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisão</a>
+    <a class="nav ga-module-link" href="./gestao.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manut./Gestão Adm.</a>
   </div>
   <div class="sb-sec">
     <div class="sb-lbl">Painel</div>
@@ -239,7 +252,7 @@ td.ora{color:var(--o);font-weight:600}
   <div class="sb-sec">
     <div class="sb-lbl">Controles</div>
     <div class="nav" onclick="go(&#39;cartao&#39;,this)"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> Cartão de Crédito</div>
-    <div class="nav" onclick="go(&#39;manutencoes&#39;,this);setMT(&#39;p&#39;,1);updHeader()"><svg class="ico" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manutenções <span class="nbadge nb-ora" id="nb-mn">0</span></div>
+    <div class="nav" onclick="go(&#39;manutencoes&#39;,this)"><svg class="ico" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manutenções <span class="nbadge nb-ora" id="nb-mn">0</span></div>
     <div class="nav" onclick="go(&#39;manutencoes&#39;,this);setTimeout(()=&gt;setMT(&#39;va&#39;,2),80)" style="padding-left:30px;font-size:11px">V. Antecip. a Fazer <span class="nbadge" id="nb-va">0</span></div>
     <div class="nav" onclick="go(&#39;sanepar&#39;,this)"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg> Sanepar <span class="nbadge nb-red" id="nb-sn">0</span></div>
     <div class="nav" onclick="go(&#39;marketing&#39;,this)"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Marketing <span class="nbadge nb-ora" id="nb-mk">0</span></div>
@@ -1772,10 +1785,6 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
 
 <!-- USER BAR -->
 
-
-<!-- SYNC INDICATOR -->
-<div id="sync-indicator" style="display:none">● sincronizado</div>
-
 <script>
 // ============================================================
 // STATE
@@ -1795,7 +1804,7 @@ function dadosAno(a){
 }
 function D(){return dadosAno(S.anoAtivo);}
 
-let cpId=null,curPage='dash',editId=null,detType=null,detId=null,manutTab='p';
+let cpId=null,curPage='dash',editId=null,detType=null,detId=null,manutTab='t';
 
 // ============================================================
 // CHECKLIST
@@ -1930,7 +1939,7 @@ function fixNomeDebora(){
     if(!S.resps.resc.includes('Débora'))S.resps.resc.unshift('Débora');
   }
 }
-function load(){
+function load(skipRender){
   const d=localStorage.getItem('ga_v3');
   if(d){try{const p=JSON.parse(d);S={...S,...p,resps:{...S.resps,...(p.resps||{})}};}catch(e){}}
   fixNomeDebora();
@@ -1951,8 +1960,8 @@ function load(){
   Object.keys(ac).forEach(k=>{
     if(k.startsWith('agenda:')&&!agIds.has(k.slice(7)))delete ac[k];
   });
-  save();
-  renderAll();
+  if(!skipRender) save();
+  if(!skipRender) renderAll();
 }
 
 // ============================================================
@@ -1991,6 +2000,12 @@ function go(p,el){
     inadimplentes:`<button class="btn btn-p btn-sm" onclick="openM('m-inad')">+ Inadimplente</button>`,
     rescisoes:`<button class="btn btn-p btn-sm" onclick="resetRescModal();openM('m-resc')">+ Nova Rescisão</button>`};
   a.innerHTML=m[p]||'';
+  if(p==='manutencoes'){
+    manutTab='t';
+    document.querySelectorAll('#mtabs .tab').forEach((el,j)=>el.classList.toggle('active',j===0));
+    const mMesEl=document.getElementById('f-man-mes');
+    if(mMesEl&&!mMesEl.value&&mMesEl.dataset.cleared!=='1'&&S.mesAtivo)mMesEl.value=S.mesAtivo;
+  }
   fillSels();
   renderAll();
 }
@@ -2420,7 +2435,7 @@ function manCell(codigo){
   return`<td style="font-weight:600;color:var(--r)">Pendente</td>`;
 }
 function sbadge(s){
-  const m={'Em Andamento':'bo','Concluída':'bg','Inadimplente':'br','Saiu da Imob':'bgy','Pago':'bg','Pendente':'bo','Desligado':'bgy','Urgente':'br','Para fazer':'bo','Lembrar':'by','Sim':'bg','Não':'br','Aprovado':'bg','Negado':'br','Em análise':'by'};
+  const m={'Em Andamento':'bo','Concluída':'bg','Inadimplente':'br','Saiu da Imob':'bgy','Pago':'bg','Pendente':'bo','Desligado':'bgy','Urgente':'br','Para fazer':'bo','Lembrar':'by','Sim':'bg','Não':'bn','Aprovado':'bg','Negado':'bn','Em análise':'by'};
   return`<span class="badge ${m[s]||'bgy'}">${s}</span>`;
 }
 
@@ -2659,7 +2674,7 @@ function rResc(){
     ${aguaCell(r.agua)}
     ${energCell(r.energia)}
     ${gasCell(r.gas)}
-    <td>${(()=>{const isCT=r.tipoSaida==='Carta 30 dias - Aniversário'||r.tipoSaida==='Carta 30 dias - Indeterminado';const val=isCT?(r.cartaLocAvisado||r.propAvisado||'Não'):r.propAvisado;return val==='Sim'?'<span class="badge bg" style="font-size:10px">Sim</span>':val==='Não'?'<span class="badge br" style="font-size:10px">✗ Não</span>':'<span style="color:var(--tl);font-size:11px">—</span>';})()}</td>
+    <td>${(()=>{const isCT=r.tipoSaida==='Carta 30 dias - Aniversário'||r.tipoSaida==='Carta 30 dias - Indeterminado';const val=isCT?(r.cartaLocAvisado||r.propAvisado||'Não'):r.propAvisado;return val==='Sim'?'<span class="badge bg" style="font-size:10px">Sim</span>':val==='Não'?'<span class="badge bn" style="font-size:10px">Não</span>':'<span style="color:var(--tl);font-size:11px">—</span>';})()}</td>
     ${comCell(r.comercial)}
     ${garantiaCell(r)}
     ${manCell(r.codigo)}
@@ -3625,6 +3640,55 @@ function getManMes(m){
   const resc=D().rescisoes.find(rx=>rx.codigo===m.codigo);
   return resc?getRescMes(resc):(m.dtRepasse?getMesRef(m.dtRepasse):null);
 }
+function isManPending(m){
+  if(m.alugado)return false;
+  if(m.soVAntecip)return m.status!=='Concluído'||!m.vaOk;
+  return m.status!=='Concluído';
+}
+function getManMesAlugado(m){
+  if(m.alugadoDt)return getMesRef(m.alugadoDt);
+  return getManMes(m);
+}
+function manMatchesMesFilter(m,mesAtivoM,fManAno,tab){
+  if(mesAtivoM){
+    const refMes=(tab==='a'&&m.alugado)?getManMesAlugado(m):getManMes(m);
+    if(!refMes)return tab!=='c'&&tab!=='a'&&isManPending(m);
+    if(refMes===mesAtivoM)return true;
+    if(tab==='c'||tab==='a')return false;
+    if(mesAnoLt(refMes,mesAtivoM)&&isManPending(m))return true;
+    return false;
+  }
+  if(fManAno&&!mesAtivoM){
+    const refMes=getManMes(m);
+    if(refMes&&!refMes.endsWith('/'+fManAno))return false;
+  }
+  return true;
+}
+function passesManutTab(m,tab){
+  if(m.saiuImobFlag)return false;
+  if(tab==='a')return !!m.alugado;
+  if(m.alugado)return false;
+  if(m.soVAntecip){
+    const rc=D().rescisoes.find(rx=>rx.codigo===m.codigo);
+    if(rc&&(rc.comercial==='saiu'||rc.status==='Saiu da Imob'))return false;
+    if(tab==='va')return m.status!=='Concluído';
+    if(tab==='c')return m.status==='Concluído';
+    if(tab==='p')return m.status!=='Concluído'&&!m.liberado;
+    return true;
+  }
+  if(tab==='p'){
+    if(m.status==='Concluído')return false;
+    if(!m.liberado)return false;
+    return true;
+  }
+  if(tab==='c')return m.status==='Concluído';
+  if(tab==='va'){
+    if(!m.soVAntecip&&!m.soManutencao)return false;
+    if(m.status==='Concluído')return false;
+    return true;
+  }
+  return true;
+}
 function rMan(){
   const q=(document.getElementById('s-man')||{}).value||'';
 
@@ -3642,37 +3706,8 @@ function rMan(){
   const mesAtivoM=fManMes||'';// default = todos os meses
   let rows=D().manutencoes.filter(m=>{
     if(q&&!(m.codigo||'').toLowerCase().includes(q.toLowerCase()))return false;
-    if(m.saiuImobFlag)return false; // saiu da imob — não aparece mais aqui
-    if(manutTab==='a')return !!m.alugado; // aba Alugados
-    if(m.alugado)return false; // alugados só aparecem na aba própria
-    if(manutTab==='p'&&m.status==='Concluído')return false;
-    if(manutTab==='p'&&!m.liberado)return false;// only show liberado entries in Pendente tab
-    if(manutTab==='c'&&m.status!=='Concluído')return false;
-    // soVAntecip items: hide if saiu da imob
-    if(m.soVAntecip){
-      const rc=D().rescisoes.find(rx=>rx.codigo===m.codigo);
-      if(rc&&(rc.comercial==='saiu'||rc.status==='Saiu da Imob'))return false;
-      // VA tab: show all soVAntecip; other tabs: only show pending
-      if(manutTab==='va')return m.status!=='Concluído';// VA: only show non-concluded
-      if(manutTab==='c')return m.status==='Concluído';// concluded tab: only manually concluded
-      if(manutTab==='p')return m.status!=='Concluído'&&!m.liberado;// pending tab: not liberado and not done
-      // 'Todas' tab: show all soVAntecip
-    }
-    // VA tab: show soVAntecip entries AND soManutencao entries (manutencao also appears here)
-    if(manutTab==='va'&&!m.soVAntecip&&!m.soManutencao)return false;
-    if(manutTab==='va'&&m.status==='Concluído')return false;// remove from VA when concluded
-    // Month/year filter — applies to ALL entries including soManutencao
-    if(mesAtivoM){
-      const mMes=getManMes(m);
-      if(!mMes)return true;// no date = always show
-      const isSame=mMes===mesAtivoM;
-      const isPrevPend=mesAnoLt(mMes,mesAtivoM)&&m.status!=='Concluído';
-      if(manutTab==='c'){if(!isSame&&!isPrevPend)return false;}
-      else if(!isSame&&!isPrevPend)return false;
-    } else if(fManAno&&!fManMes){
-      const mMes=getManMes(m);
-      if(mMes&&!mMes.endsWith('/'+fManAno))return false;
-    }
+    if(!passesManutTab(m,manutTab))return false;
+    if(!manMatchesMesFilter(m,mesAtivoM,fManAno,manutTab))return false;
     return true;
   });
   const tb=document.getElementById('tb-man');
@@ -4529,7 +4564,7 @@ function rLoft(){
     // "Cancelada?" display: Sim=verde, Não=vermelho
     const canCell=l.cancelado==='Sim'
       ?`<td style="color:var(--g);font-weight:600">Sim</td>`
-      :`<td style="color:var(--r);font-weight:600">✗ Não</td>`;
+      :`<td><span class="badge bn">Não</span></td>`;
     return`<tr class="${concl?'rg':''}">
       <td style="color:var(--tl);font-size:11px">${i+1}</td>
       <td><b style="color:var(--p);${concl?'text-decoration:line-through':''}">${l.codigo}</b>
@@ -5184,11 +5219,7 @@ function clearSession(){ sessionStorage.removeItem('ga_session'); currentUser=nu
 // SYNC INDICATOR
 // ============================================================
 function showSync(state, msg){
-  const el=document.getElementById('sync-indicator');
-  el.style.display='block';
-  el.className=state==='ok'?'':state==='syncing'?'syncing':'error';
-  el.textContent=state==='ok'?'● sincronizado':state==='syncing'?'⟳ salvando...':'✗ erro ao salvar';
-  if(state==='ok') setTimeout(()=>{el.style.display='none';},2000);
+  /* indicador oculto — sync continua em background */
 }
 
 // ============================================================
@@ -5213,7 +5244,6 @@ async function loadFromSupabase(){
       const p = data.valor;
       S = {...S, ...p};
       fixNomeDebora();
-      renderAll(); updHeader();
     }
   } catch(e){ /* use local */ }
 }
@@ -5636,15 +5666,14 @@ ${s1}${s2}${s5}${s6}
 }
 
 fillSels();
-load();
+load(true);
 
-// Check session on load
+// Check session on load — um único render para evitar flash duplo
 (async function initApp(){
   const sess=getSession();
   if(sess){
     currentUser=sess;
     document.getElementById('login-overlay').classList.add('hidden');
-    document.querySelectorAll('.hdr,.lay').forEach(el=>el.style.opacity='1');
     document.getElementById('user-bar').style.display='none';
     document.getElementById('ub-name').textContent='👤 '+sess.nome;
     if(sess.role==='admin'){document.getElementById('ub-admin-btn').style.display='inline-block';}else{const cn=document.getElementById('admin-config-nav');if(cn)cn.style.display='none';}
@@ -5652,6 +5681,8 @@ load();
     setupRealtime();
     setupClickTracking();
   }
+  renderAll();
+  updHeader();
 })();
 </script>
 
@@ -5661,8 +5692,8 @@ load();
 
 
 
-<!-- SYNC -->
-<div id="sync-indicator" style="display:none;position:fixed;top:8px;right:60px;font-size:10px;padding:3px 10px;border-radius:20px;z-index:9998;background:#dcfce7;color:#166534"></div>
+<!-- SYNC INDICATOR (oculto) -->
+<div id="sync-indicator" style="display:none"></div>
 
 <!-- ADMIN PANEL -->
 
@@ -5683,5 +5714,5 @@ load();
 .hist-when{color:#94a3b8;min-width:110px;text-align:right;flex-shrink:0;font-size:11px}
 </style>
 
-<script src="./cloud-sync.js?v=10"></script>
+<script src="./cloud-sync.js?v=12"></script>
 </body></html>

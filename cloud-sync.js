@@ -66,6 +66,11 @@
   }
 
   function setState(next){
+    if(!next) return;
+    const cur = getState();
+    try{
+      if(cur && JSON.stringify(cur) === JSON.stringify(next)) return;
+    }catch(e){}
     applyingRemote = true;
     try{
       if(MODULE === 'rescisoes' && typeof S !== 'undefined'){
@@ -103,15 +108,8 @@
   }
 
   function showStatus(text, ok){
-    let el = document.getElementById('ga-cloud-status');
-    if(!el){
-      el = document.createElement('div');
-      el.id='ga-cloud-status';
-      el.style.cssText='position:fixed;right:12px;bottom:10px;z-index:999999;background:#0f172a;color:#fff;border-radius:999px;padding:6px 10px;font:11px Arial;box-shadow:0 8px 24px rgba(0,0,0,.18);opacity:.86';
-      document.body.appendChild(el);
-    }
-    el.textContent = text;
-    el.style.background = ok ? '#14532d' : '#7f1d1d';
+    const el=document.getElementById('ga-cloud-status');
+    if(el) el.remove();
   }
 
   async function audit(action, detail){
@@ -206,15 +204,8 @@
   window.gaCloudBackup = exportCloudBackup;
 
   function addCloudTools(){
-    if(window.top !== window.self) return;
-    if(document.getElementById('ga-cloud-tools')) return;
-    const box = document.createElement('div');
-    box.id = 'ga-cloud-tools';
-    box.style.cssText = 'position:fixed;right:12px;bottom:44px;z-index:999999;display:flex;gap:6px;font:11px Arial';
-    box.innerHTML = '<button type="button" id="ga-cloud-save" style="border:none;border-radius:999px;background:#1e3a5f;color:#fff;padding:6px 10px;cursor:pointer">Salvar nuvem</button><button type="button" id="ga-cloud-backup" style="border:none;border-radius:999px;background:#334155;color:#fff;padding:6px 10px;cursor:pointer">Backup</button>';
-    document.body.appendChild(box);
-    document.getElementById('ga-cloud-save').onclick = ()=>pushState('Salvamento manual');
-    document.getElementById('ga-cloud-backup').onclick = exportCloudBackup;
+    const old=document.getElementById('ga-cloud-tools');
+    if(old) old.remove();
   }
 
   function watchChanges(){
