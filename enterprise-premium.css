@@ -2023,7 +2023,8 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 /* Tipografia lateral — mesmo tamanho nos dois sistemas */
 .mod-resc .nav,.mod-resc .sb-item,.mod-resc .sb .nav{font-size:12px!important;font-weight:500!important;padding:8px 14px!important}
 .mod-resc .sb-lbl{font-size:9.5px!important;letter-spacing:.12em!important}
-.mod-gest #sidebar .ni,.mod-gest .sb-item,.mod-gest #sidebar .nav{font-size:12px!important;font-weight:500!important;padding:8px 12px!important}
+.mod-gest #sidebar .ni,.mod-gest .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 12px!important}
+.mod-gest #sidebar .sb-module-row .ga-module-link,.mod-gest .sb-module-row .ga-module-link{font-size:10px!important;font-weight:600!important;padding:5px 6px!important;min-height:30px!important}
 .mod-gest .sb-sec,.mod-gest .sb-lbl{font-size:9.5px!important;letter-spacing:.12em!important}
 
 /* Botões retos (não pills) */

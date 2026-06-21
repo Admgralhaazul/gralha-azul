@@ -319,7 +319,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=21">
+<link rel="stylesheet" href="./enterprise-premium.css?v=22">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -337,7 +337,17 @@ body{visibility:visible!important}
 .tb-title{font-size:16px!important;font-weight:700!important;color:#152236!important}
 .stat-val{font-size:24px!important;font-weight:800!important}
 .stat-lbl{font-size:10.5px!important}
-#sidebar .ni,#sidebar .nav,#sidebar .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 12px!important}
+#sidebar .ni,#sidebar .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 12px!important}
+#sidebar .sb-module-row .ga-module-link{
+  font-size:10px!important;font-weight:600!important;
+  padding:5px 6px!important;min-height:30px!important;
+  flex:1 1 0!important;min-width:0!important;text-align:center!important;
+  line-height:1.2!important;white-space:nowrap!important;
+  border-radius:0!important;margin:0!important;
+}
+#sidebar .sb-module-switch{margin:0 10px 10px!important;padding:0!important}
+#sidebar .sb-module-lbl{font-size:9px!important;letter-spacing:.12em!important;text-transform:uppercase!important;opacity:.55!important;margin-bottom:5px!important}
+#sidebar .sb-module-row{display:flex!important;border-radius:5px!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important}
 #sidebar .sb-sec{font-size:9.5px!important}
 </style>
 </head>
@@ -3776,20 +3786,35 @@ function removeAno(a){
   }
 })();
 
-const MANUT_SEED_VER='20260621';
+const MANUT_SEED_VER='20260621b';
+
+function manutTotal(){
+  return ['imob','cond','ocup','ager'].reduce((s,k)=>s+((DB.manutencoes[k]||[]).length),0);
+}
+
+function afterManutSeedLoaded(){
+  updateDashboard();
+  ['imob','cond','ocup','ager'].forEach(t=>renderManut(t));
+  renderManutHome();
+  renderFin();
+  if(typeof window.gaCloudSave==='function')window.gaCloudSave();
+}
+
 async function loadManutSeed(){
   try{
-    if(localStorage.getItem('ga_manut_seed')===MANUT_SEED_VER)return;
+    if(manutTotal()>=100)return false;
     const r=await fetch('./gestao-manut-seed.json?v='+MANUT_SEED_VER);
-    if(!r.ok)return;
+    if(!r.ok)return false;
     const seed=await r.json();
     ['imob','cond','ocup','ager'].forEach(k=>{
       if(Array.isArray(seed[k])&&seed[k].length)DB.manutencoes[k]=seed[k];
     });
     localStorage.setItem('ga_manut_seed',MANUT_SEED_VER);
-    if(typeof window.gaCloudSave==='function')window.gaCloudSave();
-  }catch(e){console.warn('Manut seed:',e);}
+    afterManutSeedLoaded();
+    return true;
+  }catch(e){console.warn('Manut seed:',e);return false;}
 }
+window.ensureManutSeed=loadManutSeed;
 
 // ─── LEMBRETES ────────────────────────────────────
 function openLembrete(){
@@ -3822,7 +3847,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=14"></script>
+<script src="./cloud-sync.js?v=15"></script>
 
 </div></body></html>
 

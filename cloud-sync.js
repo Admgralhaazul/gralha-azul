@@ -101,6 +101,13 @@
         if(typeof renderLembretes === 'function') renderLembretes();
         if(typeof renderTasks === 'function') renderTasks();
         if(typeof renderProcHist === 'function') renderProcHist();
+        if(MODULE==='gestao' && typeof window.ensureManutSeed==='function'){
+          window.ensureManutSeed().then(()=>{
+            if(typeof updateDashboard==='function')updateDashboard();
+            if(typeof renderManut==='function'){renderManut('imob');renderManut('cond');renderManut('ocup');renderManut('ager');}
+            if(typeof renderManutHome==='function')renderManutHome();
+          });
+        }
       }
     }finally{
       setTimeout(()=>{ applyingRemote=false; }, 150);
@@ -254,6 +261,10 @@
       watchChanges();
       addCloudTools();
       showStatus('Nuvem conectada', true);
+      if(MODULE==='gestao' && typeof window.ensureManutSeed==='function'){
+        await window.ensureManutSeed();
+        if(typeof updateDashboard==='function')updateDashboard();
+      }
       await audit('open', 'Abriu o módulo');
     }catch(e){
       showStatus('Nuvem não configurada', false);
