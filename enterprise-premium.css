@@ -1854,3 +1854,59 @@ th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-we
 }
 /* Botoes de acao em texto (sem emoji) */
 .btn .ico,.abt .ico{vertical-align:-2px;margin-right:5px}
+
+/* Cartoes de modulo (Gestao) com icone grande */
+.mico svg.ico{width:30px!important;height:30px!important;stroke:currentColor!important;stroke-width:1.6!important;fill:none!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+
+/* Botoes de acao em texto: abt (Rescisoes) e btn-icon (Gestao) */
+.abt{width:auto!important;height:auto!important;min-width:0!important;padding:3px 9px!important;font-size:10.5px!important;font-weight:700!important;line-height:1.5!important;border-radius:6px!important;letter-spacing:.2px}
+.btn-icon{width:auto!important;height:auto!important;min-width:0!important;padding:4px 10px!important;font-size:11px!important;font-weight:700!important;line-height:1.5!important;border-radius:6px!important;background:#F1F5F9!important;border:1px solid #E2E8F0!important;color:#334155!important;display:inline-flex;align-items:center;gap:4px}
+
+/* ============================================================ */
+/* STATUS — CORES FORTES: PENDENTE x CONCLUIDO (foco executivo) */
+/* ============================================================ */
+/* Rescisoes: badges viram pills coloridos e com enfoque */
+.badge{border-radius:20px!important;font-weight:700!important;padding:3px 10px!important;letter-spacing:.2px}
+.badge.bg{background:#DCFCE7!important;color:#166534!important;border:1px solid #86EFAC!important}   /* concluido / sim / pago */
+.badge.bo{background:#FFEDD5!important;color:#C2410C!important;border:1px solid #FDBA74!important}   /* pendente / em andamento */
+.badge.bacc{background:#FFEDD5!important;color:#C2410C!important;border:1px solid #FDBA74!important}
+.badge.br{background:#FEE2E2!important;color:#B91C1C!important;border:1px solid #FCA5A5!important}   /* atrasado / inadimplente / nao */
+.badge.by{background:#FEF9C3!important;color:#A16207!important;border:1px solid #FDE047!important}   /* lembrar / amanha */
+.badge.bb{background:#DBEAFE!important;color:#1D4ED8!important;border:1px solid #93C5FD!important}   /* responsavel */
+.badge.bp{background:#EDE9FE!important;color:#6D28D9!important;border:1px solid #C4B5FD!important}
+.badge.bgy{background:#F1F5F9!important;color:#475569!important;border:1px solid #E2E8F0!important}
+
+/* Celulas agua/energia/gas */
+td.ok,.ok{color:#166534!important;font-weight:700!important}
+td.pend,.pend{color:#C2410C!important;font-weight:700!important}
+
+/* Linhas inteiras: concluido (verde) x pendente do mes anterior (vermelho) com barra lateral */
+tr.rg td{background:#F0FDF4!important}
+tr.rg td:first-child{box-shadow:inset 4px 0 0 #16A34A!important}
+tr.rr td{background:#FEF2F2!important}
+tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
+
+/* Gestao: selos .bs mais vivos */
+.bs{font-weight:700!important;padding:4px 11px!important}
+.bs-ok{background:#DCFCE7!important;color:#166534!important}.bs-ok::before{background:#16A34A!important}
+.bs-an{background:#FFEDD5!important;color:#C2410C!important}.bs-an::before{background:#F97316!important}
+.bs-ab{background:#DBEAFE!important;color:#1D4ED8!important}.bs-ab::before{background:#3B82F6!important}
+.bs-at{background:#FEE2E2!important;color:#B91C1C!important}.bs-at::before{background:#EF4444!important}
+.bs-ag{background:#EDE9FE!important;color:#6D28D9!important}.bs-ag::before{background:#8B5CF6!important}
+.bs-ca{background:#F1F5F9!important;color:#64748B!important}.bs-ca::before{background:#94A3B8!important}
+
+/* Cartoes do painel: numero colorido conforme o status (verde=ok, laranja=pendente, vermelho=alerta) */
+.card.c-g .card-n{color:#16A34A!important}
+.card.c-o .card-n{color:#C2410C!important}
+.card.c-r .card-n{color:#DC2626!important}
+.card.c-y .card-n{color:#A16207!important}
+/* Cartoes da Gestao (mcard) com leve cor de topo conforme variante */
+.mcard{border-top:3px solid transparent!important}
+.mcard.mc-gr{border-top-color:#16A34A!important}
+.mcard.mc-yl{border-top-color:#F59E0B!important}
+.mcard.mc-cy{border-top-color:#0EA5E9!important}
+.mcard.mc-pu{border-top-color:#8B5CF6!important}
+.mcard.mc-gr .mico{color:#16A34A!important}
+.mcard.mc-yl .mico{color:#D97706!important}
+.mcard.mc-cy .mico{color:#0EA5E9!important}
+.mcard.mc-pu .mico{color:#8B5CF6!important}

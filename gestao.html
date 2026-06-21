@@ -318,7 +318,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=7">
+<link rel="stylesheet" href="./enterprise-premium.css?v=9">
 <style id="ga-final-no-flicker">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 *{font-family:Inter,"Segoe UI",Arial,sans-serif!important}
@@ -425,31 +425,31 @@ body{visibility:visible!important}
   <!-- ─ 4 cards de manutenção (substituem a view de home) ─ -->
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:20px">
     <div class="mcard mc-gr" onclick="nav(&#39;manut-imob&#39;)" style="margin:0">
-      <div class="mico">🏠</div>
+      <div class="mico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9.5 20v-6h5v6"/></svg></div>
       <div class="mname">Executadas pela Imobiliária</div>
       <div class="mdesc">Chamados e manutenções em imóveis gerenciados e áreas comuns.</div>
       <div class="mmeta"><span class="mbadge" id="mi-cnt">0 chamados</span></div>
     </div>
     <div class="mcard mc-yl" onclick="nav(&#39;manut-cond&#39;)" style="margin:0">
-      <div class="mico">🏢</div>
+      <div class="mico"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg></div>
       <div class="mname">Manutenções Condomínios</div>
       <div class="mdesc">Serviços dos condomínios + checklist. 14 dias antes sobe alerta.</div>
       <div class="mmeta"><span class="mbadge" id="mc-cnt">0 chamados</span></div>
     </div>
     <div class="mcard mc-cy" onclick="nav(&#39;manut-ocup&#39;)" style="margin:0">
-      <div class="mico">🔑</div>
+      <div class="mico"><svg class="ico" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3M14 9l2 2"/></svg></div>
       <div class="mname">Imóveis Ocupados Geral</div>
       <div class="mdesc">Manutenções em imóveis com locatário ativo — visão geral.</div>
       <div class="mmeta"><span class="mbadge" id="mo-cnt">0 chamados</span></div>
     </div>
     <div class="mcard mc-pu" onclick="nav(&#39;manut-ager&#39;)" style="margin:0">
-      <div class="mico">📋</div>
+      <div class="mico"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM8 11h8M8 15h6"/></svg></div>
       <div class="mname">Manut. Assistente</div>
       <div class="mdesc">Chamados gerenciados pelo assistente gerente.</div>
       <div class="mmeta"><span class="mbadge" id="mager-cnt">0 chamados</span></div>
     </div>
     <div class="mcard mc-bl" onclick="nav(&#39;processos&#39;)" style="margin:0;cursor:pointer">
-      <div class="mico">📌</div>
+      <div class="mico"><svg class="ico" viewBox="0 0 24 24"><path d="M9 3h6l-1 6 3 3v2h-10v-2l3-3z"/><path d="M12 14v7"/></svg></div>
       <div class="mname">Processos Administrativos</div>
       <div class="mdesc">Agenda do dia, tarefas e histórico de processos.</div>
       <div class="mmeta"><span class="mbadge" id="ds-proc-badge">Acessar</span></div>
@@ -1731,7 +1731,7 @@ function renderManutRows(arr,tipo){
       <td style="text-align:right">
         <div class="td-actions" style="justify-content:flex-end">
           ${m.status!=='Concluído'&&m.status!=='Cancelado'?`<div class="btn-icon" onclick="concluirManutDireto('${m.id}','${tipo}')" title="Concluir" style="color:var(--green);font-weight:700;font-size:15px">✓</div>`:''}
-          <div class="btn-icon" onclick="editManut('${m.id}','${tipo}')" title="Editar">✏️</div>
+          <div class="btn-icon" onclick="editManut('${m.id}','${tipo}')" title="Editar">Editar</div>
           <div class="btn-icon" onclick="reopenManut('${m.id}')" title="Desfazer / Reabrir" style="color:var(--yellow)">↩</div>
         </div>
       </td>
@@ -1821,7 +1821,7 @@ function renderTasks(){
       </div>
       <div style="display:flex;gap:6px;align-items:center">
         ${t.status==='Concluída'?`<button class="btn btn-g btn-s" onclick="reopenTask('${t.id}')" style="color:var(--yellow)">Reabrir</button>`:`<button class="btn btn-success btn-s" onclick="completeTask('${t.id}')">✓ Concluir</button>`}
-        <div class="btn-icon" onclick="editTask('${t.id}')" title="Editar">✏️</div>
+        <div class="btn-icon" onclick="editTask('${t.id}')" title="Editar">Editar</div>
       </div>
     </div>`).join('');
   // also update proc hist
@@ -1948,7 +1948,7 @@ function renderProcTab3(){
   else if(sf==='concluido') filtered=arr.filter(m=>m.status==='Concluído');
   if(!filtered.length){tbody.innerHTML='';emp.style.display='flex';emp.querySelector('p').textContent=sf==='concluido'?'Nenhum processo concluído.':'Nenhum processo em andamento.';return}
   emp.style.display='none';
-  tbody.innerHTML=filtered.map(m=>`<tr><td><span class="bs ${MANUT_STATUS_CLS[m.status]}">${m.status}</span></td><td>${fmtDate(m.dtSol)}</td><td>${fmtDate(m.dtPrev)}</td><td>${fmt(m.resp)}</td><td>${fmt(m.cond)}</td><td>${fmt(m.prest)}</td><td>${fmt(m.desc)}</td><td>${fmtDate(m.dtConc)}</td><td>${fmtR(m.val)}</td><td>${fmtR(m.mat)}</td><td>${fmtR(m.recKenlo)}</td><td>${fmtR(m.manutKenlo)}</td><td>${fmtR(m.locDeb)}</td><td>${fmtR(m.contas)}</td><td>${m.recibo==='Sim'?'✓':'-'}</td><td style="color:var(--t3);font-size:12px">${m.obs||'—'}</td><td style="text-align:right"><div style="display:flex;gap:4px;justify-content:flex-end">${m.status==='Concluído'?`<button class="btn btn-s" style="font-size:10px;background:rgba(251,191,36,.15);color:#f59e0b;border:1px solid rgba(251,191,36,.3)" onclick="reverterProc('${m.id}')">Reverter</button>`:''}<div class="btn-icon" onclick="editManut('${m.id}','proc')">✏️</div></div></td></tr>`).join('');
+  tbody.innerHTML=filtered.map(m=>`<tr><td><span class="bs ${MANUT_STATUS_CLS[m.status]}">${m.status}</span></td><td>${fmtDate(m.dtSol)}</td><td>${fmtDate(m.dtPrev)}</td><td>${fmt(m.resp)}</td><td>${fmt(m.cond)}</td><td>${fmt(m.prest)}</td><td>${fmt(m.desc)}</td><td>${fmtDate(m.dtConc)}</td><td>${fmtR(m.val)}</td><td>${fmtR(m.mat)}</td><td>${fmtR(m.recKenlo)}</td><td>${fmtR(m.manutKenlo)}</td><td>${fmtR(m.locDeb)}</td><td>${fmtR(m.contas)}</td><td>${m.recibo==='Sim'?'✓':'-'}</td><td style="color:var(--t3);font-size:12px">${m.obs||'—'}</td><td style="text-align:right"><div style="display:flex;gap:4px;justify-content:flex-end">${m.status==='Concluído'?`<button class="btn btn-s" style="font-size:10px;background:rgba(251,191,36,.15);color:#f59e0b;border:1px solid rgba(251,191,36,.3)" onclick="reverterProc('${m.id}')">Reverter</button>`:''}<div class="btn-icon" onclick="editManut('${m.id}','proc')">Editar</div></div></td></tr>`).join('');
 }
 function reverterProc(id){
   const arr=DB.manutencoes.proc||[];
@@ -2094,7 +2094,7 @@ function showCondDetail(id){
               onchange="editCondPrest(${c.id},'${k}',this.value,document.getElementById('pvc-${c.id}-${k}')?.value)">
             <input id="pvc-${c.id}-${k}" class="fc" style="flex:1;padding:4px 6px;font-size:13px" value="${v}" placeholder="Nome do prestador"
               onchange="editCondPrest(${c.id},'${k}','${k}',this.value)">
-            <div class="btn-icon" onclick="removerPrestCond(${c.id},'${k}')" style="color:var(--red)" title="Remover">🗑</div>
+            <div class="btn-icon" onclick="removerPrestCond(${c.id},'${k}')" style="color:var(--red)" title="Remover">Excluir</div>
           </div>`).join('')}
         </div>
       </div>
@@ -2149,7 +2149,7 @@ function showCondDetail(id){
             <div style="font-size:11.5px;color:var(--t3)">${fmtDate(m.dtChk)} · Prazo: ${fmtDate(m.dtPrev)}</div></div>
             <span class="bs ${m.status==='Concluído'?'bs-ok':'bs-an'}">${m.status}</span>
             ${m.status!=='Concluído'?`<div class="btn-icon" onclick="concluirCondManut('${m.id}',${id})" title="Concluir" style="color:var(--green)">✓</div>`:''}
-            <div class="btn-icon" onclick="removerCondManut('${m.id}',${id})" style="color:var(--red)">🗑</div>
+            <div class="btn-icon" onclick="removerCondManut('${m.id}',${id})" style="color:var(--red)">Excluir</div>
           </div>`).join('')}
         </div>
       </div>
@@ -2744,8 +2744,8 @@ function renderGlobalChk(){
         </div>
         <div style="display:flex;align-items:center;gap:8px">
           <div style="text-align:center"><div style="font-size:15px;font-weight:700;color:${pctColor}">${pct}%</div><div style="font-size:10px;color:var(--t3)">${done}/${tot}</div></div>
-          <div class="btn-icon" onclick="editChkVisit('${v.id}')" title="Editar">✏️</div>
-          <div class="btn-icon" onclick="deleteChkVisit('${v.id}')" title="Excluir" style="color:var(--red)">🗑</div>
+          <div class="btn-icon" onclick="editChkVisit('${v.id}')" title="Editar">Editar</div>
+          <div class="btn-icon" onclick="deleteChkVisit('${v.id}')" title="Excluir" style="color:var(--red)">Excluir</div>
         </div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">
@@ -2902,7 +2902,7 @@ function renderColabs(){
       </div>
       <span class="bs ${c.ativo?'bs-ok':'bs-at'}">${c.ativo?'Ativo':'Inativo'}</span>
       <div class="btn-icon" onclick="toggleColab('${c.id}')" title="${c.ativo?'Desativar':'Ativar'}">${c.ativo?'🔓':'🔒'}</div>
-      <div class="btn-icon" onclick="removeColab('${c.id}')" style="color:var(--red)" title="Remover">🗑</div>
+      <div class="btn-icon" onclick="removeColab('${c.id}')" style="color:var(--red)" title="Remover">Excluir</div>
     </div>`).join('');
 }
 function toggleColab(id){
@@ -2928,7 +2928,7 @@ function renderPrestListAcesso(){
         <div style="font-size:11.5px;color:var(--t3)">${p.esp||''}${p.tel?' · '+p.tel:''}</div>
       </div>
       <span class="bs bs-ok">Ativo</span>
-      <div class="btn-icon" onclick="removePrest('${p.id}')" style="color:var(--red)" title="Remover">🗑</div>
+      <div class="btn-icon" onclick="removePrest('${p.id}')" style="color:var(--red)" title="Remover">Excluir</div>
     </div>`).join('');
 }
 function removePrest(id){

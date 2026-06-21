@@ -203,7 +203,7 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=8">
+<link rel="stylesheet" href="./enterprise-premium.css?v=9">
 </head>
 <body>
 
@@ -2424,7 +2424,8 @@ function aguaCell(v){
   if(v==='sanepar-pend')return'<td class="pend">Sanepar desligar</td>';
   if(v==='sanepar-ok')return'<td class="ok">Sanepar ✓</td>';
   if(v==='cond')return'<td class="ok">Cond. ✓</td>';
-  return`<td>${v}</td>`;
+  if(v==='prop-nome')return'<td class="ok">No nome do prop. ✓</td>';
+  return`<td class="ok">${v}</td>`;
 }
 function energCell(v){
   if(!v)return'<td>—</td>';
@@ -2658,7 +2659,7 @@ function rResc(){
     ${manCell(r.codigo)}
     <td>${pHtml(r.id)}</td>
     <td><div class="abts">
-      <button class="abt" onclick="openCP('${r.id}')" title="Checklist">📋</button>
+      <button class="abt" onclick="openCP('${r.id}')" title="Checklist">Checklist</button>
       <button class="abt" onclick="editResc('${r.id}')" title="Editar">Editar</button>
       <button class="abt" onclick="delR('rescisoes','${r.id}')">Excluir</button>
     </div></td>
@@ -4701,6 +4702,7 @@ function togCL(k){
   D().checklists[cpId][k]=document.getElementById('ck_'+k).checked;
   const lb=document.getElementById('lb_'+k);if(lb)lb.className=D().checklists[cpId][k]?'done':'';
   updCP(cpId);
+  clearTimeout(togCL._t);togCL._t=setTimeout(()=>{try{save();}catch(e){}},600);
 }
 function updCP(id){const{done,tot}=getP(id);document.getElementById('cp-prog').textContent=`${done}/${tot} itens`;}
 function closeCP(){document.getElementById('cpanel').classList.remove('open');}
