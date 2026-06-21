@@ -1,4 +1,5 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root{
   --premium-bg:#F8FAFC!important;
@@ -1778,3 +1779,34 @@ html body #admin-overlay:not(.hidden){
   .cards .card:nth-child(9){animation-delay:.34s!important}
   .cards .card:nth-child(10){animation-delay:.38s!important}
 }
+
+/* ============================================================ */
+/* TIPOGRAFIA PROFISSIONAL (cara de site SaaS)                  */
+/* Titulos/Marca: Plus Jakarta Sans  |  Dados/Corpo: Inter      */
+/* ============================================================ */
+body,.nav,.ni,.sb-item,input,select,textarea,button,td,.badge,.psub{
+  font-family:Inter,"Segoe UI",system-ui,sans-serif!important;
+}
+.sb-brand,body:has(.sb) .sb-brand,
+.logo-nm,body:has(.sb) .logo-nm,
+.ptit,body:has(.sb) .ptit,
+.sh-t,.card-t,
+.mhd .ptit,
+.admin-hdr-t,.modal-title,.mtitle{
+  font-family:"Plus Jakarta Sans",Inter,"Segoe UI",sans-serif!important;
+  letter-spacing:-.02em!important;
+}
+/* Hierarquia de titulos */
+.ptit,body:has(.sb) .ptit{font-size:20px!important;font-weight:800!important;line-height:1.15!important}
+.psub,body:has(.sb) .psub{font-size:12px!important;font-weight:500!important}
+.sb-brand,body:has(.sb) .sb-brand{font-size:15.5px!important;font-weight:800!important;line-height:1.18!important}
+.sb-brand span,body:has(.sb) .sb-brand span{font-weight:800!important}
+.sb-lbl,.sb-section{font-family:Inter,sans-serif!important;font-size:10px!important;font-weight:700!important;letter-spacing:1.6px!important}
+.nav,.ni,.sb-item{font-size:12.5px!important;font-weight:600!important;letter-spacing:-.005em!important}
+/* Numeros alinhados (padrao financeiro/profissional) */
+.card-n,.stat-val,table td,.nbadge,.hs-n{font-variant-numeric:tabular-nums!important;font-feature-settings:"tnum" 1!important}
+.card-n,.stat-val{font-family:"Plus Jakarta Sans",Inter,sans-serif!important;font-weight:800!important}
+.card-l,.stat-lbl{font-size:11.5px!important;font-weight:600!important}
+/* Tabelas mais legiveis */
+table{font-size:12.5px!important}
+th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-weight:700!important;text-transform:uppercase!important;font-size:10.5px!important;color:#64748B!important}
