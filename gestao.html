@@ -319,7 +319,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=22">
+<link rel="stylesheet" href="./enterprise-premium.css?v=24">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -337,9 +337,9 @@ body{visibility:visible!important}
 .tb-title{font-size:16px!important;font-weight:700!important;color:#152236!important}
 .stat-val{font-size:24px!important;font-weight:800!important}
 .stat-lbl{font-size:10.5px!important}
-#sidebar .ni,#sidebar .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 12px!important}
+#sidebar .ni,#sidebar .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 14px!important}
 #sidebar .sb-module-row .ga-module-link{
-  font-size:10px!important;font-weight:600!important;
+  font-size:10.5px!important;font-weight:600!important;
   padding:5px 6px!important;min-height:30px!important;
   flex:1 1 0!important;min-width:0!important;text-align:center!important;
   line-height:1.2!important;white-space:nowrap!important;
@@ -2025,7 +2025,10 @@ function renderAgendaProc(){
 // ─── CONDOMÍNIOS ─────────────────────────────────
 function renderConds(){
   const badge=document.getElementById('sb-cond-badge');
-  if(badge)badge.textContent=CONDOMINIOS.length;
+  if(badge){
+    badge.textContent=CONDOMINIOS.length;
+    badge.classList.toggle('has-count',CONDOMINIOS.length>0);
+  }
   const lbl=document.getElementById('cond-count-lbl');
   if(lbl)lbl.textContent=CONDOMINIOS.length+' condomínios gerenciados';
   const q=(document.getElementById('cond-search')?.value||'').toLowerCase();

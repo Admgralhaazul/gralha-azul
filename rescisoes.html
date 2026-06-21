@@ -86,10 +86,7 @@ body{background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-directi
 .nav{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;color:rgba(255,255,255,.5);font-size:12px;border-left:2px solid transparent;transition:.1s}
 .nav:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.9)}
 .nav.active{background:rgba(232,114,12,.1);color:#fff;border-left-color:#e8720c;font-weight:500}
-.nbadge{margin-left:auto;border-radius:3px;padding:1px 6px;font-size:9px;font-weight:600;background:#2a3f55;color:rgba(255,255,255,.4);transition:.2s}
-.nb-acc{background:#2a3f55;color:rgba(255,255,255,.4)}
-.nb-red{background:#2a3f55;color:rgba(255,255,255,.4)}
-.nb-ora{background:#2a3f55;color:rgba(255,255,255,.4)}
+.nbadge{margin-left:auto;border-radius:10px;padding:2px 7px;font-size:10px;font-weight:800;min-width:18px;text-align:center;line-height:1.3;background:rgba(255,255,255,.08);color:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.06);transition:.15s}
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .mhd{background:#fff;border-bottom:1px solid #e8ecf0;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .ptit{font-size:14px;font-weight:600;color:#1e3a5f}
@@ -203,7 +200,7 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=21">
+<link rel="stylesheet" href="./enterprise-premium.css?v=24">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
@@ -675,10 +672,10 @@ td.ora{color:var(--o);font-weight:600}
       <div class="ttbar" style="background:#fff;border-radius:9px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
         <span style="font-weight:700;font-size:12px">Inadimplentes</span>
         <div style="display:flex;gap:4px;margin-left:auto;align-items:center">
-          <button id="inad-tab-pend" onclick="setInadTab(false)" style="padding:4px 12px;border-radius:5px;border:1.5px solid #1e3a5f;font-size:11px;font-weight:600;cursor:pointer;background:#1e3a5f;color:#fff">Pendentes</button>
-          <button id="inad-tab-conc" onclick="setInadTab(true)" style="padding:4px 12px;border-radius:5px;border:1.5px solid var(--bd);font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#64748b">Concluídos</button>
+          <button id="inad-tab-pend" type="button" class="filter-tab on" onclick="setInadTab(false)">Pendentes</button>
+          <button id="inad-tab-conc" type="button" class="filter-tab" onclick="setInadTab(true)">Concluídos</button>
           <input type="hidden" id="inad-show-pagos" value="0">
-          <button class="btn btn-p btn-sm" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button>
+          <button class="btn btn-p btn-sm" style="color:#fff" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button>
         </div>
       </div>
       <div id="inad-list"><div class="empty"><div class="empty-mark"></div><p>Tudo em dia!</p><button class="btn btn-p btn-sm" style="margin-top:10px" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button></div></div>
@@ -690,8 +687,8 @@ td.ora{color:var(--o);font-weight:600}
         <span style="font-weight:700;font-size:12px">Jurídicos</span>
         <span style="font-size:11px;color:var(--tl);margin-left:8px">Casos repassados do Inadimp./Atrasos</span>
         <div style="display:flex;gap:4px;margin-left:12px;align-items:center">
-          <button id="jur-tab-pend" onclick="setJurTab(false)" style="padding:4px 12px;border-radius:5px;border:1.5px solid #1e3a5f;font-size:11px;font-weight:600;cursor:pointer;background:#1e3a5f;color:#fff">Pendentes</button>
-          <button id="jur-tab-conc" onclick="setJurTab(true)" style="padding:4px 12px;border-radius:5px;border:1.5px solid var(--bd);font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#64748b">Concluídos</button>
+          <button id="jur-tab-pend" type="button" class="filter-tab on" onclick="setJurTab(false)">Pendentes</button>
+          <button id="jur-tab-conc" type="button" class="filter-tab" onclick="setJurTab(true)">Concluídos</button>
           <input type="hidden" id="jur-show-concl" value="0">
         </div>
         <span style="flex:1"></span>
@@ -1995,7 +1992,7 @@ function go(p,el){
   document.getElementById('psub').textContent=s;
   const a=document.getElementById('macts');
   const m={cartas:`<button class="btn btn-p btn-sm" onclick="openM('m-carta')">+ Carta 30 Dias</button>`,
-    inadimplentes:`<button class="btn btn-p btn-sm" onclick="openM('m-inad')">+ Inadimplente</button>`,
+    inadimplentes:`<button class="btn btn-p btn-sm" style="color:#fff" onclick="openM('m-inad')">+ Inadimplente</button>`,
     rescisoes:`<button class="btn btn-p btn-sm" onclick="resetRescModal();openM('m-resc')">+ Nova Rescisão</button>`};
   a.innerHTML=m[p]||'';
   if(p==='manutencoes'){
@@ -2337,10 +2334,11 @@ function updHeader(){
     if(!el)return;
     el.textContent=v;
     const n=parseInt(v)||0;
-    if(n>0){el.style.background='#e8720c';el.style.color='#fff';}
-    else{el.style.background='';el.style.color='';}
+    el.classList.toggle('has-count',n>0);
+    el.style.background='';
+    el.style.color='';
     const nav=el.closest('.nav');
-    if(nav){nav.style.color=n>0?'rgba(255,255,255,.9)':'';}
+    if(nav){nav.style.color=n>0?'rgba(255,255,255,.92)':'';}
   };
   setB('nb-r',andamento);
   setB('nb-ag',agUrg);
@@ -2436,7 +2434,7 @@ function manCell(codigo){
 function loftSinCell(v){
   if(v==='Sim')return cellTd('Sim','pend');
   if(v==='Não precisou')return cellTd('Não precisou','ok');
-  if(v==='Não')return cellTd('Não','bn');
+  if(v==='Não')return cellTd('Não','no');
   return cellTd('Aguardando','warn');
 }
 function mktSq(on,label){return `<span class="mkt-sq${on?' on':''}">${label}</span>`;}
@@ -3462,7 +3460,7 @@ function rCart(){
 function clearCartFilter(){const a=document.getElementById('f-cart-ano');const m=document.getElementById('f-cart-mes');if(a)a.value='';if(m){m.value='';m.dataset.cleared='1';}rCart();}
 function onCartAnoChange(){const m=document.getElementById('f-cart-mes');if(m){m.value='';delete m.dataset.cleared;}rCart();}
 function onCartMesChange(){const m=document.getElementById('f-cart-mes');if(m){if(m.value==='')m.dataset.cleared='1';else delete m.dataset.cleared;}rCart();}
-function togCart(id,idx){const c=D().cartao.find(x=>x.id===id);if(!c)return;if(!c.pago)c.pago=[];c.pago[idx]=!c.pago[idx];save();rCart();}
+function togCart(id,idx){const c=D().cartao.find(x=>x.id===id);if(!c)return;if(!c.pago)c.pago=[];c.pago[idx]=!c.pago[idx];save();rCart();if(typeof rInad==='function')rInad();}
 function togCartM(btn,idx){btn.textContent=btn.textContent==='⬜'?'✅':'⬜';}
 function salCart(){
   const con=document.getElementById('c-con').value.trim();if(!con){alert('Informe contrato');return;}
@@ -4128,10 +4126,10 @@ function rMkt(){
     </td>
     <td>${m.proprietario||'-'}</td><td>${m.contato||'-'}</td>
     <td><b>${fm(m.aluguel)}</b></td><td>${m.cond||'-'}</td><td>${m.agua||'-'}</td><td>${m.energia||'-'}</td><td>${m.iptu||'-'}</td>
-    <td><button onclick="togMkt('${m.id}','mktAvisado')" class="mkt-sq-btn ${m.mktAvisado==='Sim'?'on':''}" style="min-width:100px">${m.mktAvisado==='Sim'?'Liberado':'Pendente'}</button></td>
-    <td><button onclick="togMkt('${m.id}','site')" class="mkt-sq-btn ${m.site==='Sim'?'on':''}" style="min-width:90px">${m.site==='Sim'?'Ativado':'Sem site'}</button></td>
-    <td><button onclick="togMkt('${m.id}','fotos')" class="mkt-sq-btn ${mktFotosOn(m)?'on':''}" style="width:36px;min-width:36px;padding:0" title="Fotos">${m.fotos==='Feitas'?'Feitas':m.fotos==='Recebidas'?'Receb.':m.fotos==='Não tem'?'N/A':'Pend.'}</button></td>
-    <td>${m.ativDt?`<span style="font-size:11px">${fd(m.ativDt)}</span>`:'<span style="color:var(--tl);font-size:10px">—</span>'}<br><span style="font-size:9px;color:var(--tl)">${m.data?fd(m.data):''}</span></td>
+    <td><button type="button" onclick="togMkt('${m.id}','mktAvisado')" class="mkt-sq-btn ${m.mktAvisado==='Sim'?'on':'off'}" style="min-width:100px">${m.mktAvisado==='Sim'?'Liberado':'Pendente'}</button></td>
+    <td><button type="button" onclick="togMkt('${m.id}','site')" class="mkt-sq-btn ${m.site==='Sim'?'on':'off'}" style="min-width:90px">${m.site==='Sim'?'Ativado':'Sem site'}</button></td>
+    <td><button type="button" onclick="togMkt('${m.id}','fotos')" class="mkt-sq-btn ${mktFotosOn(m)?'on':'off'}" title="Fotos">${m.fotos==='Feitas'?'Feitas':m.fotos==='Recebidas'?'Receb.':m.fotos==='Não tem'?'N/A':'Pend.'}</button></td>
+    <td><input type="date" class="mkt-dt-inp" value="${m.ativDt||''}" onchange="setMktAtivDt('${m.id}',this.value)" title="Data de ativação">${m.data?`<div style="font-size:9px;color:var(--tl);margin-top:2px">${fd(m.data)}</div>`:''}</td>
     <td><div class="abts">
       ${!done?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="arquivarMkt('${m.id}')" title="Marcar como concluído manualmente">Concluído</button>`:`<button class="abt" onclick="desarquivarMkt('${m.id}')" title="Reabrir">↩</button>`}
       <button class="abt action-edit" onclick="editMkt('${m.id}')">Editar</button>
@@ -4167,6 +4165,12 @@ function desarquivarMkt(id){
   const m=D().marketing.find(x=>x.id===id);if(!m)return;
   m.arquivado=false;
   save();rMkt();updHeader();
+}
+function setMktAtivDt(id,val){
+  const m=D().marketing.find(x=>x.id===id);if(!m)return;
+  m.ativDt=val||'';
+  if(currentUser)logEvent('alteracao',`${currentUser.nome} ${m.codigo}, em Marketing data ativação → "${val||'—'}"`);
+  save();rMkt();
 }
 function togMkt(id,field){
   const m=D().marketing.find(x=>x.id===id);if(!m)return;
@@ -4372,7 +4376,7 @@ function rInad(){
       cartItems.push(card(pago,'#0891b2',
         `<b style="color:var(--p)">${ct.contrato}</b><div style="font-size:9px;color:var(--tl)">P${i+1}</div>`,
         `<div style="font-weight:600">Venceu: ${fd(dt)}</div><div style="font-size:11px;color:var(--tl)">${ct.tipo} · ${ct.parcelas}x</div>`,
-        pago ? pagoTag : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="togCart('${ct.id}',${i})">Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('cart','${ct.id}',${i})" title="Passar para o Jurídico">p/ Jurídico</button></div>`
+        pago ? `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">${pagoTag}<button onclick="unmarkCartPay('${ct.id}',${i})" style="padding:3px 10px;border:1.5px solid #16a34a;background:#dcfce7;color:#166534;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer">Reabrir</button></div>` : `<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="btn btn-sm" style="background:#dcfce7;color:#166534" onclick="togCart('${ct.id}',${i})">Pago</button><button class="btn btn-sm" style="background:#ede9fe;color:#5b21b6;font-size:10px" onclick="passarJuridico('cart','${ct.id}',${i})" title="Passar para o Jurídico">p/ Jurídico</button></div>`
       ));
     });
   });
@@ -4440,13 +4444,14 @@ function salJur(){
   if(currentUser) logEvent('criacao',`${currentUser.nome} ${cod}, adicionou manualmente ao Jurídico`);
   save();closeM('m-jur');rJur();
 }
+function applyFilterTabs(pb,cb,secondActive){
+  if(pb)pb.classList.toggle('on',!secondActive);
+  if(cb)cb.classList.toggle('on',!!secondActive);
+}
 function setJurTab(showConcl){
   const el=document.getElementById('jur-show-concl');
   if(el)el.value=showConcl?'1':'0';
-  const pb=document.getElementById('jur-tab-pend');
-  const cb=document.getElementById('jur-tab-conc');
-  if(pb){pb.style.background=showConcl?'#fff':'#1e3a5f';pb.style.color=showConcl?'#64748b':'#fff';}
-  if(cb){cb.style.background=showConcl?'#1e3a5f':'#fff';cb.style.color=showConcl?'#fff':'#64748b';}
+  applyFilterTabs(document.getElementById('jur-tab-pend'),document.getElementById('jur-tab-conc'),showConcl);
   rJur();
 }
 function concluirJur(jid){
@@ -4482,11 +4487,15 @@ function rJur(){
 function setInadTab(showConcl){
   const el=document.getElementById('inad-show-pagos');
   if(el)el.value=showConcl?'1':'0';
-  const pb=document.getElementById('inad-tab-pend');
-  const cb=document.getElementById('inad-tab-conc');
-  if(pb){pb.style.background=showConcl?'#fff':'#1e3a5f';pb.style.color=showConcl?'#64748b':'#fff';}
-  if(cb){cb.style.background=showConcl?'#1e3a5f':'#fff';cb.style.color=showConcl?'#fff':'#64748b';}
+  applyFilterTabs(document.getElementById('inad-tab-pend'),document.getElementById('inad-tab-conc'),showConcl);
   rInad();
+}
+function unmarkCartPay(id,idx){
+  const c=D().cartao.find(x=>x.id===id);if(!c)return;
+  if(!c.pago)c.pago=[];
+  c.pago[idx]=false;
+  if(currentUser)logEvent('alteracao',`${currentUser.nome} ${c.contrato}, em Inadimplentes reabriu parcela cartão ${idx+1}`);
+  save();rInad();rCart();
 }
 function unmarkInadPago(id){
   const inad=D().inadimplentes.find(x=>x.id===id);if(!inad)return;
