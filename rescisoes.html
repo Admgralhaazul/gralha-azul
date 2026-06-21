@@ -83,7 +83,7 @@ body{background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-directi
 .sb{width:214px;background:#162840;color:#fff;display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
 .sb-sec{padding:8px 0 2px}
 .sb-lbl{font-size:8.5px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.22);padding:0 16px 5px;font-weight:600}
-.nav{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;color:rgba(255,255,255,.5);font-size:11px;border-left:2px solid transparent;transition:.1s}
+.nav{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;color:rgba(255,255,255,.5);font-size:12px;border-left:2px solid transparent;transition:.1s}
 .nav:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.9)}
 .nav.active{background:rgba(232,114,12,.1);color:#fff;border-left-color:#e8720c;font-weight:500}
 .nbadge{margin-left:auto;border-radius:3px;padding:1px 6px;font-size:9px;font-weight:600;background:#2a3f55;color:rgba(255,255,255,.4);transition:.2s}
@@ -203,7 +203,7 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=17">
+<link rel="stylesheet" href="./enterprise-premium.css?v=18">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
@@ -2410,22 +2410,20 @@ function getRescMes(r){return getMesRef(r.vis2||r.vis1||'');}
 function manCell(codigo){
   const mans=D().manutencoes.filter(m=>m.codigo===codigo);
   if(!mans.length){
-    // Check if this rescisao is 'saiu da imob'
     const resc=D().rescisoes.find(rx=>rx.codigo===codigo);
-    if(resc&&resc.manTipo==='vantecip'&&resc.comercial!=='saiu'&&resc.status!=='Saiu da Imob')return'<td style="color:var(--g);font-size:10px;font-weight:600">Só v. antecipação</td>';
-  if(resc&&(resc.comercial==='saiu'||resc.status==='Saiu da Imob'))return'<td style="color:var(--tl);font-size:10px">—</td>';
-    return'<td><span style="color:var(--g);font-size:10px;font-weight:600">Sem manut.</span></td>';
+    if(resc&&resc.manTipo==='vantecip'&&resc.comercial!=='saiu'&&resc.status!=='Saiu da Imob')return cellTd('Só v. antecipação','ok');
+    if(resc&&(resc.comercial==='saiu'||resc.status==='Saiu da Imob'))return'<td>—</td>';
+    return cellTd('Sem manut.','ok');
   }
-  // Separate real manutencoes from soVAntecip
   const realMans=mans.filter(m=>!m.soVAntecip);
   const vaOnly=mans.filter(m=>m.soVAntecip);
   if(!realMans.length&&vaOnly.length){
     const vaOk=vaOnly.every(m=>m.vaOk);
-    return`<td style="color:${vaOk?'var(--g)':'var(--r)'};font-size:10px;font-weight:600">${vaOk?'Só vist de antec. ✅':'Só v. antecipação'}</td>`;
+    return vaOk?cellTd('Só vist. antec.','ok'):cellTd('Só v. antecipação','pend');
   }
   const allDone=realMans.every(m=>m.recibo||m.status==='Concluído');
-  if(allDone)return`<td style="font-weight:600;color:var(--g)">Concluído</td>`;
-  return`<td style="font-weight:600;color:var(--r)">Pendente</td>`;
+  if(allDone)return cellTd('Concluído','ok');
+  return cellTd('Pendente','pend');
 }
 function sbadge(s){
   const m={'Em Andamento':'bo','Concluída':'bg','Inadimplente':'br','Saiu da Imob':'bgy','Pago':'bg','Pendente':'bo','Desligado':'bgy','Urgente':'br','Para fazer':'bo','Lembrar':'by','Sim':'bg','Não':'bn','Aprovado':'bg','Negado':'bn','Em análise':'by'};
