@@ -83,7 +83,7 @@ body{background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-directi
 .sb{width:214px;background:#162840;color:#fff;display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
 .sb-sec{padding:8px 0 2px}
 .sb-lbl{font-size:8.5px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.22);padding:0 16px 5px;font-weight:600}
-.nav{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;color:rgba(255,255,255,.5);font-size:12px;border-left:2px solid transparent;transition:.1s}
+.nav{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;color:rgba(255,255,255,.5);font-size:11.5px;border-left:2px solid transparent;transition:.1s}
 .nav:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.9)}
 .nav.active{background:rgba(232,114,12,.1);color:#fff;border-left-color:#e8720c;font-weight:500}
 .nbadge{margin-left:auto;border-radius:3px;padding:1px 6px;font-size:9px;font-weight:600;background:#2a3f55;color:rgba(255,255,255,.4);transition:.2s}
@@ -203,22 +203,34 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=14">
+<link rel="stylesheet" href="./enterprise-premium.css?v=15">
 <style id="ga-live-fixes">
-.sb-module-switch{background:rgba(0,0,0,.32)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:6px!important;padding:10px!important;margin:10px 8px 14px!important;box-shadow:inset 0 2px 8px rgba(0,0,0,.25)!important}
-.sb-module-lbl{font-size:9px!important;letter-spacing:1.5px!important;text-transform:uppercase;color:rgba(255,255,255,.45)!important;font-weight:700;padding:0 6px 8px!important}
-.nav,.ni,.sb-item{font-size:12px!important}
+/* Módulos — segmento fino (sem caixa grossa) */
+.sb-module-switch{margin:14px 12px 16px!important;padding:0!important;background:none!important;border:none!important;box-shadow:none!important}
+.sb-module-lbl{font-size:8.5px!important;letter-spacing:.14em!important;text-transform:uppercase;color:rgba(255,255,255,.30)!important;font-weight:600!important;padding:0 0 7px!important;margin:0!important}
+.sb-module-row{display:flex!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:5px!important;overflow:hidden!important}
+.sb-module-row .ga-module-link{flex:1!important;justify-content:center!important;min-height:30px!important;padding:5px 6px!important;margin:0!important;border-radius:0!important;border:none!important;border-right:1px solid rgba(255,255,255,.10)!important;background:rgba(255,255,255,.04)!important;font-size:10.5px!important;gap:5px!important;box-shadow:none!important}
+.sb-module-row .ga-module-link:last-child{border-right:none!important}
+.sb-module-row .ga-module-link.active-system{background:rgba(255,255,255,.13)!important;color:#fff!important;font-weight:600!important}
+.sb-module-row .ga-module-link:not(.active-system){opacity:.72!important}
+.sb-module-row .ga-module-link:hover{opacity:1!important;background:rgba(255,255,255,.09)!important}
+/* Menu lateral rescisão */
+.mod-resc .nav,.mod-resc .sb-item{font-size:11.5px!important}
+.mod-resc .sb-lbl{font-size:9.5px!important}
 .abt,.btn-icon,.btn-sm{border-radius:5px!important}
 .abt.action-edit::before{background:#0F172A!important}
 .abt.action-checklist::before{width:7px!important;height:7px!important;border-radius:50%!important;background:#0F172A!important;box-shadow:none!important;border:none!important}
 .badge,.cell-tag{border-radius:4px!important}
 .badge.bn{background:#F1F5F9!important;color:#64748B!important;border:1px solid #E2E8F0!important;font-weight:600!important}
-.mico{border-radius:3px!important;background:#F1F5F9!important;border:1px solid #E2E8F0!important}
+/* Ícones de módulo — só traço, sem caixa */
+.mico{width:auto!important;height:auto!important;padding:0!important;background:none!important;border:none!important;border-radius:0!important}
+.mico svg.ico{width:26px!important;height:26px!important;opacity:.88!important}
+.mcard{border-radius:10px!important}
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
 </style>
 </head>
-<body>
+<body class="mod-resc">
 
 <div class="hdr" style="opacity: 1;">
   <div class="logo">
@@ -238,9 +250,11 @@ td.ora{color:var(--o);font-weight:600}
     <div class="sb-tag">Plataforma Imobiliária</div>
   </div>
   <div class="sb-module-switch">
-    <div class="sb-module-lbl">Escolher sistema</div>
-    <a class="nav ga-module-link active-system" href="./rescisoes.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisão</a>
-    <a class="nav ga-module-link" href="./gestao.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manut./Gestão Adm.</a>
+    <div class="sb-module-lbl">Módulos</div>
+    <div class="sb-module-row">
+      <a class="nav ga-module-link active-system" href="./rescisoes.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisão</a>
+      <a class="nav ga-module-link" href="./gestao.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Gestão Adm.</a>
+    </div>
   </div>
   <div class="sb-sec">
     <div class="sb-lbl">Painel</div>
@@ -3673,7 +3687,7 @@ function passesManutTab(m,tab){
     if(rc&&(rc.comercial==='saiu'||rc.status==='Saiu da Imob'))return false;
     if(tab==='va')return m.status!=='Concluído';
     if(tab==='c')return m.status==='Concluído';
-    if(tab==='p')return m.status!=='Concluído'&&!m.liberado;
+    if(tab==='p')return m.liberado&&m.status!=='Concluído';
     return true;
   }
   if(tab==='p'){

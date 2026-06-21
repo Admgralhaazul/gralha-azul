@@ -1973,45 +1973,56 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 .hdr,.lay{opacity:1!important}
 .content,.cards .card,.stats-row .stat,.view.active{animation:none!important}
 
-/* Escolher sistema — painel distinto do menu */
+/* Escolher sistema — segmento fino */
 .sb-module-switch{
-  margin:10px 8px 14px!important;
-  padding:10px 10px 8px!important;
-  background:rgba(0,0,0,.30)!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  border-radius:6px!important;
-  box-shadow:inset 0 2px 8px rgba(0,0,0,.22)!important;
-}
-.sb-module-lbl{
-  font-size:9px!important;
-  letter-spacing:1.5px!important;
-  text-transform:uppercase!important;
-  color:rgba(255,255,255,.40)!important;
-  font-weight:700!important;
-  padding:0 6px 8px!important;
-}
-.sb-module-switch .ga-module-link{
-  border-radius:4px!important;
-  font-size:12px!important;
-  min-height:36px!important;
-  padding:8px 10px!important;
-  margin-bottom:3px!important;
-  background:rgba(255,255,255,.05)!important;
-  border:1px solid rgba(255,255,255,.08)!important;
+  margin:14px 12px 16px!important;
+  padding:0!important;
+  background:none!important;
+  border:none!important;
   box-shadow:none!important;
 }
-.sb-module-switch .ga-module-link.active-system{
-  background:rgba(255,255,255,.15)!important;
-  border-color:rgba(255,255,255,.20)!important;
+.sb-module-lbl{
+  font-size:8.5px!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+  color:rgba(255,255,255,.30)!important;
+  font-weight:600!important;
+  padding:0 0 7px!important;
 }
-.sb-module-switch .ga-module-link:hover{
-  background:rgba(255,255,255,.11)!important;
-  border-color:rgba(255,255,255,.14)!important;
+.sb-module-row{
+  display:flex!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:5px!important;
+  overflow:hidden!important;
 }
+.sb-module-row .ga-module-link{
+  flex:1!important;
+  justify-content:center!important;
+  min-height:30px!important;
+  padding:5px 6px!important;
+  margin:0!important;
+  border-radius:0!important;
+  border:none!important;
+  border-right:1px solid rgba(255,255,255,.10)!important;
+  background:rgba(255,255,255,.04)!important;
+  font-size:10.5px!important;
+  gap:5px!important;
+  box-shadow:none!important;
+}
+.sb-module-row .ga-module-link:last-child{border-right:none!important}
+.sb-module-row .ga-module-link.active-system{
+  background:rgba(255,255,255,.13)!important;
+  color:#fff!important;
+  font-weight:600!important;
+}
+.sb-module-row .ga-module-link:not(.active-system){opacity:.72!important}
+.sb-module-row .ga-module-link:hover{opacity:1!important;background:rgba(255,255,255,.09)!important}
 
-/* Tipografia unificada lateral */
-.nav,.ni,.sb-item{font-size:12px!important;font-weight:600!important}
-.sb-lbl,.sb-sec,.sb-section{font-size:10px!important;letter-spacing:1.4px!important}
+/* Tipografia lateral por módulo */
+.mod-resc .nav,.mod-resc .sb-item{font-size:11.5px!important}
+.mod-resc .sb-lbl{font-size:9.5px!important}
+.mod-gest #sidebar .ni,.mod-gest .sb-item{font-size:11.5px!important}
+.mod-gest .sb-sec{font-size:9.5px!important}
 
 /* Botões retos (não pills) */
 .abt,.btn-icon,.btn-sm{border-radius:5px!important}
@@ -2035,13 +2046,17 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 /* Tags menos arredondadas */
 .cell-tag,.badge,.bs,.mbadge{border-radius:4px!important}
 
-/* Ícones de módulo — quadrado, não pill */
+/* Ícones de módulo — só traço SVG, sem caixa */
 .mico{
-  border-radius:3px!important;
-  background:#F1F5F9!important;
-  border:1px solid #E2E8F0!important;
+  width:auto!important;
+  height:auto!important;
+  padding:0!important;
+  background:none!important;
+  border:none!important;
+  border-radius:0!important;
 }
-.mcard{border-radius:8px!important}
+.mico svg.ico{width:26px!important;height:26px!important;opacity:.88!important}
+.mcard{border-radius:10px!important}
 
 /* Nuvem oculta */
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important;pointer-events:none!important}

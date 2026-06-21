@@ -39,7 +39,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);min-h
 .sb-tag{font-size:10px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-top:3px}
 .sb-nav{flex:1;overflow-y:auto;padding:14px 10px}
 .sb-sec{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--t3);font-weight:600;padding:10px 10px 5px}
-.ni{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);cursor:pointer;font-size:12px;font-weight:500;color:var(--t2);transition:all .15s;margin-bottom:1px;position:relative}
+.ni{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--rs);cursor:pointer;font-size:11.5px;font-weight:500;color:var(--t2);transition:all .15s;margin-bottom:1px;position:relative}
 .ni:hover{background:var(--s2);color:var(--t1)}
 .ni.active{background:rgba(79,142,247,.1);color:var(--blue)}
 .ni.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--blue);border-radius:0 3px 3px 0}
@@ -282,7 +282,7 @@ textarea.fc{resize:vertical;min-height:80px}
 .mcard.mc-cy{border-top:3px solid var(--cyan)}.mcard.mc-cy:hover{box-shadow:0 8px 30px rgba(30,201,201,.15)}
 .mcard.mc-pu{border-top:3px solid var(--purple)}.mcard.mc-pu:hover{box-shadow:0 8px 30px rgba(124,92,232,.15)}
 .mcard.mc-or{border-top:3px solid var(--orange)}.mcard.mc-pk{border-top:3px solid var(--pink)}.mcard.mc-rd{border-top:3px solid var(--red)}
-.mico{font-size:26px;width:48px;height:48px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:var(--s2)}
+.mico{font-size:26px;width:auto;height:auto;padding:0;border-radius:0;display:flex;align-items:center;justify-content:center;background:transparent}
 .mname{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
 .mdesc{font-size:12px;color:var(--t3);line-height:1.5}
 .mmeta{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--t3);border-top:1px solid var(--border);padding-top:12px;margin-top:auto}
@@ -318,14 +318,20 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=14">
+<link rel="stylesheet" href="./enterprise-premium.css?v=15">
 <style id="ga-live-fixes">
-.sb-module-switch{background:rgba(0,0,0,.32)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:6px!important;padding:10px!important;margin:10px 8px 14px!important;box-shadow:inset 0 2px 8px rgba(0,0,0,.25)!important}
-.sb-module-lbl{font-size:9px!important;letter-spacing:1.5px!important;text-transform:uppercase;color:rgba(255,255,255,.45)!important;font-weight:700;padding:0 6px 8px!important}
-.nav,.ni,.sb-item{font-size:12px!important}
-.abt,.btn-icon,.btn-sm{border-radius:5px!important}
-.mico{border-radius:3px!important;background:#F1F5F9!important;border:1px solid #E2E8F0!important}
-.mcard{border-radius:8px!important}
+.sb-module-switch{margin:14px 10px 16px!important;padding:0!important;background:none!important;border:none!important;box-shadow:none!important}
+.sb-module-lbl{font-size:8.5px!important;letter-spacing:.14em!important;text-transform:uppercase;color:rgba(255,255,255,.30)!important;font-weight:600!important;padding:0 0 7px!important}
+.sb-module-row{display:flex!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:5px!important;overflow:hidden!important}
+.sb-module-row .ga-module-link{flex:1!important;justify-content:center!important;min-height:30px!important;padding:5px 6px!important;margin:0!important;border-radius:0!important;border:none!important;border-right:1px solid rgba(255,255,255,.10)!important;background:rgba(255,255,255,.04)!important;font-size:10.5px!important;gap:5px!important;box-shadow:none!important}
+.sb-module-row .ga-module-link:last-child{border-right:none!important}
+.sb-module-row .ga-module-link.active-system{background:rgba(255,255,255,.13)!important;color:#fff!important;font-weight:600!important}
+.sb-module-row .ga-module-link:not(.active-system){opacity:.72!important}
+.mod-gest #sidebar .ni,.mod-gest .sb-item{font-size:11.5px!important}
+.mod-gest .sb-sec{font-size:9.5px!important}
+.mico{width:auto!important;height:auto!important;padding:0!important;background:none!important;border:none!important;border-radius:0!important}
+.mico svg.ico{width:26px!important;height:26px!important;opacity:.88!important}
+.mcard{border-radius:10px!important}
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
 </style>
@@ -337,14 +343,14 @@ body{visibility:visible!important}
 #app,.view,#main,#content{background:#F8FAFC!important}
 #sidebar{background:radial-gradient(circle at 16% 4%,rgba(145,190,228,.26),transparent 34%),linear-gradient(180deg,#2D4965 0%,#243F59 36%,#1C344C 68%,#14283D 100%)!important;color:#EAF2FA!important}
 #topbar{height:48px!important;background:linear-gradient(90deg,#F7FBFF 0%,#EFF6FC 50%,#E6F0F8 100%)!important;border-bottom:1px solid #CFE0EF!important;box-shadow:0 8px 26px rgba(30,58,95,.08)!important}
-.card,.stat,.mcard,.tw,.filter-bar{background:#FFFFFF!important;border:1px solid #D9E6F2!important;border-radius:18px!important;box-shadow:0 1px 2px rgba(15,23,42,.04),0 18px 48px rgba(30,58,95,.08)!important}
+.card,.stat,.mcard,.tw,.filter-bar{background:#FFFFFF!important;border:1px solid #D9E6F2!important;border-radius:10px!important;box-shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(30,58,95,.06)!important}
 .tb-title,.sh-t,.card-t,.mname,.mt,.ccard-name{font-family:Inter,"Segoe UI",Arial,sans-serif!important;letter-spacing:-.01em!important}
 .tb-title{font-size:16px!important;font-weight:700!important;color:#152236!important}
 .stat-val{font-size:24px!important;font-weight:800!important}
 .stat-lbl{font-size:10.5px!important}
 </style>
 </head>
-<body>
+<body class="mod-gest">
 <div id="app">
 
 <!-- ══════════════ SIDEBAR ══════════════ -->
@@ -355,9 +361,11 @@ body{visibility:visible!important}
   </div>
   <div class="sb-nav">
     <div class="sb-module-switch">
-      <div class="sb-module-lbl">Escolher sistema</div>
-      <a class="ni ga-module-link" href="./rescisoes.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisão</a>
-      <a class="ni ga-module-link active-system" href="./gestao.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manut./Gestão Adm.</a>
+      <div class="sb-module-lbl">Módulos</div>
+      <div class="sb-module-row">
+        <a class="ni ga-module-link" href="./rescisoes.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisão</a>
+        <a class="ni ga-module-link active-system" href="./gestao.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Gestão Adm.</a>
+      </div>
     </div>
     <div class="sb-sec">Principal</div>
     <div class="ni active" onclick="nav(&#39;dashboard&#39;)"><svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Dashboard</div>
