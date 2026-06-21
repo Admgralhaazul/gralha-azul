@@ -1876,9 +1876,10 @@ th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-we
 .badge.bp{background:#EDE9FE!important;color:#6D28D9!important;border:1px solid #C4B5FD!important}
 .badge.bgy{background:#F1F5F9!important;color:#475569!important;border:1px solid #E2E8F0!important}
 
-/* Celulas agua/energia/gas */
+/* Celulas agua/energia/gas/comercial/chaves */
 td.ok,.ok{color:#166534!important;font-weight:700!important}
 td.pend,.pend{color:#C2410C!important;font-weight:700!important}
+td.warn,.warn{color:#A16207!important;font-weight:600!important}
 
 /* Linhas inteiras: concluido (verde) x pendente do mes anterior (vermelho) com barra lateral */
 tr.rg td{background:#F0FDF4!important}

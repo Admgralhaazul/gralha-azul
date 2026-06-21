@@ -203,7 +203,7 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=9">
+<link rel="stylesheet" href="./enterprise-premium.css?v=10">
 </head>
 <body>
 
@@ -353,7 +353,7 @@ td.ora{color:var(--o);font-weight:600}
             <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer"><input type="checkbox" id="ag-show-concl" onchange="rAg()"> Mostrar concluídas</label>
           <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openM(&#39;m-ag&#39;)">+ Adicionar</button>
           </div>
-          <div id="ag-list"><div class="empty"><div class="empty-i">📅</div>Nenhum prazo pendente — <a href="file:///C:/Users/User/Downloads/Gralha%20Azul%20%E2%80%94%20Gest%C3%A3o%20de%20Rescis%C3%B5es%20(6).html#" onclick="document.getElementById(&#39;ag-show-concl&#39;).checked=true;rAg();return false;">ver concluídos</a></div></div>
+          <div id="ag-list"><div class="empty"><div class="empty-i">📅</div>Nenhum prazo pendente — <a href="#" onclick="document.getElementById(&#39;ag-show-concl&#39;).checked=true;rAg();return false;">ver concluídos</a></div></div>
         </div>
         <div>
           <div class="tw" style="padding:12px;margin-bottom:10px">
@@ -1945,10 +1945,12 @@ function load(){
   const cc=D().cartasConcl||{};
   const cartaIds=new Set((D().cartas||[]).map(c=>c.id));
   Object.keys(cc).forEach(k=>{if(!cartaIds.has(k))delete cc[k];});
-  // Clean orphaned agConcl keys
+  // Clean orphaned agConcl keys (somente itens manuais da agenda removidos)
   const ac=D().agConcl||{};
   const agIds=new Set((D().agenda||[]).map(a=>a.id));
-  Object.keys(ac).forEach(k=>{if(!agIds.has(k))delete ac[k];});
+  Object.keys(ac).forEach(k=>{
+    if(k.startsWith('agenda:')&&!agIds.has(k.slice(7)))delete ac[k];
+  });
   save();
   renderAll();
 }
@@ -2366,6 +2368,8 @@ function isMktFotos(m){return m&&(m.fotos==='Feitas'||m.fotos==='Recebidas'||m.f
 function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2,5);}
 // Parse YYYY-MM-DD as local date (avoids UTC-3 off-by-one)
 function ld(s){if(!s)return null;const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
+function isValidDate(s){const d=ld(s);return d&&!isNaN(d.getTime());}
+function escAttr(s){return String(s||'').replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
 function ldNow(){const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());}
 function fd(d){if(!d)return'-';try{const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`;}catch{return d;}}
 function fm(v){if(!v&&v!==0)return'-';return'R$'+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
@@ -2421,32 +2425,32 @@ function sbadge(s){
 // Água cell
 function aguaCell(v){
   if(!v)return'<td>—</td>';
-  if(v==='sanepar-pend')return'<td class="pend">Sanepar desligar</td>';
-  if(v==='sanepar-ok')return'<td class="ok">Sanepar ✓</td>';
-  if(v==='cond')return'<td class="ok">Cond. ✓</td>';
-  if(v==='prop-nome')return'<td class="ok">No nome do prop. ✓</td>';
-  return`<td class="ok">${v}</td>`;
+  if(v==='sanepar-pend')return'<td class="pend">Sanepar — desligar</td>';
+  if(v==='sanepar-ok')return'<td class="ok">Sanepar — desligada</td>';
+  if(v==='cond')return'<td class="ok">Condomínio</td>';
+  if(v==='prop-nome')return'<td class="ok">No nome do prop.</td>';
+  return`<td class="warn">${v}</td>`;
 }
 function energCell(v){
   if(!v)return'<td>—</td>';
   if(v==='ind-pend')return'<td class="pend">Protocolo pendente</td>';
-  if(v==='ind-ok')return'<td class="ok">Protocolo ✓</td>';
-  if(v==='cond')return'<td class="ok">Cond. ✓</td>';
-  return`<td>${v}</td>`;
+  if(v==='ind-ok')return'<td class="ok">Protocolo enviado</td>';
+  if(v==='cond')return'<td class="ok">Condomínio</td>';
+  return`<td class="warn">${v}</td>`;
 }
 function gasCell(v){
   if(!v)return'<td>—</td>';
-  if(v==='cond')return'<td class="ok">Cond. ✓</td>';
-  if(v==='terc-ok')return'<td class="ok">Protocolo ✓</td>';
-  if(v==='terc-pend')return'<td class="pend">Solicitar</td>';
-  if(v==='botijao')return'<td class="ok">Botijão ✓</td>';
-  return`<td>${v}</td>`;
+  if(v==='cond')return'<td class="ok">Cond. cobrado</td>';
+  if(v==='terc-ok')return'<td class="ok">Protocolo enviado</td>';
+  if(v==='terc-pend')return'<td class="pend">Sem protocolo</td>';
+  if(v==='botijao')return'<td class="ok">Botijão / Não tem</td>';
+  return`<td class="warn">${v}</td>`;
 }
 function comCell(v){
   if(!v||v==='nao')return'<td class="pend">Não repassado</td>';
-  if(v==='rep')return'<td class="ok">Repassado ✓</td>';
-  if(v==='saiu')return'<td class="ok" style="color:var(--g)">Saiu de locação</td>';
-  return`<td>${v}</td>`;
+  if(v==='rep')return'<td class="ok">Repassado</td>';
+  if(v==='saiu')return'<td class="ok">Saiu de locação</td>';
+  return`<td class="warn">${v}</td>`;
 }
 function garantiaCell(r){
   if(r.garantia==='caucao'){
@@ -2456,7 +2460,7 @@ function garantiaCell(r){
   }
   if(r.garantia==='loft'){
     const ok=r.loftCan==='Sim';
-    return`<td class="${ok?'ok':'pend'}">Loft${ok?' ✓':' pendente'}</td>`;
+    return`<td class="${ok?'ok':'pend'}">Loft ${ok?'concluído':'pendente'}</td>`;
   }
   if(r.garantia==='fiador')return'<td><span class="badge bgy">Fiador</span></td>';
   return'<td>—</td>';
@@ -2487,26 +2491,26 @@ function getAllVenc(){
   d.agenda.forEach(a=>res.push({data:a.data,label:`${a.codigo?a.codigo+' · ':''}${a.descricao||a.tipo}`,tipo:a.tipo,id:a.id,tipo2:'agenda',resp:a.responsavel}));
   // Carta vencimento only (not reminders)
   d.cartas.forEach(c=>{
-    if(c.vencimento)res.push({data:c.vencimento,label:`Venc. Carta: ${c.codigo} (${c.inquilino||''})`,tipo:'Vencimento Carta',tipo2:'carta',id:c.id,cartaId:c.id});
-    if(c.vistoria)res.push({data:c.vistoria,label:`Vistoria: ${c.codigo} (${c.inquilino||''})`,tipo:'Vistoria de Saída',tipo2:'carta',id:c.id+'_vis',cartaId:c.id});
+    if(c.vencimento&&isValidDate(c.vencimento))res.push({data:c.vencimento,label:`Venc. Carta: ${c.codigo} (${c.inquilino||''})`,tipo:'Vencimento Carta',tipo2:'carta',id:c.id,cartaId:c.id});
+    if(c.vistoria&&isValidDate(c.vistoria))res.push({data:c.vistoria,label:`Vistoria: ${c.codigo} (${c.inquilino||''})`,tipo:'Vistoria de Saída',tipo2:'carta',id:c.id+'_vis',cartaId:c.id});
   });
   // Sanepar religamento
-  d.sanepar.forEach(s=>{if(s.dtRelig)res.push({data:s.dtRelig,label:`Sanepar desligamento: ${s.codigo}`,tipo:'Sanepar / Água',tipo2:'san'});});
-  // Rescisões vistorias
+  d.sanepar.forEach(s=>{if(s.dtRelig&&isValidDate(s.dtRelig))res.push({data:s.dtRelig,label:`Sanepar desligamento: ${s.codigo}`,tipo:'Sanepar / Água',tipo2:'san',id:s.id||('san_'+s.codigo)});});
+  // Rescisões vistorias e chaves (somente datas válidas)
   d.rescisoes.forEach(r=>{
-    if(r.vis2)res.push({data:r.vis2,label:`2ª Vistoria: ${r.codigo}`,tipo:'Vistoria de Saída',tipo2:'resc'});
-    if(r.chaves)res.push({data:r.chaves,label:`Entrega chaves: ${r.codigo}`,tipo:'Entrega de Chaves',tipo2:'resc'});
+    if(r.vis2&&isValidDate(r.vis2))res.push({data:r.vis2,label:`2ª Vistoria: ${r.codigo}`,tipo:'Vistoria de Saída',tipo2:'resc',id:'vis2_'+r.id,rescId:r.id});
+    if(r.chaves&&isValidDate(r.chaves))res.push({data:r.chaves,label:`Entrega chaves: ${r.codigo}`,tipo:'Entrega de Chaves',tipo2:'resc',id:'chv_'+r.id,rescId:r.id});
   });
   // Boletos a vencer (não vencidos — vencidos vão p/ inadimplentes)
   d.rescisoes.forEach(r=>{
-    if(r.pgto==='boleto'&&r.bolVenc&&r.bolPago!=='Sim'){
+    if(r.pgto==='boleto'&&r.bolVenc&&r.bolPago!=='Sim'&&isValidDate(r.bolVenc)){
       const dv=ld(r.bolVenc)||ldNow();
       const hoje=ldNow();
       if(dv>=hoje)res.push({data:r.bolVenc,label:`Boleto: ${r.codigo} ${r.inquilino||''}`,tipo:'Prazo Pagamento',tipo2:'resc'});
     }
   });
   // Inadimplentes com data de vencimento futura
-  d.inadimplentes.forEach(i=>{if(i.venc){const dv=ld(i.venc)||ldNow();const hoje=ldNow();if(dv>=hoje)res.push({data:i.venc,label:`Inadimp: ${i.codigo} ${i.inquilino||''}`,tipo:'Inadimplência',tipo2:'inad'});}});
+  d.inadimplentes.forEach(i=>{if(i.venc&&isValidDate(i.venc)){const dv=ld(i.venc)||ldNow();const hoje=ldNow();if(dv>=hoje)res.push({data:i.venc,label:`Inadimp: ${i.codigo} ${i.inquilino||''}`,tipo:'Inadimplência',tipo2:'inad',id:i.id||('inad_'+i.codigo)});}});
   return res;
 }
 
@@ -2551,7 +2555,7 @@ function rDash(){
   const venc=getAllVenc().filter(v=>{const dv=ld(v.data)||ldNow();return dv>=hoje;}).sort((a,b)=>new Date(a.data)-new Date(b.data)).slice(0,10);
     {
     const hoje2=ldNow();
-    const allV=getAllVenc().filter(a=>!isAgConcl(a)).sort((a,b)=>new Date(a.data)-new Date(b.data));
+    const allV=getAllVenc().filter(a=>isValidDate(a.data)).filter(a=>!isAgConcl(a)).sort((a,b)=>new Date(a.data)-new Date(b.data));
     const vColor=(data)=>{const dv=ld(data)||ldNow();const df=Math.ceil((dv-hoje2)/86400000);if(df<0)return'#fee2e2';if(df===0)return'#ffedd5';if(df===1)return'#fef9c3';return'#fff';};
     const vTColor=(data)=>{const dv=ld(data)||ldNow();const df=Math.ceil((dv-hoje2)/86400000);if(df<0)return'var(--r)';if(df===0)return'var(--o)';if(df===1)return'var(--y)';return'var(--tx)';};
     const vLabel=(data)=>{const dv=ld(data)||ldNow();const df=Math.ceil((dv-hoje2)/86400000);if(df<0)return`<span style="color:var(--r);font-weight:700;font-size:9px">ATRASADO</span>`;if(df===0)return`<span style="color:var(--o);font-weight:700;font-size:9px">HOJE</span>`;if(df===1)return`<span style="color:var(--y);font-weight:700;font-size:9px">AMANHÃ</span>`;return`<span style="font-size:9px;color:var(--tl)">${df}d</span>`;};
@@ -2562,7 +2566,7 @@ function rDash(){
         ${vLabel(v.data)}
         <span style="flex:1;font-size:11px;color:${vTColor(v.data)}">${v.label}</span>
         <span class="badge bb" style="font-size:9px">${v.tipo}</span>
-        <button onclick="markAgConcl('${k}','${v.cartaId||''}','${v.loftId||''}');rDash();rAg();" style="border:none;background:#dcfce7;color:#166534;border-radius:5px;padding:2px 6px;cursor:pointer;font-size:10px;flex-shrink:0">✅</button>
+        <button onclick="markAgConcl('${escAttr(k)}','${escAttr(v.cartaId||'')}','${escAttr(v.loftId||'')}');rDash();rAg();" style="border:none;background:#dcfce7;color:#166534;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:10px;font-weight:700;flex-shrink:0">Concluir</button>
       </div>`;
     }).join(''):`<div class="empty"><div class="empty-i">📅</div>Sem itens</div>`;
   }
@@ -2646,7 +2650,7 @@ function rResc(){
     <td>${r.inquilino||'-'}</td>
     <td><span class="badge bb" style="font-size:9px">${r.responsavel||'-'}</span></td>
     <td style="font-size:11px;white-space:nowrap">${r.vis2?fd(r.vis2):r.vis1?fd(r.vis1):'<span style="color:var(--tl)">—</span>'}</td>
-    <td style="font-size:11px;max-width:110px">${(()=>{const parts=[];if(r.chaves)parts.push('🔑 '+fd(r.chaves));if(r.chavesStatus)parts.push(r.chavesStatus);return parts.length?parts.join('<br>'):'—';})()}</td>
+    <td style="font-size:11px;max-width:110px">${(()=>{const parts=[];if(r.chaves){if(isValidDate(r.chaves))parts.push(`<span class="ok">${fd(r.chaves)}</span>`);else parts.push(`<span class="warn">${r.chaves}</span>`);}if(r.chavesStatus){const pend=/pendente/i.test(r.chavesStatus);parts.push(`<span class="${pend?'pend':'ok'}">${r.chavesStatus}</span>`);}return parts.length?parts.join('<br>'):'—';})()}</td>
     <td>${sbadge(r.status)}</td>
     <td style="font-size:10px;max-width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.tipoSaida||'-'}</td>
     <td><span class="badge bgy" style="font-size:9px">${r.pagamento||'-'}</span></td>
@@ -3221,7 +3225,7 @@ function genCartParcelasModal(){
 // ============================================================
 // AGENDA
 // ============================================================
-function agKey(a){return (a.tipo2||'x')+':'+(a.id||a.data+a.label.substring(0,20));}
+function agKey(a){return (a.tipo2||'x')+':'+(a.id||((a.data||'')+':'+(a.label||'').substring(0,20)));}
 function isAgConcl(a){return !!(D().agConcl||{})[agKey(a)];}
 function markAgConcl(key,cartaId,loftId){
   if(!D().agConcl)D().agConcl={};
@@ -3243,12 +3247,13 @@ function rAg(){
   const hoje=ldNow();
   const ftip=(document.getElementById('ag-ftip')||{}).value||'';
   const showConcl=document.getElementById('ag-show-concl')&&document.getElementById('ag-show-concl').checked;
-  const all=getAllVenc().filter(a=>!ftip||a.tipo===ftip).sort((a,b)=>new Date(a.data)-new Date(b.data));
+  const all=getAllVenc().filter(a=>isValidDate(a.data)).filter(a=>!ftip||a.tipo===ftip).sort((a,b)=>new Date(a.data)-new Date(b.data));
   const items=showConcl?all:all.filter(a=>!isAgConcl(a));
   const el=document.getElementById('ag-list');
   if(!items.length){el.innerHTML=`<div class="empty"><div class="empty-i">📅</div>Nenhum prazo pendente ${showConcl?'':'— <a href="#" onclick="document.getElementById(\'ag-show-concl\').checked=true;rAg();return false;">ver concluídos</a>'}</div>`;return;}
   el.innerHTML=items.map(a=>{
-    const dv=ld(a.data)||ldNow();
+    if(!isValidDate(a.data))return '';
+    const dv=ld(a.data);
     const diff=Math.ceil((dv-hoje)/86400000);
     const isT=diff===0,isPast=diff<0;
     const concl=isAgConcl(a);
@@ -3268,8 +3273,8 @@ function rAg(){
       </div>
       <div class="abts">
         ${concl
-          ? `<button class="abt" onclick="unmarkAgConcl('${k}','${a.cartaId||''}','${a.loftId||''}')" title="Reabrir">↩</button>`
-          : `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="markAgConcl('${k}','${a.cartaId||''}','${a.loftId||''}')">✅</button>`
+          ? `<button class="abt" onclick="unmarkAgConcl('${escAttr(k)}','${escAttr(a.cartaId||'')}','${escAttr(a.loftId||'')}')" title="Reabrir">Reabrir</button>`
+          : `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="markAgConcl('${escAttr(k)}','${escAttr(a.cartaId||'')}','${escAttr(a.loftId||'')}')">Concluir</button>`
         }
         ${a.tipo2==='agenda'?`<button class="abt" onclick="editAg('${a.id}')">Editar</button><button class="abt" onclick="delR('agenda','${a.id}')">Excluir</button>`:''}
       </div>
@@ -4702,7 +4707,6 @@ function togCL(k){
   D().checklists[cpId][k]=document.getElementById('ck_'+k).checked;
   const lb=document.getElementById('lb_'+k);if(lb)lb.className=D().checklists[cpId][k]?'done':'';
   updCP(cpId);
-  clearTimeout(togCL._t);togCL._t=setTimeout(()=>{try{save();}catch(e){}},600);
 }
 function updCP(id){const{done,tot}=getP(id);document.getElementById('cp-prog').textContent=`${done}/${tot} itens`;}
 function closeCP(){document.getElementById('cpanel').classList.remove('open');}
@@ -5677,5 +5681,5 @@ load();
 .hist-when{color:#94a3b8;min-width:110px;text-align:right;flex-shrink:0;font-size:11px}
 </style>
 
-<script src="./cloud-sync.js?v=8"></script>
+<script src="./cloud-sync.js?v=10"></script>
 </body></html>

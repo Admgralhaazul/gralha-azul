@@ -72,6 +72,7 @@
         S = Object.assign({}, S, next || {});
         try{ localStorage.setItem('ga_v3', JSON.stringify(S)); }catch(e){}
         if(typeof dadosAno === 'function') dadosAno(S.anoAtivo || 2026);
+        if(typeof fixNomeDebora === 'function') fixNomeDebora();
         if(typeof renderAll === 'function') renderAll();
         if(typeof updHeader === 'function') updHeader();
       }
@@ -205,7 +206,15 @@
   window.gaCloudBackup = exportCloudBackup;
 
   function addCloudTools(){
-    /* botoes manuais removidos — sync automatico continua ativo */
+    if(window.top !== window.self) return;
+    if(document.getElementById('ga-cloud-tools')) return;
+    const box = document.createElement('div');
+    box.id = 'ga-cloud-tools';
+    box.style.cssText = 'position:fixed;right:12px;bottom:44px;z-index:999999;display:flex;gap:6px;font:11px Arial';
+    box.innerHTML = '<button type="button" id="ga-cloud-save" style="border:none;border-radius:999px;background:#1e3a5f;color:#fff;padding:6px 10px;cursor:pointer">Salvar nuvem</button><button type="button" id="ga-cloud-backup" style="border:none;border-radius:999px;background:#334155;color:#fff;padding:6px 10px;cursor:pointer">Backup</button>';
+    document.body.appendChild(box);
+    document.getElementById('ga-cloud-save').onclick = ()=>pushState('Salvamento manual');
+    document.getElementById('ga-cloud-backup').onclick = exportCloudBackup;
   }
 
   function watchChanges(){
