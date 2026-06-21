@@ -1710,3 +1710,71 @@ html body #login-overlay:not(.hidden),
 html body #admin-overlay:not(.hidden){
   pointer-events:auto!important;
 }
+
+/* ============================================================ */
+/* CAMADA "WOW" — acabamento premium extra (Gralha Azul)        */
+/* ============================================================ */
+
+/* Selecao de texto com a cor da marca */
+::selection{background:rgba(232,114,12,.22)!important;color:#0F172A!important}
+
+/* Barra de rolagem premium */
+*::-webkit-scrollbar{width:11px!important;height:11px!important}
+*::-webkit-scrollbar-track{background:transparent!important}
+*::-webkit-scrollbar-thumb{background:#CBD5E1!important;border-radius:10px!important;border:3px solid transparent!important;background-clip:content-box!important}
+*::-webkit-scrollbar-thumb:hover{background:#94A3B8!important;background-clip:content-box!important}
+.sb::-webkit-scrollbar-thumb,.side::-webkit-scrollbar-thumb,#sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.20)!important;background-clip:content-box!important}
+
+/* Cartoes: faixa lateral em destaque + profundidade no hover */
+.card:before,.stat:before{width:5px!important;border-radius:0 4px 4px 0!important;opacity:1!important}
+.card{transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .2s,border-color .2s!important}
+.card:hover,.stat:hover{transform:translateY(-4px)!important;box-shadow:0 22px 48px rgba(15,23,42,.14)!important}
+.card-n,.stat-val{letter-spacing:-.02em!important}
+
+/* Fio de destaque no topo do cabecalho */
+.hdr{position:relative!important}
+.hdr:after{content:""!important;position:absolute!important;left:0;right:0;bottom:-1px;height:2px!important;background:linear-gradient(90deg,#1E3A5F,#E8720C 60%,#1E3A5F)!important;opacity:.9}
+
+/* Marca na lateral: segunda linha em dourado discreto (combina com a logo) */
+.sb-brand span,body:has(.sb) .sb-brand span{color:#D8C079!important}
+
+/* Item ativo da lateral com leve brilho */
+.nav.active,.sb-item.active,#sidebar .ni.active,.ni.active,#sidebar .ni.on,.ni.on{
+  background:linear-gradient(90deg,rgba(232,114,12,.18),rgba(255,255,255,.02))!important;
+  box-shadow:inset 3px 0 0 #E8720C,0 6px 16px rgba(0,0,0,.14)!important;
+  color:#FFFFFF!important;
+}
+
+/* Botao primario com leve degrade */
+.btn-p,.btn-primary,.login-btn{background:linear-gradient(180deg,#274B72,#1E3A5F)!important}
+.btn-p:hover,.btn-primary:hover,.login-btn:hover{background:linear-gradient(180deg,#1E3A5F,#142B46)!important}
+
+/* ===== LOGIN: primeira impressao ===== */
+.login-right{
+  background:
+    radial-gradient(circle at 30% 18%,rgba(120,160,200,.20),transparent 42%),
+    linear-gradient(155deg,#2b3747 0%,#1d2735 60%,#141b26 100%)!important;
+  position:relative!important;
+}
+.login-right:after{content:""!important;position:absolute!important;inset:0;background:radial-gradient(circle at 72% 86%,rgba(216,192,121,.10),transparent 46%)!important;pointer-events:none}
+.login-title{font-weight:600!important}
+.login-field input:focus{border-bottom-color:#E8720C!important}
+.login-btn{letter-spacing:2px!important}
+
+/* ===== ANIMACOES DE ENTRADA (suaves, respeitam acessibilidade) ===== */
+@media (prefers-reduced-motion: no-preference){
+  @keyframes gaUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes gaFade{from{opacity:0}to{opacity:1}}
+  .content{animation:gaFade .4s ease both!important}
+  .cards .card,.stats-row .stat{animation:gaUp .5s cubic-bezier(.2,.7,.3,1) both!important}
+  .cards .card:nth-child(1){animation-delay:.02s!important}
+  .cards .card:nth-child(2){animation-delay:.06s!important}
+  .cards .card:nth-child(3){animation-delay:.10s!important}
+  .cards .card:nth-child(4){animation-delay:.14s!important}
+  .cards .card:nth-child(5){animation-delay:.18s!important}
+  .cards .card:nth-child(6){animation-delay:.22s!important}
+  .cards .card:nth-child(7){animation-delay:.26s!important}
+  .cards .card:nth-child(8){animation-delay:.30s!important}
+  .cards .card:nth-child(9){animation-delay:.34s!important}
+  .cards .card:nth-child(10){animation-delay:.38s!important}
+}
