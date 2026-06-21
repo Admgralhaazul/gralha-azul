@@ -1858,9 +1858,62 @@ th{font-family:Inter,sans-serif!important;letter-spacing:.05em!important;font-we
 /* Cartoes de modulo (Gestao) com icone grande */
 .mico svg.ico{width:30px!important;height:30px!important;stroke:currentColor!important;stroke-width:1.6!important;fill:none!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 
-/* Botoes de acao em texto: abt (Rescisoes) e btn-icon (Gestao) */
-.abt{width:auto!important;height:auto!important;min-width:0!important;padding:3px 9px!important;font-size:10.5px!important;font-weight:700!important;line-height:1.5!important;border-radius:6px!important;letter-spacing:.2px}
-.btn-icon{width:auto!important;height:auto!important;min-width:0!important;padding:4px 10px!important;font-size:11px!important;font-weight:700!important;line-height:1.5!important;border-radius:6px!important;background:#F1F5F9!important;border:1px solid #E2E8F0!important;color:#334155!important;display:inline-flex;align-items:center;gap:4px}
+/* ============================================================ */
+/* BOTOES PREMIUM — visual executivo unificado                  */
+/* ============================================================ */
+.btn{
+  font-weight:600!important;letter-spacing:.2px!important;
+  border-radius:8px!important;
+  box-shadow:0 1px 2px rgba(15,23,42,.06)!important;
+  transition:transform .12s ease,box-shadow .12s ease,filter .12s ease!important;
+}
+.btn:hover{transform:translateY(-1px)!important;box-shadow:0 4px 14px rgba(15,23,42,.12)!important}
+.btn:active{transform:translateY(0)!important;box-shadow:0 1px 2px rgba(15,23,42,.08)!important}
+.btn-p,.btn-primary{
+  background:linear-gradient(180deg,#2F5282 0%,#1E3A5F 100%)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:0 2px 10px rgba(30,58,95,.25)!important;
+  color:#fff!important;
+}
+.btn-p:hover,.btn-primary:hover{
+  background:linear-gradient(180deg,#1E3A5F 0%,#142B46 100%)!important;
+  filter:brightness(1.03)!important;
+}
+.btn-sm{padding:6px 13px!important;font-size:11px!important;border-radius:8px!important}
+.btn-o{
+  background:#fff!important;border:1.5px solid #CBD5E1!important;color:#1E3A5F!important;
+}
+.btn-o:hover{border-color:#94A3B8!important;background:#F8FAFC!important}
+.btn-g{background:linear-gradient(180deg,#22C55E 0%,#16A34A 100%)!important;color:#fff!important;border:none!important}
+
+/* Pills de acao na tabela */
+.abt,.btn-icon{
+  min-height:28px!important;padding:5px 12px!important;
+  border-radius:999px!important;font-size:10.5px!important;font-weight:700!important;
+  line-height:1.2!important;letter-spacing:.15px!important;
+  border:1px solid #CBD5E1!important;background:#F8FAFC!important;color:#334155!important;
+  display:inline-flex!important;align-items:center!important;gap:5px!important;
+  box-shadow:0 1px 2px rgba(15,23,42,.04)!important;
+  transition:transform .1s ease,box-shadow .1s ease,background .1s ease!important;
+  cursor:pointer!important;
+}
+.abt:hover,.btn-icon:hover{
+  transform:translateY(-1px)!important;
+  box-shadow:0 3px 10px rgba(15,23,42,.10)!important;
+  background:#EFF6FF!important;border-color:#93C5FD!important;color:#1E3A5F!important;
+}
+.abt.action-checklist{background:#EFF6FF!important;border-color:#BFDBFE!important;color:#1D4ED8!important}
+.abt.action-checklist:hover{background:#DBEAFE!important;border-color:#93C5FD!important}
+.abt.action-edit{background:#F0FDF4!important;border-color:#BBF7D0!important;color:#166534!important}
+.abt.action-edit:hover{background:#DCFCE7!important;border-color:#86EFAC!important}
+.abt.action-delete{background:#FEF2F2!important;border-color:#FECACA!important;color:#B91C1C!important}
+.abt.action-delete:hover{background:#FEE2E2!important;border-color:#FCA5A5!important;color:#991B1B!important}
+
+/* Tags de status nas celulas (protocolo verde, pendente laranja) */
+.cell-tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap;line-height:1.35}
+.cell-ok,.cell-tag.cell-ok{background:#DCFCE7!important;color:#166534!important;border:1px solid #86EFAC!important}
+.cell-pend,.cell-tag.cell-pend{background:#FFEDD5!important;color:#C2410C!important;border:1px solid #FDBA74!important}
+.cell-warn,.cell-tag.cell-warn{background:#FEF9C3!important;color:#A16207!important;border:1px solid #FDE047!important}
 
 /* ============================================================ */
 /* STATUS — CORES FORTES: PENDENTE x CONCLUIDO (foco executivo) */
