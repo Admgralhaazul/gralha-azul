@@ -2077,3 +2077,97 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 /* Nuvem oculta */
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important;pointer-events:none!important}
 .ga-hide-cloud{display:none!important}
+
+/* ─── v19: pacote profissional unificado ─── */
+.sb-module-row .ga-module-link{
+  flex:1 1 0!important;
+  min-width:0!important;
+  text-align:center!important;
+  font-size:10px!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+  line-height:1.2!important;
+}
+.sb-module-row .ga-module-link .ico{display:none!important}
+
+.empty-mark,.empty-i{
+  width:36px!important;height:36px!important;
+  margin:0 auto 8px!important;
+  border-radius:5px!important;
+  background:#F1F5F9!important;
+  border:1px solid #E2E8F0!important;
+  flex-shrink:0!important;
+}
+.empty{font-size:13px!important;color:#64748B!important}
+.empty p{margin:0!important;line-height:1.45!important}
+
+.lib-badge{
+  min-width:108px!important;
+  border:1px solid #FDBA74!important;
+  background:#FEF3C7!important;
+  color:#C2410C!important;
+  border-radius:4px!important;
+  cursor:pointer!important;
+  font-size:10px!important;
+  font-weight:700!important;
+  padding:4px 8px!important;
+  font-family:inherit!important;
+}
+.lib-badge.on{
+  border-color:#86EFAC!important;
+  background:#DCFCE7!important;
+  color:#166534!important;
+}
+.yn-badge{
+  min-width:42px!important;
+  border:1px solid #E2E8F0!important;
+  background:#F8FAFC!important;
+  color:#64748B!important;
+  border-radius:4px!important;
+  cursor:pointer!important;
+  font-size:10px!important;
+  font-weight:700!important;
+  padding:3px 8px!important;
+  font-family:inherit!important;
+}
+.yn-badge.on{
+  border-color:#86EFAC!important;
+  background:#DCFCE7!important;
+  color:#166534!important;
+}
+.warn-tag{font-size:9px!important;display:inline-block!important;margin-top:2px!important}
+
+.tw table thead th,.table-wrap table thead th{
+  position:sticky!important;
+  top:0!important;
+  z-index:2!important;
+  background:#F8FAFC!important;
+  box-shadow:0 1px 0 #E2E8F0!important;
+}
+.tw tbody tr:nth-child(even) td,.table-wrap tbody tr:nth-child(even) td{background:#FAFCFE!important}
+.tw table td,.tw table th,.table-wrap table td,.table-wrap table th{padding:8px 10px!important}
+
+#toast{
+  position:fixed!important;
+  bottom:22px!important;right:22px!important;
+  background:#0F172A!important;
+  color:#F8FAFC!important;
+  border:1px solid #334155!important;
+  border-radius:6px!important;
+  padding:11px 16px!important;
+  font-size:13px!important;font-weight:500!important;
+  box-shadow:0 8px 24px rgba(15,23,42,.18)!important;
+  z-index:9999!important;
+  transform:translateY(70px)!important;
+  opacity:0!important;
+  transition:all .25s ease!important;
+  max-width:320px!important;
+  pointer-events:none!important;
+}
+#toast.show{transform:none!important;opacity:1!important}
+
+.abt.action-checklist{
+  font-size:0!important;
+  min-width:28px!important;
+  padding:0!important;
+}

@@ -203,7 +203,7 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=18">
+<link rel="stylesheet" href="./enterprise-premium.css?v=19">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
@@ -231,8 +231,8 @@ td.ora{color:var(--o);font-weight:600}
   <div class="sb-module-switch">
     <div class="sb-module-lbl">Módulos</div>
     <div class="sb-module-row">
-      <a class="nav ga-module-link active-system" href="./rescisoes.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisão</a>
-      <a class="nav ga-module-link" href="./gestao.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Gestão Adm.</a>
+      <a class="nav ga-module-link active-system" href="./rescisoes.html">Rescisão</a>
+      <a class="nav ga-module-link" href="./gestao.html">Manut./Gest.Adm</a>
     </div>
   </div>
   <div class="sb-sec">
@@ -308,7 +308,7 @@ td.ora{color:var(--o);font-weight:600}
           <div style="padding:10px 14px;border-bottom:1px solid var(--bd);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:space-between">
             <span>Em Alerta</span>
           </div>
-          <div id="d-alertas" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-i">✅</div>Sem alertas</div></div>
+          <div id="d-alertas" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-mark"></div><p>Sem alertas</p></div></div>
         </div>
         <div class="tw">
           <div style="padding:10px 14px;border-bottom:1px solid var(--bd);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:space-between">
@@ -342,7 +342,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>#</th><th>Código</th><th>Inquilino</th><th>Resp.</th><th>Ref. Vistoria</th><th>Chaves</th><th>Status</th><th>Tipo</th><th>Pgto</th><th>Água</th>
             <th>Energia</th><th>Gás</th><th>Prop.Av.</th><th>Comercial</th><th>Garantia</th><th>Manut.</th><th>Progresso</th><th>Ações</th>
           </tr></thead>
-          <tbody id="tb-resc"><tr><td colspan="17"><div class="empty"><div class="empty-i">📋</div>Nenhuma rescisão</div></td></tr></tbody>
+          <tbody id="tb-resc"><tr><td colspan="17"><div class="empty"><div class="empty-mark"></div><p>Nenhuma rescisão</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -364,11 +364,11 @@ td.ora{color:var(--o);font-weight:600}
         <div>
           <div class="tw" style="padding:12px;margin-bottom:10px">
             <div style="font-weight:700;font-size:12px;margin-bottom:8px">Hoje</div>
-            <div id="ag-hoje"><div style="font-size:11px;color:var(--tl);padding:8px 0">Nada para hoje 🎉</div></div>
+            <div id="ag-hoje"><div style="font-size:11px;color:var(--tl);padding:8px 0">Nada para hoje</div></div>
           </div>
           <div class="tw" style="padding:12px">
             <div style="font-weight:700;font-size:12px;margin-bottom:8px">Próximos 7 dias</div>
-            <div id="ag-7d"><div style="font-size:11px;color:var(--tl);padding:8px 0">Tudo ok ✅</div></div>
+            <div id="ag-7d"><div style="font-size:11px;color:var(--tl);padding:8px 0">Tudo em dia</div></div>
           </div>
         </div>
       </div>
@@ -616,7 +616,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Recibo ✓</th><th>V.Antecip. ✓</th><th>Pago ✓</th><th>Status</th><th>Ações</th>
           </tr></thead>
 <tbody><tr><td colspan="12"><div id="man-summary" style="padding:5px 8px;font-size:11px;color:var(--tl);background:#f8fafc">Todos: Nenhuma manutenção</div></td></tr>
-          </tbody><tbody id="tb-man"><tr><td colspan="13"><div class="empty"><div class="empty-i">🔧</div>Nenhuma manutenção no período</div></td></tr></tbody>
+          </tbody><tbody id="tb-man"><tr><td colspan="13"><div class="empty"><div class="empty-mark"></div><p>Nenhuma manutenção no período</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -667,7 +667,7 @@ td.ora{color:var(--o);font-weight:600}
         <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openM(&#39;m-carta&#39;)">+ Carta 30 Dias</button>
       </div>
       <div id="cartas-summary" style="padding:5px 14px;font-size:11px;color:var(--tl);background:#f8fafc;border-bottom:1px solid var(--bd)">Pendentes: 1 | Concluídas: 0</div>
-      <div id="cartas-list"><div class="empty"><div class="empty-i">✉️</div>Nenhuma carta<br><button class="btn btn-p" style="margin-top:10px" onclick="openM(&#39;m-carta&#39;)">+ Carta 30 dias</button></div></div>
+      <div id="cartas-list"><div class="empty"><div class="empty-mark"></div><p>Nenhuma carta</p><button class="btn btn-p" style="margin-top:10px" onclick="openM(&#39;m-carta&#39;)">+ Carta 30 dias</button></div></div>
     </div>
 
     <!-- INADIMPLENTES -->
@@ -681,7 +681,7 @@ td.ora{color:var(--o);font-weight:600}
           <button class="btn btn-p btn-sm" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button>
         </div>
       </div>
-      <div id="inad-list"><div class="empty"><div class="empty-i">✅</div>Tudo em dia!<br><button class="btn btn-p btn-sm" style="margin-top:10px" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button></div></div>
+      <div id="inad-list"><div class="empty"><div class="empty-mark"></div><p>Tudo em dia!</p><button class="btn btn-p btn-sm" style="margin-top:10px" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button></div></div>
     </div>
 
     <!-- JURÍDICOS -->
@@ -692,7 +692,7 @@ td.ora{color:var(--o);font-weight:600}
         <span style="flex:1"></span>
         <button class="btn btn-p btn-sm" onclick="newJur()">+ Adicionar</button>
       </div>
-      <div id="jur-list"><div class="empty"><div class="empty-i">⚖️</div>Nenhum caso no jurídico</div></div>
+      <div id="jur-list"><div class="empty"><div class="empty-mark"></div><p>Nenhum caso no jurídico</p></div></div>
     </div>
 
     <!-- LOFT -->
@@ -1443,7 +1443,7 @@ Qualquer dúvida, fico à disposição!</textarea>
     <div class="fg"><label>Data Recebimento do Recibo</label><input type="date" id="mn-dt-rec"></div>
     <div class="fg"><label>Data V. Antecipação/Placa</label><input type="date" id="mn-dt-vist"></div>
   </div>
-  <p style="font-size:11px;color:var(--tl);background:#fef3c7;padding:7px 10px;border-radius:6px;margin-bottom:10px">Após salvar, abra o 📋 para adicionar os itens de manutenção.</p>
+  <p style="font-size:11px;color:var(--tl);background:#fef3c7;padding:7px 10px;border-radius:6px;margin-bottom:10px">Após salvar, abra o checklist para adicionar os itens de manutenção.</p>
   <div class="sdiv">Confirmações</div>
   <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:8px 0">
     <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
@@ -2382,6 +2382,9 @@ function ldNow(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()
 function fd(d){if(!d)return'-';try{const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`;}catch{return d;}}
 function cellTag(text,kind){return `<span class="cell-tag cell-${kind||'warn'}">${text}</span>`;}
 function cellTd(text,kind){return `<td>${cellTag(text,kind)}</td>`;}
+function emptyHtml(msg){return `<div class="empty"><div class="empty-mark"></div><p>${msg}</p></div>`;}
+function libBtn(id,on){return `<button type="button" class="lib-badge${on?' on':''}" onclick="togManLiberado('${id}')">${on?'Liberado p/ manut.':'Em rescisão'}</button>`;}
+function ynBtn(fn,id,on){return `<button type="button" class="yn-badge${on?' on':''}" onclick="${fn}('${id}')">${on?'Sim':'Não'}</button>`;}
 function fm(v){if(!v&&v!==0)return'-';return'R$'+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
 
 function getP(id){
@@ -2558,7 +2561,7 @@ function rDash(){
   `;
   // alertas
   const al=d.rescisoes.filter(r=>r.status==='Inadimplente'||getP(r.id).pct<30).slice(0,8);
-  document.getElementById('d-alertas').innerHTML=al.length?al.map(r=>`<div style="padding:6px 10px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px"><b style="color:var(--p);min-width:80px;font-size:12px">${r.codigo}</b><span style="flex:1;font-size:11px;color:var(--tl)">${r.inquilino||'-'}</span>${sbadge(r.status)}</div>`).join(''):`<div class="empty"><div class="empty-i">✅</div>Sem alertas</div>`;
+  document.getElementById('d-alertas').innerHTML=al.length?al.map(r=>`<div style="padding:6px 10px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px"><b style="color:var(--p);min-width:80px;font-size:12px">${r.codigo}</b><span style="flex:1;font-size:11px;color:var(--tl)">${r.inquilino||'-'}</span>${sbadge(r.status)}</div>`).join(''):emptyHtml('Sem alertas');
   // vencimentos
   const venc=getAllVenc().filter(v=>{const dv=ld(v.data)||ldNow();return dv>=hoje;}).sort((a,b)=>new Date(a.data)-new Date(b.data)).slice(0,10);
     {
@@ -2637,7 +2640,7 @@ function rResc(){
     return true;
   });
   const tb=document.getElementById('tb-resc');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="17"><div class="empty"><div class="empty-i">📋</div>Nenhuma rescisão</div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="17">${emptyHtml('Nenhuma rescisão')}</td></tr>`;return;}
   tb.innerHTML=rows.map((r,i)=>{
     // Determine row color by mes competencia
     const resMes=getRescMes(r);
@@ -3291,7 +3294,7 @@ function rAg(){
   const hj=items.filter(a=>{const d=ld(a.data)||ldNow();return d.getTime()===hoje.getTime()&&!isAgConcl(a);});
   document.getElementById('ag-hoje').innerHTML=hj.length?hj.map(a=>`<div style="padding:5px 0;border-bottom:1px solid var(--bd);font-size:11px"><b>${a.tipo}</b><br><span style="color:var(--tl)">${a.label}</span></div>`).join(''):`<div style="font-size:11px;color:var(--tl);padding:8px 0">Nada para hoje 🎉</div>`;
   const s7=items.filter(a=>{const d=ld(a.data)||ldNow();const df=Math.ceil((d-hoje)/86400000);return df>0&&df<=7&&!isAgConcl(a);});
-  document.getElementById('ag-7d').innerHTML=s7.length?s7.slice(0,6).map(a=>{const d=ld(a.data)||ldNow();const df=Math.ceil((d-hoje)/86400000);return`<div style="padding:5px 0;border-bottom:1px solid var(--bd);font-size:11px"><b>${df}d</b> · ${a.tipo}<br><span style="color:var(--tl)">${a.label}</span></div>`}).join(''):`<div style="font-size:11px;color:var(--tl);padding:8px 0">Tudo ok ✅</div>`;
+  document.getElementById('ag-7d').innerHTML=s7.length?s7.slice(0,6).map(a=>{const d=ld(a.data)||ldNow();const df=Math.ceil((d-hoje)/86400000);return`<div style="padding:5px 0;border-bottom:1px solid var(--bd);font-size:11px"><b>${df}d</b> · ${a.tipo}<br><span style="color:var(--tl)">${a.label}</span></div>`}).join(''):`<div style="font-size:11px;color:var(--tl);padding:8px 0">Tudo em dia</div>`;
 }
 function salAg(){
   const dat=document.getElementById('ag-dat').value;if(!dat){alert('Informe a data');return;}
@@ -3717,7 +3720,7 @@ function rMan(){
       return bd2-ad;// dtVist filled = higher priority (first)
     });
   }
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="13"><div class="empty"><div class="empty-i">🔧</div>Nenhuma manutenção no período</div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="13">${emptyHtml('Nenhuma manutenção no período')}</td></tr>`;return;}
   tb.innerHTML=rows.map(m=>{
     const itens=m.itens||[];
     const doneItens=itens.filter(i=>i.done).length;
@@ -3728,15 +3731,14 @@ function rMan(){
       return`<tr class="${m.vaOk?'rg':''}">
         <td><b style="color:var(--p)">${m.codigo}</b>${mMesRef?`<span style="font-size:9px;color:var(--tl);display:block">${mMesRef}</span>`:''}</td>
         <td><span style="color:var(--g);font-size:10px;font-weight:600">Não possui manutenções</span></td>
-        <td><button onclick="togManLiberado('${m.id}')" style="min-width:110px;border:1.5px solid ${m.liberado?'#16a34a':'#92400e'};background:${m.liberado?'#f0fdf4':'#fef3c7'};border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;padding:4px 8px;color:${m.liberado?'#16a34a':'#92400e'}">
-          ${m.liberado?'✅ Liberado p/ manut.':'🟠 Ainda em rescisão'}</button></td>
+        <td>${libBtn(m.id,m.liberado)}</td>
         <td>—</td>
         <td>—</td>
         <td><input type="date" value="${m.dtVist||''}" onchange="updVADt('${m.id}',this.value)"
             style="font-size:11px;padding:3px 5px;border:2px solid ${m.dtVist?'var(--g)':'var(--r)'};border-radius:5px;outline:none;width:120px;background:${m.dtVist?'#f0fdf4':'#fff'}"/></td>
         <td>—</td>
         <td>—</td>
-        <td><button onclick="togManVA('${m.id}')" style="border:none;background:none;cursor:pointer;font-size:18px" title="V. Antecip. Concluída">${m.vaOk?'✅':'⬜'}</button></td>
+        <td>${ynBtn('togManVA',m.id,m.vaOk)}</td>
         <td>—</td>
         <td>${m.alugado?`<span class="badge bg" style="font-size:9px">Alugado${m.alugadoDt?' '+fd(m.alugadoDt):''}</span>`:m.vaOk?sbadge('Concluído'):sbadge('Pendente')}</td>
         <td><div class="abts">${manutTab==='a'?`<button class="btn btn-sm" style="background:#fef3c7;color:#92400e;font-size:10px;padding:3px 8px;border:1px solid #d97706" onclick="reverterAlugado('${m.id}')">Voltar p/ Concluídas</button>`:manutTab==='c'?selConcl(m)+`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px;border:1px solid #16a34a" onclick="reabrirVA('${m.id}')">Reabrir</button>`:`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="concluirVA('${m.id}')">Concluir</button>`}<button class="abt action-delete" onclick="delR('manutencoes','${m.id}')">Excluir</button></div></td>
@@ -3748,11 +3750,10 @@ function rMan(){
       <td>
         <b style="color:var(--p)">${m.codigo}</b>
         ${mMesRef?`<span style="font-size:9px;color:var(--tl);display:block">${mMesRef}</span>`:''}
-        ${isCarry?`<span class="badge br" style="font-size:9px;display:block;margin-top:2px">⚠️ ${m.carryMes||mMesRef}</span>`:''}
+        ${isCarry?`<span class="badge br warn-tag">Atraso · ${m.carryMes||mMesRef}</span>`:''}
       </td>
       <td>${m.prestador||'-'}</td>
-      <td><button onclick="togManLiberado('${m.id}')" style="min-width:110px;border:1.5px solid ${m.liberado?'#16a34a':'#92400e'};background:${m.liberado?'#f0fdf4':'#fef3c7'};border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;padding:4px 8px;color:${m.liberado?'#16a34a':'#92400e'}">
-        ${m.liberado?'✅ Liberado p/ manut.':'🟠 Ainda em rescisão'}</button></td>
+      <td>${libBtn(m.id,m.liberado)}</td>
       <td>${fd(m.dtRepasse)}</td>
       <td>${m.dtRec?fd(m.dtRec):'<span style="color:var(--r);font-size:10px">Pendente</span>'}</td>
       <td>${saiuLocacao?'<span style="color:var(--g);font-size:10px;font-weight:600">Saiu de locação</span>':`<input type="date" value="${m.dtVist||''}" onchange="updVADt('${m.id}',this.value)" style="font-size:11px;padding:3px 5px;border:2px solid ${m.dtVist?'var(--g)':'var(--r)'};border-radius:5px;outline:none;width:120px;background:${m.dtVist?'#f0fdf4':'#fff'}"/>`}</td>
@@ -3762,13 +3763,13 @@ function rMan(){
         </div>
         <div style="font-size:10px;color:var(--tl)">${doneItens}/${itens.length}</div>
       </td>
-      <td><button onclick="togManRec('${m.id}')" style="border:none;background:none;cursor:pointer;font-size:16px">${m.recibo?'✅':'⬜'}</button></td>
-      <td>${saiuLocacao?'<span style="color:var(--tl)">—</span>':`<button onclick="togManVA('${m.id}')" style="border:none;background:none;cursor:pointer;font-size:16px" title="V. Antecip. Concluída">${m.vaOk?'✅':'⬜'}</button>`}</td>
-      <td><button onclick="togManPago('${m.id}')" style="border:none;background:none;cursor:pointer;font-size:16px">${m.pago?'✅':'⬜'}</button></td>
+      <td>${ynBtn('togManRec',m.id,m.recibo)}</td>
+      <td>${saiuLocacao?'<span style="color:var(--tl)">—</span>':ynBtn('togManVA',m.id,m.vaOk)}</td>
+      <td>${ynBtn('togManPago',m.id,m.pago)}</td>
       <td>${m.alugado?`<span class="badge bg" style="font-size:9px">Alugado${m.alugadoDt?' '+fd(m.alugadoDt):''}</span>`:sbadge(m.status||'Pendente')}</td>
       <td><div class="abts">
         ${manutTab==='a'?`<button class="btn btn-sm" style="background:#fef3c7;color:#92400e;font-size:10px;padding:3px 8px;border:1px solid #d97706" onclick="reverterAlugado('${m.id}')">Voltar p/ Concluídas</button>`:manutTab==='va'?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px" onclick="concluirVA('${m.id}')">Concluir</button>`:manutTab==='c'?selConcl(m)+`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 8px;border:1px solid #16a34a" onclick="reabrirVA('${m.id}')">Reabrir</button>`:''}
-        <button class="abt" onclick="openManPanel('${m.id}')" title="Itens / Detalhes">📋</button>
+        <button class="abt action-checklist" onclick="openManPanel('${m.id}')" title="Itens / Detalhes"></button>
         <button class="abt action-edit" onclick="editMan('${m.id}')">Editar</button>
         <button class="abt action-delete" onclick="delR('manutencoes','${m.id}')">Excluir</button>
       </div></td>
@@ -4378,7 +4379,7 @@ function rInad(){
   html+=sec('📅 Datas Vencidas — Agenda','var(--gy)',agItems);
 
   if(!html){
-    el.innerHTML=`<div class="empty"><div class="empty-i">✅</div>Tudo em dia!<br><button class="btn btn-p btn-sm" style="margin-top:10px" onclick="openM('m-inad')">+ Inadimplente</button></div>`;
+    el.innerHTML=`<div class="empty"><div class="empty-mark"></div><p>Tudo em dia!</p><button class="btn btn-p btn-sm" style="margin-top:10px" onclick="openM('m-inad')">+ Inadimplente</button></div>`;
     return;
   }
   const inadSumEl=document.getElementById('inad-summary');
@@ -5708,4 +5709,9 @@ load(true);
 </style>
 
 <script src="./cloud-sync.js?v=12"></script>
+<div id="toast"></div>
+<script>
+let toastT;
+function toast(msg){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3000);}
+</script>
 </body></html>

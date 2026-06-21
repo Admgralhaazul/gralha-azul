@@ -293,7 +293,8 @@ textarea.fc{resize:vertical;min-height:80px}
 
 /* ─── EMPTY ─── */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 20px;color:var(--t3);text-align:center;gap:10px}
-.empty-ico{font-size:36px;opacity:.35}
+.empty-mark,.empty-i{width:36px;height:36px;margin:0 auto 8px;border-radius:5px;background:#F1F5F9;border:1px solid #E2E8F0}
+.empty-ico{font-size:0;width:36px;height:36px;margin:0 auto 8px;border-radius:5px;background:#F1F5F9;border:1px solid #E2E8F0}
 .empty p{font-size:13.5px;max-width:260px;line-height:1.5}
 
 /* ─── TOAST ─── */
@@ -318,7 +319,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=18">
+<link rel="stylesheet" href="./enterprise-premium.css?v=19">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -336,6 +337,8 @@ body{visibility:visible!important}
 .tb-title{font-size:16px!important;font-weight:700!important;color:#152236!important}
 .stat-val{font-size:24px!important;font-weight:800!important}
 .stat-lbl{font-size:10.5px!important}
+#sidebar .ni,#sidebar .nav,#sidebar .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 12px!important}
+#sidebar .sb-sec{font-size:9.5px!important}
 </style>
 </head>
 <body class="mod-gest">
@@ -350,8 +353,8 @@ body{visibility:visible!important}
   <div class="sb-module-switch">
     <div class="sb-module-lbl">Módulos</div>
     <div class="sb-module-row">
-      <a class="nav ga-module-link" href="./rescisoes.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisão</a>
-      <a class="nav ga-module-link active-system" href="./gestao.html"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Gestão Adm.</a>
+      <a class="nav ga-module-link" href="./rescisoes.html">Rescisão</a>
+      <a class="nav ga-module-link active-system" href="./gestao.html">Manut./Gest.Adm</a>
     </div>
   </div>
   <div class="sb-nav">
@@ -363,13 +366,6 @@ body{visibility:visible!important}
     <div class="ni" onclick="nav(&#39;financeiro&#39;)"><svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M3 21h18"/><rect x="5" y="11" width="3" height="7"/><rect x="10.5" y="6" width="3" height="12"/><rect x="16" y="9" width="3" height="9"/></svg> Prestadores / Relatórios</div>
     <div class="sb-sec">Sistema</div>
     <div class="ni" onclick="nav(&#39;acesso&#39;)"><svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg> Configurações</div>
-  </div>
-  <div class="sb-foot">
-    <div class="user-chip">
-      <div class="u-av" id="sb-av">GA</div>
-      <div style="flex:1"><div class="u-nm" id="sb-nm">Gestão Admin.</div><div class="u-rl">Administrador</div></div>
-      <div class="btn-icon" onclick="nav(&#39;acesso&#39;)" style="font-size:12px">👥</div>
-    </div>
   </div>
 </nav>
 
@@ -507,7 +503,7 @@ body{visibility:visible!important}
       <tbody id="mager-tbody"></tbody>
     </table>
   </div>
-  <div id="mager-empty" class="empty"><div class="empty-ico">📋</div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
+  <div id="mager-empty" class="empty"><div class="empty-mark"></div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
 
 </div>
 
@@ -550,7 +546,7 @@ body{visibility:visible!important}
       <tbody id="mi-tbody"></tbody>
     </table>
   </div>
-  <div id="mi-empty" class="empty"><div class="empty-ico">🏠</div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
+  <div id="mi-empty" class="empty"><div class="empty-mark"></div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
 
 </div>
 
@@ -593,7 +589,7 @@ body{visibility:visible!important}
       <tbody id="mc-tbody"></tbody>
     </table>
   </div>
-  <div id="mc-empty" class="empty"><div class="empty-ico">🏢</div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
+  <div id="mc-empty" class="empty"><div class="empty-mark"></div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
 
 </div>
 
@@ -631,7 +627,7 @@ body{visibility:visible!important}
     <th>Contrato/Cond.</th><th>Prestador</th><th>Descrição Serviço</th>
     <th>Valor Fechado</th><th>Lanç. Manutenção</th><th>Recibo</th><th>OBS</th><th style="min-width:80px;text-align:right">Ações</th>
   </tr></thead><tbody id="mo-tbody"></tbody></table></div>
-  <div id="mo-empty" class="empty"><div class="empty-ico">🔑</div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
+  <div id="mo-empty" class="empty"><div class="empty-mark"></div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
 
 </div>
 
@@ -667,7 +663,7 @@ body{visibility:visible!important}
     <button class="btn btn-g btn-s" onclick="clearManutAgendaFilter()">✕ Limpar</button>
   </div>
   <div id="mag-list"></div>
-  <div id="mag-empty" class="empty"><div class="empty-ico">📅</div><p>Nenhum evento encontrado no período.</p></div>
+  <div id="mag-empty" class="empty"><div class="empty-mark"></div><p>Nenhum evento encontrado no período.</p></div>
 </div>
 
 <!-- ══════════════════════════════════════════════════
@@ -724,7 +720,7 @@ body{visibility:visible!important}
       <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-task&#39;)">+ Nova</button>
     </div>
     <div id="task-list"></div>
-    <div id="task-empty" class="empty"><div class="empty-ico">📌</div><p>Nenhuma tarefa pendente.</p></div>
+    <div id="task-empty" class="empty"><div class="empty-mark"></div><p>Nenhuma tarefa pendente.</p></div>
   </div>
   <!-- Notificações -->
   <div id="proc-tab-2" style="display:none">
@@ -738,7 +734,7 @@ body{visibility:visible!important}
       <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-notif&#39;)">+ Registrar Notificação</button>
     </div>
     <div id="notif-list"></div>
-    <div id="notif-empty" class="empty"><div class="empty-ico">🔔</div><p>Nenhuma notificação registrada.</p></div>
+    <div id="notif-empty" class="empty"><div class="empty-mark"></div><p>Nenhuma notificação registrada.</p></div>
   </div>
   <!-- Em Andamento -->
   <div id="proc-tab-3" style="display:none">
@@ -753,7 +749,7 @@ body{visibility:visible!important}
         <tbody id="proc-tbody"></tbody>
       </table>
     </div>
-    <div id="proc-empty" class="empty"><div class="empty-ico">📌</div><p>Nenhum processo em andamento.</p></div>
+    <div id="proc-empty" class="empty"><div class="empty-mark"></div><p>Nenhum processo em andamento.</p></div>
   </div>
   <!-- Histórico -->
   <div id="proc-tab-4" style="display:none">
@@ -766,7 +762,7 @@ body{visibility:visible!important}
       <button class="btn btn-g btn-s" onclick="histLimpar()">✕ Limpar</button>
     </div>
     <div id="proc-hist-list"></div>
-    <div id="proc-hist-empty" class="empty"><div class="empty-ico">📋</div><p>Nenhum item concluído ainda.</p></div>
+    <div id="proc-hist-empty" class="empty"><div class="empty-mark"></div><p>Nenhum item concluído ainda.</p></div>
   </div>
 </div>
 
@@ -814,13 +810,13 @@ body{visibility:visible!important}
   <div class="sh"><div><div class="sh-t">Agenda Geral</div><div class="sh-s">Calendário operacional</div></div><button class="btn btn-p btn-s" onclick="openM(&#39;m-new-event&#39;)">+ Novo Evento</button></div>
   <div class="g2">
     <div>
-      <div class="ag-day"><div class="ag-dh">Hoje <span class="today-pill" id="ag-today-lbl">11/06/2026</span></div><div id="ag-today"><div class="empty" style="padding:20px"><div class="empty-ico">📅</div><p style="font-size:12px">Nenhum evento hoje</p></div></div></div>
+      <div class="ag-day"><div class="ag-dh">Hoje <span class="today-pill" id="ag-today-lbl">11/06/2026</span></div><div id="ag-today"><div class="empty" style="padding:20px"><div class="empty-mark"></div><p style="font-size:12px">Nenhum evento hoje</p></div></div></div>
       <div id="ag-week"></div>
     </div>
     <div>
       <div class="card">
         <div class="card-h"><div class="card-t">Próximos Vencimentos</div></div>
-        <div id="ag-venc" style="display:flex;flex-direction:column;gap:6px"><div class="empty" style="padding:20px"><div class="empty-ico">📅</div><p style="font-size:12px">Sem vencimentos próximos</p></div></div>
+        <div id="ag-venc" style="display:flex;flex-direction:column;gap:6px"><div class="empty" style="padding:20px"><div class="empty-mark"></div><p style="font-size:12px">Sem vencimentos próximos</p></div></div>
       </div>
     </div>
   </div>
@@ -908,7 +904,7 @@ body{visibility:visible!important}
     <div class="tw" id="rel-result-table-wrap" style="display:none">
       <table><thead id="rel-thead"></thead><tbody id="rel-tbody"></tbody></table>
     </div>
-    <div id="rel-empty" class="empty"><div class="empty-ico">📊</div><p>Selecione os filtros e clique em "Gerar Relatório".</p></div>
+    <div id="rel-empty" class="empty"><div class="empty-mark"></div><p>Selecione os filtros e clique em "Gerar Relatório".</p></div>
   </div>
 
   </div><!-- /fin-tab-0 -->
@@ -973,7 +969,7 @@ body{visibility:visible!important}
     <button class="btn btn-g btn-s" onclick="document.getElementById(&#39;gchk-cond&#39;).value=&#39;&#39;;document.getElementById(&#39;gchk-ano&#39;).value=&#39;&#39;;document.getElementById(&#39;gchk-mes&#39;).value=&#39;&#39;;renderGlobalChk()">✕ Limpar</button>
   </div>
   <div id="gchk-list"></div>
-  <div id="gchk-empty" class="empty"><div class="empty-ico">✅</div><p>Nenhuma visita registrada.<br>Clique em "+ Nova Visita" para começar.</p></div>
+  <div id="gchk-empty" class="empty"><div class="empty-mark"></div><p>Nenhuma visita registrada.<br>Clique em "+ Nova Visita" para começar.</p></div>
 </div>
 
 
@@ -1022,7 +1018,7 @@ body{visibility:visible!important}
       <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-colab&#39;)">+ Adicionar Responsável</button>
     </div>
     <div id="colab-list" style="display:flex;flex-direction:column;gap:8px"></div>
-    <div id="colab-empty" class="empty"><div class="empty-ico">👤</div><p>Nenhum colaborador cadastrado.</p></div>
+    <div id="colab-empty" class="empty"><div class="empty-mark"></div><p>Nenhum colaborador cadastrado.</p></div>
   </div>
   <!-- Nuvem / Backup -->
   <div class="card" style="margin-top:18px;margin-bottom:18px">
@@ -1083,7 +1079,7 @@ body{visibility:visible!important}
           <option value="1">Sim</option><option value="0">Não</option>
         </select>
       </div>
-      <button class="btn btn-p" style="margin-top:14px" onclick="applyConfig();toast(&#39;✅ Configurações salvas!&#39;)">Salvar Configurações</button>
+      <button class="btn btn-p" style="margin-top:14px" onclick="applyConfig();toast(&#39;Configurações salvas!&#39;)">Salvar Configurações</button>
     </div>
   </div>
 </div>
@@ -1483,7 +1479,7 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 function openM(id,tipo){
   if(tipo&&id==='m-new-manut'){
     document.getElementById('nm-tipo').value=tipo;
-    document.getElementById('manut-modal-title').textContent=tipo==='imob'?'🏠 Novo Chamado — Imobiliária':tipo==='cond'?'🏢 Novo Chamado — Condomínio':tipo==='proc'?'📌 Processo em Andamento':'🔧 Novo Chamado';
+    document.getElementById('manut-modal-title').textContent=tipo==='imob'?'Novo Chamado — Imobiliária':tipo==='cond'?'Novo Chamado — Condomínio':tipo==='proc'?'Processo em Andamento':'Novo Chamado';
     document.getElementById('nm-dt-sol').value=today();
   }
   if(id==='m-new-task'){
@@ -1548,10 +1544,12 @@ function changeUser(){
   const uid=sel.value;
   DB.currentUser=DB.users.find(u=>u.id===uid)||null;
   if(DB.currentUser){
-    document.getElementById('sb-nm').textContent=DB.currentUser.nome;
-    document.getElementById('sb-av').textContent=DB.currentUser.nome.split(' ').map(w=>w[0]).join('').toUpperCase().substr(0,2);
+    const sbNm=document.getElementById('sb-nm');
+    const sbAv=document.getElementById('sb-av');
+    if(sbNm)sbNm.textContent=DB.currentUser.nome;
+    if(sbAv)sbAv.textContent=DB.currentUser.nome.split(' ').map(w=>w[0]).join('').toUpperCase().substr(0,2);
     logAccess('Login no sistema','Sistema');
-    toast('👤 Bem-vindo, '+DB.currentUser.nome+'!');
+    toast('Bem-vindo, '+DB.currentUser.nome+'!');
     renderLog();
   }
 }
@@ -1569,11 +1567,11 @@ function renderUsers(){
 }
 function saveUser(){
   const nome=document.getElementById('nu-nome').value.trim();
-  if(!nome){toast('⚠️ Digite o nome!');return}
+  if(!nome){toast('Digite o nome!');return}
   DB.users.push({id:'u'+ID(),nome,cargo:document.getElementById('nu-cargo').value,ativo:true});
-  closeM('m-new-user');renderUsers();toast('✅ Usuário adicionado!');
+  closeM('m-new-user');renderUsers();toast('Usuário adicionado!');
 }
-function removeUser(uid){DB.users=DB.users.filter(u=>u.id!==uid);renderUsers();toast('🗑 Usuário removido!')}
+function removeUser(uid){DB.users=DB.users.filter(u=>u.id!==uid);renderUsers();toast('Usuário removido!')}
 function renderLog(){
   const q=(document.getElementById('log-search')||{}).value||'';
   const ini=document.getElementById('log-dt-ini')?.value;
@@ -1623,13 +1621,13 @@ function saveManut(){
   const val=parseFloat(document.getElementById('nm-val').value)||0;
   const mat=parseFloat(document.getElementById('nm-mat').value)||0;
   const m={id:ID(),tipo,status:document.getElementById('nm-status').value,dtSol:document.getElementById('nm-dt-sol').value,dtPrev:document.getElementById('nm-dt-prev').value,resp:document.getElementById('nm-resp').value,cond:document.getElementById('nm-cond').value,prest:document.getElementById('nm-prest').value,desc:document.getElementById('nm-desc').value,dtConc:document.getElementById('nm-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:document.getElementById('nm-loc-deb').value,contas:document.getElementById('nm-contas').value,recibo:document.getElementById('nm-recibo').value,obs:document.getElementById('nm-obs').value};
-  if(!m.desc){toast('⚠️ Preencha a descrição!');return}
+  if(!m.desc){toast('Preencha a descrição!');return}
   if(!DB.manutencoes[tipo])DB.manutencoes[tipo]=[];
   DB.manutencoes[tipo].unshift(m);
   closeM('m-new-manut');
   ['nm-desc','nm-cond','nm-obs'].forEach(id=>document.getElementById(id).value='');
   ['nm-val','nm-mat','nm-rec-kenlo','nm-loc-deb','nm-contas'].forEach(id=>document.getElementById(id).value='');
-  renderManut(tipo);updateDashboard();renderFin();toast('✅ Chamado cadastrado!');logAccess('Criou chamado '+m.tipo,'Manutenções');
+  renderManut(tipo);updateDashboard();renderFin();toast('Chamado cadastrado!');logAccess('Criou chamado '+m.tipo,'Manutenções');
 }
 function filterManut(tipo){
   if(tipo==='proc'){renderProcTab3();return;}
@@ -1753,7 +1751,7 @@ function updateManutStats(tipo){
 }
 function editManut(id,tipo){
   const m=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup,...(DB.manutencoes.proc||[]),...(DB.manutencoes.ager||[])].find(x=>x.id===id);
-  if(!m){toast('⚠️ Registro não encontrado!');return;}
+  if(!m){toast('Registro não encontrado!');return;}
   if(!m)return;
   DB.editingId=id;DB.editingManutTipo=tipo||m.tipo;
   ['status','resp','prest','recibo'].forEach(f=>{const el=document.getElementById('em-'+f.replace('Prest','prest'));if(el)el.value=m[f]||el.options[0].value});
@@ -1782,22 +1780,22 @@ function updateManut(){
   const val=parseFloat(document.getElementById('em-val').value)||0;
   const mat=parseFloat(document.getElementById('em-mat').value)||0;
   arr[idx]={...arr[idx],status:document.getElementById('em-status').value,dtSol:document.getElementById('em-dt-sol').value,dtPrev:document.getElementById('em-dt-prev').value,resp:document.getElementById('em-resp').value,cond:document.getElementById('em-cond').value,prest:document.getElementById('em-prest').value,desc:document.getElementById('em-desc').value,dtConc:document.getElementById('em-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:document.getElementById('em-loc-deb').value,contas:document.getElementById('em-contas').value,recibo:document.getElementById('em-recibo').value,obs:document.getElementById('em-obs').value};
-  closeM('m-edit-manut');renderManut(tipo);updateDashboard();renderFin();toast('✅ Chamado atualizado!');
+  closeM('m-edit-manut');renderManut(tipo);updateDashboard();renderFin();toast('Chamado atualizado!');
 }
 function deleteManut(){
   if(!confirm('Excluir este chamado?'))return;
   const tipo=DB.editingManutTipo;
   DB.manutencoes[tipo]=DB.manutencoes[tipo].filter(m=>m.id!==DB.editingId);
-  closeM('m-edit-manut');renderManut(tipo);updateDashboard();renderFin();toast('🗑 Chamado excluído!');
+  closeM('m-edit-manut');renderManut(tipo);updateDashboard();renderFin();toast('Chamado excluído!');
 }
 
 // ─── TASKS ──────────────────────────────────────
 function saveTask(){
   const t={id:ID(),titulo:document.getElementById('nt-titulo').value,resp:document.getElementById('nt-resp').value,prio:document.getElementById('nt-prio').value,dtIni:document.getElementById('nt-dt-ini').value,dtFim:document.getElementById('nt-dt-fim').value,cond:document.getElementById('nt-cond').value,obs:document.getElementById('nt-obs').value,status:'Pendente',criadoEm:today()};
-  if(!t.titulo){toast('⚠️ Digite o título!');return}
+  if(!t.titulo){toast('Digite o título!');return}
   DB.tasks.unshift(t);
   closeM('m-new-task');document.getElementById('nt-titulo').value='';document.getElementById('nt-obs').value='';
-  renderTasks();updateDashboard();toast('✅ Tarefa criada!');logAccess('Criou tarefa','Processos Admin');
+  renderTasks();updateDashboard();toast('Tarefa criada!');logAccess('Criou tarefa','Processos Admin');
 }
 function renderTasks(){
   const q=(document.getElementById('task-search')?.value||'').toLowerCase();
@@ -1830,7 +1828,7 @@ function renderTasks(){
 function completeTask(id){
   const t=DB.tasks.find(x=>x.id===id);if(!t)return;
   t.status='Concluída';t.concluidoEm=today();
-  renderTasks();renderProcHist();renderAgendaProc();updateDashboard();toast('✅ Tarefa concluída!');logAccess('Concluiu tarefa '+t.titulo,'Processos Admin');
+  renderTasks();renderProcHist();renderAgendaProc();updateDashboard();toast('Tarefa concluída!');logAccess('Concluiu tarefa '+t.titulo,'Processos Admin');
 }
 function editTask(id){
   const t=DB.tasks.find(x=>x.id===id);if(!t)return;
@@ -1841,12 +1839,12 @@ function editTask(id){
 function updateTask(){
   const idx=DB.tasks.findIndex(t=>t.id===DB.editingId);if(idx<0)return;
   DB.tasks[idx]={...DB.tasks[idx],titulo:document.getElementById('et-titulo').value,resp:document.getElementById('et-resp').value,prio:document.getElementById('et-prio').value,dtIni:document.getElementById('et-dt-ini').value,dtFim:document.getElementById('et-dt-fim').value,status:document.getElementById('et-status').value,obs:document.getElementById('et-obs').value};
-  closeM('m-edit-task');renderTasks();updateDashboard();toast('✅ Tarefa atualizada!');
+  closeM('m-edit-task');renderTasks();updateDashboard();toast('Tarefa atualizada!');
 }
 function deleteTask(){
   if(!confirm('Excluir esta tarefa?'))return;
   DB.tasks=DB.tasks.filter(t=>t.id!==DB.editingId);
-  closeM('m-edit-task');renderTasks();updateDashboard();toast('🗑 Tarefa excluída!');
+  closeM('m-edit-task');renderTasks();updateDashboard();toast('Tarefa excluída!');
 }
 function renderProcHist(){
   let histTasks=DB.tasks.filter(t=>t.status==='Concluída');
@@ -1879,9 +1877,9 @@ function renderProcHist(){
 }
 function reverterTaskHist(id){
   const t=DB.tasks.find(x=>x.id===id);
-  if(t){t.status='Em andamento';t.concluidoEm=null;renderProcHist();renderTasks();renderAgendaProc();updateDashboard();toast('↩ Tarefa reaberta!');return;}
+  if(t){t.status='Em andamento';t.concluidoEm=null;renderProcHist();renderTasks();renderAgendaProc();updateDashboard();toast('Tarefa reaberta!');return;}
   const l=(DB.lembretes||[]).find(x=>x.id===id);
-  if(l){l.status='Pendente';l.concluidoEm=null;renderLembretes();renderProcHist();updateDashboard();toast('↩ Lembrete reaberto!');return;}
+  if(l){l.status='Pendente';l.concluidoEm=null;renderLembretes();renderProcHist();updateDashboard();toast('Lembrete reaberto!');return;}
 }
 function updateProgress(){
   const roles=['Assistente Administrativa','Operacional Administrativo','Jurídico'];
@@ -1903,7 +1901,7 @@ function saveNotif(){
   const n={id:ID(),cod:document.getElementById('nn-cod').value,dt:document.getElementById('nn-dt').value,dest:document.getElementById('nn-dest').value,contrato:document.getElementById('nn-contrato').value,tipo:document.getElementById('nn-tipo').value,resp:document.getElementById('nn-resp').value,obs:document.getElementById('nn-obs').value};
   DB.notifs.unshift(n);
   closeM('m-new-notif');document.getElementById('nn-cod').value='';document.getElementById('nn-dest').value='';document.getElementById('nn-obs').value='';
-  renderNotifs();toast('✅ Notificação registrada!');logAccess('Registrou notificação '+n.cod,'Processos Admin');
+  renderNotifs();toast('Notificação registrada!');logAccess('Registrou notificação '+n.cod,'Processos Admin');
 }
 function renderNotifs(){
   const q=(document.getElementById('notif-search')?.value||'').toLowerCase();
@@ -1953,23 +1951,23 @@ function reverterProc(id){
   const arr=DB.manutencoes.proc||[];
   const m=arr.find(x=>x.id===id);if(!m)return;
   m.status='Em andamento';
-  renderProcTab3();toast('↩ Processo reaberto!');
+  renderProcTab3();toast('Processo reaberto!');
 }
 
 // ─── AGENDA ─────────────────────────────────────
 function saveEvent(){
   const e={id:ID(),titulo:document.getElementById('ne-titulo').value,dt:document.getElementById('ne-dt').value,hora:document.getElementById('ne-hora').value,resp:document.getElementById('ne-resp').value,cond:document.getElementById('ne-cond').value,obs:document.getElementById('ne-obs').value};
-  if(!e.titulo){toast('⚠️ Digite o título!');return}
+  if(!e.titulo){toast('Digite o título!');return}
   DB.events.unshift(e);
   closeM('m-new-event');document.getElementById('ne-titulo').value='';document.getElementById('ne-obs').value='';
-  renderAgenda();renderAgendaProc();toast('✅ Evento agendado!');logAccess('Criou evento '+e.titulo,'Agenda');
+  renderAgenda();renderAgendaProc();toast('Evento agendado!');logAccess('Criou evento '+e.titulo,'Agenda');
 }
 function renderAgenda(){
   const td=today();
   const todayEvs=DB.events.filter(e=>e.dt===td&&!e._fromCond).sort((a,b)=>a.hora>b.hora?1:-1);
   const agTd=document.getElementById('ag-today');
   document.getElementById('ag-today-lbl').textContent=fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
-  if(!todayEvs.length){agTd.innerHTML='<div class="empty" style="padding:16px"><div class="empty-ico">📅</div><p style="font-size:12px">Nenhum evento hoje</p></div>';return}
+  if(!todayEvs.length){agTd.innerHTML='<div class="empty" style="padding:16px"><div class="empty-mark"></div><p style="font-size:12px">Nenhum evento hoje</p></div>';return}
   agTd.innerHTML=todayEvs.map(e=>`<div class="ag-ev"><div class="ev-time">${e.hora||'—'}</div><div class="ev-bar" style="background:var(--blue)"></div><div class="ev-info"><div class="ev-t">${e.titulo}</div><div class="ev-s">${e.resp}${e.cond?' · '+e.cond:''}</div></div><span class="bs bs-ag">Agendado</span></div>`).join('');
   const week=document.getElementById('ag-week');
   const futureEvs=DB.events.filter(e=>e.dt>td&&!e._fromCond).sort((a,b)=>a.dt>b.dt?1:-1).slice(0,8);
@@ -2008,7 +2006,7 @@ function renderAgendaProc(){
         }
       }).join('');
     } else {
-      secTarefas.innerHTML='<div class="empty" style="padding:14px"><div class="empty-ico">📌</div><p style="font-size:12px">Nenhuma tarefa pendente</p></div>';
+      secTarefas.innerHTML='<div class="empty" style="padding:14px"><div class="empty-mark"></div><p style="font-size:12px">Nenhuma tarefa pendente</p></div>';
     }
   }
 }
@@ -2142,7 +2140,7 @@ function showCondDetail(id){
           <button class="btn btn-p btn-s" onclick="openCondManutModal(${id})">+ Incluir Manutenção</button>
         </div>
         <div id="cond-manut-chk-${id}" style="margin-top:10px">
-          ${(c.manutChk||[]).length===0?'<div class="empty" style="padding:14px"><div class="empty-ico">📋</div><p style="font-size:12px">Nenhuma manutenção identificada ainda</p></div>':
+          ${(c.manutChk||[]).length===0?'<div class="empty" style="padding:14px"><div class="empty-mark"></div><p style="font-size:12px">Nenhuma manutenção identificada ainda</p></div>':
           (c.manutChk||[]).map(m=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
             <div style="flex:1"><div style="font-size:13px;font-weight:500">${m.desc}</div>
             <div style="font-size:11.5px;color:var(--t3)">${fmtDate(m.dtChk)} · Prazo: ${fmtDate(m.dtPrev)}</div></div>
@@ -2187,7 +2185,7 @@ function showCondDetail(id){
           <div id="chk-alerta-${id}" style="display:none;font-size:12px;font-weight:700;color:var(--red);margin-left:auto">Visita próxima!</div>
         </div>
         <div id="chk-hist-${id}">
-          ${hist.length===0?'<div class="empty" style="padding:14px"><div class="empty-ico">📋</div><p style="font-size:12px">Nenhuma visita registrada</p></div>':
+          ${hist.length===0?'<div class="empty" style="padding:14px"><div class="empty-mark"></div><p style="font-size:12px">Nenhuma visita registrada</p></div>':
           hist.map(h=>`<div style="padding:10px 0;border-bottom:1px solid var(--border)">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
               <div style="width:22px;height:22px;background:rgba(30,201,138,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green)">✓</div>
@@ -2240,7 +2238,7 @@ function saveCondChk(id){
   const obs=document.getElementById('chk-obs-'+id)?.value||'';
   const dt=document.getElementById('chk-dt-'+id)?.value||today();
   c.checklists.unshift({id:ID(),dt,checks,obs,criadoEm:new Date().toLocaleString('pt-BR')});
-  toast('✅ Visita registrada com sucesso!');
+  toast('Visita registrada com sucesso!');
   // Re-render history section
   const histEl=document.getElementById('chk-hist-'+id);
   if(histEl){
@@ -2282,7 +2280,7 @@ function renderPrestCards(){
     const grid=document.getElementById(gridId);
     if(!grid)return;
     if(!DB.prestadores.length){
-      grid.innerHTML='<div class="empty" style="padding:40px"><div class="empty-ico">👷</div><p>Nenhum prestador cadastrado.<br>Clique em "+ Novo Prestador" para começar.</p></div>';
+      grid.innerHTML='<div class="empty" style="padding:40px"><div class="empty-mark"></div><p>Nenhum prestador cadastrado.<br>Clique em "+ Novo Prestador" para começar.</p></div>';
       return;
     }
     grid.innerHTML=DB.prestadores.map(p=>{
@@ -2401,7 +2399,7 @@ function showPrestDetail(pid,filtAno,filtMes,filtIni,filtFim,noDef){
       <div class="stat cy"><div class="stat-lbl">${(isTiagoD||p.rec_tipo==='receita')?'Receita (R$)':'Valor Total'}</div><div class="stat-val">R$${svcs.reduce((s,m)=>s+((isTiagoD||p.rec_tipo==='receita')?parseFloat(m.recKenlo||0):parseFloat(m.val||0)),0).toFixed(0)}</div></div>
     </div>
     <div class="tw"><table class="manut-table"><thead><tr><th>Status</th><th>Data</th><th>Contrato/Cond.</th><th>Descrição</th><th>${(isTiagoD||p.rec_tipo==='receita')?'Receita (R$)':'Valor Fechado'}</th><th>OBS</th></tr></thead><tbody id="pr-tbody"></tbody></table></div>
-    <div id="pr-empty" class="empty"><div class="empty-ico">📋</div><p>Nenhum serviço encontrado.</p></div>`;
+    <div id="pr-empty" class="empty"><div class="empty-mark"></div><p>Nenhum serviço encontrado.</p></div>`;
   nav('prest-detail');
   DB._pdFilt={ano:filtAno||'',mes:filtMes||'',ini:filtIni||'',fim:filtFim||''};
   setTimeout(()=>renderPrestRel(pid),50);
@@ -2421,9 +2419,9 @@ function renderPrestRel(pid){
 }
 function savePrest(){
   const nome=document.getElementById('np-nome').value.trim();
-  if(!nome){toast('⚠️ Digite o nome!');return}
+  if(!nome){toast('Digite o nome!');return}
   DB.prestadores.push({id:'p'+ID(),nome,esp:document.getElementById('np-esp').value,tel:document.getElementById('np-tel').value,perc:parseFloat(document.getElementById('np-perc').value)||70,rec_tipo:document.getElementById('np-rec-tipo').value,servicos:0,total:0});
-  closeM('m-new-prest');renderPrestCards();toast('✅ Prestador adicionado!');
+  closeM('m-new-prest');renderPrestCards();toast('Prestador adicionado!');
 }
 
 // ─── FINANCEIRO ──────────────────────────────────
@@ -2581,7 +2579,7 @@ function exportarDados(){
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download='gestao_admin_'+new Date().toISOString().split('T')[0]+'.json';a.click();
-  toast('📥 Dados exportados com sucesso!');
+  toast('Dados exportados com sucesso!');
 }
 function importarDados(e){
   const file=e.target.files[0];if(!file)return;
@@ -2589,7 +2587,7 @@ function importarDados(e){
   reader.onload=ev=>{
     try{
       const data=JSON.parse(ev.target.result);
-      if(data.DB){Object.assign(DB,data.DB);toast('✅ Dados importados!');}
+      if(data.DB){Object.assign(DB,data.DB);toast('Dados importados!');}
       if(data.CONDOMINIOS){data.CONDOMINIOS.forEach(c=>{const idx=CONDOMINIOS.findIndex(x=>x.id===c.id);if(idx>=0){CONDOMINIOS[idx].servicos=c.servicos;CONDOMINIOS[idx].checklists=c.checklists;}});}
       updateDashboard();renderManut('imob');renderManut('cond');renderManut('ocup');renderGlobalChk();
     }catch(err){alert('Erro ao importar: '+err.message);}
@@ -2686,7 +2684,7 @@ function saveChkVisit(){
   const dt=document.getElementById('nchk-dt').value;
   const resp=document.getElementById('nchk-resp').value;
   const obs=document.getElementById('nchk-obs').value;
-  if(!condId||!dt){toast('⚠️ Preencha condomínio e data!');return;}
+  if(!condId||!dt){toast('Preencha condomínio e data!');return;}
   const checks=getChkChecks('nchk-items');
   const condNome=(CONDOMINIOS.find(c=>c.id===condId)||{}).nome||'';
   const manDesc=document.getElementById('nchk-man-desc').value;
@@ -2703,9 +2701,9 @@ function saveChkVisit(){
       const m={id:ID(),tipo:'cond',status:'Aberto',dtSol:dt,dtPrev:manDt,resp,cond:condNome,prest:manPrest,desc:manDesc,dtConc:'',val:0,mat:0,recKenlo:'0',manutKenlo:'',locDeb:'',contas:'',recibo:'Não',obs:'Gerado via checklist'};
       DB.manutencoes.cond.unshift(m);
     }
-    toast('✅ Visita registrada e manutenção agendada!');
+    toast('Visita registrada e manutenção agendada!');
   } else {
-    toast('✅ Visita de checklist registrada!');
+    toast('Visita de checklist registrada!');
   }
   closeM('m-new-chk');
   document.getElementById('nchk-obs').value='';
@@ -2774,12 +2772,12 @@ function updateChkVisit(){
   v.condId=condId;
   v.condNome=(CONDOMINIOS.find(c=>c.id===condId)||{}).nome||v.condNome;
   v.checks=getChkChecks('echk-items');
-  closeM('m-edit-chk');renderGlobalChk();toast('✅ Visita atualizada!');
+  closeM('m-edit-chk');renderGlobalChk();toast('Visita atualizada!');
 }
 function deleteChkVisit(id){
   if(!confirm('Excluir esta visita?'))return;
   DB.checklists=DB.checklists.filter(x=>x.id!==(id||DB.editingId));
-  closeM('m-edit-chk');renderGlobalChk();updateDashboard();toast('🗑 Visita excluída!');
+  closeM('m-edit-chk');renderGlobalChk();updateDashboard();toast('Visita excluída!');
 }
 
 // ─── RELATÓRIO SEMANAL ─────────────────────────────
@@ -2830,7 +2828,7 @@ function gerarRelSemanal(){
   // abrir aba Relatórios
   const tabs=document.querySelectorAll('#view-financeiro .tabs .tab');
   if(tabs.length>=2)switchFinTab(tabs[1].textContent.includes('Relat')?tabs[1]:tabs[0],0);
-  toast('📄 Relatório semanal gerado!');
+  toast('Relatório semanal gerado!');
 }
 
 // ─── COND DETAIL: com botão editar ───────────────
@@ -2845,7 +2843,7 @@ function editCondModal(id){
   if(novoGas!==null)c.gas=novoGas;
   const novaEnergia=prompt('Energia (atual: '+c.energia+'):', c.energia);
   if(novaEnergia!==null)c.energia=novaEnergia;
-  toast('✅ Condomínio atualizado!');
+  toast('Condomínio atualizado!');
   showCondDetail(id);
 }
 
@@ -2878,12 +2876,12 @@ function addManutFilters_OLD(tipo){
 // ─── COLABORADORES ────────────────────────────────
 function saveColab(){
   const nome=document.getElementById('nc-nome').value.trim();
-  if(!nome){toast('⚠️ Digite o nome!');return;}
+  if(!nome){toast('Digite o nome!');return;}
   const c={id:ID(),nome,cargo:document.getElementById('nc-cargo').value,tel:document.getElementById('nc-tel').value,email:document.getElementById('nc-email').value,ativo:document.getElementById('nc-ativo').value==='1'};
   DB.colaboradores.push(c);
   closeM('m-new-colab');
   renderColabs();fillRespSelects();fillPrestSelects();renderPrestListAcesso();
-  toast('✅ Colaborador adicionado!');
+  toast('Colaborador adicionado!');
 }
 function renderColabs(){
   const list=document.getElementById('colab-list');
@@ -2906,12 +2904,12 @@ function renderColabs(){
 }
 function toggleColab(id){
   const c=DB.colaboradores.find(x=>x.id===id);if(!c)return;
-  c.ativo=!c.ativo;renderColabs();fillRespSelects();fillPrestSelects();toast('✅ Status atualizado!');
+  c.ativo=!c.ativo;renderColabs();fillRespSelects();fillPrestSelects();toast('Status atualizado!');
 }
 function removeColab(id){
   if(!confirm('Remover colaborador?'))return;
   DB.colaboradores=DB.colaboradores.filter(x=>x.id!==id);
-  renderColabs();fillRespSelects();fillPrestSelects();toast('🗑 Colaborador removido!');
+  renderColabs();fillRespSelects();fillPrestSelects();toast('Colaborador removido!');
 }
 function renderPrestListAcesso(){
   const list=document.getElementById('prest-list-acesso');
@@ -2933,7 +2931,7 @@ function renderPrestListAcesso(){
 function removePrest(id){
   if(!confirm('Remover prestador? Ele deixará de aparecer nas pesquisas.'))return;
   DB.prestadores=DB.prestadores.filter(x=>x.id!==id);
-  renderPrestListAcesso();renderPrestCards();fillPrestSelects();fillRespSelects();updateDashboard();toast('🗑 Prestador removido!');
+  renderPrestListAcesso();renderPrestCards();fillPrestSelects();fillRespSelects();updateDashboard();toast('Prestador removido!');
 }
 
 // ─── FILL RESP SELECTS (colaboradores dinâmicos) ──
@@ -2992,7 +2990,7 @@ function resetAllData(){
   DB.tasks=[];DB.notifs=[];DB.events=[];DB.checklists=[];DB.log=[];
   updateDashboard();renderManut('imob');renderManut('cond');renderManut('ocup');
   renderGlobalChk();renderAgenda();renderTasks();renderNotifs();
-  toast('🗑 Dados resetados!');
+  toast('Dados resetados!');
 }
 
 // ─── RELATÓRIOS FUNCIONAIS ────────────────────────
@@ -3093,7 +3091,7 @@ function exportarRelCSV(){
   const csv=rows.map(r=>r.map(c=>'"'+String(c||'').replace(/"/g,'""')+'"').join(',')).join('\n');
   const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,﻿'+encodeURIComponent(csv);
   a.download='relatorio_'+new Date().toISOString().split('T')[0]+'.csv';a.click();
-  toast('📊 CSV exportado!');
+  toast('CSV exportado!');
 }
 
 // ─── FINANCEIRO COM FILTROS ───────────────────────
@@ -3127,7 +3125,7 @@ function renderManutHome(){
 function reopenTask(id){
   const t=DB.tasks.find(x=>x.id===id);if(!t)return;
   t.status='Pendente';t.dtConc='';
-  renderTasks();updateDashboard();toast('↩ Tarefa reaberta!');
+  renderTasks();updateDashboard();toast('Tarefa reaberta!');
 }
 function concluirManutDireto(id,tipo){
   const all=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup,...(DB.manutencoes.proc||[]),...(DB.manutencoes.ager||[])];
@@ -3150,14 +3148,14 @@ function concluirManutDireto(id,tipo){
     }
   }
   renderManut(m.tipo||tipo);updateManutStats(m.tipo||tipo);updateDashboard();
-  toast('✅ Concluído! Cruzado com condomínio.');
+  toast('Concluído! Cruzado com condomínio.');
 }
 function reopenManut(id){
   const all=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup,...(DB.manutencoes.proc||[]),...(DB.manutencoes.ager||[])];
   const m=all.find(x=>x.id===id);if(!m)return;
   m.status='Em andamento';m.dtConc='';
   renderManut(m.tipo);updateManutStats(m.tipo);updateDashboard();
-  toast('↩ Chamado reaberto!');
+  toast('Chamado reaberto!');
 }
 
 
@@ -3189,7 +3187,7 @@ function exportPrestPDF(pid){
 // ─── SALVAR NOVO CONDOMÍNIO ───────────────────────
 function saveCond(){
   const nome=document.getElementById('ncond-nome').value.trim();
-  if(!nome){toast('⚠️ Digite o nome do condomínio!');return;}
+  if(!nome){toast('Digite o nome do condomínio!');return;}
   const newId=Math.max(0,...CONDOMINIOS.map(c=>c.id))+1;
   const novo={
     id:newId,
@@ -3228,7 +3226,7 @@ function saveCond(){
   fillCondSelects();fillChkCondSelects();
   // Atualizar badge do sidebar
   updateDashboard();
-  toast('✅ Condomínio "'+nome+'" cadastrado!');
+  toast('Condomínio "'+nome+'" cadastrado!');
   logAccess('Cadastrou condomínio '+nome,'Condomínios');
 }
 
@@ -3236,7 +3234,7 @@ function saveCond(){
 // ─── CONDOMÍNIO: editar campo inline ─────────────
 function editCondField(id,field,val){
   const c=CONDOMINIOS.find(x=>x.id===id);if(!c)return;
-  c[field]=val;toast('✅ Salvo!');
+  c[field]=val;toast('Salvo!');
 }
 function adicionarInfoCampo(id){
   const c=CONDOMINIOS.find(x=>x.id===id);if(!c)return;
@@ -3258,7 +3256,7 @@ function adicionarInfoCampo(id){
   } else {
     showCondDetail(id);
   }
-  toast('✅ Campo adicionado!');
+  toast('Campo adicionado!');
 }
 
 // ─── CONDOMÍNIO: prestadores inline ──────────────
@@ -3272,13 +3270,13 @@ function adicionarPrestCond(id){
   const srv=prompt('Serviço (ex: Eletricista):');if(!srv)return;
   const nome=prompt('Nome do prestador:');if(!nome)return;
   c.prestadores[srv]=nome;
-  showCondDetail(id);toast('✅ Prestador adicionado!');
+  showCondDetail(id);toast('Prestador adicionado!');
 }
 function removerPrestCond(id,key){
   const c=CONDOMINIOS.find(x=>x.id===id);if(!c)return;
   if(!confirm('Remover '+key+'?'))return;
   delete c.prestadores[key];
-  showCondDetail(id);toast('🗑 Removido!');
+  showCondDetail(id);toast('Removido!');
 }
 
 // ─── CONDOMÍNIO: serviços ─────────────────────────
@@ -3287,13 +3285,13 @@ function addCondSvc(id){
   const nome=prompt('Nome do serviço (ex: Desentupimento):');if(!nome)return;
   const dias=parseInt(prompt('Frequência em dias (ex: 30, 180, 365):','90'))||90;
   c.servicos.push({nome,dias,ultima:'',proxima:'',prest:''});
-  showCondDetail(id);toast('✅ Serviço adicionado!');
+  showCondDetail(id);toast('Serviço adicionado!');
 }
 function removerCondSvcRow(id,idx){
   const c=CONDOMINIOS.find(x=>x.id===id);if(!c)return;
   if(!confirm('Remover este serviço?'))return;
   c.servicos.splice(idx,1);
-  showCondDetail(id);toast('🗑 Serviço removido!');
+  showCondDetail(id);toast('Serviço removido!');
 }
 function editCondSvcFreq(id,idx,val){
   const c=CONDOMINIOS.find(x=>x.id===id);if(!c)return;
@@ -3306,7 +3304,7 @@ function editCondSvcFreq(id,idx,val){
 function marcarSvcConcluido(id,idx,btn){
   const c=CONDOMINIOS.find(x=>x.id===id);if(!c)return;
   const s=c.servicos[idx];
-  if(!s.ultima){toast('⚠️ Defina a data de última realização primeiro!');return;}
+  if(!s.ultima){toast('Defina a data de última realização primeiro!');return;}
   // Mover para concluídas: adicionar ao histórico e calcular próxima
   if(!c.svcConcluidos)c.svcConcluidos=[];
   c.svcConcluidos.unshift({nome:s.nome,dtConc:s.ultima,dtProx:s.proxima||addDaysToDateStr(s.ultima,s.dias),condId:id});
@@ -3319,7 +3317,7 @@ function marcarSvcConcluido(id,idx,btn){
     DB.events.unshift({id:ID(),titulo:s.nome+' — '+c.nome,dt:dtEvt,hora:'',resp:'',cond:c.nome,obs:'Agendamento automático'});
     renderAgenda();
   }
-  toast('✅ Concluído! Próxima data agendada automaticamente.');
+  toast('Concluído! Próxima data agendada automaticamente.');
   showCondDetail(id);
 }
 function renderCondHist(id){
@@ -3330,7 +3328,7 @@ function renderCondHist(id){
   if(ano)hist=hist.filter(h=>(h.dt||'').startsWith(ano));
   if(mes)hist=hist.filter(h=>(h.dt||'').substring(5,7)===mes);
   const el=document.getElementById('chk-hist-'+id);if(!el)return;
-  if(!hist.length){el.innerHTML='<div class="empty" style="padding:14px"><div class="empty-ico">📋</div><p style="font-size:12px">Nenhuma visita no período</p></div>';return;}
+  if(!hist.length){el.innerHTML='<div class="empty" style="padding:14px"><div class="empty-mark"></div><p style="font-size:12px">Nenhuma visita no período</p></div>';return;}
   el.innerHTML=hist.map(h=>`<div style="padding:10px 0;border-bottom:1px solid var(--border)">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
       <div style="width:22px;height:22px;background:rgba(30,201,138,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green)">✓</div>
@@ -3359,7 +3357,7 @@ function openCondManutModal(id){
   renderAgenda();
   renderManut('cond');updateManutStats('cond');updateDashboard();
   showCondDetail(id);
-  toast('✅ Manutenção registrada, cruzada com Manutenções Condomínios e agendada!');
+  toast('Manutenção registrada, cruzada com Manutenções Condomínios e agendada!');
 }
 function concluirCondManut(mid,condId){
   const c=CONDOMINIOS.find(x=>x.id===condId);if(!c)return;
@@ -3370,13 +3368,13 @@ function concluirCondManut(mid,condId){
   if(mc){mc.status='Concluído';mc.dtConc=today();}
   showCondDetail(condId);
   renderManut('cond');updateManutStats('cond');updateDashboard();
-  toast('✅ Manutenção concluída! Atualizado em Manutenções Condomínios.');
+  toast('Manutenção concluída! Atualizado em Manutenções Condomínios.');
 }
 function removerCondManut(mid,condId){
   const c=CONDOMINIOS.find(x=>x.id===condId);if(!c)return;
   if(!confirm('Remover esta manutenção?'))return;
   c.manutChk=(c.manutChk||[]).filter(x=>x.id!==mid);
-  showCondDetail(condId);toast('🗑 Removida!');
+  showCondDetail(condId);toast('Removida!');
 }
 
 // ─── CONDOMÍNIO: PDF Pendências ───────────────────
@@ -3635,7 +3633,7 @@ function setUltimaVisita(condId, dtStr){
   DB.events.unshift({id:ID(),titulo:'— Visita — '+c.nome,dt:proxStr,hora:'08:00',resp:'Operacional Administrativo',cond:c.nome,obs:'Checklist periódico 40 dias',_checklist:true,_fromCond:true});
   renderAgenda();
   renderManut('cond');updateManutStats('cond');updateDashboard();
-  toast('✅ Próxima visita: '+fmtDate(proxStr)+' — aparece em Manutenções Condomínios!');
+  toast('Próxima visita: '+fmtDate(proxStr)+' — aparece em Manutenções Condomínios!');
   logAccess('Última visita checklist: '+c.nome,'Condomínios');
 }
 
@@ -3693,7 +3691,7 @@ function gerarRelManut(tipo){
   <br><button onclick="window.print()">Imprimir</button>
   </body></html>`);
   w.document.close();
-  toast('📄 Relatório gerado!');
+  toast('Relatório gerado!');
 }
 
 // ─── Checklist na agenda: verificar iminentes no dashboard ──
@@ -3728,17 +3726,17 @@ function renderAnos(){
 function addAno(){
   const inp=document.getElementById('novo-ano-input');
   const v=(inp.value||'').trim();
-  if(!v||isNaN(v)){toast('⚠️ Digite um ano válido!');return;}
-  if((DB.anos||[]).includes(v)){toast('⚠️ Ano já existe!');return;}
+  if(!v||isNaN(v)){toast('Digite um ano válido!');return;}
+  if((DB.anos||[]).includes(v)){toast('Ano já existe!');return;}
   if(!DB.anos)DB.anos=[];
   DB.anos.push(v);DB.anos.sort();
   inp.value='';renderAnos();
-  toast('✅ Ano '+v+' adicionado!');
+  toast('Ano '+v+' adicionado!');
 }
 function removeAno(a){
   if(!confirm('Remover o ano '+a+'?'))return;
   DB.anos=(DB.anos||[]).filter(x=>x!==a);
-  renderAnos();toast('🗑 Ano removido!');
+  renderAnos();toast('Ano removido!');
 }
 
 (function init(){
@@ -3790,12 +3788,12 @@ function closeLembrete(){
 function saveLembrete(){
   const txt=document.getElementById('lem-texto').value.trim();
   const dt=document.getElementById('lem-dt').value||'';
-  if(!txt){toast('⚠️ Digite o lembrete!');return;}
+  if(!txt){toast('Digite o lembrete!');return;}
   if(!DB.lembretes)DB.lembretes=[];
   DB.lembretes.unshift({id:ID(),texto:txt,dtFim:dt,status:'Pendente',criadoEm:today()});
   closeLembrete();
   renderAgendaProc();
-  toast('📝 Lembrete adicionado!');
+  toast('Lembrete adicionado!');
 }
 function renderLembretes(){renderAgendaProc();}
 function concluirLembrete(id,checked){
@@ -3805,7 +3803,7 @@ function concluirLembrete(id,checked){
   if(!l)return;
   l.status='Concluído';l.concluidoEm=today();l.titulo=l.texto;l.resp='Lembrete';
   renderLembretes();renderProcHist();updateDashboard();
-  toast('✅ Lembrete concluído!');
+  toast('Lembrete concluído!');
 }
 </script>
 
