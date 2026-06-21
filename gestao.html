@@ -845,7 +845,7 @@ body{visibility:visible!important}
         <div><div class="card-t">Relatório Semanal</div><div class="card-sub" id="rel-sem-periodo"></div></div>
         <div style="display:flex;gap:8px">
           <button class="btn btn-g btn-s" onclick="document.getElementById(&#39;rel-semanal-wrap&#39;).style.display=&#39;none&#39;">✕ Fechar</button>
-          <button class="btn btn-g btn-s" onclick="window.print()">🖨️ Imprimir</button>
+          <button class="btn btn-g btn-s" onclick="window.print()">Imprimir</button>
         </div>
       </div>
       <div id="rel-semanal-body"></div>
@@ -890,7 +890,7 @@ body{visibility:visible!important}
     </div>
     <div style="display:flex;gap:9px;margin-top:10px;flex-wrap:wrap">
       <button class="btn btn-p" onclick="gerarRel()">Gerar Relatório</button>
-      <button class="btn btn-g" onclick="imprimirRel()">🖨️ Imprimir</button>
+      <button class="btn btn-g" onclick="imprimirRel()">Imprimir</button>
       <button class="btn btn-g btn-s" onclick="exportarRelCSV()">📊 CSV</button>
     </div>
   </div>
@@ -1165,7 +1165,7 @@ body{visibility:visible!important}
       <div id="echk-items" style="display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto;padding-right:4px"></div>
       <div class="fg" style="margin-top:14px"><label class="fl">Observações</label><textarea class="fc" id="echk-obs" style="min-height:70px"></textarea></div>
     </div>
-    <div class="mf"><button class="btn btn-danger" onclick="deleteChkVisit()">🗑 Excluir</button><button class="btn btn-g" onclick="closeM(&#39;m-edit-chk&#39;)">Cancelar</button><button class="btn btn-p" onclick="updateChkVisit()">Salvar</button></div>
+    <div class="mf"><button class="btn btn-danger" onclick="deleteChkVisit()">Excluir</button><button class="btn btn-g" onclick="closeM(&#39;m-edit-chk&#39;)">Cancelar</button><button class="btn btn-p" onclick="updateChkVisit()">Salvar</button></div>
   </div>
 </div>
 
@@ -1202,7 +1202,7 @@ body{visibility:visible!important}
 <!-- Editar Chamado -->
 <div class="moverlay" id="m-edit-manut">
   <div class="modal modal-lg">
-    <div class="mh"><div class="mt">✏️ Editar Chamado</div><div class="mclose" onclick="closeM(&#39;m-edit-manut&#39;)">✕</div></div>
+    <div class="mh"><div class="mt">Editar Chamado</div><div class="mclose" onclick="closeM(&#39;m-edit-manut&#39;)">✕</div></div>
     <div class="mc">
       <input type="hidden" id="em-id"><input type="hidden" id="em-tipo">
       <div class="fr">
@@ -1224,7 +1224,7 @@ body{visibility:visible!important}
         <div class="fg" style="grid-column:1/-1"><label class="fl">OBS</label><textarea class="fc" id="em-obs"></textarea></div>
       </div>
     </div>
-    <div class="mf"><button class="btn btn-danger" onclick="deleteManut()">🗑 Excluir</button><button class="btn btn-g" onclick="closeM(&#39;m-edit-manut&#39;)">Cancelar</button><button class="btn btn-p" onclick="updateManut()">Atualizar</button></div>
+    <div class="mf"><button class="btn btn-danger" onclick="deleteManut()">Excluir</button><button class="btn btn-g" onclick="closeM(&#39;m-edit-manut&#39;)">Cancelar</button><button class="btn btn-p" onclick="updateManut()">Atualizar</button></div>
   </div>
 </div>
 
@@ -1250,7 +1250,7 @@ body{visibility:visible!important}
 <!-- Editar Tarefa -->
 <div class="moverlay" id="m-edit-task">
   <div class="modal">
-    <div class="mh"><div class="mt">✏️ Editar Tarefa</div><div class="mclose" onclick="closeM(&#39;m-edit-task&#39;)">✕</div></div>
+    <div class="mh"><div class="mt">Editar Tarefa</div><div class="mclose" onclick="closeM(&#39;m-edit-task&#39;)">✕</div></div>
     <div class="mc">
       <div class="fr">
         <div class="fg" style="grid-column:1/-1"><label class="fl">Título</label><input class="fc" id="et-titulo"></div>
@@ -1262,7 +1262,7 @@ body{visibility:visible!important}
         <div class="fg" style="grid-column:1/-1"><label class="fl">Observações</label><textarea class="fc" id="et-obs"></textarea></div>
       </div>
     </div>
-    <div class="mf"><button class="btn btn-danger" onclick="deleteTask()">🗑 Excluir</button><button class="btn btn-g" onclick="closeM(&#39;m-edit-task&#39;)">Cancelar</button><button class="btn btn-p" onclick="updateTask()">Atualizar</button></div>
+    <div class="mf"><button class="btn btn-danger" onclick="deleteTask()">Excluir</button><button class="btn btn-g" onclick="closeM(&#39;m-edit-task&#39;)">Cancelar</button><button class="btn btn-p" onclick="updateTask()">Atualizar</button></div>
   </div>
 </div>
 
@@ -3181,7 +3181,7 @@ function exportPrestPDF(pid){
   <table><thead><tr><th>Data</th><th>Condomínio</th><th>Descrição</th><th>Status</th><th>Valor</th><th>Receita (R$)</th></tr></thead>
   <tbody>${svcs.map(m=>`<tr><td>${m.dtSol||'—'}</td><td>${m.cond||'—'}</td><td>${m.desc||'—'}</td><td>${m.status}</td><td>R$ ${parseFloat(m.val||0).toFixed(2)}</td><td>R$ ${parseFloat(m.recKenlo||0).toFixed(2)}</td></tr>`).join('')}</tbody></table>
   <div class="tot">Total Valor: R$ ${total.toFixed(2)} | Receita manut. imob.: R$ ${rec.toFixed(2)}</div>
-  <br><button onclick="window.print()">🖨️ Imprimir</button>
+  <br><button onclick="window.print()">Imprimir</button>
   </body></html>`);
   w.document.close();
 }
@@ -3406,7 +3406,7 @@ function exportCondPDF(id){
   <table><thead><tr><th>Descrição</th><th>Data Checklist</th><th>Prazo</th><th>Status</th></tr></thead>
   <tbody>${manuts.map(m=>`<tr><td>${m.desc}</td><td>${m.dtChk||'—'}</td><td>${m.dtPrev||'—'}</td><td class="${m.status==='Concluído'?'ok':'at'}">${m.status}</td></tr>`).join('')}
   ${!manuts.length?'<tr><td colspan="4" style="text-align:center;color:#999">Nenhuma manutenção pendente</td></tr>':''}</tbody></table>
-  <br><button onclick="window.print()">🖨️ Imprimir</button>
+  <br><button onclick="window.print()">Imprimir</button>
   </body></html>`);
   w.document.close();
 }
@@ -3691,7 +3691,7 @@ function gerarRelManut(tipo){
   <h2>✅ Concluídos (${conc.length})</h2>
   <table><thead><tr><th>Status</th><th>Data</th><th>Condomínio</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Receita</th></tr></thead>
   <tbody>${makeRows(conc)||'<tr><td colspan="7" style="text-align:center;color:#999">Nenhum concluído</td></tr>'}</tbody></table>
-  <br><button onclick="window.print()">🖨️ Imprimir</button>
+  <br><button onclick="window.print()">Imprimir</button>
   </body></html>`);
   w.document.close();
   toast('📄 Relatório gerado!');
