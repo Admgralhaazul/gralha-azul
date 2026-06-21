@@ -1026,14 +1026,6 @@ body{visibility:visible!important}
       <button class="btn btn-p btn-s" onclick="addAno()">+ Adicionar Ano</button>
     </div>
   </div>
-  <div class="card" style="margin-top:18px">
-    <div class="card-t" style="margin-bottom:14px">Nuvem e Backup</div>
-    <div style="font-size:13px;color:var(--t3);margin-bottom:14px">Salve as altera��es na nuvem ou baixe um backup completo em JSON.</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn btn-p" onclick="if(window.gaCloudSave){window.gaCloudSave()}">Salvar nuvem</button>
-      <button class="btn btn-g" onclick="if(window.gaCloudBackup){window.gaCloudBackup()}else{exportarDados()}">Backup</button>
-    </div>
-  </div>
 </div>
 
 
@@ -1067,11 +1059,9 @@ body{visibility:visible!important}
       <div class="frow" style="border:none"><div class="flbl">Colaboradores</div><div class="fval neu" id="cfg-total-colab">0</div></div>
     </div>
     <div class="card">
-      <div class="card-t" style="margin-bottom:14px">Nuvem e Backup</div>
+      <div class="card-t" style="margin-bottom:14px">Manutenção de dados</div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <button class="btn btn-p" onclick="if(window.gaCloudSave){window.gaCloudSave()}">Salvar nuvem</button>
-        <button class="btn btn-g" onclick="if(window.gaCloudBackup){window.gaCloudBackup()}else{exportarDados()}">Backup</button>
-        <button class="btn btn-danger" onclick="if(confirm(&#39;Apagar TODOS os dados? Esta ação não pode ser desfeita!&#39;))resetAllData()">🗑 Resetar todos os dados</button>
+        <button class="btn btn-danger" onclick="if(confirm(&#39;Apagar TODOS os dados? Esta ação não pode ser desfeita!&#39;))resetAllData()">Resetar todos os dados</button>
       </div>
     </div>
     <div class="card">
@@ -3810,7 +3800,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=7"></script>
+<script src="./cloud-sync.js?v=8"></script>
 
 </div></body></html>
 
