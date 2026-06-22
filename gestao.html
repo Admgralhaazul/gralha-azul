@@ -319,7 +319,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=26">
+<link rel="stylesheet" href="./enterprise-premium.css?v=27">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -340,8 +340,8 @@ body{visibility:visible!important}
 #sidebar .ni,#sidebar .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 14px!important}
 #sidebar .sb-module-switch{margin:0 10px 10px!important;padding:0!important}
 #sidebar .sb-module-lbl{font-size:9px!important;letter-spacing:.12em!important;text-transform:uppercase!important;opacity:.55!important;margin-bottom:5px!important}
-#sidebar .sb-module-row{display:flex!important;border-radius:5px!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important}
-#sidebar .sb-module-row .ga-module-link{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;flex:1!important}
+#sidebar .sb-module-row{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;border-radius:5px!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important}
+#sidebar .sb-module-row .ga-module-link{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;flex:none!important;width:100%!important;box-sizing:border-box!important}
 #sidebar .sb-sec{font-size:9.5px!important}
 </style>
 </head>
@@ -867,30 +867,30 @@ body{visibility:visible!important}
         <label class="fl">Módulos (selecione um ou mais)</label>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px" id="rel-tipos">
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="imob" onchange="gerarRel()" style="accent-color:var(--green)"> Executadas pela Imobiliária</label>
+            <input type="checkbox" value="imob" onchange="marcarRelPendente()" style="accent-color:var(--green)"> Executadas pela Imobiliária</label>
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="cond" onchange="gerarRel()" style="accent-color:var(--yellow)"> Condomínios</label>
+            <input type="checkbox" value="cond" onchange="marcarRelPendente()" style="accent-color:var(--yellow)"> Condomínios</label>
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="ocup" onchange="gerarRel()" style="accent-color:var(--cyan)"> Imóveis Ocupados Geral</label>
+            <input type="checkbox" value="ocup" onchange="marcarRelPendente()" style="accent-color:var(--cyan)"> Imóveis Ocupados Geral</label>
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="ager" onchange="gerarRel()" style="accent-color:var(--purple)"> Manutenções — Assistente Gerente</label>
+            <input type="checkbox" value="ager" onchange="marcarRelPendente()" style="accent-color:var(--purple)"> Manutenções — Assistente Gerente</label>
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="proc" onchange="gerarRel()" style="accent-color:var(--blue)"> Processos Administrativos</label>
+            <input type="checkbox" value="proc" onchange="marcarRelPendente()" style="accent-color:var(--blue)"> Processos Administrativos</label>
         </div>
       </div>
       <div class="fg"><label class="fl">Ano</label>
-        <select class="fc" id="rel-ano" onchange="gerarRel()"><option value="">Todos os anos</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
+        <select class="fc" id="rel-ano" onchange="marcarRelPendente()"><option value="">Todos os anos</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
       </div>
       <div class="fg"><label class="fl">Mês</label>
-        <select class="fc" id="rel-mes" onchange="gerarRel()"><option value="">Todos os meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
+        <select class="fc" id="rel-mes" onchange="marcarRelPendente()"><option value="">Todos os meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
       </div>
-      <div class="fg"><label class="fl">Período Início</label><input type="date" class="fc" id="rel-ini" onchange="gerarRel()"></div>
-      <div class="fg"><label class="fl">Período Fim</label><input type="date" class="fc" id="rel-fim" onchange="gerarRel()"></div>
+      <div class="fg"><label class="fl">Período Início</label><input type="date" class="fc" id="rel-ini" onchange="marcarRelPendente()"></div>
+      <div class="fg"><label class="fl">Período Fim</label><input type="date" class="fc" id="rel-fim" onchange="marcarRelPendente()"></div>
       <div class="fg"><label class="fl">Prestador</label>
-        <select class="fc" id="rel-prest" onchange="gerarRel()"><option value="">Todos</option><option value="Tiago Fermiano">Tiago Fermiano</option><option value="Rafael">Rafael</option><option value="Jeferson">Jeferson</option><option value="Rodrigo">Rodrigo</option><option value="Anderson BH">Anderson BH</option></select>
+        <select class="fc" id="rel-prest" onchange="marcarRelPendente()"><option value="">Todos</option><option value="Tiago Fermiano">Tiago Fermiano</option><option value="Rafael">Rafael</option><option value="Jeferson">Jeferson</option><option value="Rodrigo">Rodrigo</option><option value="Anderson BH">Anderson BH</option></select>
       </div>
       <div class="fg"><label class="fl">Status</label>
-        <select class="fc" id="rel-status" onchange="gerarRel()">
+        <select class="fc" id="rel-status" onchange="marcarRelPendente()">
           <option value="">Todos</option>
           <option value="Em andamento">Em andamento</option><option value="Concluído">Concluído</option>
         </select>
@@ -3427,6 +3427,15 @@ function backFromPrestDetail(){
   nav('financeiro');
 }
 
+function marcarRelPendente(){
+  const stats=document.getElementById('rel-result-stats');
+  const tbWrap=document.getElementById('rel-result-table-wrap');
+  const emp=document.getElementById('rel-empty');
+  if(stats)stats.innerHTML='';
+  if(tbWrap)tbWrap.style.display='none';
+  if(emp){emp.style.display='flex';emp.innerHTML='<div class="empty-mark"></div><p>Filtros alterados. Clique em "Gerar Relatório" para atualizar.</p>';}
+}
+
 // ─── RELATÓRIOS: gerarRel atualizado com multi-select ──
 function gerarRel(){
   // Módulos selecionados — TODOS os 5 módulos são suportados
@@ -3504,16 +3513,21 @@ function gerarRel(){
   const rec=data.reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
   const val=data.reduce((s,m)=>s+parseFloat(m.val||0),0);
 
+  const maxRows=250;
+  const displayData=data.slice(0,maxRows);
+  const limitMsg=data.length>maxRows?`<div class="stat" style="grid-column:1/-1"><div class="stat-lbl">Prévia otimizada</div><div class="stat-val" style="font-size:14px">Mostrando ${maxRows} de ${data.length} registros. Refine os filtros para ver menos itens na tela.</div></div>`:'';
+
   stats.innerHTML=`
     <div class="stat bl"><div class="stat-lbl">Total</div><div class="stat-val">${total}</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val">${conc}</div></div>
     <div class="stat yl"><div class="stat-lbl">Pendentes</div><div class="stat-val">${total-conc}</div></div>
     <div class="stat cy"><div class="stat-lbl" style="color:var(--cyan)">Receita manut. imob.</div><div class="stat-val" style="font-size:18px">R$${rec.toFixed(0)}</div></div>
-    <div class="stat pu"><div class="stat-lbl">Valor Total (material)</div><div class="stat-val" style="font-size:18px">R$${val.toFixed(0)}</div></div>`;
+    <div class="stat pu"><div class="stat-lbl">Valor Total (material)</div><div class="stat-val" style="font-size:18px">R$${val.toFixed(0)}</div></div>
+    ${limitMsg}`;
 
   if(tbWrap)tbWrap.style.display='block';
   thead.innerHTML='<tr><th>Modulo</th><th>Status</th><th>Data Solic.</th><th>Cond./Imovel</th><th>Prestador/Resp.</th><th>Descricao</th><th>Valor</th><th style="color:var(--cyan)">Receita manut. imob.</th></tr>';
-  tbody.innerHTML=data.map(m=>`<tr>
+  tbody.innerHTML=displayData.map(m=>`<tr>
     <td><span style="font-size:11px;padding:2px 7px;border-radius:20px;background:var(--s2)">${m._modulo||'—'}</span></td>
     <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span></td>
     <td>${fmtDate(m.dtSol)}</td>

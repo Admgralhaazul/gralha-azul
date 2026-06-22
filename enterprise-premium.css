@@ -2019,7 +2019,8 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
   padding:0 0 7px!important;
 }
 .sb-module-row{
-  display:flex!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
   border:1px solid rgba(255,255,255,.14)!important;
   border-radius:5px!important;
   overflow:hidden!important;
@@ -2190,8 +2191,10 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 
 /* ─── v19: pacote profissional unificado ─── */
 .sb-module-row .ga-module-link{
-  flex:1 1 0!important;
+  flex:none!important;
   min-width:0!important;
+  width:100%!important;
+  box-sizing:border-box!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
