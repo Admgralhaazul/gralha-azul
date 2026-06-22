@@ -101,7 +101,11 @@ body{background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-directi
 .cards{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 .card{background:#fff;border-radius:6px;padding:12px 16px;box-shadow:none;border:1px solid #e4e8ed;border-top:2px solid var(--bd);cursor:pointer;transition:.1s;min-width:100px}
 .card:hover{border-color:#e8720c;box-shadow:0 2px 10px rgba(30,58,95,.07)}
-.card.c-g{border-left-color:var(--g)}.card.c-o{border-left-color:var(--o)}.card.c-r{border-left-color:var(--r)}.card.c-b{border-left-color:var(--pl)}.card.c-y{border-left-color:var(--y)}.card.c-gy{border-left-color:var(--gy)}
+.card.c-g{border-left-color:var(--g)}.card.c-o{border-left-color:var(--o)}.card.c-r{border-left-color:var(--r)}.card.c-b{border-left-color:var(--pl)}.card.c-y{border-left-color:var(--y)}.card.c-gy{border-left-color:var(--gy)}.card.c-pan{border-left-color:var(--p)}
+#page-dash .card.c-pan:before{background:var(--p)!important}
+#page-dash .card.c-pan .card-n{color:var(--tx)!important}
+#page-dash .card.c-g .card-n{color:var(--g)!important}
+#page-dash .card.c-g:before{background:var(--g)!important}
 .card-n{font-size:24px;font-weight:800}
 .card-l{font-size:10px;color:var(--tl);margin-top:1px}
 .tw{background:#fff;border-radius:8px;border:1px solid #e4e8ed;overflow:hidden}
@@ -284,15 +288,14 @@ td.ora{color:var(--o);font-weight:600}
     <!-- PANORAMA -->
     <div class="page active" id="page-dash">
       <div class="cards" id="dash-cards">
-    <div class="card c-b" onclick="go(&#39;rescisoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisões</div></div>
+    <div class="card c-pan" onclick="go(&#39;rescisoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisões</div></div>
     <div class="card c-g" onclick="go(&#39;rescisoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Concluídas</div></div>
-    <div class="card c-o" onclick="go(&#39;rescisoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Em Andamento</div></div>
-    <div class="card c-r" onclick="go(&#39;inadimplentes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M10.3 4l-7 12A2 2 0 0 0 5 19h14a2 2 0 0 0 1.7-3l-7-12a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> Inadimplentes</div></div>
-    <div class="card c-y" onclick="go(&#39;cartas&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Cartas</div></div>
-    <div class="card c-gy" onclick="go(&#39;manutencoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manut. Pend.</div></div>
-    <div class="card" style="border-left-color:#a855f7;cursor:pointer" onclick="go(&#39;manutencoes&#39;,null)"><div class="card-n" style="color:inherit">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> V. Antecip. a Fazer</div></div>
-    <div class="card c-b" onclick="go(&#39;sanepar&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg> Sanepar Pend.</div></div>
-    <div class="card c-gy" onclick="go(&#39;marketing&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Mkt Pend.</div></div>
+    <div class="card c-pan" onclick="go(&#39;cartas&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Cartas</div></div>
+    <div class="card c-pan" onclick="go(&#39;manutencoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manut. Pend.</div></div>
+    <div class="card c-pan" onclick="go(&#39;manutencoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> V. Antecip. a Fazer</div></div>
+    <div class="card c-pan" onclick="go(&#39;sanepar&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg> Sanepar Pend.</div></div>
+    <div class="card c-pan" onclick="go(&#39;marketing&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Mkt Pend.</div></div>
+    <div class="card c-pan" onclick="go(&#39;rescisoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3M14 9l2 2"/></svg> Chaves Pendentes</div></div>
   </div>
       <div style="margin-bottom:14px;display:flex;align-items:center;gap:10px">
         <button class="btn" style="background:#1e3a5f;color:#fff;padding:10px 22px;font-size:13px;font-weight:600;border-radius:6px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(30,58,95,.18);cursor:pointer" onclick="gerarRelatorioPanorama()">Gerar Relatório
@@ -2512,6 +2515,13 @@ function comCell(v){
   if(v==='saiu')return cellTd('Saiu de locação','ok');
   return cellTd(v,'warn');
 }
+function propAvisadoCell(r){
+  const isCT=r.tipoSaida==='Carta 30 dias - Aniversário'||r.tipoSaida==='Carta 30 dias - Indeterminado';
+  const val=isCT?(r.cartaLocAvisado||r.propAvisado||'Não'):r.propAvisado;
+  if(val==='Sim')return cellTd('Sim','ok');
+  if(val==='Não')return cellTd('Não','pend');
+  return '<td><span style="color:var(--tl);font-size:11px">—</span></td>';
+}
 function garantiaCell(r){
   if(r.garantia==='caucao'){
     if(r.cauSta==='Sem valores para reembolsar')return cellTd('Sem valores p/ reembolsar','ok');
@@ -2596,17 +2606,16 @@ function rDash(){
   const chvPend=d.rescisoes.filter(r=>r.status!=='Saiu da Imob'&&r.chavesStatus&&r.chavesStatus.toLowerCase().includes('pendente')).length;
   const loftConcl2=D().loftConcl||{};
   const cartasConcl2=D().cartasConcl||{};
+  const cartasP=d.cartas.filter(c=>c.vencimento&&!(cartasConcl2||{})[c.id]).length;
   document.getElementById('dash-cards').innerHTML=`
-    <div class="card c-b" onclick="go('rescisoes',null)"><div class="card-n">${tot}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisões</div></div>
+    <div class="card c-pan" onclick="go('rescisoes',null)"><div class="card-n">${tot}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisões</div></div>
     <div class="card c-g" onclick="go('rescisoes',null)"><div class="card-n">${concl}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Concluídas</div></div>
-    <div class="card c-o" onclick="go('rescisoes',null)"><div class="card-n">${and}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Em Andamento</div></div>
-    <div class="card c-r" onclick="go('inadimplentes',null)"><div class="card-n">${inad}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M10.3 4l-7 12A2 2 0 0 0 5 19h14a2 2 0 0 0 1.7-3l-7-12a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> Inadimplentes</div></div>
-    <div class="card c-y" onclick="go('cartas',null)"><div class="card-n">${d.cartas.filter(c=>c.vencimento&&!(cartasConcl2||{})[c.id]).length}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Cartas</div></div>
-    <div class="card c-gy" onclick="go('manutencoes',null)"><div class="card-n">${manP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manut. Pend.</div></div>
-    <div class="card" style="border-left-color:#a855f7;cursor:pointer" onclick="go('manutencoes',null)"><div class="card-n" style="color:${vaFazer>0?'var(--r)':'inherit'}">${vaFazer}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> V. Antecip. a Fazer</div></div>
-    <div class="card c-b" onclick="go('sanepar',null)"><div class="card-n">${sanP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg> Sanepar Pend.</div></div>
-    <div class="card c-gy" onclick="go('marketing',null)"><div class="card-n">${mktP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Mkt Pend.</div></div>
-    <div class="card c-y" onclick="go('rescisoes',null)"><div class="card-n" style="color:${chvPend>0?'var(--o)':'inherit'}">${chvPend}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3M14 9l2 2"/></svg> Chaves Pendentes</div></div>
+    <div class="card c-pan" onclick="go('cartas',null)"><div class="card-n">${cartasP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Cartas</div></div>
+    <div class="card c-pan" onclick="go('manutencoes',null)"><div class="card-n">${manP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14.5 6.5a3.5 3.5 0 0 1-4.6 4.6L5 16v3h3l4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.4 2.4-2-2z"/></svg> Manut. Pend.</div></div>
+    <div class="card c-pan" onclick="go('manutencoes',null)"><div class="card-n">${vaFazer}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> V. Antecip. a Fazer</div></div>
+    <div class="card c-pan" onclick="go('sanepar',null)"><div class="card-n">${sanP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg> Sanepar Pend.</div></div>
+    <div class="card c-pan" onclick="go('marketing',null)"><div class="card-n">${mktP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Mkt Pend.</div></div>
+    <div class="card c-pan" onclick="go('rescisoes',null)"><div class="card-n">${chvPend}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3M14 9l2 2"/></svg> Chaves Pendentes</div></div>
   `;
   // alertas
   const al=d.rescisoes.filter(r=>r.status==='Inadimplente'||getP(r.id).pct<30).slice(0,8);
@@ -2717,7 +2726,7 @@ function rResc(){
     ${aguaCell(r.agua)}
     ${energCell(r.energia)}
     ${gasCell(r.gas)}
-    <td>${(()=>{const isCT=r.tipoSaida==='Carta 30 dias - Aniversário'||r.tipoSaida==='Carta 30 dias - Indeterminado';const val=isCT?(r.cartaLocAvisado||r.propAvisado||'Não'):r.propAvisado;return val==='Sim'?'<span class="badge bg" style="font-size:10px">Sim</span>':val==='Não'?'<span class="badge bn" style="font-size:10px">Não</span>':'<span style="color:var(--tl);font-size:11px">—</span>';})()}</td>
+    ${propAvisadoCell(r)}
     ${comCell(r.comercial)}
     ${garantiaCell(r)}
     ${manCell(r.codigo)}

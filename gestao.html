@@ -78,6 +78,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);min-h
 .btn-danger{background:rgba(240,79,79,.12);color:var(--red);border:1px solid rgba(240,79,79,.25)}
 .btn-success{background:rgba(30,201,138,.1);color:var(--green);border:1px solid rgba(30,201,138,.25)}
 .btn-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--s2);border:1px solid var(--border);border-radius:var(--rs);cursor:pointer;font-size:13px;color:var(--t2);transition:all .15s}
+.btn-icon.btn-act-edit{width:auto;min-width:52px;padding:0 10px;font-size:12px;font-weight:600;height:30px}
 .btn-icon:hover{color:var(--t1);border-color:var(--border2)}
 .icon-topbar{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:var(--s2);border:1px solid var(--border);border-radius:var(--rs);cursor:pointer;font-size:14px;color:var(--t2)}
 
@@ -139,7 +140,7 @@ tbody tr.iminente{background:rgba(240,79,79,.06);border-left:3px solid var(--red
 /* Manut table: coluna descrição quebra, demais fixas */
 .manut-table{table-layout:auto}
 .manut-table td:nth-child(7){white-space:normal;min-width:130px;max-width:180px;font-size:11px}
-.manut-table td:nth-child(16){white-space:normal;min-width:80px;max-width:120px;font-size:11px;color:var(--t3)}
+.manut-table td:nth-child(11){white-space:normal;min-width:80px;max-width:120px;font-size:11px;color:var(--t3)}
 .manut-table th,.manut-table td{padding:6px 8px}
 
 /* ─── BADGES ─── */
@@ -1698,6 +1699,13 @@ function renderManutRows(arr,tipo){
   });
   if(!arr.length){if(tbody)tbody.innerHTML='';if(emp)emp.style.display='flex';return}
   if(emp)emp.style.display='none';
+  const reciboCell=m=>m.recibo==='Sim'?'<span style="color:var(--green);font-weight:500;font-size:12px">Sim</span>':'<span style="color:var(--t3);font-size:12px">Não</span>';
+  const actionsCell=(m,t)=>`<td style="text-align:right"><div class="td-actions" style="justify-content:flex-end">
+          ${m.status!=='Concluído'&&m.status!=='Cancelado'?`<div class="btn-icon" onclick="concluirManutDireto('${m.id}','${t}')" title="Concluir" style="color:var(--green);font-weight:700;font-size:15px">✓</div>`:''}
+          <div class="btn-icon btn-act-edit" onclick="editManut('${m.id}','${t}')" title="Editar">Editar</div>
+          <div class="btn-icon" onclick="reopenManut('${m.id}')" title="Desfazer / Reabrir" style="color:var(--yellow)">↩</div>
+        </div></td>`;
+  const prevConcCell=m=>m.status==='Concluído'&&m.dtConc?fmtDate(m.dtConc):fmtDate(m.dtPrev);
   tbody.innerHTML=arr.map(m=>{
     // Linha especial para visitas de checklist
     if(m._visita){
@@ -1710,34 +1718,37 @@ function renderManutRows(arr,tipo){
         <td style="font-size:11.5px;font-weight:500" title="${m.cond}">${vcond}</td>
         <td style="color:var(--t3);font-size:11px">—</td>
         <td style="font-size:11.5px;color:#fb923c">Visita periódica</td>
-        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
-        <td style="text-align:right"><div class="btn-icon" onclick="concluirManutDireto('${m.id}','cond')" title="Concluir" style="color:var(--green);font-weight:700">✓</div></td>
-      </tr>`;
+        <td>—</td><td>—</td><td>—</td><td class="td-obs">—</td>
+        ${actionsCell(m,'cond')}</tr>`;
     }
-    return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
+    if(tipo==='ocup'){
+      return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
       <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
       <td>${fmtDate(m.dtSol)}</td>
-      <td>${fmtDate(m.dtPrev)}</td>
+      <td>${prevConcCell(m)}</td>
       <td>${fmt(m.resp)}</td>
       <td>${fmt(m.cond)}</td>
       <td>${fmt(m.prest)}</td>
       <td class="td-obs" title="${m.desc}">${fmt(m.desc)}</td>
-      <td>${fmtDate(m.dtConc)}</td>
+      <td>${fmtR(m.val)}</td>
+      <td>${fmtR(m.recKenlo)}</td>
+      <td>${reciboCell(m)}</td>
+      <td class="td-obs">${m.obs||'—'}</td>
+      ${actionsCell(m,tipo)}</tr>`;
+    }
+    return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
+      <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
+      <td>${fmtDate(m.dtSol)}</td>
+      <td>${prevConcCell(m)}</td>
+      <td>${fmt(m.resp)}</td>
+      <td>${fmt(m.cond)}</td>
+      <td>${fmt(m.prest)}</td>
+      <td class="td-obs" title="${m.desc}">${fmt(m.desc)}</td>
       <td>${fmtR(m.val)}</td>
       <td>${fmtR(m.mat)}</td>
-      <td>${fmtR(m.recKenlo)}</td>
-      <td>${fmtR(m.locDeb)}</td>
-      <td>${fmtR(m.contas)}</td>
-      <td>${m.recibo==='Sim'?'<span class="bs bs-ok">✓ Sim</span>':'<span style="color:var(--t3);font-size:12px">Não</span>'}</td>
+      <td>${reciboCell(m)}</td>
       <td class="td-obs">${m.obs||'—'}</td>
-      <td style="text-align:right">
-        <div class="td-actions" style="justify-content:flex-end">
-          ${m.status!=='Concluído'&&m.status!=='Cancelado'?`<div class="btn-icon" onclick="concluirManutDireto('${m.id}','${tipo}')" title="Concluir" style="color:var(--green);font-weight:700;font-size:15px">✓</div>`:''}
-          <div class="btn-icon" onclick="editManut('${m.id}','${tipo}')" title="Editar">Editar</div>
-          <div class="btn-icon" onclick="reopenManut('${m.id}')" title="Desfazer / Reabrir" style="color:var(--yellow)">↩</div>
-        </div>
-      </td>
-    </tr>`;}).join('');
+      ${actionsCell(m,tipo)}</tr>`;}).join('');
 }
 function updateManutStats(tipo){
   const all=DB.manutencoes[tipo];
