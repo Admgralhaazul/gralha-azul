@@ -1560,6 +1560,7 @@ function logAccess(acao,modulo){
 }
 function changeUser(){
   const sel=document.getElementById('current-user-sel');
+  if(!sel)return;
   const uid=sel.value;
   DB.currentUser=DB.users.find(u=>u.id===uid)||null;
   if(DB.currentUser){
@@ -1575,6 +1576,9 @@ function changeUser(){
 function renderUsers(){
   const list=document.getElementById('user-list');
   const sel=document.getElementById('current-user-sel');
+  const opts='<option value="">— Selecione seu perfil —</option>'+DB.users.map(u=>`<option value="${u.id}">${u.nome} — ${u.cargo}</option>`).join('');
+  if(sel)sel.innerHTML=opts;
+  if(!list)return;
   list.innerHTML=DB.users.map(u=>`
     <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--s2);border-radius:var(--rs)">
       <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">${u.nome.split(' ').map(w=>w[0]).join('').substr(0,2).toUpperCase()}</div>
@@ -1582,7 +1586,6 @@ function renderUsers(){
       <div class="btn-icon" onclick="removeUser('${u.id}')" title="Remover" style="color:var(--red);font-size:12px">✕</div>
     </div>
   `).join('');
-  sel.innerHTML='<option value="">— Selecione seu perfil —</option>'+DB.users.map(u=>`<option value="${u.id}">${u.nome} — ${u.cargo}</option>`).join('');
 }
 function saveUser(){
   const nome=document.getElementById('nu-nome').value.trim();
@@ -3399,9 +3402,11 @@ function switchFinTab(el,idx){
   const finView=document.getElementById('view-financeiro');
   if(!finView)return;
   finView.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('fin-tab-0').style.display=idx===0?'block':'none';
-  document.getElementById('fin-tab-1').style.display=idx===1?'block':'none';
+  if(el)el.classList.add('active');
+  const relTab=document.getElementById('fin-tab-0');
+  const prestTab=document.getElementById('fin-tab-1');
+  if(relTab)relTab.style.display=idx===0?'block':'none';
+  if(prestTab)prestTab.style.display=idx===1?'block':'none';
   if(idx===1)renderPrestCards();
   if(idx===0)fillRelSelects();
 }
@@ -3484,6 +3489,7 @@ function gerarRel(){
   const thead=document.getElementById('rel-thead');
   const tbody=document.getElementById('rel-tbody');
 
+  if(!stats||!emp||!thead||!tbody)return;
   if(!data.length){stats.innerHTML='';if(tbWrap)tbWrap.style.display='none';emp.style.display='flex';return;}
   emp.style.display='none';
 

@@ -2192,6 +2192,9 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 .sb-module-row .ga-module-link{
   flex:1 1 0!important;
   min-width:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
   text-align:center!important;
   font-size:10px!important;
   letter-spacing:0!important;
