@@ -178,12 +178,11 @@ textarea.fc{resize:vertical;min-height:80px}
 .status-multi{display:flex;gap:6px;flex-wrap:wrap}
 .status-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);color:var(--t3);transition:all .15s;user-select:none}
 .status-pill:hover{border-color:var(--border2);color:var(--t2)}
-.status-pill.sel-ab{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
-.status-pill.sel-an{background:rgba(245,180,0,.1);border-color:var(--yellow);color:var(--yellow)}
-.status-pill.sel-ok{background:rgba(30,201,138,.1);border-color:var(--green);color:var(--green)}
-.status-pill.sel-at{background:rgba(240,79,79,.1);border-color:var(--red);color:var(--red)}
-.status-pill.sel-ca{background:rgba(100,100,120,.1);border-color:#9399b0;color:#9399b0}
-.status-pill.sel-ca{background:rgba(100,100,120,.1);border-color:#9399b0;color:#9399b0}
+.status-pill.sel-ab{background:#FEF9C3!important;border-color:#FDE047!important;color:#854D0E!important;font-weight:600!important}
+.status-pill.sel-an{background:#FFFBEB!important;border-color:#FDE68A!important;color:#92400E!important;font-weight:600!important}
+.status-pill.sel-ok{background:#ECFDF5!important;border-color:#86EFAC!important;color:#166534!important;font-weight:600!important}
+.status-pill.sel-ca{background:#F8FAFC!important;border-color:#CBD5E1!important;color:#64748B!important;font-weight:600!important}
+.status-pill.sel-at{background:#FFF7ED!important;border-color:#FDBA74!important;color:#C2410C!important;font-weight:600!important}
 
 /* Date range */
 .date-range{display:flex;align-items:center;gap:6px}
@@ -294,7 +293,7 @@ textarea.fc{resize:vertical;min-height:80px}
 /* ─── EMPTY ─── */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 20px;color:var(--t3);text-align:center;gap:10px}
 .empty-mark,.empty-i{width:36px;height:36px;margin:0 auto 8px;border-radius:5px;background:#F1F5F9;border:1px solid #E2E8F0}
-.empty-ico{font-size:0;width:36px;height:36px;margin:0 auto 8px;border-radius:5px;background:#F1F5F9;border:1px solid #E2E8F0}
+.empty-i{display:none!important}
 .empty p{font-size:13.5px;max-width:260px;line-height:1.5}
 
 /* ─── TOAST ─── */
@@ -319,7 +318,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=24">
+<link rel="stylesheet" href="./enterprise-premium.css?v=25">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -338,13 +337,6 @@ body{visibility:visible!important}
 .stat-val{font-size:24px!important;font-weight:800!important}
 .stat-lbl{font-size:10.5px!important}
 #sidebar .ni,#sidebar .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 14px!important}
-#sidebar .sb-module-row .ga-module-link{
-  font-size:10.5px!important;font-weight:600!important;
-  padding:5px 6px!important;min-height:30px!important;
-  flex:1 1 0!important;min-width:0!important;text-align:center!important;
-  line-height:1.2!important;white-space:nowrap!important;
-  border-radius:0!important;margin:0!important;
-}
 #sidebar .sb-module-switch{margin:0 10px 10px!important;padding:0!important}
 #sidebar .sb-module-lbl{font-size:9px!important;letter-spacing:.12em!important;text-transform:uppercase!important;opacity:.55!important;margin-bottom:5px!important}
 #sidebar .sb-module-row{display:flex!important;border-radius:5px!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important}
@@ -611,6 +603,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mo-an">0</div></div>
+    <div class="stat bl"><div class="stat-lbl">Aberto</div><div class="stat-val" id="mo-ab">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
   </div>
@@ -629,6 +622,7 @@ body{visibility:visible!important}
   </div>
   <div class="status-multi" id="mo-status-pills" style="margin-bottom:14px">
     <div class="status-pill" onclick="toggleStatus(this,&#39;an&#39;,&#39;ocup&#39;)" data-s="Em andamento">● Em andamento</div>
+    <div class="status-pill" onclick="toggleStatus(this,&#39;ab&#39;,&#39;ocup&#39;)" data-s="Aberto">● Aberto</div>
     <div class="status-pill" onclick="toggleStatus(this,&#39;ok&#39;,&#39;ocup&#39;)" data-s="Concluído">● Concluído</div>
     <div class="status-pill" onclick="toggleStatus(this,&#39;ca&#39;,&#39;ocup&#39;)" data-s="Cancelado">● Cancelado</div>
   </div>
@@ -730,7 +724,7 @@ body{visibility:visible!important}
       <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-task&#39;)">+ Nova</button>
     </div>
     <div id="task-list"></div>
-    <div id="task-empty" class="empty"><div class="empty-mark"></div><p>Nenhuma tarefa pendente.</p></div>
+    <div id="task-empty" class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma tarefa pendente.</p></div>
   </div>
   <!-- Notificações -->
   <div id="proc-tab-2" style="display:none">
@@ -1753,7 +1747,9 @@ function updateManutStats(tipo){
   document.getElementById(pf+'-ok')&&(document.getElementById(pf+'-ok').textContent=all.filter(m=>m.status==='Concluído').length);
   document.getElementById(pf+'-at')&&(document.getElementById(pf+'-at').textContent=all.filter(m=>m.status==='Atrasado').length);
   document.getElementById(pf+'-ca')&&(document.getElementById(pf+'-ca').textContent=all.filter(m=>m.status==='Cancelado').length);
-  document.getElementById(pf+'-ca')&&(document.getElementById(pf+'-ca').textContent=all.filter(m=>m.status==='Cancelado').length);
+  const pend=all.filter(m=>['Em andamento','Aberto','Atrasado'].includes(m.status)).length;
+  const pendEl=document.getElementById(pf+'-pend');
+  if(pendEl)pendEl.textContent=pend;
   const rec=all.filter(m=>m.status==='Concluído').reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
   document.getElementById(pf+'-rec')&&(document.getElementById(pf+'-rec').textContent='R$'+rec.toFixed(0));
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
@@ -2017,7 +2013,7 @@ function renderAgendaProc(){
         }
       }).join('');
     } else {
-      secTarefas.innerHTML='<div class="empty" style="padding:14px"><div class="empty-mark"></div><p style="font-size:12px">Nenhuma tarefa pendente</p></div>';
+      secTarefas.innerHTML='<div class="empty" style="padding:14px"><div class="empty-mark icon-doc"></div><p style="font-size:12px">Nenhuma tarefa pendente</p></div>';
     }
   }
 }
@@ -3754,7 +3750,7 @@ function removeAno(a){
 }
 
 // ─── SEED MANUTENÇÕES (planilhas PDF) ───────────
-const MANUT_SEED_VER='20260622';
+const MANUT_SEED_VER='20260624';
 
 function manutTotal(){
   return ['imob','cond','ocup','ager'].reduce((s,k)=>s+((DB.manutencoes[k]||[]).length),0);
@@ -3770,13 +3766,15 @@ function afterManutSeedLoaded(){
 
 async function loadManutSeed(){
   try{
-    if(manutTotal()>=100)return false;
+    const stored=localStorage.getItem('ga_manut_seed');
+    const needsReload=stored!==MANUT_SEED_VER||manutTotal()<100;
+    if(!needsReload)return false;
     const r=await fetch('./gestao-manut-seed.json?v='+MANUT_SEED_VER);
     if(!r.ok){console.warn('Manut seed HTTP',r.status);return false;}
     const seed=await r.json();
     if(!DB.manutencoes)DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
     ['imob','cond','ocup','ager'].forEach(k=>{
-      if(Array.isArray(seed[k])&&seed[k].length)DB.manutencoes[k]=seed[k];
+      if(Array.isArray(seed[k]))DB.manutencoes[k]=seed[k];
     });
     localStorage.setItem('ga_manut_seed',MANUT_SEED_VER);
     console.info('Manut seed OK:',manutTotal(),'registros');

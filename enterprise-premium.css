@@ -158,30 +158,19 @@ html,body{
   box-shadow:none!important;
 }
 .sb .nav .nbadge.has-count,#sidebar .ni .nbadge.has-count{
-  background:#E8720C!important;
-  color:#fff!important;
-  border-color:rgba(255,255,255,.22)!important;
-  box-shadow:0 0 0 2px rgba(232,114,12,.28)!important;
+  background:#FEF9C3!important;
+  color:#854D0E!important;
+  border-color:#FDE68A!important;
+  box-shadow:0 0 0 2px rgba(253,224,71,.22)!important;
 }
-.sb .nav .nbadge.nb-red.has-count{
-  background:#EF4444!important;
-  color:#fff!important;
-  box-shadow:0 0 0 2px rgba(239,68,68,.30)!important;
-}
-.sb .nav .nbadge.nb-ora.has-count{
-  background:#FBBF24!important;
-  color:#422006!important;
-  box-shadow:0 0 0 2px rgba(251,191,36,.35)!important;
-}
-.sb .nav .nbadge.nb-acc.has-count{
-  background:#38BDF8!important;
-  color:#0C4A6E!important;
-  box-shadow:0 0 0 2px rgba(56,189,248,.32)!important;
-}
+.sb .nav .nbadge.nb-red.has-count,
+.sb .nav .nbadge.nb-ora.has-count,
+.sb .nav .nbadge.nb-acc.has-count,
 #sidebar .ni .nbadge.g.has-count{
-  background:#22C55E!important;
-  color:#fff!important;
-  box-shadow:0 0 0 2px rgba(34,197,94,.30)!important;
+  background:#FEF9C3!important;
+  color:#854D0E!important;
+  border-color:#FDE68A!important;
+  box-shadow:0 0 0 2px rgba(253,224,71,.22)!important;
 }
 
 /* Page headers */
@@ -2064,7 +2053,9 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 .mod-resc .nav,.mod-resc .sb-item,.mod-resc .sb .nav{font-size:12px!important;font-weight:500!important;padding:8px 14px!important}
 .mod-resc .sb-lbl{font-size:9.5px!important;letter-spacing:.12em!important}
 .mod-gest #sidebar .ni,.mod-gest .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 14px!important}
-.mod-gest #sidebar .sb-module-row .ga-module-link,.mod-gest .sb-module-row .ga-module-link{font-size:10.5px!important;font-weight:600!important;padding:5px 6px!important;min-height:30px!important}
+.sb-module-row .ga-module-link,.mod-gest .sb-module-row .ga-module-link,.mod-resc .sb-module-row .ga-module-link{
+  font-size:11px!important;font-weight:600!important;padding:6px 8px!important;min-height:32px!important;line-height:1.25!important;
+}
 .mod-gest .sb-sec,.mod-gest .sb-lbl{font-size:9.5px!important;letter-spacing:.12em!important}
 
 /* Botões retos (não pills) */
@@ -2209,14 +2200,36 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 }
 .sb-module-row .ga-module-link .ico{display:none!important}
 
-.empty-mark,.empty-i{
+.empty-mark{
   width:36px!important;height:36px!important;
   margin:0 auto 8px!important;
   border-radius:5px!important;
   background:#F1F5F9!important;
   border:1px solid #E2E8F0!important;
   flex-shrink:0!important;
+  position:relative!important;
 }
+.empty-mark::after{
+  content:'';
+  display:block!important;
+  width:14px!important;height:14px!important;
+  margin:10px auto 0!important;
+  border-radius:3px!important;
+  background:#CBD5E1!important;
+  opacity:.85!important;
+}
+.empty-mark.icon-doc::after{width:12px!important;height:15px!important;border-radius:2px!important;background:linear-gradient(#CBD5E1 0 0)!important;border:1.5px solid #94A3B8!important}
+.empty-mark.icon-warn::after{background:#FDE68A!important;border:1.5px solid #FBBF24!important;width:16px!important;height:16px!important;margin-top:9px!important;border-radius:50%!important}
+.empty-mark.icon-check::after{background:#BBF7D0!important;border:1.5px solid #86EFAC!important;width:16px!important;height:16px!important;margin-top:9px!important;border-radius:50%!important}
+.empty-i{display:none!important}
+.loft-obs-inp,.loft-sel{
+  width:100%;min-width:120px;max-width:200px;border:1px solid #E2E8F0;background:#fff;
+  font-size:11px;font-family:inherit;padding:5px 8px;border-radius:4px;color:var(--tx,#1e293b);
+}
+.loft-obs-inp::placeholder{color:#94A3B8;font-style:italic;font-size:10.5px}
+.loft-obs-inp:hover,.loft-obs-inp:focus,.loft-sel:hover,.loft-sel:focus{border-color:#CBD5E1;background:#F8FAFC;outline:none}
+.cell-tag.cell-no{background:#FEE2E2!important;color:#991B1B!important;border:1px solid #FECACA!important}
+.cell-tag.cell-ok-loft{background:#DCFCE7!important;color:#166534!important;border:1px solid #86EFAC!important}
 .empty{font-size:13px!important;color:#64748B!important}
 .empty p{margin:0!important;line-height:1.45!important}
 

@@ -188,9 +188,8 @@ td.ora{color:var(--o);font-weight:600}
 .abts{display:flex;gap:3px}
 .abt{background:none;border:none;cursor:pointer;padding:3px 5px;border-radius:4px;font-size:13px}
 .abt:hover{background:var(--bg)}
-/* EMPTY */
+/* EMPTY — ícones via .empty-mark no CSS global */
 .empty{text-align:center;padding:32px 20px;color:var(--tl)}
-.empty-i{font-size:34px;margin-bottom:8px}
 /* AGENDA DIARIA */
 .ad-slot{background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:4px solid var(--pl);box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .ad-time{font-size:12px;font-weight:800;color:var(--p);margin-bottom:4px}
@@ -200,7 +199,7 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=24">
+<link rel="stylesheet" href="./enterprise-premium.css?v=25">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
@@ -312,7 +311,7 @@ td.ora{color:var(--o);font-weight:600}
             <span>Agenda</span>
             <button class="btn btn-p btn-sm" onclick="openM(&#39;m-ag&#39;)">+ Prazo</button>
           </div>
-          <div id="d-venc" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-i">📅</div>Sem itens</div></div>
+          <div id="d-venc" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-mark icon-doc"></div><p>Sem itens</p></div></div>
         </div>
       </div>
 
@@ -356,7 +355,7 @@ td.ora{color:var(--o);font-weight:600}
             <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer"><input type="checkbox" id="ag-show-concl" onchange="rAg()"> Mostrar concluídas</label>
           <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openM(&#39;m-ag&#39;)">+ Adicionar</button>
           </div>
-          <div id="ag-list"><div class="empty"><div class="empty-i">📅</div>Nenhum prazo pendente — <a href="#" onclick="document.getElementById(&#39;ag-show-concl&#39;).checked=true;rAg();return false;">ver concluídos</a></div></div>
+          <div id="ag-list"><div class="empty"><div class="empty-mark icon-doc"></div>Nenhum prazo pendente — <a href="#" onclick="document.getElementById(&#39;ag-show-concl&#39;).checked=true;rAg();return false;">ver concluídos</a></div></div>
         </div>
         <div>
           <div class="tw" style="padding:12px;margin-bottom:10px">
@@ -564,7 +563,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Nº</th><th>Contrato</th><th>Data</th><th>Tipo</th><th>Parcelas</th><th>Valor/Parc.</th>
             <th id="cart-par-headers"></th><th>Status</th><th>Ações</th>
           </tr></thead>
-          <tbody id="tb-cart"><tr><td colspan="9"><div class="empty"><div class="empty-i">💳</div>Nenhum lançamento pendente</div></td></tr></tbody>
+          <tbody id="tb-cart"><tr><td colspan="9"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum lançamento pendente</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -585,7 +584,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>#</th><th>Inquilino</th><th>Valor Total</th><th>Parcelas</th><th>Assinado Loc.</th>
             <th>Assinado Fiad.</th><th>Boletos</th><th>Status</th><th>Ações</th>
           </tr></thead>
-<tbody id="tb-conf"><tr><td colspan="9"><div class="empty"><div class="empty-i">📝</div>Nenhuma confissão no período</div></td></tr></tbody>
+<tbody id="tb-conf"><tr><td colspan="9"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma confissão no período</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -631,7 +630,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Código</th><th>Data Solicitação</th><th>Prev. Desligamento</th>
             <th>Tipo</th><th>Resp.</th><th>Status</th><th>Obs.</th><th>Ações</th>
           </tr></thead>
-          <tbody id="tb-san"><tr><td colspan="10"><div class="empty"><div class="empty-i">💧</div>Nenhum desligamento</div></td></tr></tbody>
+          <tbody id="tb-san"><tr><td colspan="10"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum desligamento</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -651,7 +650,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Código</th><th>Proprietário</th><th>Contato</th><th>Aluguel</th><th>Cond.</th>
             <th>Água</th><th>Energia</th><th>IPTU</th><th>Repasse MKT</th><th>Site</th><th>Fotos</th><th>Data Ativação</th><th></th>
           </tr></thead>
-<tbody id="tb-mkt"><tr><td colspan="13"><div class="empty"><div class="empty-i">📢</div>Nenhum imóvel pendente</div></td></tr></tbody>
+<tbody id="tb-mkt"><tr><td colspan="13"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum imóvel pendente</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -678,7 +677,7 @@ td.ora{color:var(--o);font-weight:600}
           <button class="btn btn-p btn-sm" style="color:#fff" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button>
         </div>
       </div>
-      <div id="inad-list"><div class="empty"><div class="empty-mark"></div><p>Tudo em dia!</p><button class="btn btn-p btn-sm" style="margin-top:10px" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button></div></div>
+      <div id="inad-list"><div class="empty"><div class="empty-mark icon-check"></div><p>Tudo em dia!</p><button class="btn btn-p btn-sm" style="margin-top:10px;color:#fff" onclick="openM(&#39;m-inad&#39;)">+ Inadimplente</button></div></div>
     </div>
 
     <!-- JURÍDICOS -->
@@ -694,7 +693,7 @@ td.ora{color:var(--o);font-weight:600}
         <span style="flex:1"></span>
         <button class="btn btn-p btn-sm" onclick="newJur()">+ Adicionar</button>
       </div>
-      <div id="jur-list"><div class="empty"><div class="empty-mark"></div><p>Nenhum caso no jurídico</p></div></div>
+      <div id="jur-list"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum caso no jurídico</p></div></div>
     </div>
 
     <!-- LOFT -->
@@ -707,11 +706,10 @@ td.ora{color:var(--o);font-weight:600}
         </div>
         <div style="overflow-x:auto"><table>
           <thead><tr>
-            <th>#</th><th>Código</th><th>Inquilino</th><th>Sinistro</th><th>Data</th><th>Status</th>
-            <th>Cancelado</th><th>Observações</th><th>Ações</th>
+            <th>Código</th><th>Inquilino</th><th>Status</th><th>Sinistro</th><th>Observações</th><th>Vist. saída</th><th>Ações</th>
           </tr></thead>
-          <tbody><tr><td colspan="9"><div id="loft-summary" style="padding:5px 8px;font-size:11px;color:var(--tl);background:#f8fafc">Pendentes: 0 | Concluídos: 0</div></td></tr>
-          </tbody><tbody id="tb-loft"><tr><td colspan="9"><div class="empty"><div class="empty-i">🏢</div>Nenhum caso Loft ativo</div></td></tr></tbody>
+          <tbody><tr><td colspan="7"><div id="loft-summary" style="padding:5px 8px;font-size:11px;color:var(--tl);background:#f8fafc">Pendentes: 0 | Concluídos: 0</div></td></tr>
+          </tbody><tbody id="tb-loft"><tr><td colspan="7"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum caso Loft ativo</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -728,7 +726,7 @@ td.ora{color:var(--o);font-weight:600}
           <thead><tr>
             <th>#</th><th>Código</th><th>Inquilino</th><th>Proprietário</th><th>Motivo</th><th>Ano</th><th>Observação</th><th>Ações</th>
           </tr></thead>
-          <tbody id="tb-saiu"><tr><td colspan="8"><div class="empty"><div class="empty-i">🚪</div>Nenhum registro</div></td></tr></tbody>
+          <tbody id="tb-saiu"><tr><td colspan="8"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum registro</p></div></td></tr></tbody>
         </table></div>
         <div style="padding:10px 14px;font-size:11px;color:var(--tl)" id="saiu-tot">Total: 2 saída(s)</div>
       </div>
@@ -1626,12 +1624,10 @@ Qualquer dúvida, fico à disposição!</textarea>
     <div class="fg"><label>Inquilino</label><input id="l-inq"></div>
   </div>
   <div class="fr3">
-    <div class="fg"><label>Sinistro Aberto?</label><select id="l-sin"><option>Aguardando</option><option>Sim</option><option>Não</option><option>Não precisou</option></select></div>
-    <div class="fg"><label>Data</label><input type="date" id="l-dat"></div>
-    <div class="fg"><label>Status</label><select id="l-sta"><option>Em análise</option><option>Aprovado</option><option>Negado</option><option>Pago</option></select></div>
+    <div class="fg"><label>Sinistro</label><select id="l-sin"><option>Sim</option><option>Não</option><option>Não precisou</option></select></div>
+    <div class="fg"><label>Status cancelamento</label><select id="l-can"><option value="Não">Sem cancelamento</option><option value="Sim">Cancelado</option></select></div>
   </div>
-  <div class="fg" style="margin-bottom:10px"><label>Cancelado?</label><select id="l-can"><option>Não</option><option>Sim</option></select></div>
-  <div class="fg" style="margin-bottom:0"><label>Observação Inicial</label><textarea id="l-obs" rows="2"></textarea></div>
+  <div class="fg" style="margin-bottom:0"><label>Observação</label><textarea id="l-obs" rows="2" placeholder="Atualização de sinistro, datas, etc."></textarea></div>
 </div>
 <div class="mft"><button class="btn btn-o" onclick="closeM(&#39;m-loft&#39;)">Cancelar</button><button class="btn btn-p" onclick="salLoft()">Salvar</button></div>
 </div></div>
@@ -2385,7 +2381,7 @@ function ldNow(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()
 function fd(d){if(!d)return'-';try{const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`;}catch{return d;}}
 function cellTag(text,kind){return `<span class="cell-tag cell-${kind||'warn'}">${text}</span>`;}
 function cellTd(text,kind){return `<td>${cellTag(text,kind)}</td>`;}
-function emptyHtml(msg){return `<div class="empty"><div class="empty-mark"></div><p>${msg}</p></div>`;}
+function emptyHtml(msg,ic){return `<div class="empty"><div class="empty-mark icon-${ic||'doc'}"></div><p>${msg}</p></div>`;}
 function libBtn(id,on){return `<button type="button" class="lib-badge${on?' on':''}" onclick="togManLiberado('${id}')">${on?'Liberado p/ manut.':'Em rescisão'}</button>`;}
 function ynBtn(fn,id,on){return `<button type="button" class="yn-badge${on?' on':''}" onclick="${fn}('${id}')">${on?'Sim':'Não'}</button>`;}
 function fm(v){if(!v&&v!==0)return'-';return'R$'+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
@@ -2431,11 +2427,53 @@ function manCell(codigo){
   if(allDone)return cellTd('Concluído','ok');
   return cellTd('Pendente','pend');
 }
+function loftCanSelect(id,val){
+  const l=D().loft.find(x=>x.id===id);if(!l)return;
+  l.cancelado=val;
+  if(currentUser)logEvent('alteracao',`${currentUser.nome} ${l.codigo}, em Casos Loft status → "${val==='Sim'?'Cancelado':'Sem cancelamento'}"`);
+  save();rLoft();
+}
+function loftSinSelect(id,val){
+  const l=D().loft.find(x=>x.id===id);if(!l)return;
+  l.sinistro=val;
+  if(currentUser)logEvent('alteracao',`${currentUser.nome} ${l.codigo}, em Casos Loft sinistro → "${val}"`);
+  save();rLoft();
+}
+function loftCanTag(v){
+  if(v==='Sim')return cellTag('Cancelado','ok-loft');
+  return cellTag('Sem cancelamento','no');
+}
+function loftVisDate(cod){
+  const r=D().rescisoes.find(x=>x.codigo===cod);
+  if(!r)return'—';
+  const d=r.vis2||r.vis1;
+  if(!d)return'—';
+  return fd(d)+(r.vis2?' <span style="font-size:9px;color:var(--tl)">(2ª vist.)</span>':r.vis1?' <span style="font-size:9px;color:var(--tl)">(1ª vist.)</span>':'');
+}
+function loftObsCell(l){
+  const last=(l.obs||[]).slice(-1)[0];
+  const val=escAttr(last?.txt||'');
+  return`<input type="text" class="loft-obs-inp" value="${val}" placeholder="Atualização de sinistro, datas, etc." onchange="saveLoftObs('${l.id}',this.value)">`;
+}
+function saveLoftObs(id,val){
+  const l=D().loft.find(x=>x.id===id);if(!l)return;
+  if(!l.obs)l.obs=[];
+  const t=val.trim();
+  if(!t){save();return;}
+  const last=l.obs.slice(-1)[0];
+  if(last&&last.txt===t)return;
+  l.obs.push({txt:t,data:new Date().toISOString().split('T')[0]});
+  if(currentUser)logEvent('alteracao',`${currentUser.nome} ${l.codigo}, em Casos Loft atualizou observação`);
+  save();rLoft();
+}
+function loftSinTag(v){
+  if(v==='Sim')return cellTag('Sim','warn');
+  if(v==='Não precisou')return cellTag('Não precisou','ok-loft');
+  if(v==='Não')return cellTag('Não','no');
+  return cellTag('Não','no');
+}
 function loftSinCell(v){
-  if(v==='Sim')return cellTd('Sim','pend');
-  if(v==='Não precisou')return cellTd('Não precisou','ok');
-  if(v==='Não')return cellTd('Não','no');
-  return cellTd('Aguardando','warn');
+  return `<td>${loftSinTag(v)}</td>`;
 }
 function mktSq(on,label){return `<span class="mkt-sq${on?' on':''}">${label}</span>`;}
 function mktFotosOn(m){return m.fotos==='Feitas'||m.fotos==='Recebidas'||m.fotos==='Não tem';}
@@ -2590,7 +2628,7 @@ function rDash(){
         <span class="badge bb" style="font-size:9px">${v.tipo}</span>
         <button onclick="markAgConcl('${escAttr(k)}','${escAttr(v.cartaId||'')}','${escAttr(v.loftId||'')}');rDash();rAg();" style="border:none;background:#dcfce7;color:#166534;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:10px;font-weight:700;flex-shrink:0">Concluir</button>
       </div>`;
-    }).join(''):`<div class="empty"><div class="empty-i">📅</div>Sem itens</div>`;
+    }).join(''):`<div class="empty"><div class="empty-mark icon-doc"></div><p>Sem itens</p></div>`;
   }
 }
 
@@ -3272,7 +3310,7 @@ function rAg(){
   const all=getAllVenc().filter(a=>isValidDate(a.data)).filter(a=>!ftip||a.tipo===ftip).sort((a,b)=>new Date(a.data)-new Date(b.data));
   const items=showConcl?all:all.filter(a=>!isAgConcl(a));
   const el=document.getElementById('ag-list');
-  if(!items.length){el.innerHTML=`<div class="empty"><div class="empty-i">📅</div>Nenhum prazo pendente ${showConcl?'':'— <a href="#" onclick="document.getElementById(\'ag-show-concl\').checked=true;rAg();return false;">ver concluídos</a>'}</div>`;return;}
+  if(!items.length){el.innerHTML=`<div class="empty"><div class="empty-mark icon-doc"></div>Nenhum prazo pendente ${showConcl?'':'— <a href="#" onclick="document.getElementById(\'ag-show-concl\').checked=true;rAg();return false;">ver concluídos</a>'}</div>`;return;}
   el.innerHTML=items.map(a=>{
     if(!isValidDate(a.data))return '';
     const dv=ld(a.data);
@@ -3429,7 +3467,7 @@ function rCart(){
   });
 
   const tb=document.getElementById('tb-cart');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-i">💳</div>Nenhum lançamento${cartShowConcl?'':' pendente'}</div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum lançamento${cartShowConcl?'':' pendente'}</p></div></td></tr>`;return;}
 
   // Find max parcelas in this set for dynamic headers
   const maxP=Math.max(...rows.map(ct=>parseInt(ct.parcelas)||0),1);
@@ -3550,7 +3588,7 @@ function rConf(){
   });
   const tb=document.getElementById('tb-conf');
   // Summary count
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-i">📝</div>Nenhuma confissão no período</div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma confissão no período</p></div></td></tr>`;return;}
   tb.innerHTML=rows.map((cf,idx)=>{
     const done=isConfDone(cf);
     const cMes=getConfMes(cf);
@@ -4050,7 +4088,7 @@ function rSan(){
     return true;
   });
   const tb=document.getElementById('tb-san');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="10"><div class="empty"><div class="empty-i">💧</div>Nenhum desligamento</div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="10"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum desligamento</p></div></td></tr>`;return;}
   tb.innerHTML=rows.map(s=>`<tr class="${s.status==='Desligado'?'rg':''}">
     <td><b style="color:var(--p)">${s.codigo}</b></td>
     <td>${fd(s.dtSol)}</td><td>${fd(s.dtRelig)}</td>
@@ -4113,7 +4151,7 @@ function rMkt(){
     return true;
   });
   const tb=document.getElementById('tb-mkt');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="13"><div class="empty"><div class="empty-i">📢</div>Nenhum imóvel${showConcl?'':' pendente'}</div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="13"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum imóvel${showConcl?'':' pendente'}</p></div></td></tr>`;return;}
   tb.innerHTML=rows.map((m,idx)=>{
     const done=isMktDone(m);
     const allDone=isMktAllDone(m);
@@ -4211,7 +4249,7 @@ function editMkt(id){
 function rCartas(){
   const hoje=ldNow();
   const el=document.getElementById('cartas-list');
-  if(!D().cartas.length){el.innerHTML=`<div class="empty"><div class="empty-i">✉️</div>Nenhuma carta<br><button class="btn btn-p" style="margin-top:10px" onclick="openM('m-carta')">+ Carta 30 dias</button></div>`;return;}
+  if(!D().cartas.length){el.innerHTML=`<div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma carta</p><button class="btn btn-p" style="margin-top:10px" onclick="openM('m-carta')">+ Carta 30 dias</button></div>`;return;}
   const showConcl=document.getElementById('ct-show-concl')&&document.getElementById('ct-show-concl').checked;
   const cartasConcl=D().cartasConcl||{};
   const mesAtivoC=S.mesAtivo||'';
@@ -4226,7 +4264,7 @@ function rCartas(){
       return isSame||isPrevPend;
     });
   }
-  if(!visible.length){el.innerHTML=`<div class="empty"><div class="empty-i">✉️</div>Nenhuma carta ativa</div>`;return;}
+  if(!visible.length){el.innerHTML=`<div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma carta ativa</p></div>`;return;}
   const cartaSumEl=document.getElementById('cartas-summary');
   if(cartaSumEl){const p=D().cartas.filter(c=>!(D().cartasConcl||{})[c.id]).length;const done=Object.keys(D().cartasConcl||{}).length;cartaSumEl.textContent=`Pendentes: ${p} | Concluídas: ${done}`;}
   el.innerHTML=visible.map(c=>{
@@ -4393,7 +4431,7 @@ function rInad(){
   html+=sec('Datas Vencidas — Agenda','var(--gy)',agItems);
 
   if(!html){
-    el.innerHTML=`<div class="empty"><div class="empty-mark"></div><p>Tudo em dia!</p><button class="btn btn-p btn-sm" style="margin-top:10px" onclick="openM('m-inad')">+ Inadimplente</button></div>`;
+    el.innerHTML=`<div class="empty"><div class="empty-mark icon-check"></div><p>Tudo em dia!</p><button class="btn btn-p btn-sm" style="margin-top:10px;color:#fff" onclick="openM('m-inad')">+ Inadimplente</button></div>`;
     return;
   }
   const inadSumEl=document.getElementById('inad-summary');
@@ -4470,7 +4508,7 @@ function rJur(){
   const d=D();d.juridicos=d.juridicos||[];
   const showConcl=document.getElementById('jur-show-concl')&&document.getElementById('jur-show-concl').value==='1';
   const rows=d.juridicos.filter(j=>showConcl?!!j.concluido:!j.concluido);
-  if(!rows.length){el.innerHTML=`<div class="empty"><div class="empty-mark"></div><p>${showConcl?'Nenhum caso concluído':'Nenhum caso no jurídico'}</p></div>`;return;}
+  if(!rows.length){el.innerHTML=`<div class="empty"><div class="empty-mark icon-doc"></div><p>${showConcl?'Nenhum caso concluído':'Nenhum caso no jurídico'}</p></div>`;return;}
   el.innerHTML=rows.map(j=>`<div class="ic inad-row" style="border-left-color:#7c3aed;background:#fff;${j.concluido?'opacity:.75':''}">
     <div style="min-width:90px"><b style="color:var(--p)">${j.codigo}</b><div style="font-size:9px;color:var(--tl)">desde ${fd(j.data)}</div></div>
     <div style="flex:1"><div style="font-weight:600;color:var(--tx)">${j.inquilino||'-'}</div><div style="font-size:11px;color:var(--tl)"><span class="badge" style="background:#ede9fe;color:#5b21b6;font-size:9px">${j.origem}</span> ${j.detalhe||''}</div></div>
@@ -4594,32 +4632,25 @@ function rLoft(){
   });
   const tb=document.getElementById('tb-loft');
   if(!rows.length){
-    tb.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-i">🏢</div>Nenhum caso Loft ativo</div></td></tr>`;
+    tb.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum caso Loft ativo</p></div></td></tr>`;
     return;
   }
   tb.innerHTML=rows.map((l,i)=>{
     const concl=!!loftConcl[l.id];
-    // "Cancelada?" display: Sim=verde, Não=vermelho
-    const canCell=l.cancelado==='Sim'
-      ?`<td style="color:var(--g);font-weight:600">Sim</td>`
-      :`<td><span class="badge bn">Não</span></td>`;
+    const can=l.cancelado==='Sim'?'Sim':'Não';
+    const sin=['Sim','Não','Não precisou'].includes(l.sinistro)?l.sinistro:'Não';
     return`<tr class="${concl?'rg':''}">
-      <td style="color:var(--tl);font-size:11px">${i+1}</td>
-      <td><b style="color:var(--p);${concl?'text-decoration:line-through':''}">${l.codigo}</b>
-        ${l.autoFromResc?'<span style="font-size:9px;color:var(--tl);display:block">da rescisão</span>':''}
-      </td>
+      <td><b style="color:var(--p);${concl?'text-decoration:line-through':''}">${l.codigo}</b></td>
       <td>${l.inquilino||'-'}</td>
-      <td>${loftSinCell(l.sinistro)}</td>
-      <td>${fd(l.data)}</td>
-      <td>${sbadge(l.statusLoft)}</td>
-      ${canCell}
-      <td style="font-size:11px;max-width:150px">${(l.obs||[]).length?`${l.obs[l.obs.length-1].txt.substring(0,50)}${l.obs[l.obs.length-1].txt.length>50?'...':''}<span class="badge bgy" style="font-size:9px;margin-left:4px">${l.obs.length}</span>`:'-'}</td>
+      <td><select class="loft-sel" onchange="loftCanSelect('${l.id}',this.value)"><option value="Não"${can==='Não'?' selected':''}>Sem cancelamento</option><option value="Sim"${can==='Sim'?' selected':''}>Cancelado</option></select></td>
+      <td><select class="loft-sel" onchange="loftSinSelect('${l.id}',this.value)"><option${sin==='Sim'?' selected':''}>Sim</option><option${sin==='Não'?' selected':''}>Não</option><option${sin==='Não precisou'?' selected':''}>Não precisou</option></select></td>
+      <td>${loftObsCell(l)}</td>
+      <td style="font-size:11px;white-space:nowrap">${loftVisDate(l.codigo)}</td>
       <td><div class="abts">
         ${concl
           ?`<button class="abt" onclick="togLoftConcl('${l.id}')" title="Reabrir">↩</button>`
           :`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="togLoftConcl('${l.id}')">Concluir</button>`
         }
-        <button class="abt" onclick="openDet('loft','${l.id}')">💬</button>
         <button class="abt action-edit" onclick="editLoft('${l.id}')">Editar</button>
         <button class="abt action-delete" onclick="delR('loft','${l.id}')">Excluir</button>
       </div></td>
@@ -4635,17 +4666,18 @@ function togLoftConcl(id){
 function salLoft(){
   const cod=document.getElementById('l-cod').value.trim();if(!cod){alert('Informe código');return;}
   const obsIni=document.getElementById('l-obs').value.trim();
-  const obj={id:editId||uid(),codigo:cod,inquilino:document.getElementById('l-inq').value,sinistro:document.getElementById('l-sin').value,data:document.getElementById('l-dat').value,statusLoft:document.getElementById('l-sta').value,cancelado:document.getElementById('l-can').value,obs:obsIni?[{txt:obsIni,data:new Date().toISOString().split('T')[0]}]:[]};
+  const obj={id:editId||uid(),codigo:cod,inquilino:document.getElementById('l-inq').value,sinistro:document.getElementById('l-sin').value,cancelado:document.getElementById('l-can').value,data:'',statusLoft:'Em análise',obs:obsIni?[{txt:obsIni,data:new Date().toISOString().split('T')[0]}]:[]};
   if(editId){const idx=D().loft.findIndex(x=>x.id===editId);if(idx>=0){obj.obs=D().loft[idx].obs||obj.obs;D().loft[idx]=obj;}}else D().loft.push(obj);
-  const _lCod=document.getElementById('l-cod')?.value||''; const _lAcao=editId?'editou':'criou'; logEvent('alteracao',`${currentUser?.nome||''} ${_lAcao} ${_lCod} em Casos Loft`); save();closeM('m-loft');editId=null;document.getElementById('loft-tit').textContent='🏢 Caso Loft';rLoft();
+  const _lCod=document.getElementById('l-cod')?.value||''; const _lAcao=editId?'editou':'criou'; logEvent('alteracao',`${currentUser?.nome||''} ${_lAcao} ${_lCod} em Casos Loft`); save();closeM('m-loft');editId=null;document.getElementById('loft-tit').textContent='Caso Loft';rLoft();
 }
 function editLoft(id){
   const l=D().loft.find(x=>x.id===id);if(!l)return;editId=id;
   document.getElementById('loft-tit').textContent='Editar Loft';
   document.getElementById('l-cod').value=l.codigo||'';document.getElementById('l-inq').value=l.inquilino||'';
-  document.getElementById('l-sin').value=l.sinistro||'Sim';document.getElementById('l-dat').value=l.data||'';
-  document.getElementById('l-sta').value=l.statusLoft||'Em análise';document.getElementById('l-can').value=l.cancelado||'Não';
-document.getElementById('l-obs').value='';
+  document.getElementById('l-sin').value=['Sim','Não','Não precisou'].includes(l.sinistro)?l.sinistro:'Não';
+  document.getElementById('l-can').value=l.cancelado||'Não';
+  const lastObs=(l.obs||[]).slice(-1)[0];
+  document.getElementById('l-obs').value=lastObs?.txt||'';
   openM('m-loft');
 }
 
@@ -4660,7 +4692,7 @@ function rSaiu(){
   if(sel){const cur=sel.value;sel.innerHTML=`<option value="">Todos anos</option>`+anos.map(a=>`<option>${a}</option>`).join('');if(cur)sel.value=cur;}
   let rows=D().saiuImob.filter(s=>{if(q&&!(s.codigo+(s.inquilino||'')).toLowerCase().includes(q.toLowerCase()))return false;if(fa&&s.data&&!s.data.startsWith(fa))return false;return true;});
   const tb=document.getElementById('tb-saiu');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-i">🚪</div>Nenhum registro</div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum registro</p></div></td></tr>`;return;}
   tb.innerHTML=rows.map((s,i)=>{
     // Get mes/ano from linked rescisao vistoria
     const resc=D().rescisoes.find(rx=>rx.codigo===s.codigo);
