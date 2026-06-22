@@ -319,7 +319,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=27">
+<link rel="stylesheet" href="./enterprise-premium.css?v=28">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -356,9 +356,9 @@ body{visibility:visible!important}
   </div>
   <div class="sb-module-switch">
     <div class="sb-module-lbl">Módulos</div>
-    <div class="sb-module-row">
-      <a class="nav ga-module-link" href="./rescisoes.html">Rescisão</a>
-      <a class="nav ga-module-link active-system" href="./gestao.html">Manut./Adm</a>
+    <div class="sb-module-row" style="display:grid!important;grid-template-columns:1fr 1fr!important">
+      <a class="nav ga-module-link" href="./rescisoes.html" style="display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;border-left:0!important;margin:0!important;width:100%!important">Rescisão</a>
+      <a class="nav ga-module-link active-system" href="./gestao.html" style="display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;border-left:0!important;margin:0!important;width:100%!important">Manut./Adm</a>
     </div>
   </div>
   <div class="sb-nav">
@@ -3447,6 +3447,16 @@ function gerarRel(){
   const mes=document.getElementById('rel-mes')?.value||'';
   const prest=document.getElementById('rel-prest')?.value||'';
   const status=document.getElementById('rel-status')?.value||'';
+  const hasRelFilter=tipos.length||ini||fim||ano||mes||prest||status;
+  if(!hasRelFilter){
+    const stats=document.getElementById('rel-result-stats');
+    const tbWrap=document.getElementById('rel-result-table-wrap');
+    const emp=document.getElementById('rel-empty');
+    if(stats)stats.innerHTML='';
+    if(tbWrap)tbWrap.style.display='none';
+    if(emp){emp.style.display='flex';emp.innerHTML='<div class="empty-mark"></div><p>Selecione pelo menos um módulo ou filtro antes de gerar. Isso evita carregar todos os registros de uma vez.</p>';}
+    return;
+  }
 
   const allModules=['imob','cond','ocup','ager','proc'];
   const selectedModules=tipos.length?tipos:allModules;
@@ -3513,7 +3523,7 @@ function gerarRel(){
   const rec=data.reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
   const val=data.reduce((s,m)=>s+parseFloat(m.val||0),0);
 
-  const maxRows=250;
+  const maxRows=50;
   const displayData=data.slice(0,maxRows);
   const limitMsg=data.length>maxRows?`<div class="stat" style="grid-column:1/-1"><div class="stat-lbl">Prévia otimizada</div><div class="stat-val" style="font-size:14px">Mostrando ${maxRows} de ${data.length} registros. Refine os filtros para ver menos itens na tela.</div></div>`:'';
 

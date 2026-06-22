@@ -2313,3 +2313,22 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
   padding:0!important;
 }
 .cell-tag.cell-bn{background:#F1F5F9!important;color:#64748B!important;border:1px solid #E2E8F0!important}
+
+/* v28: alinhamento definitivo do seletor de módulos */
+.mod-resc .sb .sb-module-row,
+.mod-gest #sidebar .sb-module-row{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+}
+.mod-resc .sb .sb-module-row .nav.ga-module-link,
+.mod-gest #sidebar .sb-module-row .nav.ga-module-link{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border-left:0!important;
+  box-sizing:border-box!important;
+}
