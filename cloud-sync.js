@@ -117,6 +117,9 @@
   function showStatus(text, ok){
     const el=document.getElementById('ga-cloud-status');
     if(el) el.remove();
+    if(typeof window.gaSetSync==='function'){
+      window.gaSetSync(ok?'ok':(/salv|sincron/i.test(text||'')?'sync':'err'), text||'');
+    }
   }
 
   async function audit(action, detail){
@@ -178,6 +181,7 @@
   }
 
   function scheduleSave(reason){
+    if(typeof window.gaSetSync==='function') window.gaSetSync('syncing','Salvando…');
     clearTimeout(timer);
     timer = setTimeout(()=>pushState(reason), SAVE_DELAY);
   }
