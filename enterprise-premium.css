@@ -2190,8 +2190,13 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
 .ga-hide-cloud{display:none!important}
 
 /* ─── v19: pacote profissional unificado ─── */
-.sb-module-row .ga-module-link{
-  flex:none!important;
+.sb-module-row .ga-module-link,
+.sb-module-row .nav.ga-module-link,
+.sb-module-row .ni.ga-module-link,
+.mod-gest .sb-module-row .ga-module-link,
+.mod-resc .sb-module-row .ga-module-link,
+#sidebar .sb-module-row .ga-module-link{
+  flex:1 1 0!important;
   min-width:0!important;
   width:100%!important;
   box-sizing:border-box!important;
@@ -2199,14 +2204,21 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
   align-items:center!important;
   justify-content:center!important;
   text-align:center!important;
-  border-left:0!important;
-  padding-left:0!important;
-  padding-right:0!important;
+  border-left:none!important;
+  padding-left:6px!important;
+  padding-right:6px!important;
+  gap:0!important;
+  margin:0!important;
   font-size:10px!important;
   letter-spacing:0!important;
   white-space:nowrap!important;
   line-height:1.2!important;
 }
+.sb-module-row .ga-module-link::after,
+.sb-module-row .ga-module-link:not(.active-system)::after{display:none!important;content:none!important;margin:0!important}
+.sb-module-switch .sb-module-lbl{text-align:center!important}
+.mod-gest .sb-logo .sb-brand,.mod-resc .sb-logo .sb-brand{text-align:center!important;width:100%!important}
+.mod-gest .sb-logo .sb-tag,.mod-resc .sb-logo .sb-tag{text-align:center!important;width:100%!important}
 .sb-module-row .ga-module-link .ico{display:none!important}
 
 .empty-mark{

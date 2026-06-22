@@ -322,7 +322,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=29">
+<link rel="stylesheet" href="./enterprise-premium.css?v=30">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -3440,7 +3440,21 @@ function marcarRelPendente(){
 }
 
 // ─── RELATÓRIOS: gerarRel atualizado com multi-select ──
+let _gerarRelBusy=false;
 function gerarRel(){
+  if(_gerarRelBusy)return;
+  _gerarRelBusy=true;
+  const btn=document.querySelector('#fin-tab-0 .btn-p[onclick*="gerarRel"]');
+  if(btn){btn.disabled=true;btn.dataset._lbl=btn.textContent;btn.textContent='Gerando…';}
+  requestAnimationFrame(()=>{
+    try{_gerarRelCore();}
+    finally{
+      _gerarRelBusy=false;
+      if(btn){btn.disabled=false;btn.textContent=btn.dataset._lbl||'Gerar Relatório';}
+    }
+  });
+}
+function _gerarRelCore(){
   // Módulos selecionados — TODOS os 5 módulos são suportados
   const checkboxes=document.querySelectorAll('#rel-tipos input[type=checkbox]:checked');
   let tipos=[...checkboxes].map(c=>c.value);
