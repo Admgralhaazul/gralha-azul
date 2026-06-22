@@ -319,10 +319,9 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=26">
-<link rel="stylesheet" href="./ga-premium-v2.css?v=1">
+<link rel="stylesheet" href="./enterprise-premium.css?v=25">
 <style id="ga-live-fixes">
-#ga-cloud-status,#ga-cloud-tools{display:none!important;visibility:hidden!important}
+#ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
 </style>
 <style id="ga-final-no-flicker">
@@ -377,9 +376,8 @@ body{visibility:visible!important}
 <!-- ══════════════ MAIN ══════════════ -->
 <div id="main">
 <header id="topbar">
-  <nav class="ga-breadcrumb" id="ga-bc" aria-label="Navegação"><span class="ga-bc-cur">Dashboard</span></nav>
   <div class="tb-title" id="tb-title">Dashboard</div>
-  <div class="ga-topbar-actions"></div>
+  <div style="display:flex;align-items:center;gap:9px"></div>
 </header>
 <div id="content">
 
@@ -3830,8 +3828,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=17"></script>
-<script src="./ga-premium-v2.js?v=1"></script>
+<script src="./cloud-sync.js?v=16"></script>
 
 </div></body></html>
 
