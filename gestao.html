@@ -319,7 +319,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=25">
+<link rel="stylesheet" href="./enterprise-premium.css?v=26">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -1464,7 +1464,13 @@ function nav(id){
   document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+navHighlight+"'"))n.classList.add('active')});
   document.getElementById('tb-title').textContent=TITLES[id]||TITLES[navHighlight]||'Gestão Administrativa';
   if(id==='condominios')renderConds();
-  if(id==='financeiro'){fillPrestSelects();renderPrestCards();fillRelSelects();if(DB._restoreFinTab!==undefined){restoreFinTab(DB._restoreFinTab);delete DB._restoreFinTab;}}
+  if(id==='financeiro'){
+    fillPrestSelects();
+    fillRelSelects();
+    const tabIdx=DB._restoreFinTab!==undefined?DB._restoreFinTab:(document.getElementById('fin-tab-0')?.style.display==='block'?0:1);
+    restoreFinTab(tabIdx);
+    delete DB._restoreFinTab;
+  }
   if(id==='acesso'){renderUsers();renderLog();renderColabs();renderPrestListAcesso();renderAnos();}
   if(id==='dashboard')updateDashboard();
   if(id==='processos'){renderTasks();renderNotifs();renderProcTab();}
@@ -3506,7 +3512,7 @@ function gerarRel(){
     <div class="stat pu"><div class="stat-lbl">Valor Total (material)</div><div class="stat-val" style="font-size:18px">R$${val.toFixed(0)}</div></div>`;
 
   if(tbWrap)tbWrap.style.display='block';
-  thead.innerHTML='<tr><th>Modulo</th><th>Status</th><th>Data Solic.</th><th>Cond./Imovel</th><th>Prestador/Resp.</th><th>Descricao</th><th>Valor</th><th style="color:var(--cyan)">Receita manut. imob.</th><th>Campos completos</th></tr>';
+  thead.innerHTML='<tr><th>Modulo</th><th>Status</th><th>Data Solic.</th><th>Cond./Imovel</th><th>Prestador/Resp.</th><th>Descricao</th><th>Valor</th><th style="color:var(--cyan)">Receita manut. imob.</th></tr>';
   tbody.innerHTML=data.map(m=>`<tr>
     <td><span style="font-size:11px;padding:2px 7px;border-radius:20px;background:var(--s2)">${m._modulo||'—'}</span></td>
     <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span></td>
@@ -3516,7 +3522,6 @@ function gerarRel(){
     <td>${m.desc||'—'}</td>
     <td style="color:var(--green);font-weight:500">${fmtR(m.val)}</td>
     <td style="color:var(--cyan)">${fmtR(m.recKenlo)}</td>
-    <td><div class="rel-fields">${gaRelAllFields(m)}</div></td>
   </tr>`).join('');
 }
 
@@ -3779,7 +3784,7 @@ function renderGestaoAll(){
   renderManut('ocup');
   renderManut('ager');
   renderManutHome();
-  renderPrestCards();
+  if(document.getElementById('view-financeiro')?.classList.contains('active'))renderPrestCards();
   renderGlobalChk();
   renderColabs();
   renderFin();

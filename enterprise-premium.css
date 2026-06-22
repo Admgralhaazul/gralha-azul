@@ -2196,6 +2196,9 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
   align-items:center!important;
   justify-content:center!important;
   text-align:center!important;
+  border-left:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
   font-size:10px!important;
   letter-spacing:0!important;
   white-space:nowrap!important;
