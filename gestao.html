@@ -319,7 +319,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=25">
+<link rel="stylesheet" href="./enterprise-premium.css?v=26">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -838,8 +838,8 @@ body{visibility:visible!important}
   </div>
   <!-- Abas -->
   <div class="tabs" style="margin-bottom:18px">
-    <div class="tab active" onclick="switchFinTab(this,1)">Prestadores</div>
-    <div class="tab" onclick="switchFinTab(this,0)">Relatórios</div>
+    <div class="tab active" data-fin-tab="1" onclick="switchFinTab(this,1)">Prestadores</div>
+    <div class="tab" data-fin-tab="0" onclick="switchFinTab(this,0)">Relatórios</div>
   </div>
   <!-- Tab 0: Financeiro (começa escondida) -->
   <div id="fin-tab-0" style="display:none">
@@ -1560,6 +1560,7 @@ function logAccess(acao,modulo){
 }
 function changeUser(){
   const sel=document.getElementById('current-user-sel');
+  if(!sel)return;
   const uid=sel.value;
   DB.currentUser=DB.users.find(u=>u.id===uid)||null;
   if(DB.currentUser){
@@ -1575,14 +1576,19 @@ function changeUser(){
 function renderUsers(){
   const list=document.getElementById('user-list');
   const sel=document.getElementById('current-user-sel');
-  list.innerHTML=DB.users.map(u=>`
+  const users=Array.isArray(DB.users)?DB.users:[];
+  if(list)list.innerHTML=users.map(u=>`
     <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--s2);border-radius:var(--rs)">
       <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">${u.nome.split(' ').map(w=>w[0]).join('').substr(0,2).toUpperCase()}</div>
       <div style="flex:1"><div style="font-size:13px;font-weight:500">${u.nome}</div><div style="font-size:11.5px;color:var(--t3)">${u.cargo}</div></div>
       <div class="btn-icon" onclick="removeUser('${u.id}')" title="Remover" style="color:var(--red);font-size:12px">✕</div>
     </div>
   `).join('');
-  sel.innerHTML='<option value="">— Selecione seu perfil —</option>'+DB.users.map(u=>`<option value="${u.id}">${u.nome} — ${u.cargo}</option>`).join('');
+  if(sel){
+    const selected=sel.value;
+    sel.innerHTML='<option value="">— Selecione seu perfil —</option>'+users.map(u=>`<option value="${u.id}">${u.nome} — ${u.cargo}</option>`).join('');
+    if(selected&&users.some(u=>u.id===selected))sel.value=selected;
+  }
 }
 function saveUser(){
   const nome=document.getElementById('nu-nome').value.trim();
@@ -3398,18 +3404,22 @@ function exportCondPDF(id){
 function switchFinTab(el,idx){
   const finView=document.getElementById('view-financeiro');
   if(!finView)return;
-  finView.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('fin-tab-0').style.display=idx===0?'block':'none';
-  document.getElementById('fin-tab-1').style.display=idx===1?'block':'none';
+  const tabs=Array.from(finView.querySelectorAll('.tabs .tab'));
+  const tabEl=el||tabs.find(t=>t.dataset.finTab===String(idx));
+  tabs.forEach(t=>t.classList.toggle('active',t===tabEl));
+  const relTab=document.getElementById('fin-tab-0');
+  const prestTab=document.getElementById('fin-tab-1');
+  if(relTab)relTab.style.display=idx===0?'block':'none';
+  if(prestTab)prestTab.style.display=idx===1?'block':'none';
   if(idx===1)renderPrestCards();
   if(idx===0)fillRelSelects();
 }
 function restoreFinTab(idx){
   const finView=document.getElementById('view-financeiro');
   if(!finView)return;
-  const tabs=finView.querySelectorAll('.tabs .tab');
-  if(tabs[idx])switchFinTab(tabs[idx],idx);
+  const tabs=Array.from(finView.querySelectorAll('.tabs .tab'));
+  const tab=tabs.find(t=>t.dataset.finTab===String(idx));
+  switchFinTab(tab,idx);
 }
 function backFromPrestDetail(){
   DB._restoreFinTab=1;
