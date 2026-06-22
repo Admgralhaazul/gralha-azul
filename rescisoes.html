@@ -106,6 +106,10 @@ body{background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-directi
 #page-dash .card.c-pan .card-n{color:var(--tx)!important}
 #page-dash .card.c-g .card-n{color:var(--g)!important}
 #page-dash .card.c-g:before{background:var(--g)!important}
+.loft-sel{font-size:11px;padding:4px 8px;border-radius:4px;border:1px solid var(--bd);font-weight:600;min-width:118px;cursor:pointer}
+.loft-sel-loft-ok{background:#DCFCE7!important;color:#166534!important;border-color:#86EFAC!important}
+.loft-sel-loft-no{background:#FEE2E2!important;color:#991B1B!important;border-color:#FECACA!important}
+.mod-gest #sidebar .sb-module-row .ga-module-link,.mod-resc #sidebar .sb-module-row .ga-module-link{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;flex:1!important}
 .card-n{font-size:24px;font-weight:800}
 .card-l{font-size:10px;color:var(--tl);margin-top:1px}
 .tw{background:#fff;border-radius:8px;border:1px solid #e4e8ed;overflow:hidden}
@@ -296,6 +300,7 @@ td.ora{color:var(--o);font-weight:600}
     <div class="card c-pan" onclick="go(&#39;sanepar&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg> Sanepar Pend.</div></div>
     <div class="card c-pan" onclick="go(&#39;marketing&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Mkt Pend.</div></div>
     <div class="card c-pan" onclick="go(&#39;rescisoes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3M14 9l2 2"/></svg> Chaves Pendentes</div></div>
+    <div class="card c-pan" onclick="go(&#39;inadimplentes&#39;,null)"><div class="card-n">0</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M10.3 4l-7 12A2 2 0 0 0 5 19h14a2 2 0 0 0 1.7-3l-7-12a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> Inadimp./Atrasos</div></div>
   </div>
       <div style="margin-bottom:14px;display:flex;align-items:center;gap:10px">
         <button class="btn" style="background:#1e3a5f;color:#fff;padding:10px 22px;font-size:13px;font-weight:600;border-radius:6px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(30,58,95,.18);cursor:pointer" onclick="gerarRelatorioPanorama()">Gerar Relatório
@@ -2442,6 +2447,8 @@ function loftSinSelect(id,val){
   if(currentUser)logEvent('alteracao',`${currentUser.nome} ${l.codigo}, em Casos Loft sinistro → "${val}"`);
   save();rLoft();
 }
+function loftCanSelClass(v){return v==='Sim'?'loft-sel-loft-ok':'loft-sel-loft-no';}
+function loftSinSelClass(v){return(v==='Não'||v==='Não precisou')?'loft-sel-loft-ok':(v==='Sim'?'loft-sel-loft-no':'');}
 function loftCanTag(v){
   if(v==='Sim')return cellTag('Cancelado','ok-loft');
   return cellTag('Sem cancelamento','no');
@@ -2470,10 +2477,10 @@ function saveLoftObs(id,val){
   save();rLoft();
 }
 function loftSinTag(v){
-  if(v==='Sim')return cellTag('Sim','warn');
+  if(v==='Sim')return cellTag('Sim','no');
   if(v==='Não precisou')return cellTag('Não precisou','ok-loft');
-  if(v==='Não')return cellTag('Não','no');
-  return cellTag('Não','no');
+  if(v==='Não')return cellTag('Não','ok-loft');
+  return cellTag('Não','ok-loft');
 }
 function loftSinCell(v){
   return `<td>${loftSinTag(v)}</td>`;
@@ -2607,6 +2614,7 @@ function rDash(){
   const loftConcl2=D().loftConcl||{};
   const cartasConcl2=D().cartasConcl||{};
   const cartasP=d.cartas.filter(c=>c.vencimento&&!(cartasConcl2||{})[c.id]).length;
+  const atrasos=getAtrasados();
   document.getElementById('dash-cards').innerHTML=`
     <div class="card c-pan" onclick="go('rescisoes',null)"><div class="card-n">${tot}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg> Rescisões</div></div>
     <div class="card c-g" onclick="go('rescisoes',null)"><div class="card-n">${concl}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Concluídas</div></div>
@@ -2616,6 +2624,7 @@ function rDash(){
     <div class="card c-pan" onclick="go('sanepar',null)"><div class="card-n">${sanP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z"/></svg> Sanepar Pend.</div></div>
     <div class="card c-pan" onclick="go('marketing',null)"><div class="card-n">${mktP}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Mkt Pend.</div></div>
     <div class="card c-pan" onclick="go('rescisoes',null)"><div class="card-n">${chvPend}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3M14 9l2 2"/></svg> Chaves Pendentes</div></div>
+    <div class="card c-pan" onclick="go('inadimplentes',null)"><div class="card-n">${atrasos}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M10.3 4l-7 12A2 2 0 0 0 5 19h14a2 2 0 0 0 1.7-3l-7-12a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> Inadimp./Atrasos</div></div>
   `;
   // alertas
   const al=d.rescisoes.filter(r=>r.status==='Inadimplente'||getP(r.id).pct<30).slice(0,8);
@@ -2816,7 +2825,7 @@ function salRescEdit(id){
   // Sincroniza TUDO antes de salvar
   syncFromResc(r);
   if(r.pgto==='cartao')syncCartaoFromResc(r);
-  save();closeM('m-resc');resetRescModal();
+  save();closeM('m-resc');resetRescModal();editId=null;
   renderAll();if(typeof rCart==='function')rCart();updHeader();
 }
 function buildRescObj(){
@@ -4651,8 +4660,8 @@ function rLoft(){
     return`<tr class="${concl?'rg':''}">
       <td><b style="color:var(--p);${concl?'text-decoration:line-through':''}">${l.codigo}</b></td>
       <td>${l.inquilino||'-'}</td>
-      <td><select class="loft-sel" onchange="loftCanSelect('${l.id}',this.value)"><option value="Não"${can==='Não'?' selected':''}>Sem cancelamento</option><option value="Sim"${can==='Sim'?' selected':''}>Cancelado</option></select></td>
-      <td><select class="loft-sel" onchange="loftSinSelect('${l.id}',this.value)"><option${sin==='Sim'?' selected':''}>Sim</option><option${sin==='Não'?' selected':''}>Não</option><option${sin==='Não precisou'?' selected':''}>Não precisou</option></select></td>
+      <td><select class="loft-sel ${loftCanSelClass(can)}" onchange="loftCanSelect('${l.id}',this.value)"><option value="Não"${can==='Não'?' selected':''}>Sem cancelamento</option><option value="Sim"${can==='Sim'?' selected':''}>Cancelado</option></select></td>
+      <td><select class="loft-sel ${loftSinSelClass(sin)}" onchange="loftSinSelect('${l.id}',this.value)"><option${sin==='Sim'?' selected':''}>Sim</option><option${sin==='Não'?' selected':''}>Não</option><option${sin==='Não precisou'?' selected':''}>Não precisou</option></select></td>
       <td>${loftObsCell(l)}</td>
       <td style="font-size:11px;white-space:nowrap">${loftVisDate(l.codigo)}</td>
       <td><div class="abts">

@@ -341,6 +341,7 @@ body{visibility:visible!important}
 #sidebar .sb-module-switch{margin:0 10px 10px!important;padding:0!important}
 #sidebar .sb-module-lbl{font-size:9px!important;letter-spacing:.12em!important;text-transform:uppercase!important;opacity:.55!important;margin-bottom:5px!important}
 #sidebar .sb-module-row{display:flex!important;border-radius:5px!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important}
+#sidebar .sb-module-row .ga-module-link{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;flex:1!important}
 #sidebar .sb-sec{font-size:9.5px!important}
 </style>
 </head>
@@ -604,7 +605,6 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mo-an">0</div></div>
-    <div class="stat bl"><div class="stat-lbl">Aberto</div><div class="stat-val" id="mo-ab">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
   </div>
@@ -623,7 +623,6 @@ body{visibility:visible!important}
   </div>
   <div class="status-multi" id="mo-status-pills" style="margin-bottom:14px">
     <div class="status-pill" onclick="toggleStatus(this,&#39;an&#39;,&#39;ocup&#39;)" data-s="Em andamento">● Em andamento</div>
-    <div class="status-pill" onclick="toggleStatus(this,&#39;ab&#39;,&#39;ocup&#39;)" data-s="Aberto">● Aberto</div>
     <div class="status-pill" onclick="toggleStatus(this,&#39;ok&#39;,&#39;ocup&#39;)" data-s="Concluído">● Concluído</div>
     <div class="status-pill" onclick="toggleStatus(this,&#39;ca&#39;,&#39;ocup&#39;)" data-s="Cancelado">● Cancelado</div>
   </div>
@@ -804,7 +803,7 @@ body{visibility:visible!important}
 
 <!-- DETALHE PRESTADOR -->
 <div id="view-prest-detail" class="view">
-  <div class="back-btn" onclick="nav(&#39;prestadores&#39;)">← Voltar para Prestadores</div>
+  <div class="back-btn" onclick="backFromPrestDetail()">← Voltar para Prestadores</div>
   <div id="prest-detail-body"></div>
 </div>
 
@@ -1455,23 +1454,24 @@ const fmtR = v=>v?'R$ '+parseFloat(v).toFixed(2).replace('.',','):'—';
 const TITLES={dashboard:'Dashboard','manut-home':'Manutenções','manut-imob':'Manutenções — Imobiliária','manut-cond':'Manutenções Condomínios','manut-ocup':'Imóveis Ocupados Geral','manut-ager':'Manut. Assistente','manut-agenda':'Agenda — Condomínios e Imobiliária',processos:'Processos Administrativos',condominios:'Condomínios','cond-detail':'Condomínio',prestadores:'Prestadores','prest-detail':'Prestador',agenda:'Agenda Geral',financeiro:'Financeiro',relatorios:'Relatórios',checklist:'Checklist Operacional',acesso:'Configurações',config:'Configurações'};
 
 function nav(id){
+  if(id==='prestadores'){DB._restoreFinTab=1;id='financeiro';}
+  if(id==='relatorios'){DB._restoreFinTab=0;id='financeiro';}
+  const navHighlight=id==='prest-detail'?'financeiro':id;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   const el=document.getElementById('view-'+id);
   if(el)el.classList.add('active');
-  document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))n.classList.add('active')});
-  document.getElementById('tb-title').textContent=TITLES[id]||'Gestão Administrativa';
+  document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+navHighlight+"'"))n.classList.add('active')});
+  document.getElementById('tb-title').textContent=TITLES[id]||TITLES[navHighlight]||'Gestão Administrativa';
   if(id==='condominios')renderConds();
-  if(id==='prestadores')renderPrestCards();
+  if(id==='financeiro'){fillPrestSelects();renderPrestCards();fillRelSelects();if(DB._restoreFinTab!==undefined){restoreFinTab(DB._restoreFinTab);delete DB._restoreFinTab;}}
   if(id==='acesso'){renderUsers();renderLog();renderColabs();renderPrestListAcesso();renderAnos();}
   if(id==='dashboard')updateDashboard();
-  if(id==='financeiro'){fillPrestSelects();renderPrestCards();fillRelSelects();}
   if(id==='processos'){renderTasks();renderNotifs();renderProcTab();}
-  if(id==='manut-home'){nav('dashboard');return;} // redirecionado
+  if(id==='manut-home'){nav('dashboard');return;}
   if(id==='manut-agenda')renderManutAgenda();
   if(id==='checklist')renderGlobalChk();
   if(id==='config')updateConfigStats();
-  if(id==='relatorios'){nav('financeiro');const tbs=document.querySelectorAll('#view-financeiro .tabs .tab');if(tbs.length>=2)switchFinTab(tbs[1].textContent.includes('Relat')?tbs[1]:tbs[0],0);return;}
   window.scrollTo(0,0);
   logAccess('Navegou para '+(TITLES[id]||id));
 }
@@ -1484,8 +1484,9 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 function openM(id,tipo){
   if(tipo&&id==='m-new-manut'){
     document.getElementById('nm-tipo').value=tipo;
-    document.getElementById('manut-modal-title').textContent=tipo==='imob'?'Novo Chamado — Imobiliária':tipo==='cond'?'Novo Chamado — Condomínio':tipo==='proc'?'Processo em Andamento':'Novo Chamado';
+    document.getElementById('manut-modal-title').textContent=tipo==='imob'?'Novo Chamado — Imobiliária':tipo==='cond'?'Novo Chamado — Condomínio':tipo==='ocup'?'Novo Chamado — Imóveis Ocupados':tipo==='proc'?'Processo em Andamento':'Novo Chamado';
     document.getElementById('nm-dt-sol').value=today();
+    setManutStatusOptions(tipo,'nm-status');
   }
   if(id==='m-new-task'){
     document.getElementById('nt-titulo').value='';
@@ -1508,6 +1509,19 @@ function openM(id,tipo){
   if(el)el.classList.add('open');
 }
 function closeM(id){document.getElementById(id).classList.remove('open')}
+function persistGestao(){if(window.gaCloudSave)window.gaCloudSave();}
+function finishEditModal(modalId,afterSave){
+  closeM(modalId);
+  DB.editingId=null;
+  DB.editingManutTipo=null;
+  if(typeof afterSave==='function')afterSave();
+  persistGestao();
+}
+function setManutStatusOptions(tipo,selectId){
+  const sel=document.getElementById(selectId);if(!sel)return;
+  Array.from(sel.options).forEach(o=>{if(o.value==='Aberto')o.hidden=tipo==='ocup';});
+  if(tipo==='ocup'&&(sel.value==='Aberto'||!sel.value))sel.value='Em andamento';
+}
 document.querySelectorAll('.moverlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
 
 // ─── TABS ────────────────────────────────────────
@@ -1627,13 +1641,16 @@ function saveManut(){
   if(!cond.trim()){toast('Preencha o contrato / condomínio!');return;}
   const val=parseFloat(document.getElementById('nm-val').value)||0;
   const mat=parseFloat(document.getElementById('nm-mat').value)||0;
-  const m={id:ID(),tipo,status:document.getElementById('nm-status').value,dtSol:document.getElementById('nm-dt-sol').value,dtPrev:document.getElementById('nm-dt-prev').value,resp:document.getElementById('nm-resp').value,cond:cond.trim(),prest:document.getElementById('nm-prest').value,desc:document.getElementById('nm-desc').value,dtConc:document.getElementById('nm-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:(document.getElementById('nm-loc-deb')||{}).value||'',contas:(document.getElementById('nm-contas')||{}).value||'',recibo:document.getElementById('nm-recibo').value,obs:document.getElementById('nm-obs').value};
+  let status=document.getElementById('nm-status').value;
+  if(tipo==='ocup'&&status==='Aberto')status='Em andamento';
+  const m={id:ID(),tipo,status,dtSol:document.getElementById('nm-dt-sol').value,dtPrev:document.getElementById('nm-dt-prev').value,resp:document.getElementById('nm-resp').value,cond:cond.trim(),prest:document.getElementById('nm-prest').value,desc:document.getElementById('nm-desc').value,dtConc:document.getElementById('nm-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:(document.getElementById('nm-loc-deb')||{}).value||'',contas:(document.getElementById('nm-contas')||{}).value||'',recibo:document.getElementById('nm-recibo').value,obs:document.getElementById('nm-obs').value};
   if(!DB.manutencoes[tipo])DB.manutencoes[tipo]=[];
   DB.manutencoes[tipo].unshift(m);
-  closeM('m-new-manut');
+  finishEditModal('m-new-manut',()=>{
   ['nm-desc','nm-cond','nm-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   ['nm-val','nm-mat','nm-rec-kenlo'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   renderManut(tipo);updateDashboard();renderFin();toast('Chamado cadastrado!');logAccess('Criou chamado '+m.tipo,'Manutenções');
+  });
 }
 function filterManut(tipo){
   if(tipo==='proc'){renderProcTab3();return;}
@@ -1669,6 +1686,7 @@ function toggleStatus(el,cls,tipo){
   filterManut(tipo);
 }
 function renderManutRows(arr,tipo){
+  if(tipo==='ocup')(DB.manutencoes.ocup||[]).forEach(m=>{if(m.status==='Aberto')m.status='Em andamento';});
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
   const tbody=document.getElementById(pf+'-tbody');
   const emp=document.getElementById(pf+'-empty');
@@ -1699,7 +1717,7 @@ function renderManutRows(arr,tipo){
   });
   if(!arr.length){if(tbody)tbody.innerHTML='';if(emp)emp.style.display='flex';return}
   if(emp)emp.style.display='none';
-  const reciboCell=m=>m.recibo==='Sim'?'<span style="color:var(--green);font-weight:500;font-size:12px">Sim</span>':'<span style="color:var(--t3);font-size:12px">Não</span>';
+  const reciboCell=m=>m.recibo==='Sim'?'<span style="color:var(--t1);font-size:12px">Sim</span>':'<span style="color:var(--t3);font-size:12px">Não</span>';
   const actionsCell=(m,t)=>`<td style="text-align:right"><div class="td-actions" style="justify-content:flex-end">
           ${m.status!=='Concluído'&&m.status!=='Cancelado'?`<div class="btn-icon" onclick="concluirManutDireto('${m.id}','${t}')" title="Concluir" style="color:var(--green);font-weight:700;font-size:15px">✓</div>`:''}
           <div class="btn-icon btn-act-edit" onclick="editManut('${m.id}','${t}')" title="Editar">Editar</div>
@@ -1753,8 +1771,10 @@ function renderManutRows(arr,tipo){
 function updateManutStats(tipo){
   const all=DB.manutencoes[tipo];
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
-  document.getElementById(pf+'-ab')&&(document.getElementById(pf+'-ab').textContent=all.filter(m=>m.status==='Aberto').length);
-  document.getElementById(pf+'-an')&&(document.getElementById(pf+'-an').textContent=all.filter(m=>m.status==='Em andamento').length);
+  const abEl=document.getElementById(pf+'-ab');
+  if(abEl)abEl.textContent=all.filter(m=>m.status==='Aberto').length;
+  const anEl=document.getElementById(pf+'-an');
+  if(anEl)anEl.textContent=all.filter(m=>m.status==='Em andamento'||(tipo==='ocup'&&m.status==='Aberto')).length;
   document.getElementById(pf+'-ok')&&(document.getElementById(pf+'-ok').textContent=all.filter(m=>m.status==='Concluído').length);
   document.getElementById(pf+'-at')&&(document.getElementById(pf+'-at').textContent=all.filter(m=>m.status==='Atrasado').length);
   document.getElementById(pf+'-ca')&&(document.getElementById(pf+'-ca').textContent=all.filter(m=>m.status==='Cancelado').length);
@@ -1765,7 +1785,9 @@ function updateManutStats(tipo){
   document.getElementById(pf+'-rec')&&(document.getElementById(pf+'-rec').textContent='R$'+rec.toFixed(0));
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
   const cnt=document.getElementById(cntMap[tipo]||'mi-cnt');
-  if(cnt)cnt.textContent=all.length+' chamados';
+  const okCnt=all.filter(m=>m.status==='Concluído').length;
+  const pendCnt=all.filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length;
+  if(cnt)cnt.textContent=(okCnt+pendCnt)+' chamado'+(okCnt+pendCnt!==1?'s':'');
 }
 function editManut(id,tipo){
   const m=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup,...(DB.manutencoes.proc||[]),...(DB.manutencoes.ager||[])].find(x=>x.id===id);
@@ -1789,22 +1811,25 @@ function editManut(id,tipo){
   document.getElementById('em-contas').value=m.contas||'';
   document.getElementById('em-recibo').value=m.recibo||'Não';
   document.getElementById('em-obs').value=m.obs||'';
+  setManutStatusOptions(tipo||m.tipo,'em-status');
   openM('m-edit-manut');
 }
 function updateManut(){
   const tipo=DB.editingManutTipo;
   const arr=DB.manutencoes[tipo];
-  const idx=arr.findIndex(m=>m.id===DB.editingId);if(idx<0)return;
+  const idx=arr.findIndex(m=>m.id===DB.editingId);if(idx<0){toast('Registro não encontrado!');return;}
   const val=parseFloat(document.getElementById('em-val').value)||0;
   const mat=parseFloat(document.getElementById('em-mat').value)||0;
-  arr[idx]={...arr[idx],status:document.getElementById('em-status').value,dtSol:document.getElementById('em-dt-sol').value,dtPrev:document.getElementById('em-dt-prev').value,resp:document.getElementById('em-resp').value,cond:document.getElementById('em-cond').value,prest:document.getElementById('em-prest').value,desc:document.getElementById('em-desc').value,dtConc:document.getElementById('em-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:document.getElementById('em-loc-deb').value,contas:document.getElementById('em-contas').value,recibo:document.getElementById('em-recibo').value,obs:document.getElementById('em-obs').value};
-  closeM('m-edit-manut');renderManut(tipo);updateDashboard();renderFin();toast('Chamado atualizado!');
+  let status=document.getElementById('em-status').value;
+  if(tipo==='ocup'&&status==='Aberto')status='Em andamento';
+  arr[idx]={...arr[idx],status,dtSol:document.getElementById('em-dt-sol').value,dtPrev:document.getElementById('em-dt-prev').value,resp:document.getElementById('em-resp').value,cond:document.getElementById('em-cond').value,prest:document.getElementById('em-prest').value,desc:document.getElementById('em-desc').value,dtConc:document.getElementById('em-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:document.getElementById('em-loc-deb').value,contas:document.getElementById('em-contas').value,recibo:document.getElementById('em-recibo').value,obs:document.getElementById('em-obs').value};
+  finishEditModal('m-edit-manut',()=>{renderManut(tipo);updateDashboard();renderFin();toast('Chamado atualizado!');});
 }
 function deleteManut(){
   if(!confirm('Excluir este chamado?'))return;
   const tipo=DB.editingManutTipo;
   DB.manutencoes[tipo]=DB.manutencoes[tipo].filter(m=>m.id!==DB.editingId);
-  closeM('m-edit-manut');renderManut(tipo);updateDashboard();renderFin();toast('Chamado excluído!');
+  finishEditModal('m-edit-manut',()=>{renderManut(tipo);updateDashboard();renderFin();toast('Chamado excluído!');});
 }
 
 // ─── TASKS ──────────────────────────────────────
@@ -1855,14 +1880,14 @@ function editTask(id){
   openM('m-edit-task');
 }
 function updateTask(){
-  const idx=DB.tasks.findIndex(t=>t.id===DB.editingId);if(idx<0)return;
+  const idx=DB.tasks.findIndex(t=>t.id===DB.editingId);if(idx<0){toast('Tarefa não encontrada!');return;}
   DB.tasks[idx]={...DB.tasks[idx],titulo:document.getElementById('et-titulo').value,resp:document.getElementById('et-resp').value,prio:document.getElementById('et-prio').value,dtIni:document.getElementById('et-dt-ini').value,dtFim:document.getElementById('et-dt-fim').value,status:document.getElementById('et-status').value,obs:document.getElementById('et-obs').value};
-  closeM('m-edit-task');renderTasks();updateDashboard();toast('Tarefa atualizada!');
+  finishEditModal('m-edit-task',()=>{renderTasks();updateDashboard();toast('Tarefa atualizada!');});
 }
 function deleteTask(){
   if(!confirm('Excluir esta tarefa?'))return;
   DB.tasks=DB.tasks.filter(t=>t.id!==DB.editingId);
-  closeM('m-edit-task');renderTasks();updateDashboard();toast('Tarefa excluída!');
+  finishEditModal('m-edit-task',()=>{renderTasks();updateDashboard();toast('Tarefa excluída!');});
 }
 function renderProcHist(){
   let histTasks=DB.tasks.filter(t=>t.status==='Concluída');
@@ -2518,6 +2543,13 @@ function renderFin(){
 }
 
 // ─── DASHBOARD UPDATE ────────────────────────────
+function _fmtChamados(n){return n+' chamado'+(n!==1?'s':'');}
+function _dashModuloStats(arr,dateField){
+  const src=arr||[];
+  const ok=_filterByDash(src,dateField||'dtSol').filter(m=>m.status==='Concluído').length;
+  const pend=src.filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length;
+  return {ok,pend,total:ok+pend};
+}
 function updateDashboard(){
   try {
   // Imobiliária ativos
@@ -2555,13 +2587,12 @@ function updateDashboard(){
   const dsRecSub=document.getElementById('ds-rec-sub');if(dsRecSub)dsRecSub.textContent=imobM.filter(m=>(m.dtConc||m.dtSol||'').startsWith(mesStr)).length+' serviços este mês';
   // Prestadores
   const dsprest=document.getElementById('ds-prest');if(dsprest)dsprest.textContent=DB.prestadores.length;
-  // Panorama por módulo
-  const _fd=(arr,f)=>typeof _filterByDash==='function'?_filterByDash(arr,f):arr;
+  // Panorama por módulo (realizadas + pendentes; cancelados não entram no total)
   const _m={
-    imob:{ok:_fd(DB.manutencoes.imob||[],'dtSol').filter(m=>m.status==='Concluído').length,pend:(DB.manutencoes.imob||[]).filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length},
-    cond:{ok:_fd(DB.manutencoes.cond||[],'dtSol').filter(m=>m.status==='Concluído').length,pend:(DB.manutencoes.cond||[]).filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length},
-    ocup:{ok:_fd(DB.manutencoes.ocup||[],'dtSol').filter(m=>m.status==='Concluído').length,pend:(DB.manutencoes.ocup||[]).filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length},
-    ager:{ok:_fd(DB.manutencoes.ager||[],'dtSol').filter(m=>m.status==='Concluído').length,pend:(DB.manutencoes.ager||[]).filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length},
+    imob:_dashModuloStats(DB.manutencoes.imob,'dtSol'),
+    cond:_dashModuloStats(DB.manutencoes.cond,'dtSol'),
+    ocup:_dashModuloStats(DB.manutencoes.ocup,'dtSol'),
+    ager:_dashModuloStats(DB.manutencoes.ager,'dtSol'),
     proc:{ok:DB.tasks.filter(t=>t.status==='Concluída').length,pend:DB.tasks.filter(t=>t.status!=='Concluída').length}
   };
   const setM=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
@@ -2793,12 +2824,12 @@ function updateChkVisit(){
   v.condId=condId;
   v.condNome=(CONDOMINIOS.find(c=>c.id===condId)||{}).nome||v.condNome;
   v.checks=getChkChecks('echk-items');
-  closeM('m-edit-chk');renderGlobalChk();toast('Visita atualizada!');
+  finishEditModal('m-edit-chk',()=>{renderGlobalChk();toast('Visita atualizada!');});
 }
 function deleteChkVisit(id){
   if(!confirm('Excluir esta visita?'))return;
   DB.checklists=DB.checklists.filter(x=>x.id!==(id||DB.editingId));
-  closeM('m-edit-chk');renderGlobalChk();updateDashboard();toast('Visita excluída!');
+  finishEditModal('m-edit-chk',()=>{renderGlobalChk();updateDashboard();toast('Visita excluída!');});
 }
 
 // ─── RELATÓRIO SEMANAL ─────────────────────────────
@@ -3030,73 +3061,6 @@ function gaRelAllFields(item){
     .map(([k,v])=>`<div class="rel-field"><b>${gaRelEscape(k)}</b><span>${gaRelEscape(gaRelValue(v))}</span></div>`)
     .join('');
 }
-function gerarRel(){
-  const tipo=document.getElementById('rel-tipo')?.value||'manut';
-  const ini=document.getElementById('rel-ini')?.value||'';
-  const fim=document.getElementById('rel-fim')?.value||'';
-  const ano=document.getElementById('rel-ano')?.value||'';
-  const mes=document.getElementById('rel-mes')?.value||'';
-  const cond=document.getElementById('rel-cond')?.value||'';
-  const prest=document.getElementById('rel-prest')?.value||'';
-  const status=document.getElementById('rel-status')?.value||'';
-  const allM=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup,...(DB.manutencoes.proc||[]),...(DB.manutencoes.ager||[])];
-  let data=allM;
-  if(ini)data=data.filter(m=>(m.dtSol||'')>=ini);
-  if(fim)data=data.filter(m=>(m.dtSol||'')<=fim);
-  if(ano)data=data.filter(m=>(m.dtSol||'').startsWith(ano));
-  if(mes)data=data.filter(m=>(m.dtSol||'').substring(5,7)===mes);
-  if(cond)data=data.filter(m=>m.cond===cond);
-  if(prest)data=data.filter(m=>m.prest===prest);
-  if(status)data=data.filter(m=>m.status===status);
-  const stats=document.getElementById('rel-result-stats');
-  const tbWrap=document.getElementById('rel-result-table-wrap');
-  const emp=document.getElementById('rel-empty');
-  const thead=document.getElementById('rel-thead');
-  const tbody=document.getElementById('rel-tbody');
-  if(!data.length&&tipo!=='chk'){
-    stats.innerHTML='';tbWrap.style.display='none';emp.style.display='flex';return;
-  }
-  emp.style.display='none';
-  if(tipo==='manut'||tipo==='cond'||tipo==='prest'||tipo==='fin'){
-    const total=data.length;
-    const conc=data.filter(m=>m.status==='Concluído').length;
-    const rec=data.reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
-    const val=data.reduce((s,m)=>s+parseFloat(m.val||0),0);
-    stats.innerHTML=`
-      <div class="stat bl"><div class="stat-lbl">Total</div><div class="stat-val">${total}</div></div>
-      <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val">${conc}</div></div>
-      <div class="stat yl"><div class="stat-lbl">Pendentes</div><div class="stat-val">${total-conc}</div></div>
-      <div class="stat cy"><div class="stat-lbl" style="color:var(--cyan)">Receita manut. imob.</div><div class="stat-val" style="font-size:20px">R$${rec.toFixed(0)}</div></div>
-      <div class="stat pu"><div class="stat-lbl">Valor Total (material)</div><div class="stat-val" style="font-size:20px">R$${val.toFixed(0)}</div></div>`;
-    tbWrap.style.display='block';
-    thead.innerHTML='<tr><th>Status</th><th>Data Solic.</th><th>Condomínio</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th style="color:var(--cyan)">Receita manut. imob.</th></tr>';
-    tbody.innerHTML=data.map(m=>`<tr>
-      <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
-      <td>${fmtDate(m.dtSol)}</td><td>${m.cond||'—'}</td><td>${m.prest||'—'}</td>
-      <td>${m.desc||'—'}</td>
-      <td style="color:var(--green)">${fmtR(m.val)}</td>
-      <td style="color:var(--cyan)">${fmtR(m.recKenlo)}</td>
-    </tr>`).join('');
-  } else if(tipo==='chk'){
-    let chks=DB.checklists||[];
-    if(ini)chks=chks.filter(v=>(v.dt||'')>=ini);
-    if(fim)chks=chks.filter(v=>(v.dt||'')<=fim);
-    if(ano)chks=chks.filter(v=>(v.dt||'').startsWith(ano));
-    if(mes)chks=chks.filter(v=>(v.dt||'').substring(5,7)===mes);
-    if(cond)chks=chks.filter(v=>v.condNome===cond);
-    if(!chks.length){stats.innerHTML='';tbWrap.style.display='none';emp.style.display='flex';return;}
-    stats.innerHTML=`
-      <div class="stat bl"><div class="stat-lbl">Visitas</div><div class="stat-val">${chks.length}</div></div>
-      <div class="stat gr"><div class="stat-lbl">Itens OK</div><div class="stat-val">${chks.reduce((s,v)=>s+v.checks.filter(Boolean).length,0)}</div></div>`;
-    tbWrap.style.display='block';
-    thead.innerHTML='<tr><th>Data</th><th>Condomínio</th><th>Responsável</th><th>Itens OK</th><th>Observações</th></tr>';
-    tbody.innerHTML=chks.map(v=>`<tr>
-      <td>${fmtDate(v.dt)}</td><td>${v.condNome}</td><td>${v.resp}</td>
-      <td><span class="bs bs-ok">${v.checks.filter(Boolean).length}/${v.checks.length}</span></td>
-      <td style="font-size:12px;color:var(--t3)">${v.obs||'—'}</td>
-    </tr>`).join('');
-  }
-}
 function imprimirRel(){window.print();}
 function exportarRelCSV(){
   const allM=[
@@ -3131,16 +3095,16 @@ function fillRelSelects(){
 
 
 function renderManutHome(){
-  const mi=document.getElementById('mi-cnt');
-  if(mi){const c=DB.manutencoes.imob.length;mi.textContent=c+' chamado'+(c!==1?'s':'');}
-  const mc=document.getElementById('mc-cnt');
-  if(mc){const c=(DB.manutencoes.cond||[]).length;mc.textContent=c+' chamado'+(c!==1?'s':'');}
-  const mo=document.getElementById('mo-cnt');
-  if(mo){const c=(DB.manutencoes.ocup||[]).length;mo.textContent=c+' chamado'+(c!==1?'s':'');}
-  const mager=document.getElementById('mager-cnt');
-  if(mager){const c=(DB.manutencoes.ager||[]).length;mager.textContent=c+' chamado'+(c!==1?'s':'');}
-  // Atualizar stats principais  
-  const allPend=[...DB.manutencoes.imob,...(DB.manutencoes.cond||[]),...(DB.manutencoes.ocup||[])].filter(m=>m.status!=='Concluído');
+  const setCnt=(id,s)=>{const el=document.getElementById(id);if(el)el.textContent=_fmtChamados(s.total);};
+  setCnt('mi-cnt',_dashModuloStats(DB.manutencoes.imob,'dtSol'));
+  setCnt('mc-cnt',_dashModuloStats(DB.manutencoes.cond,'dtSol'));
+  setCnt('mo-cnt',_dashModuloStats(DB.manutencoes.ocup,'dtSol'));
+  setCnt('mager-cnt',_dashModuloStats(DB.manutencoes.ager,'dtSol'));
+  const procOk=DB.tasks.filter(t=>t.status==='Concluída').length;
+  const procPend=DB.tasks.filter(t=>t.status!=='Concluída').length;
+  const procTot=procOk+procPend;
+  const procBadge=document.getElementById('ds-proc-badge');
+  if(procBadge)procBadge.textContent=procTot?_fmtChamados(procTot):'Acessar';
 }
 
 function reopenTask(id){
@@ -3432,22 +3396,24 @@ function exportCondPDF(id){
 
 // ─── FINANCEIRO: abas ─────────────────────────────
 function switchFinTab(el,idx){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const finView=document.getElementById('view-financeiro');
+  if(!finView)return;
+  finView.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('fin-tab-0').style.display=idx===0?'block':'none';
   document.getElementById('fin-tab-1').style.display=idx===1?'block':'none';
-  if(idx===1){renderPrestCards();}
-  if(idx===0){fillRelSelects();}
+  if(idx===1)renderPrestCards();
+  if(idx===0)fillRelSelects();
 }
-
-// ─── DASHBOARD: updateDashboard com panorama completo ──
-// (Substituindo a função existente)
-function _calcModulo(tipo){
-  const arr=DB.manutencoes[tipo]||[];
-  return {
-    ok:arr.filter(m=>m.status==='Concluído').length,
-    pend:arr.filter(m=>m.status!=='Concluído').length
-  };
+function restoreFinTab(idx){
+  const finView=document.getElementById('view-financeiro');
+  if(!finView)return;
+  const tabs=finView.querySelectorAll('.tabs .tab');
+  if(tabs[idx])switchFinTab(tabs[idx],idx);
+}
+function backFromPrestDetail(){
+  DB._restoreFinTab=1;
+  nav('financeiro');
 }
 
 // ─── RELATÓRIOS: gerarRel atualizado com multi-select ──
