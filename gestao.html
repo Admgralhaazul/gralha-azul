@@ -188,7 +188,7 @@ textarea.fc{resize:vertical;min-height:80px}
 .status-pill.sel-ab{background:#FEF9C3!important;border-color:#FDE047!important;color:#854D0E!important;font-weight:600!important}
 .status-pill.sel-an{background:#FFFBEB!important;border-color:#FDE68A!important;color:#92400E!important;font-weight:600!important}
 .status-pill.sel-ok{background:#ECFDF5!important;border-color:#86EFAC!important;color:#166534!important;font-weight:600!important}
-.status-pill.sel-ca{background:#F8FAFC!important;border-color:#CBD5E1!important;color:#64748B!important;font-weight:600!important}
+.status-pill.sel-ca{background:#CBD5E1!important;border-color:#475569!important;color:#1E293B!important;font-weight:700!important;box-shadow:inset 0 0 0 1px rgba(71,85,105,.2)!important}
 .status-pill.sel-at{background:#FFF7ED!important;border-color:#FDBA74!important;color:#C2410C!important;font-weight:600!important}
 
 /* Date range */
@@ -300,6 +300,7 @@ textarea.fc{resize:vertical;min-height:80px}
 /* ─── EMPTY ─── */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 20px;color:var(--t3);text-align:center;gap:10px}
 .empty-mark,.empty-i{width:36px;height:36px;margin:0 auto 8px;border-radius:5px;background:#F1F5F9;border:1px solid #E2E8F0}
+.empty-mark.icon-ok::after,.empty-mark.icon-check::after{background:#22C55E;border:2px solid #16A34A;width:14px;height:14px;margin-top:10px;border-radius:50%;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
 .empty-i{display:none!important}
 .empty p{font-size:13.5px;max-width:260px;line-height:1.5}
 
@@ -325,7 +326,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=31">
+<link rel="stylesheet" href="./enterprise-premium.css?v=34">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -362,9 +363,9 @@ body{visibility:visible!important}
   </div>
   <div class="sb-module-switch">
     <div class="sb-module-lbl">Módulos</div>
-    <div class="sb-module-row" style="display:grid!important;grid-template-columns:1fr 1fr!important">
-      <a class="nav ga-module-link" href="./rescisoes.html" style="display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;border-left:0!important;margin:0!important;width:100%!important">Rescisão</a>
-      <a class="nav ga-module-link active-system" href="./gestao.html" style="display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;border-left:0!important;margin:0!important;width:100%!important">Manut./Adm</a>
+    <div class="sb-module-row">
+      <a class="nav ga-module-link" href="./rescisoes.html">Rescisão</a>
+      <a class="nav ga-module-link active-system" href="./gestao.html">Manut./Adm</a>
     </div>
   </div>
   <div class="sb-nav">
@@ -489,7 +490,7 @@ body{visibility:visible!important}
   </div>
 
   <div class="filter-bar" id="mager-filter-bar">
-    <div class="search-wrap"><input type="text" id="mager-search" oninput="filterManut(&#39;ager&#39;)" placeholder="Buscar..."></div>
+    <div class="search-wrap"><input type="text" id="mager-search" oninput="debounceFilterManut(&#39;ager&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mager-ano" onchange="filterManut(&#39;ager&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
     <select class="fc" id="mager-mes" onchange="filterManut(&#39;ager&#39;)" style="width:auto;min-width:130px"><option value="">Todos meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
     <div class="date-range">
@@ -533,7 +534,7 @@ body{visibility:visible!important}
   </div>
   <!-- Status multi-select -->
   <div class="filter-bar" id="mi-filter-bar">
-    <div class="search-wrap"><input type="text" id="mi-search" oninput="filterManut(&#39;imob&#39;)" placeholder="Buscar..."></div>
+    <div class="search-wrap"><input type="text" id="mi-search" oninput="debounceFilterManut(&#39;imob&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mi-ano" onchange="filterManut(&#39;imob&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
     <select class="fc" id="mi-mes" onchange="filterManut(&#39;imob&#39;)" style="width:auto;min-width:130px"><option value="">Todos meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
     <div class="date-range">
@@ -577,7 +578,7 @@ body{visibility:visible!important}
     <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mc-rec">R$0</div></div>
   </div>
   <div class="filter-bar" id="mc-filter-bar">
-    <div class="search-wrap"><input type="text" id="mc-search" oninput="filterManut(&#39;cond&#39;)" placeholder="Buscar..."></div>
+    <div class="search-wrap"><input type="text" id="mc-search" oninput="debounceFilterManut(&#39;cond&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mc-ano" onchange="filterManut(&#39;cond&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
     <select class="fc" id="mc-mes" onchange="filterManut(&#39;cond&#39;)" style="width:auto;min-width:130px"><option value="">Todos meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
     <div class="date-range">
@@ -619,7 +620,7 @@ body{visibility:visible!important}
   </div>
 
   <div class="filter-bar" id="mo-filter-bar">
-    <div class="search-wrap"><input type="text" id="mo-search" oninput="filterManut(&#39;ocup&#39;)" placeholder="Buscar..."></div>
+    <div class="search-wrap"><input type="text" id="mo-search" oninput="debounceFilterManut(&#39;ocup&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mo-ano" onchange="filterManut(&#39;ocup&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
     <select class="fc" id="mo-mes" onchange="filterManut(&#39;ocup&#39;)" style="width:auto;min-width:130px"><option value="">Todos meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
     <div class="date-range">
@@ -1482,6 +1483,10 @@ function nav(id){
   }
   if(id==='acesso'){renderUsers();renderLog();renderColabs();renderPrestListAcesso();renderAnos();}
   if(id==='dashboard')updateDashboard();
+  if(id==='manut-imob')renderManut('imob');
+  if(id==='manut-cond')renderManut('cond');
+  if(id==='manut-ocup')renderManut('ocup');
+  if(id==='manut-ager')renderManut('ager');
   if(id==='processos'){renderTasks();renderNotifs();renderProcTab();}
   if(id==='manut-home'){nav('dashboard');return;}
   if(id==='manut-agenda')renderManutAgenda();
@@ -1670,7 +1675,49 @@ function saveManut(){
   renderManut(tipo);updateDashboard();renderFin();toast('Chamado cadastrado!');logAccess('Criou chamado '+m.tipo,'Manutenções');
   });
 }
-function filterManut(tipo){
+const MANUT_LIST_CAP=300;
+const _manutFilterTimers={};
+
+function debounceFilterManut(tipo){
+  clearTimeout(_manutFilterTimers[tipo]);
+  _manutFilterTimers[tipo]=setTimeout(()=>filterManut(tipo,true),100);
+}
+
+function getActiveGestaoView(){
+  const v=document.querySelector('.view.active');
+  return v?(v.id||'').replace('view-',''):'dashboard';
+}
+
+function activeManutTipo(){
+  const map={'manut-imob':'imob','manut-cond':'cond','manut-ocup':'ocup','manut-ager':'ager'};
+  return map[getActiveGestaoView()]||null;
+}
+
+function updateAllManutStats(){
+  ['imob','cond','ocup','ager'].forEach(updateManutStats);
+}
+
+function sortManutRows(arr,tipo){
+  const hoje=new Date();hoje.setHours(0,0,0,0);
+  const prioridade={Aberto:0,'Em andamento':1,Atrasado:2,'Concluído':3,Cancelado:4};
+  return arr.map(m=>{
+    if(m.status==='Concluído')return {...m,_prio:3,_iminente:false,_dias:999};
+    let _iminente=false,_dias=999;
+    if(m.dtPrev){
+      const dt=new Date(m.dtPrev);
+      _dias=Math.ceil((dt-hoje)/86400000);
+      if(_dias<=14)_iminente=true;
+    }
+    const _prio=_iminente?-1:(prioridade[m.status]??2);
+    return {...m,_prio,_iminente,_dias,_hoje:_dias===0};
+  }).sort((a,b)=>{
+    if(a._prio!==b._prio)return a._prio-b._prio;
+    if(a.status==='Concluído')return (b.dtConc||b.dtSol||'').localeCompare(a.dtConc||a.dtSol||'');
+    return (a.dtSol||'').localeCompare(b.dtSol||'');
+  });
+}
+
+function filterManut(tipo,immediate){
   if(tipo==='proc'){renderProcTab3();return;}
   const pfx=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
   const q=(document.getElementById(pfx+'-search')?.value||'').toLowerCase();
@@ -1708,32 +1755,11 @@ function renderManutRows(arr,tipo){
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
   const tbody=document.getElementById(pf+'-tbody');
   const emp=document.getElementById(pf+'-empty');
-  // Marcar iminentes (dtPrev ≤ 14 dias, status != Concluído)
-  const hoje=new Date();hoje.setHours(0,0,0,0);
-  arr=arr.map(m=>{
-    if(m.status==='Concluído')return m;
-    if(m.dtPrev){
-      const dt=new Date(m.dtPrev);
-      const diff=Math.ceil((dt-hoje)/(1000*60*60*24));
-      if(diff<=14)return {...m,_iminente:true,_dias:diff,_hoje:(diff===0)};
-    }
-    return m;
-  });
-  // Iminentes sobem para o topo (dentro dos pendentes)
-  arr=[...arr.filter(m=>m._iminente),...arr.filter(m=>!m._iminente&&m.status!=='Concluído'&&m.status!=='Cancelado'),...arr.filter(m=>m.status==='Concluído'),...arr.filter(m=>m.status==='Cancelado')];
-  // Ordenar: pendentes primeiro (pela data de solicitação), concluídos depois
-  const prioridade={Aberto:0,'Em andamento':1,Atrasado:2,'Concluído':3,Cancelado:4};
-  arr=[...arr].sort((a,b)=>{
-    const pa=prioridade[a.status]??2, pb=prioridade[b.status]??2;
-    if(pa!==pb)return pa-pb;
-    // concluídos: mais recentes primeiro por dtConc
-    if(a.status==='Concluído'){
-      return (b.dtConc||b.dtSol||'').localeCompare(a.dtConc||a.dtSol||'');
-    }
-    // pendentes: mais antigos primeiro (dtSol asc)
-    return (a.dtSol||'').localeCompare(b.dtSol||'');
-  });
-  if(!arr.length){if(tbody)tbody.innerHTML='';if(emp)emp.style.display='flex';return}
+  arr=sortManutRows(arr,tipo);
+  const total=arr.length;
+  const capped=total>MANUT_LIST_CAP;
+  if(capped)arr=arr.slice(0,MANUT_LIST_CAP);
+  if(!total){if(tbody)tbody.innerHTML='';if(emp)emp.style.display='flex';return}
   if(emp)emp.style.display='none';
   const reciboCell=m=>m.recibo==='Sim'?'<span style="color:var(--t1);font-size:12px">Sim</span>':'<span style="color:var(--t3);font-size:12px">Não</span>';
   const actionsCell=(m,t)=>`<td style="text-align:right"><div class="td-actions" style="justify-content:flex-end">
@@ -1785,28 +1811,31 @@ function renderManutRows(arr,tipo){
       <td style="color:var(--cyan);font-weight:600">${fmtR(m.recKenlo)}</td>
       <td>${reciboCell(m)}</td>
       <td class="td-obs">${m.obs||'—'}</td>
-      ${actionsCell(m,tipo)}</tr>`;}).join('');
+      ${actionsCell(m,tipo)}</tr>`;}).join('')+(capped?`<tr><td colspan="13" style="text-align:center;padding:12px;font-size:12px;color:var(--t3);background:var(--s2)">Mostrando ${MANUT_LIST_CAP} de ${total} — use filtros para refinar</td></tr>`:'');
 }
 function updateManutStats(tipo){
-  const all=DB.manutencoes[tipo];
+  const all=DB.manutencoes[tipo]||[];
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
-  const abEl=document.getElementById(pf+'-ab');
-  if(abEl)abEl.textContent=all.filter(m=>m.status==='Aberto').length;
-  const anEl=document.getElementById(pf+'-an');
-  if(anEl)anEl.textContent=all.filter(m=>m.status==='Em andamento'||(tipo==='ocup'&&m.status==='Aberto')).length;
-  document.getElementById(pf+'-ok')&&(document.getElementById(pf+'-ok').textContent=all.filter(m=>m.status==='Concluído').length);
-  document.getElementById(pf+'-at')&&(document.getElementById(pf+'-at').textContent=all.filter(m=>m.status==='Atrasado').length);
-  document.getElementById(pf+'-ca')&&(document.getElementById(pf+'-ca').textContent=all.filter(m=>m.status==='Cancelado').length);
-  const pend=all.filter(m=>['Em andamento','Aberto','Atrasado'].includes(m.status)).length;
-  const pendEl=document.getElementById(pf+'-pend');
-  if(pendEl)pendEl.textContent=pend;
-  const rec=all.filter(m=>m.status==='Concluído').reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
-  document.getElementById(pf+'-rec')&&(document.getElementById(pf+'-rec').textContent='R$'+rec.toFixed(0));
+  let ab=0,an=0,ok=0,at=0,ca=0,rec=0;
+  for(const m of all){
+    if(m.status==='Aberto')ab++;
+    else if(m.status==='Em andamento'||(tipo==='ocup'&&m.status==='Aberto'))an++;
+    else if(m.status==='Concluído'){ok++;rec+=parseFloat(m.recKenlo||0);}
+    else if(m.status==='Atrasado')at++;
+    else if(m.status==='Cancelado')ca++;
+  }
+  const abEl=document.getElementById(pf+'-ab');if(abEl)abEl.textContent=ab;
+  const anEl=document.getElementById(pf+'-an');if(anEl)anEl.textContent=an;
+  const okEl=document.getElementById(pf+'-ok');if(okEl)okEl.textContent=ok;
+  const atEl=document.getElementById(pf+'-at');if(atEl)atEl.textContent=at;
+  const caEl=document.getElementById(pf+'-ca');if(caEl)caEl.textContent=ca;
+  const pend=ab+an+at;
+  const pendEl=document.getElementById(pf+'-pend');if(pendEl)pendEl.textContent=pend;
+  const recEl=document.getElementById(pf+'-rec');if(recEl)recEl.textContent='R$'+rec.toFixed(0);
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
   const cnt=document.getElementById(cntMap[tipo]||'mi-cnt');
-  const okCnt=all.filter(m=>m.status==='Concluído').length;
-  const pendCnt=all.filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length;
-  if(cnt)cnt.textContent=(okCnt+pendCnt)+' chamado'+(okCnt+pendCnt!==1?'s':'');
+  const totalCnt=ok+pend;
+  if(cnt)cnt.textContent=totalCnt+' chamado'+(totalCnt!==1?'s':'');
 }
 function editManut(id,tipo){
   const m=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup,...(DB.manutencoes.proc||[]),...(DB.manutencoes.ager||[])].find(x=>x.id===id);
@@ -3785,8 +3814,21 @@ function removeAno(a){
   renderAnos();toast('Ano removido!');
 }
 
-// ─── SEED MANUTENÇÕES (planilhas PDF) ───────────
-const MANUT_SEED_VER='20260625';
+// ─── SEED MANUTENÇÕES (desativado — cadastro manual) ───
+const MANUT_CLEAR_VER='20260621';
+
+function applyManutResetIfNeeded(){
+  if(localStorage.getItem('ga_manut_clear')===MANUT_CLEAR_VER) return false;
+  if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+  ['imob','cond','ocup','proc','ager'].forEach(k=>{ DB.manutencoes[k]=[]; });
+  localStorage.setItem('ga_manut_seed','manual');
+  return true;
+}
+function markManutResetSynced(){
+  localStorage.setItem('ga_manut_clear',MANUT_CLEAR_VER);
+}
+window.applyManutResetIfNeeded=applyManutResetIfNeeded;
+window.markManutResetSynced=markManutResetSynced;
 
 function normalizeManutRecord(m){
   if(!m||typeof m!=='object')return m;
@@ -3808,47 +3850,50 @@ function manutTotal(){
   return ['imob','cond','ocup','ager'].reduce((s,k)=>s+((DB.manutencoes[k]||[]).length),0);
 }
 
-function afterManutSeedLoaded(){
-  updateDashboard();
-  ['imob','cond','ocup','ager'].forEach(t=>renderManut(t));
-  renderManutHome();
-  renderFin();
-  if(typeof window.gaCloudSave==='function')window.gaCloudSave();
-}
-
 async function loadManutSeed(){
-  try{
-    const stored=localStorage.getItem('ga_manut_seed');
-    const needsReload=stored!==MANUT_SEED_VER||manutTotal()<100;
-    if(!needsReload)return false;
-    const r=await fetch('./gestao-manut-seed.json?v='+MANUT_SEED_VER);
-    if(!r.ok){console.warn('Manut seed HTTP',r.status);return false;}
-    const seed=await r.json();
-    if(!DB.manutencoes)DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
-    ['imob','cond','ocup','ager'].forEach(k=>{
-      if(Array.isArray(seed[k]))DB.manutencoes[k]=seed[k].map(normalizeManutRecord);
-    });
-    localStorage.setItem('ga_manut_seed',MANUT_SEED_VER);
-    console.info('Manut seed OK:',manutTotal(),'registros');
-    afterManutSeedLoaded();
-    return true;
-  }catch(e){console.warn('Manut seed:',e);return false;}
+  return false;
 }
 window.ensureManutSeed=loadManutSeed;
 
-function renderGestaoAll(){
+function hydrateGestaoFromCache(){
+  try{
+    const raw=localStorage.getItem('gestao_v5');
+    if(!raw) return false;
+    const cached=JSON.parse(raw);
+    if(!cached||typeof cached!=='object') return false;
+    Object.assign(DB,cached);
+    return true;
+  }catch(e){ return false; }
+}
+
+function renderGestaoCore(){
   fillCondSelects();
   fillChkCondSelects();
   fillPrestSelects();
   fillRelSelects();
-  renderUsers();
   updateDashboard();
-  renderManut('imob');
-  renderManut('cond');
-  renderManut('ocup');
-  renderManut('ager');
+  updateAllManutStats();
+}
+
+function renderGestaoVisible(){
+  renderGestaoCore();
+  const view=getActiveGestaoView();
+  const mt=activeManutTipo();
+  if(mt)renderManut(mt);
+  else if(view==='condominios')renderConds();
+  else if(view==='financeiro'){renderPrestCards();renderFin();}
+  else if(view==='processos'){renderTasks();renderNotifs();renderProcTab();}
+  else if(view==='checklist')renderGlobalChk();
+  else if(view==='acesso'){renderUsers();renderLog();renderColabs();renderPrestListAcesso();renderAnos();}
+  else if(view==='agenda')renderAgenda();
+}
+window.renderGestaoFast=renderGestaoVisible;
+
+function renderGestaoAll(){
+  renderGestaoCore();
+  const mt=activeManutTipo();
+  if(mt)renderManut(mt);
   renderManutHome();
-  if(document.getElementById('view-financeiro')?.classList.contains('active'))renderPrestCards();
   renderGlobalChk();
   renderColabs();
   renderFin();
@@ -3857,6 +3902,8 @@ function renderGestaoAll(){
   renderTasks();
   renderNotifs();
   renderLembretes();
+  renderUsers();
+  if(document.getElementById('view-financeiro')?.classList.contains('active'))renderPrestCards();
 }
 
 (function init(){
@@ -3866,7 +3913,25 @@ function renderGestaoAll(){
     if(ptl) ptl.textContent = fmtDate(td).substring(0,5);
     const atl = document.getElementById('ag-today-lbl');
     if(atl) atl.textContent = fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
-    loadManutSeed().finally(()=>renderGestaoAll());
+    const hadCache=hydrateGestaoFromCache();
+    const didReset=applyManutResetIfNeeded();
+    if(didReset||hadCache) renderGestaoVisible();
+    else window._gestaoPendingRender=true;
+    if(didReset) window._gestaoNeedsManutPush=true;
+    document.addEventListener('ga-cloud-ready',()=>{
+      if(window._gestaoPendingRender){
+        hydrateGestaoFromCache();
+        applyManutResetIfNeeded();
+        renderGestaoVisible();
+        window._gestaoPendingRender=false;
+      }
+    });
+    setTimeout(()=>{
+      if(window._gestaoPendingRender){
+        renderGestaoVisible();
+        window._gestaoPendingRender=false;
+      }
+    },3000);
   } catch(e) {
     console.error('Init error:', e);
   }

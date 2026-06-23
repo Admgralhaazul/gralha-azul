@@ -65,6 +65,11 @@
     return null;
   }
 
+  function cacheLocalState(state){
+    if(MODULE!=='gestao'||!state) return;
+    try{ localStorage.setItem('gestao_v5', JSON.stringify(state)); }catch(e){}
+  }
+
   function setState(next){
     if(!next) return;
     const cur = getState();
@@ -83,30 +88,19 @@
       }
       if(MODULE === 'gestao' && typeof DB !== 'undefined'){
         Object.assign(DB, next || {});
-        const refreshGestao=()=>{
-          if(typeof fillCondSelects === 'function') fillCondSelects();
-          if(typeof fillChkCondSelects === 'function') fillChkCondSelects();
-          if(typeof fillPrestSelects === 'function') fillPrestSelects();
-          if(typeof fillRelSelects === 'function') fillRelSelects();
-          if(typeof renderUsers === 'function') renderUsers();
-          if(typeof updateDashboard === 'function') updateDashboard();
-          if(typeof renderManut === 'function'){
-            renderManut('imob'); renderManut('cond'); renderManut('ocup'); renderManut('ager');
-          }
-          if(typeof renderManutHome === 'function') renderManutHome();
-          if(typeof renderPrestCards === 'function') renderPrestCards();
-          if(typeof renderGlobalChk === 'function') renderGlobalChk();
-          if(typeof renderColabs === 'function') renderColabs();
-          if(typeof renderFin === 'function') renderFin();
-          if(typeof renderAgenda === 'function') renderAgenda();
-          if(typeof renderLembretes === 'function') renderLembretes();
-          if(typeof renderTasks === 'function') renderTasks();
-          if(typeof renderProcHist === 'function') renderProcHist();
-        };
-        if(typeof window.ensureManutSeed==='function'){
-          window.ensureManutSeed().finally(refreshGestao);
-        } else {
-          refreshGestao();
+        let needsPush=false;
+        if(typeof window.applyManutResetIfNeeded==='function' && window.applyManutResetIfNeeded()){
+          needsPush=true;
+        }
+        cacheLocalState(DB);
+        if(typeof window.renderGestaoFast==='function'){
+          window.renderGestaoFast();
+        } else if(typeof updateDashboard==='function'){
+          updateDashboard();
+        }
+        if(needsPush||window._gestaoNeedsManutPush){
+          window._gestaoNeedsManutPush=false;
+          setTimeout(()=>pushState('Manutenções zeradas'),400);
         }
       }
     }finally{
@@ -153,10 +147,7 @@
     if(!ready || applyingRemote || !client) return;
     const state = getState();
     if(!state) return;
-    if(MODULE==='gestao' && typeof window.ensureManutSeed==='function'){
-      const mt=(state.manutencoes&&['imob','cond','ocup','ager'].reduce((s,k)=>s+((state.manutencoes[k]||[]).length),0))||0;
-      if(mt<100) await window.ensureManutSeed();
-    }
+    cacheLocalState(state);
     const json = JSON.stringify(state);
     if(json === lastJson) return;
     lastJson = json;
@@ -171,6 +162,11 @@
       await snapshotIfNeeded(state);
       await audit('save', reason || 'Alterou dados');
       showStatus('Nuvem sincronizada', true);
+      if(MODULE==='gestao' && typeof window.markManutResetSynced==='function'){
+        const m=getState()?.manutencoes;
+        const mt=m?['imob','cond','ocup','proc','ager'].reduce((s,k)=>s+((m[k]||[]).length),0):0;
+        if(mt===0) window.markManutResetSynced();
+      }
     }catch(e){
       showStatus('Nuvem sem conexão', false);
       console.error('Erro ao salvar na nuvem:', e);
@@ -240,7 +236,7 @@
         scheduleSave(txt ? 'Clicou/alterou: '+txt.slice(0,80) : 'Clicou/alterou item');
       }
     }, true);
-    setInterval(()=>scheduleSave('Salvamento automático'), 8000);
+    setInterval(()=>scheduleSave('Salvamento automático'), 25000);
   }
 
   function subscribeRealtime(){
@@ -261,9 +257,7 @@
       await ensureClient();
       await pullState();
       ready = true;
-      if(MODULE==='gestao' && typeof window.ensureManutSeed==='function'){
-        await window.ensureManutSeed();
-      }
+      document.dispatchEvent(new CustomEvent('ga-cloud-ready'));
       subscribeRealtime();
       watchChanges();
       addCloudTools();

@@ -115,7 +115,6 @@ body{background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-directi
 .loft-sel{font-size:11px;padding:4px 8px;border-radius:4px;border:1px solid var(--bd);font-weight:600;min-width:118px;cursor:pointer}
 .loft-sel-loft-ok{background:#DCFCE7!important;color:#166534!important;border-color:#86EFAC!important}
 .loft-sel-loft-no{background:#FEE2E2!important;color:#991B1B!important;border-color:#FECACA!important}
-.mod-gest #sidebar .sb-module-row .ga-module-link,.mod-resc .sb .sb-module-row .ga-module-link,.mod-resc #sidebar .sb-module-row .ga-module-link{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;flex:1 1 0!important}
 .card-n{font-size:24px;font-weight:800}
 .card-l{font-size:10px;color:var(--tl);margin-top:1px}
 .tw{background:#fff;border-radius:8px;border:1px solid #e4e8ed;overflow:hidden}
@@ -213,13 +212,11 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=31">
+<link rel="stylesheet" href="./enterprise-premium.css?v=34">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
 .sb{background:radial-gradient(circle at 16% 4%,rgba(145,190,228,.26),transparent 34%),linear-gradient(180deg,#2D4965 0%,#243F59 36%,#1C344C 68%,#14283D 100%)!important}
-.sb-module-row .ga-module-link{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;flex:1!important;border-left:none!important}
-.sb-module-row .ga-module-link::after{display:none!important}
 .sb-logo .sb-brand,.sb-logo .sb-tag{text-align:center!important;width:100%!important}
 .sb-module-switch .sb-module-lbl{text-align:center!important}
 </style>
@@ -245,9 +242,9 @@ td.ora{color:var(--o);font-weight:600}
   </div>
   <div class="sb-module-switch">
     <div class="sb-module-lbl">Módulos</div>
-    <div class="sb-module-row" style="display:grid!important;grid-template-columns:1fr 1fr!important">
-      <a class="nav ga-module-link active-system" href="./rescisoes.html" style="display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;border-left:0!important;margin:0!important;width:100%!important">Rescisão</a>
-      <a class="nav ga-module-link" href="./gestao.html" style="display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;border-left:0!important;margin:0!important;width:100%!important">Manut./Adm</a>
+    <div class="sb-module-row">
+      <a class="nav ga-module-link active-system" href="./rescisoes.html">Rescisão</a>
+      <a class="nav ga-module-link" href="./gestao.html">Manut./Adm</a>
     </div>
   </div>
   <div class="sb-sec">
@@ -323,7 +320,7 @@ td.ora{color:var(--o);font-weight:600}
           <div style="padding:10px 14px;border-bottom:1px solid var(--bd);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:space-between">
             <span>Em Alerta</span>
           </div>
-          <div id="d-alertas" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-mark"></div><p>Sem alertas</p></div></div>
+          <div id="d-alertas" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-mark icon-check"></div><p>Sem alertas</p></div></div>
         </div>
         <div class="tw">
           <div style="padding:10px 14px;border-bottom:1px solid var(--bd);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:space-between">
@@ -2400,7 +2397,7 @@ function ldNow(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()
 function fd(d){if(!d)return'-';try{const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`;}catch{return d;}}
 function cellTag(text,kind){return `<span class="cell-tag cell-${kind||'warn'}">${text}</span>`;}
 function cellTd(text,kind){return `<td>${cellTag(text,kind)}</td>`;}
-function emptyHtml(msg,ic){return `<div class="empty"><div class="empty-mark icon-${ic||'doc'}"></div><p>${msg}</p></div>`;}
+function emptyHtml(msg,ic){const icon=ic||(msg==='Sem alertas'?'check':'doc');return `<div class="empty"><div class="empty-mark icon-${icon}"></div><p>${msg}</p></div>`;}
 function libBtn(id,on){return `<button type="button" class="lib-badge${on?' on':''}" onclick="togManLiberado('${id}')">${on?'Liberado p/ manut.':'Em rescisão'}</button>`;}
 function ynBtn(fn,id,on){return `<button type="button" class="yn-badge${on?' on':''}" onclick="${fn}('${id}')">${on?'Sim':'Não'}</button>`;}
 function fm(v){if(!v&&v!==0)return'-';return'R$'+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
