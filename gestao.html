@@ -3863,7 +3863,7 @@ function removeAno(a){
 
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
-const AGER_SEED_VER='20260623_ocup_cond';
+const AGER_SEED_VER='20260623_ocup_cond_v2';
 
 function applyManutResetIfNeeded(){
   if(localStorage.getItem('ga_manut_clear')===MANUT_CLEAR_VER) return false;
@@ -3912,6 +3912,8 @@ async function loadAgerSeed(){
     if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
     DB.manutencoes.ager=rows.map(m=>({...m,tipo:'ager',status:normManutStatus(m.status)}));
     localStorage.setItem('ga_ager_seed',AGER_SEED_VER);
+    markManutResetSynced();
+    try{ localStorage.setItem('gestao_v5', JSON.stringify(DB)); }catch(e){}
     if(typeof window.gaCloudSave==='function') window.gaCloudSave();
     return true;
   }catch(e){
@@ -3996,8 +3998,6 @@ function renderGestaoAll(){
       window._gestaoPendingRender=false;
     });
     document.addEventListener('ga-cloud-ready',async()=>{
-      hydrateGestaoFromCache();
-      applyManutResetIfNeeded();
       await loadAgerSeed();
       normalizeManutStatuses();
       renderGestaoVisible();
@@ -4050,7 +4050,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=16"></script>
+<script src="./cloud-sync.js?v=17"></script>
 
 </div></body></html>
 

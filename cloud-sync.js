@@ -87,11 +87,13 @@
         if(typeof updHeader === 'function') updHeader();
       }
       if(MODULE === 'gestao' && typeof DB !== 'undefined'){
+        const prevAger=(DB.manutencoes&&DB.manutencoes.ager)?DB.manutencoes.ager.slice():[];
         Object.assign(DB, next || {});
-        let needsPush=false;
-        if(typeof window.applyManutResetIfNeeded==='function' && window.applyManutResetIfNeeded()){
-          needsPush=true;
+        if((DB.manutencoes?.ager||[]).length===0 && prevAger.length>=50){
+          if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+          DB.manutencoes.ager=prevAger;
         }
+        let needsPush=false;
         if(typeof window.normalizeManutStatuses==='function') window.normalizeManutStatuses();
         const loadAger=typeof window.loadAgerSeed==='function'?window.loadAgerSeed():Promise.resolve(false);
         Promise.resolve(loadAger).then(loaded=>{
