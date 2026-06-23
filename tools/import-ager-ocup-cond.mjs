@@ -8,6 +8,7 @@ import { PDFParse } from 'pdf-parse';
 
 const PDF = 'C:/Users/Kamile/Downloads/Manutenções Imóveis Ocupados + Condomínios 2025 - Google Planilhas.pdf';
 const OUT = 'C:/Users/Kamile/Projects/gralha-azul/gestao-manut-seed.json';
+const OUT_AGER = 'C:/Users/Kamile/Projects/gralha-azul/gestao-ager-seed.json';
 
 let idSeq = 1;
 const ID = () => 'ager_' + String(idSeq++).padStart(4, '0');
@@ -215,8 +216,14 @@ function assignStatuses(rows, statusArr) {
   if (st[0] === 'Cancelado' && st.length > rows.length) st = st.slice(1);
   const headerN = 40;
   const tail = st.slice(headerN);
+  // PDF exporta blocos Cancelado/Andamento invertidos — trocar ordem dos blocos
+  const head1 = tail.slice(0, 1);
+  const cancelBlock = tail.slice(1, 12);
+  const andBlock = tail.slice(12, 39);
+  const endBlock = tail.slice(39);
+  const fixedTail = [...head1, ...andBlock, ...cancelBlock, ...endBlock];
   rows.forEach((r, i) => {
-    r.status = i < headerN ? (st[i] || 'Concluído') : (tail[i - headerN] || 'Concluído');
+    r.status = i < headerN ? (st[i] || 'Concluído') : (fixedTail[i - headerN] || 'Concluído');
     r.dtConc = r.status === 'Concluído' ? (r.dtPrev || r.dtSol) : '';
   });
 }
@@ -270,7 +277,8 @@ seed.meta = {
 };
 
 fs.writeFileSync(OUT, JSON.stringify(seed), 'utf8');
-console.log('Written', OUT);
+fs.writeFileSync(OUT_AGER, JSON.stringify({ ager: rows, meta: seed.meta }), 'utf8');
+console.log('Written', OUT, 'and', OUT_AGER);
 console.log('ager:', rows.length, countStatus(rows), `(status lines: ${statusArr.length})`);
 
 console.log('\nSample rows:');

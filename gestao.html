@@ -3863,7 +3863,8 @@ function removeAno(a){
 
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
-const AGER_SEED_VER='20260623_ocup_cond_v3';
+const AGER_SEED_VER='20260623_ocup_cond_v4';
+let _agerSeedPromise=null;
 
 function applyManutResetIfNeeded(){
   if(localStorage.getItem('ga_manut_clear')===MANUT_CLEAR_VER) return false;
@@ -3901,10 +3902,12 @@ function manutTotal(){
 }
 
 async function loadAgerSeed(){
+  if(_agerSeedPromise) return _agerSeedPromise;
+  _agerSeedPromise=(async()=>{
   try{
     const hasAger=(DB.manutencoes?.ager||[]).length>=50;
     if(localStorage.getItem('ga_ager_seed')===AGER_SEED_VER&&hasAger) return false;
-    const r=await fetch('./gestao-manut-seed.json?v='+AGER_SEED_VER);
+    const r=await fetch('./gestao-ager-seed.json?v='+AGER_SEED_VER);
     if(!r.ok) return false;
     const seed=await r.json();
     const rows=(seed.ager||[]).map(normalizeManutRecord);
@@ -3914,12 +3917,16 @@ async function loadAgerSeed(){
     localStorage.setItem('ga_ager_seed',AGER_SEED_VER);
     markManutResetSynced();
     try{ localStorage.setItem('gestao_v5', JSON.stringify(DB)); }catch(e){}
-    if(typeof window.gaCloudSave==='function') window.gaCloudSave();
+    window._gestaoNeedsManutPush=true;
     return true;
   }catch(e){
     console.warn('loadAgerSeed:',e);
     return false;
+  }finally{
+    _agerSeedPromise=null;
   }
+  })();
+  return _agerSeedPromise;
 }
 
 async function loadManutSeed(){
@@ -3987,28 +3994,20 @@ function renderGestaoAll(){
     if(ptl) ptl.textContent = fmtDate(td).substring(0,5);
     const atl = document.getElementById('ag-today-lbl');
     if(atl) atl.textContent = fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
-    const hadCache=hydrateGestaoFromCache();
-    const didReset=applyManutResetIfNeeded();
-    window._gestaoPendingRender=!didReset&&!hadCache;
-    if(didReset) window._gestaoNeedsManutPush=true;
-    loadAgerSeed().then(loaded=>{
-      normalizeManutStatuses();
-      if(loaded) window._gestaoNeedsManutPush=true;
-      renderGestaoVisible();
-      window._gestaoPendingRender=false;
-    });
-    document.addEventListener('ga-cloud-ready',async()=>{
-      await loadAgerSeed();
+    hydrateGestaoFromCache();
+    applyManutResetIfNeeded();
+    let bootDone=false;
+    async function bootGestao(){
+      if(bootDone) return;
+      bootDone=true;
+      if((DB.manutencoes?.ager||[]).length<50) await loadAgerSeed();
       normalizeManutStatuses();
       renderGestaoVisible();
       window._gestaoPendingRender=false;
-    });
-    setTimeout(()=>{
-      if(window._gestaoPendingRender){
-        renderGestaoVisible();
-        window._gestaoPendingRender=false;
-      }
-    },3000);
+    }
+    window._gestaoPendingRender=true;
+    document.addEventListener('ga-cloud-ready',bootGestao,{once:true});
+    setTimeout(bootGestao,5000);
     if(typeof applyEmptySemIcons==='function')applyEmptySemIcons();
     document.addEventListener('click',e=>{
       const btn=e.target.closest('[data-edit-manut]');
@@ -4050,7 +4049,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=18"></script>
+<script src="./cloud-sync.js?v=19"></script>
 
 </div></body></html>
 
