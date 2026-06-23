@@ -3,27 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>Gralha Azul — Plataforma Integrada</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='92' fill='%232b3747'/%3E%3Cg fill='none' stroke='%23c8ba7a' stroke-width='18' stroke-linecap='round' stroke-linejoin='round' transform='translate(256 72)'%3E%3Cpath d='M0 0C-78 65-112 140-62 195-34 226 0 230 0 230s34-4 62-35C112 140 78 65 0 0Z'/%3E%3Cpath d='M0 25v260M0 62l-45 42M0 62l45 42M0 112l-62 56M0 112l62 56M0 166l-52 44M0 166l52 44M-56 306h112M-36 330h72'/%3E%3C/g%3E%3C/svg%3E">
-<meta http-equiv="refresh" content="0; url=./rescisoes.html">
-<link rel="canonical" href="./rescisoes.html">
-<script>location.replace('./rescisoes.html');</script>
+<meta name="description" content="Gralha Azul — Plataforma de Rescisões e Gestão Administrativa">
+<meta name="theme-color" content="#1e3a5f">
+<meta name="application-name" content="Gralha Azul">
+<title>Gralha Azul — Plataforma</title>
+<link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+<link rel="apple-touch-icon" href="./assets/icon.svg">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="canonical" href="./index.html">
 <style>
-html,body{height:100%;margin:0;background:#0f172a;color:#e2e8f0;font-family:system-ui,sans-serif}
-.box{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-.spin{width:34px;height:34px;border:3px solid rgba(255,255,255,.15);border-top-color:#c8ba7a;border-radius:50%;animation:r .8s linear infinite}
-@keyframes r{to{transform:rotate(360deg)}}
-a{color:#c8ba7a}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;font-family:Inter,"Segoe UI",system-ui,sans-serif}
+body{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;padding:24px 16px;
+  background:
+    radial-gradient(circle at 18% 12%,rgba(145,190,228,.22),transparent 38%),
+    radial-gradient(circle at 82% 88%,rgba(200,186,122,.12),transparent 42%),
+    linear-gradient(155deg,#1a3352 0%,#1e3a5f 45%,#14283d 100%);
+  color:#eaf2fa;
+}
+.shell{width:100%;max-width:520px}
+.brand{
+  text-align:center;margin-bottom:28px;
+}
+.logo-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:112px;height:112px;margin-bottom:18px;
+  border-radius:28px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 18px 48px rgba(0,0,0,.22);
+  overflow:hidden;
+}
+.logo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.brand h1{
+  font-size:1.65rem;font-weight:800;letter-spacing:-.02em;line-height:1.15;
+  color:#fff;
+}
+.brand p{
+  margin-top:8px;font-size:.92rem;color:rgba(234,242,250,.72);font-weight:500;
+}
+.cards{display:grid;gap:12px}
+.card{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;border-radius:16px;text-decoration:none;color:inherit;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  transition:transform .16s ease,background .16s ease,box-shadow .16s ease;
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+}
+.card:hover{
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.11);
+  box-shadow:0 14px 32px rgba(0,0,0,.18);
+}
+.card-ico{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);
+}
+.card-ico svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card-body{flex:1;min-width:0}
+.card-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:2px}
+.card-desc{font-size:.78rem;color:rgba(234,242,250,.68);line-height:1.35}
+.card-arrow{color:rgba(234,242,250,.45);font-size:1.1rem;font-weight:600}
+.hint{
+  margin-top:22px;text-align:center;font-size:.76rem;color:rgba(234,242,250,.48);line-height:1.5;
+}
+.hint strong{color:rgba(234,242,250,.72);font-weight:600}
 </style>
 </head>
 <body>
-<div class="box">
-  <div class="spin"></div>
-  <div>Abrindo a plataforma…</div>
-  <div><a href="./rescisoes.html">Clique aqui se não abrir automaticamente</a></div>
+<div class="shell">
+  <div class="brand">
+    <div class="logo-wrap">
+      <img src="./assets/icon.svg" alt="Gralha Azul">
     </div>
+    <h1>Gralha Azul</h1>
+    <p>Plataforma Imobiliária</p>
+  </div>
+
+  <div class="cards">
+    <a class="card" href="./rescisoes.html">
+      <div class="card-ico">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Rescisões</div>
+        <div class="card-desc">Panorama, rescisões, manutenções e controles</div>
+      </div>
+      <span class="card-arrow">›</span>
+    </a>
+
+    <a class="card" href="./gestao.html">
+      <div class="card-ico">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Gestão Administrativa</div>
+        <div class="card-desc">Manutenções, condomínios, prestadores e relatórios</div>
+      </div>
+      <span class="card-arrow">›</span>
+    </a>
+  </div>
+
+  <p class="hint">
+    <strong>Salve nos favoritos:</strong> Ctrl+D (Windows) ou clique na estrela na barra de endereço.<br>
+    Este link abre os dois módulos da plataforma.
+  </p>
+</div>
 </body>
 </html>
