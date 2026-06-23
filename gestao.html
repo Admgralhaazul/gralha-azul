@@ -1,4 +1,4 @@
-﻿?<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- saved from url=(0051)file:///C:/Users/Kamile/Downloads/gestao%20(3).html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -7,8 +7,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Gestão Administrativa — Gralha Azul</title>
-<link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
-<link rel="apple-touch-icon" href="./assets/icon.svg">
+<link rel="icon" type="image/png" href="./assets/logo-gralha-azul.png">
+<link rel="apple-touch-icon" href="./assets/logo-gralha-azul.png">
 <meta name="theme-color" content="#1e3a5f">
 <style id="ga-critical-ui">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -325,7 +325,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=30">
+<link rel="stylesheet" href="./enterprise-premium.css?v=31">
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -508,7 +508,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mager-tbody"></tbody>
     </table>
@@ -529,6 +529,7 @@ body{visibility:visible!important}
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mi-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mi-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mi-ca">0</div></div>
+    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mi-rec">R$0</div></div>
   </div>
   <!-- Status multi-select -->
   <div class="filter-bar" id="mi-filter-bar">
@@ -551,7 +552,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mi-tbody"></tbody>
     </table>
@@ -573,6 +574,7 @@ body{visibility:visible!important}
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div></div>
     <div class="stat rd"><div class="stat-lbl">Atrasados</div><div class="stat-val" id="mc-at">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mc-ca">0</div></div>
+    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mc-rec">R$0</div></div>
   </div>
   <div class="filter-bar" id="mc-filter-bar">
     <div class="search-wrap"><input type="text" id="mc-search" oninput="filterManut(&#39;cond&#39;)" placeholder="Buscar..."></div>
@@ -594,7 +596,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mc-tbody"></tbody>
     </table>
@@ -613,6 +615,7 @@ body{visibility:visible!important}
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mo-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
+    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mo-rec">R$0</div></div>
   </div>
 
   <div class="filter-bar" id="mo-filter-bar">
@@ -635,7 +638,7 @@ body{visibility:visible!important}
     <div class="tw"><table class="manut-table"><thead><tr>
     <th>Status</th><th>Data Solic.</th><th>Prev./Conclusão</th><th>Responsável</th>
     <th>Contrato/Cond.</th><th>Prestador</th><th>Descrição Serviço</th>
-    <th>Valor Fechado</th><th>Lanç. Manutenção</th><th>Recibo</th><th>OBS</th><th style="min-width:80px;text-align:right">Ações</th>
+    <th>Valor Fechado</th><th style="color:var(--cyan)">Receita manut. imob.</th><th>Recibo</th><th>OBS</th><th style="min-width:80px;text-align:right">Ações</th>
   </tr></thead><tbody id="mo-tbody"></tbody></table></div>
   <div id="mo-empty" class="empty"><div class="empty-mark"></div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
 
@@ -1764,7 +1767,7 @@ function renderManutRows(arr,tipo){
       <td>${fmt(m.prest)}</td>
       <td class="td-obs" title="${m.desc}">${fmt(m.desc)}</td>
       <td>${fmtR(m.val)}</td>
-      <td>${fmtR(m.recKenlo)}</td>
+      <td style="color:var(--cyan);font-weight:600">${fmtR(m.recKenlo)}</td>
       <td>${reciboCell(m)}</td>
       <td class="td-obs">${m.obs||'—'}</td>
       ${actionsCell(m,tipo)}</tr>`;
@@ -1779,6 +1782,7 @@ function renderManutRows(arr,tipo){
       <td class="td-obs" title="${m.desc}">${fmt(m.desc)}</td>
       <td>${fmtR(m.val)}</td>
       <td>${fmtR(m.mat)}</td>
+      <td style="color:var(--cyan);font-weight:600">${fmtR(m.recKenlo)}</td>
       <td>${reciboCell(m)}</td>
       <td class="td-obs">${m.obs||'—'}</td>
       ${actionsCell(m,tipo)}</tr>`;}).join('');
@@ -3782,7 +3786,23 @@ function removeAno(a){
 }
 
 // ─── SEED MANUTENÇÕES (planilhas PDF) ───────────
-const MANUT_SEED_VER='20260624';
+const MANUT_SEED_VER='20260625';
+
+function normalizeManutRecord(m){
+  if(!m||typeof m!=='object')return m;
+  if(m.cond&&m.cond!=='-'&&/R\$\s*[\d.,]+/.test(m.cond)){
+    const code=m.cond.match(/\b([A-Z]{2}\d{3,4}(?:\/\d+)?|KN\d+(?:\/\d+)?)\b/i);
+    m.cond=code?code[1].toUpperCase():m.cond.replace(/\s+R\$\s*[\d.,]+.*$/i,'').trim().slice(0,55)||'-';
+  }
+  const val=parseFloat(m.val)||0, mat=parseFloat(m.mat)||0;
+  let rec=parseFloat(m.recKenlo);
+  if(Number.isNaN(rec))rec=0;
+  const expected=Math.max(0,val-mat);
+  if(val>0&&rec===0&&expected>0)m.recKenlo=expected.toFixed(2);
+  else if(val>0&&rec>0&&rec===val&&mat>0)m.recKenlo=expected.toFixed(2);
+  else m.recKenlo=rec.toFixed(2);
+  return m;
+}
 
 function manutTotal(){
   return ['imob','cond','ocup','ager'].reduce((s,k)=>s+((DB.manutencoes[k]||[]).length),0);
@@ -3806,7 +3826,7 @@ async function loadManutSeed(){
     const seed=await r.json();
     if(!DB.manutencoes)DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
     ['imob','cond','ocup','ager'].forEach(k=>{
-      if(Array.isArray(seed[k]))DB.manutencoes[k]=seed[k];
+      if(Array.isArray(seed[k]))DB.manutencoes[k]=seed[k].map(normalizeManutRecord);
     });
     localStorage.setItem('ga_manut_seed',MANUT_SEED_VER);
     console.info('Manut seed OK:',manutTotal(),'registros');
