@@ -326,8 +326,8 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=35">
-<script src="./ga-empty.js?v=1"></script>
+<link rel="stylesheet" href="./enterprise-premium.css?v=36">
+<script src="./ga-empty.js?v=2"></script>
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -482,7 +482,7 @@ body{visibility:visible!important}
 <div id="view-manut-ager" class="view">
   <div class="back-btn" onclick="nav(&#39;dashboard&#39;)">← Voltar ao Dashboard</div>
   <div class="sh">
-    <div><div class="sh-t">Manut. Assistente</div><div class="sh-s">Chamados em andamento, concluídos e atrasados</div></div>
+    <div><div class="sh-t">Manut. Assistente</div><div class="sh-s">Chamados em andamento, concluídos e cancelados</div></div>
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mager-an">0</div></div>
@@ -574,7 +574,6 @@ body{visibility:visible!important}
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mc-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div></div>
-    <div class="stat rd"><div class="stat-lbl">Atrasados</div><div class="stat-val" id="mc-at">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mc-ca">0</div></div>
     <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mc-rec">R$0</div></div>
   </div>
@@ -1187,7 +1186,7 @@ body{visibility:visible!important}
     <div class="mc">
       <input type="hidden" id="nm-tipo">
       <div class="fr">
-        <div class="fg"><label class="fl">Status *</label><select class="fc" id="nm-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option><option>Atrasado</option><option>Cancelado</option></select></div>
+        <div class="fg"><label class="fl">Status *</label><select class="fc" id="nm-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option><option>Cancelado</option></select></div>
         <div class="fg"><label class="fl">Data da Solicitação</label><input type="date" class="fc" id="nm-dt-sol"></div>
         <div class="fg"><label class="fl">Prev./Finalização</label><input type="date" class="fc" id="nm-dt-prev"></div>
         <div class="fg"><label class="fl">Responsável</label><input class="fc" id="nm-resp" placeholder="Nome do responsável..." autocomplete="off"></div>
@@ -1216,7 +1215,7 @@ body{visibility:visible!important}
     <div class="mc">
       <input type="hidden" id="em-id"><input type="hidden" id="em-tipo">
       <div class="fr">
-        <div class="fg"><label class="fl">Status</label><select class="fc" id="em-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option><option>Atrasado</option><option>Cancelado</option></select></div>
+        <div class="fg"><label class="fl">Status</label><select class="fc" id="em-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option><option>Cancelado</option></select></div>
         <div class="fg"><label class="fl">Data da Solicitação</label><input type="date" class="fc" id="em-dt-sol"></div>
         <div class="fg"><label class="fl">Prev./Finalização</label><input type="date" class="fc" id="em-dt-prev"></div>
         <div class="fg"><label class="fl">Responsável</label><input class="fc" id="em-resp" placeholder="Nome do responsável..." autocomplete="off"></div>
@@ -1765,7 +1764,7 @@ function renderManutRows(arr,tipo){
   const reciboCell=m=>m.recibo==='Sim'?'<span style="color:var(--t1);font-size:12px">Sim</span>':'<span style="color:var(--t3);font-size:12px">Não</span>';
   const actionsCell=(m,t)=>`<td style="text-align:right"><div class="td-actions" style="justify-content:flex-end">
           ${m.status!=='Concluído'&&m.status!=='Cancelado'?`<div class="btn-icon" onclick="concluirManutDireto('${m.id}','${t}')" title="Concluir" style="color:var(--green);font-weight:700;font-size:15px">✓</div>`:''}
-          <div class="btn-icon btn-act-edit" onclick="editManut('${m.id}','${t}')" title="Editar">Editar</div>
+          <div class="btn-icon btn-act-edit" data-edit-manut="${m.id}" data-manut-tipo="${t}" title="Editar">Editar</div>
           <div class="btn-icon" onclick="reopenManut('${m.id}')" title="Desfazer / Reabrir" style="color:var(--yellow)">↩</div>
         </div></td>`;
   const prevConcCell=m=>m.status==='Concluído'&&m.dtConc?fmtDate(m.dtConc):fmtDate(m.dtPrev);
@@ -1817,20 +1816,18 @@ function renderManutRows(arr,tipo){
 function updateManutStats(tipo){
   const all=DB.manutencoes[tipo]||[];
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
-  let ab=0,an=0,ok=0,at=0,ca=0,rec=0;
+  let ab=0,an=0,ok=0,ca=0,rec=0;
   for(const m of all){
     if(m.status==='Aberto')ab++;
-    else if(m.status==='Em andamento'||(tipo==='ocup'&&m.status==='Aberto'))an++;
+    else if(m.status==='Em andamento'||m.status==='Atrasado'||(tipo==='ocup'&&m.status==='Aberto'))an++;
     else if(m.status==='Concluído'){ok++;rec+=parseFloat(m.recKenlo||0);}
-    else if(m.status==='Atrasado')at++;
     else if(m.status==='Cancelado')ca++;
   }
   const abEl=document.getElementById(pf+'-ab');if(abEl)abEl.textContent=ab;
   const anEl=document.getElementById(pf+'-an');if(anEl)anEl.textContent=an;
   const okEl=document.getElementById(pf+'-ok');if(okEl)okEl.textContent=ok;
-  const atEl=document.getElementById(pf+'-at');if(atEl)atEl.textContent=at;
   const caEl=document.getElementById(pf+'-ca');if(caEl)caEl.textContent=ca;
-  const pend=ab+an+at;
+  const pend=ab+an;
   const pendEl=document.getElementById(pf+'-pend');if(pendEl)pendEl.textContent=pend;
   const recEl=document.getElementById(pf+'-rec');if(recEl)recEl.textContent='R$'+rec.toFixed(0);
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
@@ -1838,35 +1835,74 @@ function updateManutStats(tipo){
   const totalCnt=ok+pend;
   if(cnt)cnt.textContent=totalCnt+' chamado'+(totalCnt!==1?'s':'');
 }
-function editManut(id,tipo){
-  const m=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup,...(DB.manutencoes.proc||[]),...(DB.manutencoes.ager||[])].find(x=>x.id===id);
-  if(!m){toast('Registro não encontrado!');return;}
-  if(!m)return;
-  DB.editingId=id;DB.editingManutTipo=tipo||m.tipo;
-  ['status','resp','prest','recibo'].forEach(f=>{const el=document.getElementById('em-'+f.replace('Prest','prest'));if(el)el.value=m[f]||el.options[0].value});
-  document.getElementById('em-status').value=m.status;
-  document.getElementById('em-dt-sol').value=m.dtSol||'';
-  document.getElementById('em-dt-prev').value=m.dtPrev||'';
-  document.getElementById('em-resp').value=m.resp;
-  document.getElementById('em-cond').value=m.cond||'';
-  document.getElementById('em-prest').value=m.prest;
-  document.getElementById('em-desc').value=m.desc||'';
-  document.getElementById('em-dt-conc').value=m.dtConc||'';
-  document.getElementById('em-val').value=m.val||'';
-  document.getElementById('em-mat').value=m.mat||'';
-  document.getElementById('em-rec-kenlo').value=m.recKenlo||'';
+function setSelectValue(id,val){
+  const el=document.getElementById(id);
+  if(!el) return;
+  val=val==null?'':String(val);
+  if(el.tagName==='SELECT'){
+    if(val&&!Array.from(el.options).some(o=>o.value===val)){
+      const o=document.createElement('option');
+      o.value=val; o.textContent=val;
+      el.insertBefore(o,el.lastChild);
+    }
+    el.value=val||el.options[0]?.value||'';
+  } else {
+    el.value=val;
+  }
+}
 
-  document.getElementById('em-loc-deb').value=m.locDeb||'';
-  document.getElementById('em-contas').value=m.contas||'';
-  document.getElementById('em-recibo').value=m.recibo||'Não';
-  document.getElementById('em-obs').value=m.obs||'';
-  setManutStatusOptions(tipo||m.tipo,'em-status');
+function findManutById(id){
+  for(const k of ['imob','cond','ocup','proc','ager']){
+    const arr=DB.manutencoes[k];
+    if(!arr) continue;
+    const m=arr.find(x=>x.id===id);
+    if(m) return {m,tipo:k};
+  }
+  return null;
+}
+
+function editManut(id,tipoHint){
+  const found=findManutById(id);
+  if(!found){toast('Registro não encontrado!');return;}
+  const {m,tipo}=found;
+  DB.editingId=id;
+  DB.editingManutTipo=tipo;
+  fillPrestSelects();
+  setSelectValue('em-status',m.status==='Atrasado'?'Em andamento':m.status);
+  setSelectValue('em-dt-sol',m.dtSol||'');
+  setSelectValue('em-dt-prev',m.dtPrev||'');
+  setSelectValue('em-resp',m.resp||'');
+  setSelectValue('em-cond',m.cond||'');
+  setSelectValue('em-prest',m.prest||'');
+  setSelectValue('em-desc',m.desc||'');
+  setSelectValue('em-dt-conc',m.dtConc||'');
+  setSelectValue('em-val',m.val||'');
+  setSelectValue('em-mat',m.mat||'');
+  setSelectValue('em-rec-kenlo',m.recKenlo||'');
+  setSelectValue('em-loc-deb',m.locDeb||'');
+  setSelectValue('em-contas',m.contas||'');
+  setSelectValue('em-recibo',m.recibo||'Não');
+  setSelectValue('em-obs',m.obs||'');
+  setManutStatusOptions(tipo,'em-status');
   openM('m-edit-manut');
 }
 function updateManut(){
   const tipo=DB.editingManutTipo;
+  const id=DB.editingId;
+  if(!tipo||!id){toast('Nenhum chamado selecionado!');return;}
+  if(!DB.manutencoes[tipo]) DB.manutencoes[tipo]=[];
   const arr=DB.manutencoes[tipo];
-  const idx=arr.findIndex(m=>m.id===DB.editingId);if(idx<0){toast('Registro não encontrado!');return;}
+  const idx=arr.findIndex(m=>m.id===id);
+  if(idx<0){
+    const found=findManutById(id);
+    if(!found){toast('Registro não encontrado!');return;}
+    if(found.tipo!==tipo){
+      DB.editingManutTipo=found.tipo;
+      return updateManut();
+    }
+    toast('Registro não encontrado!');
+    return;
+  }
   const val=parseFloat(document.getElementById('em-val').value)||0;
   const mat=parseFloat(document.getElementById('em-mat').value)||0;
   let status=document.getElementById('em-status').value;
@@ -1877,7 +1913,10 @@ function updateManut(){
 function deleteManut(){
   if(!confirm('Excluir este chamado?'))return;
   const tipo=DB.editingManutTipo;
-  DB.manutencoes[tipo]=DB.manutencoes[tipo].filter(m=>m.id!==DB.editingId);
+  const id=DB.editingId;
+  if(!tipo||!id){toast('Nenhum chamado selecionado!');return;}
+  if(!DB.manutencoes[tipo]) DB.manutencoes[tipo]=[];
+  DB.manutencoes[tipo]=DB.manutencoes[tipo].filter(m=>m.id!==id);
   finishEditModal('m-edit-manut',()=>{renderManut(tipo);updateDashboard();renderFin();toast('Chamado excluído!');});
 }
 
@@ -3058,7 +3097,7 @@ function fillPrestSelects(){
   const luma=allPrest.find(n=>n.toLowerCase().includes('luma'));
   if(luma){allPrest.splice(allPrest.indexOf(luma),1);allPrest.unshift(luma);}
   const opts=allPrest.map(n=>`<option value="${n}">${n}</option>`).join('')+'<option value="">— Outro —</option>';
-  ['nm-prest','nchk-man-prest'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
+  ['nm-prest','em-prest','nchk-man-prest'].forEach(id=>{const el=document.getElementById(id);if(el){const cur=el.value;el.innerHTML=opts;if(cur)el.value=cur;}});
   // fin-prest select
   const finP=document.getElementById('fin-prest-sel');if(finP)finP.innerHTML='<option value="">Todos os prestadores</option>'+DB.prestadores.map(p=>`<option value="${p.nome}">${p.nome}</option>`).join('');
   // rel-prest select
@@ -3935,6 +3974,10 @@ function renderGestaoAll(){
       }
     },3000);
     if(typeof applyEmptySemIcons==='function')applyEmptySemIcons();
+    document.addEventListener('click',e=>{
+      const btn=e.target.closest('[data-edit-manut]');
+      if(btn) editManut(btn.dataset.editManut, btn.dataset.manutTipo);
+    });
   } catch(e) {
     console.error('Init error:', e);
   }

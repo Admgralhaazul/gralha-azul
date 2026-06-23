@@ -1716,6 +1716,8 @@ html body .nav,
 html body .ni,
 html body .btn,
 html body .abt,
+html body .btn-icon,
+html body .td-actions,
 html body .card,
 html body .stat,
 html body .mcard,
@@ -2235,9 +2237,11 @@ tr.rr td:first-child{box-shadow:inset 4px 0 0 #DC2626!important}
   display:block!important;
   width:14px!important;height:14px!important;
   margin:10px auto 0!important;
-  border-radius:3px!important;
-  background:#CBD5E1!important;
-  opacity:.85!important;
+  border-radius:50%!important;
+  background:#22C55E!important;
+  border:2px solid #16A34A!important;
+  box-shadow:0 0 0 3px rgba(34,197,94,.18)!important;
+  opacity:1!important;
 }
 .empty-mark.icon-doc::after{width:12px!important;height:15px!important;border-radius:2px!important;background:linear-gradient(#CBD5E1 0 0)!important;border:1.5px solid #94A3B8!important}
 .empty-mark.icon-warn::after{background:#FDE68A!important;border:1.5px solid #FBBF24!important;width:16px!important;height:16px!important;margin-top:9px!important;border-radius:50%!important}

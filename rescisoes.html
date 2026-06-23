@@ -212,8 +212,8 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=35">
-<script src="./ga-empty.js?v=1"></script>
+<link rel="stylesheet" href="./enterprise-premium.css?v=36">
+<script src="./ga-empty.js?v=2"></script>
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
@@ -355,7 +355,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>#</th><th>Código</th><th>Inquilino</th><th>Resp.</th><th>Ref. Vistoria</th><th>Chaves</th><th>Status</th><th>Tipo</th><th>Pgto</th><th>Água</th>
             <th>Energia</th><th>Gás</th><th>Prop.Av.</th><th>Comercial</th><th>Garantia</th><th>Manut.</th><th>Progresso</th><th>Ações</th>
           </tr></thead>
-          <tbody id="tb-resc"><tr><td colspan="17"><div class="empty"><div class="empty-mark"></div><p>Nenhuma rescisão</p></div></td></tr></tbody>
+          <tbody id="tb-resc"><tr><td colspan="17"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhuma rescisão</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -372,7 +372,7 @@ td.ora{color:var(--o);font-weight:600}
             <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer"><input type="checkbox" id="ag-show-concl" onchange="rAg()"> Mostrar concluídas</label>
           <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openM(&#39;m-ag&#39;)">+ Adicionar</button>
           </div>
-          <div id="ag-list"><div class="empty"><div class="empty-mark icon-doc"></div>Nenhum prazo pendente — <a href="#" onclick="document.getElementById(&#39;ag-show-concl&#39;).checked=true;rAg();return false;">ver concluídos</a></div></div>
+          <div id="ag-list"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhum prazo pendente — <a href="#" onclick="document.getElementById(&#39;ag-show-concl&#39;).checked=true;rAg();return false;">ver concluídos</a></p></div></div>
         </div>
         <div>
           <div class="tw" style="padding:12px;margin-bottom:10px">
@@ -580,7 +580,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Nº</th><th>Contrato</th><th>Data</th><th>Tipo</th><th>Parcelas</th><th>Valor/Parc.</th>
             <th id="cart-par-headers"></th><th>Status</th><th>Ações</th>
           </tr></thead>
-          <tbody id="tb-cart"><tr><td colspan="9"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum lançamento pendente</p></div></td></tr></tbody>
+          <tbody id="tb-cart"><tr><td colspan="9"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhum lançamento pendente</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -601,7 +601,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>#</th><th>Inquilino</th><th>Valor Total</th><th>Parcelas</th><th>Assinado Loc.</th>
             <th>Assinado Fiad.</th><th>Boletos</th><th>Status</th><th>Ações</th>
           </tr></thead>
-<tbody id="tb-conf"><tr><td colspan="9"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma confissão no período</p></div></td></tr></tbody>
+<tbody id="tb-conf"><tr><td colspan="9"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhuma confissão no período</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -629,7 +629,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Recibo ✓</th><th>V.Antecip. ✓</th><th>Pago ✓</th><th>Status</th><th>Ações</th>
           </tr></thead>
 <tbody><tr><td colspan="12"><div id="man-summary" style="padding:5px 8px;font-size:11px;color:var(--tl);background:#f8fafc">Todos: Nenhuma manutenção</div></td></tr>
-          </tbody><tbody id="tb-man"><tr><td colspan="13"><div class="empty"><div class="empty-mark"></div><p>Nenhuma manutenção no período</p></div></td></tr></tbody>
+          </tbody><tbody id="tb-man"><tr><td colspan="13"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhuma manutenção no período</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -647,7 +647,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Código</th><th>Data Solicitação</th><th>Prev. Desligamento</th>
             <th>Tipo</th><th>Resp.</th><th>Status</th><th>Obs.</th><th>Ações</th>
           </tr></thead>
-          <tbody id="tb-san"><tr><td colspan="10"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum desligamento</p></div></td></tr></tbody>
+          <tbody id="tb-san"><tr><td colspan="10"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhum desligamento</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -667,7 +667,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Código</th><th>Proprietário</th><th>Contato</th><th>Aluguel</th><th>Cond.</th>
             <th>Água</th><th>Energia</th><th>IPTU</th><th>Repasse MKT</th><th>Site</th><th>Fotos</th><th>Data Ativação</th><th></th>
           </tr></thead>
-<tbody id="tb-mkt"><tr><td colspan="13"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum imóvel pendente</p></div></td></tr></tbody>
+<tbody id="tb-mkt"><tr><td colspan="13"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhum imóvel pendente</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -680,7 +680,7 @@ td.ora{color:var(--o);font-weight:600}
         <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openM(&#39;m-carta&#39;)">+ Carta 30 Dias</button>
       </div>
       <div id="cartas-summary" style="padding:5px 14px;font-size:11px;color:var(--tl);background:#f8fafc;border-bottom:1px solid var(--bd)">Pendentes: 1 | Concluídas: 0</div>
-      <div id="cartas-list"><div class="empty"><div class="empty-mark"></div><p>Nenhuma carta</p><button class="btn btn-p" style="margin-top:10px" onclick="openM(&#39;m-carta&#39;)">+ Carta 30 dias</button></div></div>
+      <div id="cartas-list"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhuma carta</p><button class="btn btn-p" style="margin-top:10px" onclick="openM(&#39;m-carta&#39;)">+ Carta 30 dias</button></div></div>
     </div>
 
     <!-- INADIMPLENTES -->
@@ -710,7 +710,7 @@ td.ora{color:var(--o);font-weight:600}
         <span style="flex:1"></span>
         <button class="btn btn-p btn-sm" onclick="newJur()">+ Adicionar</button>
       </div>
-      <div id="jur-list"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum caso no jurídico</p></div></div>
+      <div id="jur-list"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhum caso no jurídico</p></div></div>
     </div>
 
     <!-- LOFT -->
@@ -726,7 +726,7 @@ td.ora{color:var(--o);font-weight:600}
             <th>Código</th><th>Inquilino</th><th>Status</th><th>Sinistro</th><th>Observações</th><th>Vist. saída</th><th>Ações</th>
           </tr></thead>
           <tbody><tr><td colspan="7"><div id="loft-summary" style="padding:5px 8px;font-size:11px;color:var(--tl);background:#f8fafc">Pendentes: 0 | Concluídos: 0</div></td></tr>
-          </tbody><tbody id="tb-loft"><tr><td colspan="7"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum caso Loft ativo</p></div></td></tr></tbody>
+          </tbody><tbody id="tb-loft"><tr><td colspan="7"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhum caso Loft ativo</p></div></td></tr></tbody>
         </table></div>
       </div>
     </div>
@@ -743,7 +743,7 @@ td.ora{color:var(--o);font-weight:600}
           <thead><tr>
             <th>#</th><th>Código</th><th>Inquilino</th><th>Proprietário</th><th>Motivo</th><th>Ano</th><th>Observação</th><th>Ações</th>
           </tr></thead>
-          <tbody id="tb-saiu"><tr><td colspan="8"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum registro</p></div></td></tr></tbody>
+          <tbody id="tb-saiu"><tr><td colspan="8"><div class="empty"><div class="empty-mark icon-check"></div><p>Nenhum registro</p></div></td></tr></tbody>
         </table></div>
         <div style="padding:10px 14px;font-size:11px;color:var(--tl)" id="saiu-tot">Total: 2 saída(s)</div>
       </div>
@@ -3338,7 +3338,7 @@ function rAg(){
   const all=getAllVenc().filter(a=>isValidDate(a.data)).filter(a=>!ftip||a.tipo===ftip).sort((a,b)=>new Date(a.data)-new Date(b.data));
   const items=showConcl?all:all.filter(a=>!isAgConcl(a));
   const el=document.getElementById('ag-list');
-  if(!items.length){el.innerHTML=`<div class="empty"><div class="empty-mark icon-doc"></div>Nenhum prazo pendente ${showConcl?'':'— <a href="#" onclick="document.getElementById(\'ag-show-concl\').checked=true;rAg();return false;">ver concluídos</a>'}</div>`;return;}
+  if(!items.length){el.innerHTML=emptyHtml('Nenhum prazo pendente');return;}
   el.innerHTML=items.map(a=>{
     if(!isValidDate(a.data))return '';
     const dv=ld(a.data);
@@ -3495,7 +3495,7 @@ function rCart(){
   });
 
   const tb=document.getElementById('tb-cart');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum lançamento${cartShowConcl?'':' pendente'}</p></div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="9">${emptyHtml('Nenhum lançamento'+(cartShowConcl?'':' pendente'))}</td></tr>`;return;}
 
   // Find max parcelas in this set for dynamic headers
   const maxP=Math.max(...rows.map(ct=>parseInt(ct.parcelas)||0),1);
@@ -3616,7 +3616,7 @@ function rConf(){
   });
   const tb=document.getElementById('tb-conf');
   // Summary count
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma confissão no período</p></div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="9">${emptyHtml('Nenhuma confissão no período')}</td></tr>`;return;}
   tb.innerHTML=rows.map((cf,idx)=>{
     const done=isConfDone(cf);
     const cMes=getConfMes(cf);
@@ -4116,7 +4116,7 @@ function rSan(){
     return true;
   });
   const tb=document.getElementById('tb-san');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="10"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum desligamento</p></div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="10">${emptyHtml('Nenhum desligamento')}</td></tr>`;return;}
   tb.innerHTML=rows.map(s=>`<tr class="${s.status==='Desligado'?'rg':''}">
     <td><b style="color:var(--p)">${s.codigo}</b></td>
     <td>${fd(s.dtSol)}</td><td>${fd(s.dtRelig)}</td>
@@ -4179,7 +4179,7 @@ function rMkt(){
     return true;
   });
   const tb=document.getElementById('tb-mkt');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="13"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum imóvel${showConcl?'':' pendente'}</p></div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="13">${emptyHtml('Nenhum imóvel'+(showConcl?'':' pendente'))}</td></tr>`;return;}
   tb.innerHTML=rows.map((m,idx)=>{
     const done=isMktDone(m);
     const allDone=isMktAllDone(m);
@@ -4277,7 +4277,7 @@ function editMkt(id){
 function rCartas(){
   const hoje=ldNow();
   const el=document.getElementById('cartas-list');
-  if(!D().cartas.length){el.innerHTML=`<div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma carta</p><button class="btn btn-p" style="margin-top:10px" onclick="openM('m-carta')">+ Carta 30 dias</button></div>`;return;}
+  if(!D().cartas.length){el.innerHTML=emptyHtml('Nenhuma carta')+`<button class="btn btn-p" style="margin-top:10px" onclick="openM('m-carta')">+ Carta 30 dias</button>`;return;}
   const showConcl=document.getElementById('ct-show-concl')&&document.getElementById('ct-show-concl').checked;
   const cartasConcl=D().cartasConcl||{};
   const mesAtivoC=S.mesAtivo||'';
@@ -4292,7 +4292,7 @@ function rCartas(){
       return isSame||isPrevPend;
     });
   }
-  if(!visible.length){el.innerHTML=`<div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhuma carta ativa</p></div>`;return;}
+  if(!visible.length){el.innerHTML=emptyHtml('Nenhuma carta ativa');return;}
   const cartaSumEl=document.getElementById('cartas-summary');
   if(cartaSumEl){const p=D().cartas.filter(c=>!(D().cartasConcl||{})[c.id]).length;const done=Object.keys(D().cartasConcl||{}).length;cartaSumEl.textContent=`Pendentes: ${p} | Concluídas: ${done}`;}
   el.innerHTML=visible.map(c=>{
@@ -4536,7 +4536,7 @@ function rJur(){
   const d=D();d.juridicos=d.juridicos||[];
   const showConcl=document.getElementById('jur-show-concl')&&document.getElementById('jur-show-concl').value==='1';
   const rows=d.juridicos.filter(j=>showConcl?!!j.concluido:!j.concluido);
-  if(!rows.length){el.innerHTML=`<div class="empty"><div class="empty-mark icon-doc"></div><p>${showConcl?'Nenhum caso concluído':'Nenhum caso no jurídico'}</p></div>`;return;}
+  if(!rows.length){el.innerHTML=emptyHtml(showConcl?'Nenhum caso concluído':'Nenhum caso no jurídico');return;}
   el.innerHTML=rows.map(j=>`<div class="ic inad-row" style="border-left-color:#7c3aed;background:#fff;${j.concluido?'opacity:.75':''}">
     <div style="min-width:90px"><b style="color:var(--p)">${j.codigo}</b><div style="font-size:9px;color:var(--tl)">desde ${fd(j.data)}</div></div>
     <div style="flex:1"><div style="font-weight:600;color:var(--tx)">${j.inquilino||'-'}</div><div style="font-size:11px;color:var(--tl)"><span class="badge" style="background:#ede9fe;color:#5b21b6;font-size:9px">${j.origem}</span> ${j.detalhe||''}</div></div>
@@ -4660,7 +4660,7 @@ function rLoft(){
   });
   const tb=document.getElementById('tb-loft');
   if(!rows.length){
-    tb.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum caso Loft ativo</p></div></td></tr>`;
+    tb.innerHTML=`<tr><td colspan="7">${emptyHtml('Nenhum caso Loft ativo')}</td></tr>`;
     return;
   }
   tb.innerHTML=rows.map((l,i)=>{
@@ -4720,7 +4720,7 @@ function rSaiu(){
   if(sel){const cur=sel.value;sel.innerHTML=`<option value="">Todos anos</option>`+anos.map(a=>`<option>${a}</option>`).join('');if(cur)sel.value=cur;}
   let rows=D().saiuImob.filter(s=>{if(q&&!(s.codigo+(s.inquilino||'')).toLowerCase().includes(q.toLowerCase()))return false;if(fa&&s.data&&!s.data.startsWith(fa))return false;return true;});
   const tb=document.getElementById('tb-saiu');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-mark icon-doc"></div><p>Nenhum registro</p></div></td></tr>`;return;}
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="8">${emptyHtml('Nenhum registro')}</td></tr>`;return;}
   tb.innerHTML=rows.map((s,i)=>{
     // Get mes/ano from linked rescisao vistoria
     const resc=D().rescisoes.find(rx=>rx.codigo===s.codigo);
