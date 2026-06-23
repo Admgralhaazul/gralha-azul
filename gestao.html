@@ -3863,7 +3863,7 @@ function removeAno(a){
 
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
-const AGER_SEED_VER='20260623_ocup_cond_v4';
+const AGER_SEED_VER='20260623_ocup_cond_v5';
 let _agerSeedPromise=null;
 
 function applyManutResetIfNeeded(){
@@ -3996,6 +3996,8 @@ function renderGestaoAll(){
     if(atl) atl.textContent = fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
     hydrateGestaoFromCache();
     applyManutResetIfNeeded();
+    normalizeManutStatuses();
+    renderGestaoVisible();
     let bootDone=false;
     async function bootGestao(){
       if(bootDone) return;
@@ -4005,9 +4007,9 @@ function renderGestaoAll(){
       renderGestaoVisible();
       window._gestaoPendingRender=false;
     }
-    window._gestaoPendingRender=true;
+    window._gestaoPendingRender=false;
     document.addEventListener('ga-cloud-ready',bootGestao,{once:true});
-    setTimeout(bootGestao,5000);
+    setTimeout(bootGestao,8000);
     if(typeof applyEmptySemIcons==='function')applyEmptySemIcons();
     document.addEventListener('click',e=>{
       const btn=e.target.closest('[data-edit-manut]');
@@ -4049,7 +4051,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=19"></script>
+<script src="./cloud-sync.js?v=20"></script>
 
 </div></body></html>
 
