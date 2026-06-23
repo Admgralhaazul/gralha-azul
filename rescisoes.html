@@ -212,7 +212,8 @@ td.ora{color:var(--o);font-weight:600}
 /* PAGAMENTO SUB FIELDS */
 .pgto-sub{background:#f8fafc;border:1px solid var(--bd);border-radius:6px;padding:10px;margin-top:6px}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=34">
+<link rel="stylesheet" href="./enterprise-premium.css?v=35">
+<script src="./ga-empty.js?v=1"></script>
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .hdr,.lay{opacity:1!important}
@@ -327,7 +328,7 @@ td.ora{color:var(--o);font-weight:600}
             <span>Agenda</span>
             <button class="btn btn-p btn-sm" onclick="openM(&#39;m-ag&#39;)">+ Prazo</button>
           </div>
-          <div id="d-venc" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-mark icon-doc"></div><p>Sem itens</p></div></div>
+          <div id="d-venc" style="padding:8px;max-height:220px;overflow-y:auto"><div class="empty"><div class="empty-mark icon-check"></div><p>Sem itens</p></div></div>
         </div>
       </div>
 
@@ -2057,6 +2058,7 @@ function renderAll(){
   if(curPage==='config')rConfig();
   if(curPage==='relatorio'){populateRelPeriodo();}
   checkBoletoVenc();
+  if(typeof applyEmptySemIcons==='function') applyEmptySemIcons();
 }
 
 function buildYTabs(){/* ytabs removed - managed in config */}
@@ -2397,7 +2399,7 @@ function ldNow(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()
 function fd(d){if(!d)return'-';try{const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`;}catch{return d;}}
 function cellTag(text,kind){return `<span class="cell-tag cell-${kind||'warn'}">${text}</span>`;}
 function cellTd(text,kind){return `<td>${cellTag(text,kind)}</td>`;}
-function emptyHtml(msg,ic){const icon=ic||(msg==='Sem alertas'?'check':'doc');return `<div class="empty"><div class="empty-mark icon-${icon}"></div><p>${msg}</p></div>`;}
+function emptyHtml(msg,ic){return window.emptyHtml(msg,ic);}
 function libBtn(id,on){return `<button type="button" class="lib-badge${on?' on':''}" onclick="togManLiberado('${id}')">${on?'Liberado p/ manut.':'Em rescisão'}</button>`;}
 function ynBtn(fn,id,on){return `<button type="button" class="yn-badge${on?' on':''}" onclick="${fn}('${id}')">${on?'Sim':'Não'}</button>`;}
 function fm(v){if(!v&&v!==0)return'-';return'R$'+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
@@ -2654,7 +2656,7 @@ function rDash(){
         <span class="badge bb" style="font-size:9px">${v.tipo}</span>
         <button onclick="markAgConcl('${escAttr(k)}','${escAttr(v.cartaId||'')}','${escAttr(v.loftId||'')}');rDash();rAg();" style="border:none;background:#dcfce7;color:#166534;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:10px;font-weight:700;flex-shrink:0">Concluir</button>
       </div>`;
-    }).join(''):`<div class="empty"><div class="empty-mark icon-doc"></div><p>Sem itens</p></div>`;
+    }).join(''):emptyHtml('Sem itens');
   }
 }
 
