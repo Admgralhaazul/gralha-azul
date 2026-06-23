@@ -525,7 +525,7 @@ body{visibility:visible!important}
 <div id="view-manut-imob" class="view">
   <div class="back-btn" onclick="nav(&#39;manut-home&#39;)">← Voltar para Manutenções</div>
   <div class="sh">
-    <div><div class="sh-t">Manutenções — Executadas pela Imobiliária</div><div class="sh-s">Chamados abertos, em andamento e concluídos</div></div>
+    <div><div class="sh-t">Manutenções — Executadas pela Imobiliária</div><div class="sh-s">Chamados em andamento e concluídos</div></div>
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mi-an">0</div></div>
@@ -1186,7 +1186,7 @@ body{visibility:visible!important}
     <div class="mc">
       <input type="hidden" id="nm-tipo">
       <div class="fr">
-        <div class="fg"><label class="fl">Status *</label><select class="fc" id="nm-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option><option>Cancelado</option></select></div>
+        <div class="fg"><label class="fl">Status *</label><select class="fc" id="nm-status"><option>Em andamento</option><option>Concluído</option><option>Cancelado</option></select></div>
         <div class="fg"><label class="fl">Data da Solicitação</label><input type="date" class="fc" id="nm-dt-sol"></div>
         <div class="fg"><label class="fl">Prev./Finalização</label><input type="date" class="fc" id="nm-dt-prev"></div>
         <div class="fg"><label class="fl">Responsável</label><input class="fc" id="nm-resp" placeholder="Nome do responsável..." autocomplete="off"></div>
@@ -1215,7 +1215,7 @@ body{visibility:visible!important}
     <div class="mc">
       <input type="hidden" id="em-id"><input type="hidden" id="em-tipo">
       <div class="fr">
-        <div class="fg"><label class="fl">Status</label><select class="fc" id="em-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option><option>Cancelado</option></select></div>
+        <div class="fg"><label class="fl">Status</label><select class="fc" id="em-status"><option>Em andamento</option><option>Concluído</option><option>Cancelado</option></select></div>
         <div class="fg"><label class="fl">Data da Solicitação</label><input type="date" class="fc" id="em-dt-sol"></div>
         <div class="fg"><label class="fl">Prev./Finalização</label><input type="date" class="fc" id="em-dt-prev"></div>
         <div class="fg"><label class="fl">Responsável</label><input class="fc" id="em-resp" placeholder="Nome do responsável..." autocomplete="off"></div>
@@ -1507,6 +1507,7 @@ function openM(id,tipo){
     document.getElementById('manut-modal-title').textContent=tipo==='imob'?'Novo Chamado — Imobiliária':tipo==='cond'?'Novo Chamado — Condomínio':tipo==='ocup'?'Novo Chamado — Imóveis Ocupados':tipo==='proc'?'Processo em Andamento':'Novo Chamado';
     document.getElementById('nm-dt-sol').value=today();
     setManutStatusOptions(tipo,'nm-status');
+    document.getElementById('nm-status').value='Em andamento';
   }
   if(id==='m-new-task'){
     document.getElementById('nt-titulo').value='';
@@ -1539,8 +1540,16 @@ function finishEditModal(modalId,afterSave){
 }
 function setManutStatusOptions(tipo,selectId){
   const sel=document.getElementById(selectId);if(!sel)return;
-  Array.from(sel.options).forEach(o=>{if(o.value==='Aberto')o.hidden=tipo==='ocup';});
-  if(tipo==='ocup'&&(sel.value==='Aberto'||!sel.value))sel.value='Em andamento';
+  if(!sel.value||sel.value==='Aberto'||sel.value==='Atrasado')sel.value='Em andamento';
+}
+function normManutStatus(s){
+  if(s==='Aberto'||s==='Atrasado')return 'Em andamento';
+  return s||'Em andamento';
+}
+function normalizeManutStatuses(){
+  ['imob','cond','ocup','proc','ager'].forEach(k=>{
+    (DB.manutencoes[k]||[]).forEach(m=>{m.status=normManutStatus(m.status);});
+  });
 }
 document.querySelectorAll('.moverlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
 
@@ -1664,8 +1673,7 @@ function saveManut(){
   if(!cond.trim()){toast('Preencha o contrato / condomínio!');return;}
   const val=parseFloat(document.getElementById('nm-val').value)||0;
   const mat=parseFloat(document.getElementById('nm-mat').value)||0;
-  let status=document.getElementById('nm-status').value;
-  if(tipo==='ocup'&&status==='Aberto')status='Em andamento';
+  let status=normManutStatus(document.getElementById('nm-status').value);
   const m={id:ID(),tipo,status,dtSol:document.getElementById('nm-dt-sol').value,dtPrev:document.getElementById('nm-dt-prev').value,resp:document.getElementById('nm-resp').value,cond:cond.trim(),prest:document.getElementById('nm-prest').value,desc:document.getElementById('nm-desc').value,dtConc:document.getElementById('nm-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:(document.getElementById('nm-loc-deb')||{}).value||'',contas:(document.getElementById('nm-contas')||{}).value||'',recibo:document.getElementById('nm-recibo').value,obs:document.getElementById('nm-obs').value};
   if(!DB.manutencoes[tipo])DB.manutencoes[tipo]=[];
   DB.manutencoes[tipo].unshift(m);
@@ -1699,16 +1707,17 @@ function updateAllManutStats(){
 
 function sortManutRows(arr,tipo){
   const hoje=new Date();hoje.setHours(0,0,0,0);
-  const prioridade={Aberto:0,'Em andamento':1,Atrasado:2,'Concluído':3,Cancelado:4};
+  const prioridade={'Em andamento':0,'Concluído':1,Cancelado:2};
   return arr.map(m=>{
-    if(m.status==='Concluído')return {...m,_prio:3,_iminente:false,_dias:999};
+    const st=normManutStatus(m.status);
+    if(st==='Concluído')return {...m,_prio:3,_iminente:false,_dias:999};
     let _iminente=false,_dias=999;
     if(m.dtPrev){
       const dt=new Date(m.dtPrev);
       _dias=Math.ceil((dt-hoje)/86400000);
       if(_dias<=14)_iminente=true;
     }
-    const _prio=_iminente?-1:(prioridade[m.status]??2);
+    const _prio=_iminente?-1:(prioridade[st]??2);
     return {...m,_prio,_iminente,_dias,_hoje:_dias===0};
   }).sort((a,b)=>{
     if(a._prio!==b._prio)return a._prio-b._prio;
@@ -1727,7 +1736,7 @@ function filterManut(tipo,immediate){
   const mes=document.getElementById(pfx+'-mes')?.value||'';
   const activePills=Array.from(document.querySelectorAll('#'+pfx+'-status-pills .status-pill')).filter(p=>p.classList.length>1).map(p=>p.dataset.s);
   let arr=(DB.manutencoes[tipo]||[]).filter(m=>{
-    if(activePills.length&&!activePills.includes(m.status))return false;
+    if(activePills.length&&!activePills.includes(normManutStatus(m.status)))return false;
     if(q&&!(m.desc+m.cond+m.prest+m.resp).toLowerCase().includes(q))return false;
     // Para concluídos, filtrar por data de conclusão; para outros por data de solicitação
     const dtRef=m.status==='Concluído'?(m.dtConc||m.dtSol||''):(m.dtSol||'');
@@ -1751,7 +1760,6 @@ function toggleStatus(el,cls,tipo){
   filterManut(tipo);
 }
 function renderManutRows(arr,tipo){
-  if(tipo==='ocup')(DB.manutencoes.ocup||[]).forEach(m=>{if(m.status==='Aberto')m.status='Em andamento';});
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
   const tbody=document.getElementById(pf+'-tbody');
   const emp=document.getElementById(pf+'-empty');
@@ -1785,7 +1793,7 @@ function renderManutRows(arr,tipo){
     }
     if(tipo==='ocup'){
       return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
-      <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
+      <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
       <td>${fmtDate(m.dtSol)}</td>
       <td>${prevConcCell(m)}</td>
       <td>${fmt(m.resp)}</td>
@@ -1799,7 +1807,7 @@ function renderManutRows(arr,tipo){
       ${actionsCell(m,tipo)}</tr>`;
     }
     return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
-      <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
+      <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
       <td>${fmtDate(m.dtSol)}</td>
       <td>${prevConcCell(m)}</td>
       <td>${fmt(m.resp)}</td>
@@ -1818,16 +1826,16 @@ function updateManutStats(tipo){
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
   let ab=0,an=0,ok=0,ca=0,rec=0;
   for(const m of all){
-    if(m.status==='Aberto')ab++;
-    else if(m.status==='Em andamento'||m.status==='Atrasado'||(tipo==='ocup'&&m.status==='Aberto'))an++;
-    else if(m.status==='Concluído'){ok++;rec+=parseFloat(m.recKenlo||0);}
-    else if(m.status==='Cancelado')ca++;
+    const st=normManutStatus(m.status);
+    if(st==='Em andamento')an++;
+    else if(st==='Concluído'){ok++;rec+=parseFloat(m.recKenlo||0);}
+    else if(st==='Cancelado')ca++;
   }
-  const abEl=document.getElementById(pf+'-ab');if(abEl)abEl.textContent=ab;
+  const abEl=document.getElementById(pf+'-ab');if(abEl)abEl.textContent=0;
   const anEl=document.getElementById(pf+'-an');if(anEl)anEl.textContent=an;
   const okEl=document.getElementById(pf+'-ok');if(okEl)okEl.textContent=ok;
   const caEl=document.getElementById(pf+'-ca');if(caEl)caEl.textContent=ca;
-  const pend=ab+an;
+  const pend=an;
   const pendEl=document.getElementById(pf+'-pend');if(pendEl)pendEl.textContent=pend;
   const recEl=document.getElementById(pf+'-rec');if(recEl)recEl.textContent='R$'+rec.toFixed(0);
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
@@ -1868,7 +1876,7 @@ function editManut(id,tipoHint){
   DB.editingId=id;
   DB.editingManutTipo=tipo;
   fillPrestSelects();
-  setSelectValue('em-status',m.status==='Atrasado'?'Em andamento':m.status);
+  setSelectValue('em-status',normManutStatus(m.status));
   setSelectValue('em-dt-sol',m.dtSol||'');
   setSelectValue('em-dt-prev',m.dtPrev||'');
   setSelectValue('em-resp',m.resp||'');
@@ -1905,8 +1913,7 @@ function updateManut(){
   }
   const val=parseFloat(document.getElementById('em-val').value)||0;
   const mat=parseFloat(document.getElementById('em-mat').value)||0;
-  let status=document.getElementById('em-status').value;
-  if(tipo==='ocup'&&status==='Aberto')status='Em andamento';
+  let status=normManutStatus(document.getElementById('em-status').value);
   arr[idx]={...arr[idx],status,dtSol:document.getElementById('em-dt-sol').value,dtPrev:document.getElementById('em-dt-prev').value,resp:document.getElementById('em-resp').value,cond:document.getElementById('em-cond').value,prest:document.getElementById('em-prest').value,desc:document.getElementById('em-desc').value,dtConc:document.getElementById('em-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:document.getElementById('em-loc-deb').value,contas:document.getElementById('em-contas').value,recibo:document.getElementById('em-recibo').value,obs:document.getElementById('em-obs').value};
   finishEditModal('m-edit-manut',()=>{renderManut(tipo);updateDashboard();renderFin();toast('Chamado atualizado!');});
 }
@@ -2621,7 +2628,7 @@ function renderFin(){
         <td>${m.cond||'—'}</td>
         <td>${m.prest||'—'}</td>
         <td>${m.desc||'—'}</td>
-        <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
+        <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
         <td style="color:var(--green);font-weight:500">${fmtR(m.val)}</td>
         <td style="color:var(--cyan)">${fmtR(m.recKenlo)}</td>
         <td style="color:var(--yellow)">${fmtR(pagar.toFixed(2))}</td>
@@ -2634,15 +2641,15 @@ function renderFin(){
 function _fmtChamados(n){return n+' chamado'+(n!==1?'s':'');}
 function _dashModuloStats(arr,dateField){
   const src=arr||[];
-  const ok=_filterByDash(src,dateField||'dtSol').filter(m=>m.status==='Concluído').length;
-  const pend=src.filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length;
+  const ok=_filterByDash(src,dateField||'dtSol').filter(m=>normManutStatus(m.status)==='Concluído').length;
+  const pend=src.filter(m=>normManutStatus(m.status)==='Em andamento').length;
   return {ok,pend,total:ok+pend};
 }
 function updateDashboard(){
   try {
   // Imobiliária ativos
   const imobM=DB.manutencoes.imob||[];
-  const imobAtivos=imobM.filter(m=>m.status==='Aberto'||m.status==='Em andamento');
+  const imobAtivos=imobM.filter(m=>normManutStatus(m.status)==='Em andamento');
   const dsManu=document.getElementById('ds-manu');if(dsManu)dsManu.textContent=imobAtivos.length;
   const dsManuBadge=document.getElementById('ds-manu-badge');if(dsManuBadge)dsManuBadge.textContent=imobAtivos.length+' ativos';
   const mlist=document.getElementById('ds-manu-list');
@@ -2650,14 +2657,14 @@ function updateDashboard(){
     mlist.innerHTML=r.length?r.map(m=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)"><div style="flex:1"><div style="font-size:12px;font-weight:500">${m.desc||'—'}</div><div style="font-size:11px;color:var(--t3)">${m.cond||''} · ${m.status}</div></div></div>`).join(''):'<div style="padding:12px;color:var(--t3);font-size:12px;text-align:center">Nenhum chamado ativo</div>';}
   // Imóveis Ocupados Geral
   const ocupM=DB.manutencoes.ocup||[];
-  const ocupAtivos=ocupM.filter(m=>m.status==='Aberto'||m.status==='Em andamento');
+  const ocupAtivos=ocupM.filter(m=>normManutStatus(m.status)==='Em andamento');
   const dsOcup=document.getElementById('ds-ocup');if(dsOcup)dsOcup.textContent=ocupAtivos.length;
   const dsOcupBadge=document.getElementById('ds-ocup-badge');if(dsOcupBadge)dsOcupBadge.textContent=ocupAtivos.length+' ativos';
   const olist=document.getElementById('ds-ocup-list');
   if(olist){const r2=ocupAtivos.slice(0,3);
     olist.innerHTML=r2.length?r2.map(m=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)"><div style="flex:1"><div style="font-size:12px;font-weight:500">${m.desc||'—'}</div><div style="font-size:11px;color:var(--t3)">${m.cond||''} · ${m.status}</div></div></div>`).join(''):'<div style="padding:12px;color:var(--t3);font-size:12px;text-align:center">Nenhuma manutenção ativa</div>';}
   // Tarefas — puxar de TODOS os módulos
-  const allManutPend=[...imobM,...(DB.manutencoes.cond||[]),...ocupM].filter(m=>m.status==='Aberto'||m.status==='Em andamento');
+  const allManutPend=[...imobM,...(DB.manutencoes.cond||[]),...ocupM].filter(m=>normManutStatus(m.status)==='Em andamento');
   const procPend=DB.tasks.filter(t=>t.status!=='Concluída');
   const totalPend=procPend.length+allManutPend.length;
   const dsTaref=document.getElementById('ds-taref');if(dsTaref)dsTaref.textContent=totalPend;
@@ -2779,7 +2786,7 @@ function renderManutAgenda(){
         <div style="font-size:11.5px;color:var(--t3);margin-top:2px">${ev.cond||''} ${ev.prest?'· '+ev.prest:''}</div>
       </div>
       <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:var(--s2);color:${cls[ev.srcTipo]||'var(--t3)'}">${lbl[ev.srcTipo]||ev.srcTipo}</span>
-      <span class="bs ${MANUT_STATUS_CLS[ev.status]||'bs-ab'}">${ev.status||'—'}</span>
+      <span class="bs ${MANUT_STATUS_CLS[normManutStatus(ev.status)]||'bs-an'}">${normManutStatus(ev.status)||'—'}</span>
     </div>`).join('');
 }
 function clearManutAgendaFilter(){
@@ -2838,7 +2845,7 @@ function saveChkVisit(){
     DB.events.unshift(ev);
     // Criar chamado de manut cond
     if(manPrest){
-      const m={id:ID(),tipo:'cond',status:'Aberto',dtSol:dt,dtPrev:manDt,resp,cond:condNome,prest:manPrest,desc:manDesc,dtConc:'',val:0,mat:0,recKenlo:'0',manutKenlo:'',locDeb:'',contas:'',recibo:'Não',obs:'Gerado via checklist'};
+      const m={id:ID(),tipo:'cond',status:'Em andamento',dtSol:dt,dtPrev:manDt,resp,cond:condNome,prest:manPrest,desc:manDesc,dtConc:'',val:0,mat:0,recKenlo:'0',manutKenlo:'',locDeb:'',contas:'',recibo:'Não',obs:'Gerado via checklist'};
       DB.manutencoes.cond.unshift(m);
     }
     toast('Visita registrada e manutenção agendada!');
@@ -2935,7 +2942,7 @@ function gerarRelSemanal(){
   per.textContent=fmtDate(iniStr)+' a '+fmtDate(fimStr);
   const allManut=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup];
   const realizados=allManut.filter(m=>{const dt=m.dtConc||m.dtSol||'';return dt>=iniStr&&dt<=fimStr;});
-  const pendentes=allManut.filter(m=>m.status==='Aberto'||m.status==='Em andamento');
+  const pendentes=allManut.filter(m=>normManutStatus(m.status)==='Em andamento');
   const chks=DB.checklists.filter(v=>(v.dt||'')>=iniStr&&(v.dt||'')<=fimStr);
   // Proxima semana
   const proxIni=new Date(fimSem);proxIni.setDate(fimSem.getDate()+1);
@@ -3632,7 +3639,7 @@ function _gerarRelCore(){
   thead.innerHTML='<tr><th>Modulo</th><th>Status</th><th>Data Solic.</th><th>Cond./Imovel</th><th>Prestador/Resp.</th><th>Descricao</th><th>Valor</th><th style="color:var(--cyan)">Receita manut. imob.</th></tr>';
   tbody.innerHTML=displayData.map(m=>`<tr>
     <td><span style="font-size:11px;padding:2px 7px;border-radius:20px;background:var(--s2)">${m._modulo||'—'}</span></td>
-    <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span></td>
+    <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span></td>
     <td>${fmtDate(m.dtSol)}</td>
     <td>${m.cond||'—'}</td>
     <td>${m.prest||'—'}</td>
@@ -3769,7 +3776,7 @@ function checarAlertasChk(){
 function gerarRelManut(tipo){
   const titulos={imob:'Executadas pela Imobiliária',cond:'Manutenções Condomínios'};
   const arr=(DB.manutencoes[tipo]||[]);
-  const pend=arr.filter(m=>m.status==='Em andamento'||m.status==='Aberto');
+  const pend=arr.filter(m=>normManutStatus(m.status)==='Em andamento');
   const conc=arr.filter(m=>m.status==='Concluído');
   const rec=arr.reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
   const w=window.open('','_blank');
@@ -3854,20 +3861,23 @@ function removeAno(a){
   renderAnos();toast('Ano removido!');
 }
 
-// ─── SEED MANUTENÇÕES (desativado — cadastro manual) ───
+// ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
+const AGER_SEED_VER='20260623_ocup_cond';
 
 function applyManutResetIfNeeded(){
   if(localStorage.getItem('ga_manut_clear')===MANUT_CLEAR_VER) return false;
   if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
   ['imob','cond','ocup','proc','ager'].forEach(k=>{ DB.manutencoes[k]=[]; });
   localStorage.setItem('ga_manut_seed','manual');
+  localStorage.removeItem('ga_ager_seed');
   return true;
 }
 function markManutResetSynced(){
   localStorage.setItem('ga_manut_clear',MANUT_CLEAR_VER);
 }
 window.applyManutResetIfNeeded=applyManutResetIfNeeded;
+window.normalizeManutStatuses=normalizeManutStatuses;
 window.markManutResetSynced=markManutResetSynced;
 
 function normalizeManutRecord(m){
@@ -3890,10 +3900,31 @@ function manutTotal(){
   return ['imob','cond','ocup','ager'].reduce((s,k)=>s+((DB.manutencoes[k]||[]).length),0);
 }
 
+async function loadAgerSeed(){
+  try{
+    const hasAger=(DB.manutencoes?.ager||[]).length>=50;
+    if(localStorage.getItem('ga_ager_seed')===AGER_SEED_VER&&hasAger) return false;
+    const r=await fetch('./gestao-manut-seed.json?v='+AGER_SEED_VER);
+    if(!r.ok) return false;
+    const seed=await r.json();
+    const rows=(seed.ager||[]).map(normalizeManutRecord);
+    if(!rows.length) return false;
+    if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+    DB.manutencoes.ager=rows.map(m=>({...m,tipo:'ager',status:normManutStatus(m.status)}));
+    localStorage.setItem('ga_ager_seed',AGER_SEED_VER);
+    if(typeof window.gaCloudSave==='function') window.gaCloudSave();
+    return true;
+  }catch(e){
+    console.warn('loadAgerSeed:',e);
+    return false;
+  }
+}
+
 async function loadManutSeed(){
-  return false;
+  return loadAgerSeed();
 }
 window.ensureManutSeed=loadManutSeed;
+window.loadAgerSeed=loadAgerSeed;
 
 function hydrateGestaoFromCache(){
   try{
@@ -3956,16 +3987,21 @@ function renderGestaoAll(){
     if(atl) atl.textContent = fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
     const hadCache=hydrateGestaoFromCache();
     const didReset=applyManutResetIfNeeded();
-    if(didReset||hadCache) renderGestaoVisible();
-    else window._gestaoPendingRender=true;
+    window._gestaoPendingRender=!didReset&&!hadCache;
     if(didReset) window._gestaoNeedsManutPush=true;
-    document.addEventListener('ga-cloud-ready',()=>{
-      if(window._gestaoPendingRender){
-        hydrateGestaoFromCache();
-        applyManutResetIfNeeded();
-        renderGestaoVisible();
-        window._gestaoPendingRender=false;
-      }
+    loadAgerSeed().then(loaded=>{
+      normalizeManutStatuses();
+      if(loaded) window._gestaoNeedsManutPush=true;
+      renderGestaoVisible();
+      window._gestaoPendingRender=false;
+    });
+    document.addEventListener('ga-cloud-ready',async()=>{
+      hydrateGestaoFromCache();
+      applyManutResetIfNeeded();
+      await loadAgerSeed();
+      normalizeManutStatuses();
+      renderGestaoVisible();
+      window._gestaoPendingRender=false;
     });
     setTimeout(()=>{
       if(window._gestaoPendingRender){

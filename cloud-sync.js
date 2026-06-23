@@ -92,16 +92,22 @@
         if(typeof window.applyManutResetIfNeeded==='function' && window.applyManutResetIfNeeded()){
           needsPush=true;
         }
-        cacheLocalState(DB);
-        if(typeof window.renderGestaoFast==='function'){
-          window.renderGestaoFast();
-        } else if(typeof updateDashboard==='function'){
-          updateDashboard();
-        }
-        if(needsPush||window._gestaoNeedsManutPush){
-          window._gestaoNeedsManutPush=false;
-          setTimeout(()=>pushState('Manutenções zeradas'),400);
-        }
+        if(typeof window.normalizeManutStatuses==='function') window.normalizeManutStatuses();
+        const loadAger=typeof window.loadAgerSeed==='function'?window.loadAgerSeed():Promise.resolve(false);
+        Promise.resolve(loadAger).then(loaded=>{
+          if(loaded) needsPush=true;
+          cacheLocalState(DB);
+          if(typeof window.renderGestaoFast==='function'){
+            window.renderGestaoFast();
+          } else if(typeof updateDashboard==='function'){
+            updateDashboard();
+          }
+          if(needsPush||window._gestaoNeedsManutPush){
+            window._gestaoNeedsManutPush=false;
+            setTimeout(()=>pushState('Seed assistente carregado'),400);
+          }
+        });
+        return;
       }
     }finally{
       setTimeout(()=>{ applyingRemote=false; }, 150);
