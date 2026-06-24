@@ -2637,7 +2637,7 @@ function rDash(){
     <div class="card c-pan" onclick="go('inadimplentes',null)"><div class="card-n">${atrasos}</div><div class="card-l"><svg class="ico" viewBox="0 0 24 24"><path d="M10.3 4l-7 12A2 2 0 0 0 5 19h14a2 2 0 0 0 1.7-3l-7-12a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> Inadimp./Atrasos</div></div>
   `;
   // alertas
-  const al=d.rescisoes.filter(r=>r.status==='Inadimplente'||getP(r.id).pct<30).slice(0,8);
+  const al=d.rescisoes.filter(r=>r.status==='Em Andamento'&&getP(r.id).pct<30).slice(0,8);
   document.getElementById('d-alertas').innerHTML=al.length?al.map(r=>`<div style="padding:6px 10px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px"><b style="color:var(--p);min-width:80px;font-size:12px">${r.codigo}</b><span style="flex:1;font-size:11px;color:var(--tl)">${r.inquilino||'-'}</span>${sbadge(r.status)}</div>`).join(''):emptyHtml('Sem alertas');
   // vencimentos
   const venc=getAllVenc().filter(v=>{const dv=ld(v.data)||ldNow();return dv>=hoje;}).sort((a,b)=>new Date(a.data)-new Date(b.data)).slice(0,10);
