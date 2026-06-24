@@ -410,28 +410,23 @@ body{visibility:visible!important}
       <option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option>
       <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
     </select>
-    <button class="btn btn-g btn-s" onclick="imprimirRealizadas(&#39;todas&#39;)">Imprimir todas realizadas</button>
   </div>
 
   <!-- ─ Panorama: stats por módulo ─ -->
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:20px">
     <div class="stat gr" style="cursor:pointer" onclick="nav(&#39;manut-imob&#39;)">
-      <button class="btn btn-g btn-s" style="position:absolute;top:8px;right:8px;padding:3px 7px;font-size:10px" onclick="event.stopPropagation();imprimirRealizadas(&#39;imob&#39;)">Imprimir</button>
       <div class="stat-lbl">Executadas pela Imobiliária</div><div class="stat-val" id="ds-imob-ok">0</div>
       <div class="stat-sub" id="ds-imob-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat yl" style="cursor:pointer" onclick="nav(&#39;manut-cond&#39;)">
-      <button class="btn btn-g btn-s" style="position:absolute;top:8px;right:8px;padding:3px 7px;font-size:10px" onclick="event.stopPropagation();imprimirRealizadas(&#39;cond&#39;)">Imprimir</button>
       <div class="stat-lbl">Condomínios — Realizadas</div><div class="stat-val" id="ds-cond-ok">0</div>
       <div class="stat-sub" id="ds-cond-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat cy" style="cursor:pointer" onclick="nav(&#39;manut-ocup&#39;)">
-      <button class="btn btn-g btn-s" style="position:absolute;top:8px;right:8px;padding:3px 7px;font-size:10px" onclick="event.stopPropagation();imprimirRealizadas(&#39;ocup&#39;)">Imprimir</button>
       <div class="stat-lbl">Imóveis Ocupados — Realizadas</div><div class="stat-val" id="ds-ocup-ok">0</div>
       <div class="stat-sub" id="ds-ocup-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat pu" style="cursor:pointer" onclick="nav(&#39;manut-ager&#39;)">
-      <button class="btn btn-g btn-s" style="position:absolute;top:8px;right:8px;padding:3px 7px;font-size:10px" onclick="event.stopPropagation();imprimirRealizadas(&#39;ager&#39;)">Imprimir</button>
       <div class="stat-lbl">Manut. Assistente — Realizadas</div><div class="stat-val" id="ds-ager-ok">0</div>
       <div class="stat-sub" id="ds-ager-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
@@ -491,7 +486,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mager-an">0</div></div>
-    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mager-ok">0</div></div>
+    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mager-ok">0</div><button class="btn btn-g btn-s" style="margin-top:10px;padding:4px 10px;font-size:11px" onclick="imprimirRealizadas(&#39;ager&#39;)">Imprimir</button></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mager-ca">0</div></div>
   </div>
 
@@ -534,7 +529,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mi-an">0</div></div>
-    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mi-ok">0</div></div>
+    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mi-ok">0</div><button class="btn btn-g btn-s" style="margin-top:10px;padding:4px 10px;font-size:11px" onclick="imprimirRealizadas(&#39;imob&#39;)">Imprimir</button></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mi-ca">0</div></div>
     <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mi-rec">R$0</div></div>
   </div>
@@ -578,7 +573,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mc-an">0</div></div>
-    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div></div>
+    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div><button class="btn btn-g btn-s" style="margin-top:10px;padding:4px 10px;font-size:11px" onclick="imprimirRealizadas(&#39;cond&#39;)">Imprimir</button></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mc-ca">0</div></div>
     <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mc-rec">R$0</div></div>
   </div>
@@ -619,7 +614,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mo-an">0</div></div>
-    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div></div>
+    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div><button class="btn btn-g btn-s" style="margin-top:10px;padding:4px 10px;font-size:11px" onclick="imprimirRealizadas(&#39;ocup&#39;)">Imprimir</button></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
     <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mo-rec">R$0</div></div>
   </div>
