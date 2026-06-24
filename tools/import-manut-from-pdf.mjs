@@ -70,7 +70,8 @@ function cleanCond(raw) {
   let c = clean(raw);
   if (!c || c === '-') return '-';
   const codeM = c.match(/\b([A-Z]{2}\d{3,4}(?:\/\d+)?|KN\d+(?:\/\d+)?)\b/i);
-  if (codeM && c.indexOf(codeM[1]) < 45) return codeM[1].toUpperCase();
+  if (codeM && (c.indexOf(codeM[1]) < 45 || /R\$\s*[\d.,]+/.test(c))) return codeM[1].toUpperCase();
+  c = c.replace(/\s+R\$\s*[\d.,]+.*$/i, '').trim();
   const edM = c.match(/^(Ed\.[^–\-]+?|Cond\.[^–\-]+?|Osvaldo Rocha|Stutz Ba[\w]*|Top Studio[^–\-]*|Portal[\w\s]{0,30}|Imperador|Universit[\w\s]{0,20}|Paulo Klotz|Rodolpho|Tateiva|Farias|Instagram[\w\s]{0,20}|Chociai|Essencia do sabor)/i);
   if (edM) return clean(edM[1]).slice(0, 55);
   if (c.length > 55) c = c.split(/\s+(?:Anderson|Deodato|Tiago|Wesley|portão|elevador|particular|par[\w]* prop)/i)[0].trim();

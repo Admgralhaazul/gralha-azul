@@ -1,9 +1,15 @@
-﻿?<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- saved from url=(0051)file:///C:/Users/Kamile/Downloads/gestao%20(3).html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestão Administrativa</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Gestão Administrativa — Gralha Azul</title>
+<link rel="icon" type="image/png" href="./assets/logo-gralha-azul.png">
+<link rel="apple-touch-icon" href="./assets/logo-gralha-azul.png">
+<meta name="theme-color" content="#1e3a5f">
 <style id="ga-critical-ui">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 *{font-family:Inter,"Segoe UI",Arial,sans-serif!important}
@@ -182,7 +188,7 @@ textarea.fc{resize:vertical;min-height:80px}
 .status-pill.sel-ab{background:#FEF9C3!important;border-color:#FDE047!important;color:#854D0E!important;font-weight:600!important}
 .status-pill.sel-an{background:#FFFBEB!important;border-color:#FDE68A!important;color:#92400E!important;font-weight:600!important}
 .status-pill.sel-ok{background:#ECFDF5!important;border-color:#86EFAC!important;color:#166534!important;font-weight:600!important}
-.status-pill.sel-ca{background:#F8FAFC!important;border-color:#CBD5E1!important;color:#64748B!important;font-weight:600!important}
+.status-pill.sel-ca{background:#CBD5E1!important;border-color:#475569!important;color:#1E293B!important;font-weight:700!important;box-shadow:inset 0 0 0 1px rgba(71,85,105,.2)!important}
 .status-pill.sel-at{background:#FFF7ED!important;border-color:#FDBA74!important;color:#C2410C!important;font-weight:600!important}
 
 /* Date range */
@@ -294,6 +300,7 @@ textarea.fc{resize:vertical;min-height:80px}
 /* ─── EMPTY ─── */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 20px;color:var(--t3);text-align:center;gap:10px}
 .empty-mark,.empty-i{width:36px;height:36px;margin:0 auto 8px;border-radius:5px;background:#F1F5F9;border:1px solid #E2E8F0}
+.empty-mark.icon-ok::after,.empty-mark.icon-check::after{background:#22C55E;border:2px solid #16A34A;width:14px;height:14px;margin-top:10px;border-radius:50%;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
 .empty-i{display:none!important}
 .empty p{font-size:13.5px;max-width:260px;line-height:1.5}
 
@@ -319,7 +326,8 @@ hr.div{border:none;border-top:1px solid var(--border);margin:18px 0}
 .tag-sel:hover{border-color:var(--border2);color:var(--t1)}
 .tag-sel.on{background:rgba(79,142,247,.1);border-color:var(--blue);color:var(--blue)}
 </style>
-<link rel="stylesheet" href="./enterprise-premium.css?v=26">
+<link rel="stylesheet" href="./enterprise-premium.css?v=36">
+<script src="./ga-empty.js?v=2"></script>
 <style id="ga-live-fixes">
 #ga-cloud-status,#ga-cloud-tools,#sync-indicator{display:none!important;visibility:hidden!important}
 .ga-hide-cloud{display:none!important}
@@ -340,8 +348,8 @@ body{visibility:visible!important}
 #sidebar .ni,#sidebar .sb-item{font-size:12px!important;font-weight:500!important;padding:8px 14px!important}
 #sidebar .sb-module-switch{margin:0 10px 10px!important;padding:0!important}
 #sidebar .sb-module-lbl{font-size:9px!important;letter-spacing:.12em!important;text-transform:uppercase!important;opacity:.55!important;margin-bottom:5px!important}
-#sidebar .sb-module-row{display:flex!important;border-radius:5px!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important}
-#sidebar .sb-module-row .ga-module-link{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;flex:1!important}
+#sidebar .sb-module-row{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;border-radius:5px!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important}
+#sidebar .sb-module-row .ga-module-link{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;flex:none!important;width:100%!important;box-sizing:border-box!important}
 #sidebar .sb-sec{font-size:9.5px!important}
 </style>
 </head>
@@ -474,7 +482,7 @@ body{visibility:visible!important}
 <div id="view-manut-ager" class="view">
   <div class="back-btn" onclick="nav(&#39;dashboard&#39;)">← Voltar ao Dashboard</div>
   <div class="sh">
-    <div><div class="sh-t">Manut. Assistente</div><div class="sh-s">Chamados em andamento, concluídos e atrasados</div></div>
+    <div><div class="sh-t">Manut. Assistente</div><div class="sh-s">Chamados em andamento, concluídos e cancelados</div></div>
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mager-an">0</div></div>
@@ -483,7 +491,7 @@ body{visibility:visible!important}
   </div>
 
   <div class="filter-bar" id="mager-filter-bar">
-    <div class="search-wrap"><input type="text" id="mager-search" oninput="filterManut(&#39;ager&#39;)" placeholder="Buscar..."></div>
+    <div class="search-wrap"><input type="text" id="mager-search" oninput="debounceFilterManut(&#39;ager&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mager-ano" onchange="filterManut(&#39;ager&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
     <select class="fc" id="mager-mes" onchange="filterManut(&#39;ager&#39;)" style="width:auto;min-width:130px"><option value="">Todos meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
     <div class="date-range">
@@ -502,7 +510,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mager-tbody"></tbody>
     </table>
@@ -517,16 +525,17 @@ body{visibility:visible!important}
 <div id="view-manut-imob" class="view">
   <div class="back-btn" onclick="nav(&#39;manut-home&#39;)">← Voltar para Manutenções</div>
   <div class="sh">
-    <div><div class="sh-t">Manutenções — Executadas pela Imobiliária</div><div class="sh-s">Chamados abertos, em andamento e concluídos</div></div>
+    <div><div class="sh-t">Manutenções — Executadas pela Imobiliária</div><div class="sh-s">Chamados em andamento e concluídos</div></div>
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mi-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mi-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mi-ca">0</div></div>
+    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mi-rec">R$0</div></div>
   </div>
   <!-- Status multi-select -->
   <div class="filter-bar" id="mi-filter-bar">
-    <div class="search-wrap"><input type="text" id="mi-search" oninput="filterManut(&#39;imob&#39;)" placeholder="Buscar..."></div>
+    <div class="search-wrap"><input type="text" id="mi-search" oninput="debounceFilterManut(&#39;imob&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mi-ano" onchange="filterManut(&#39;imob&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
     <select class="fc" id="mi-mes" onchange="filterManut(&#39;imob&#39;)" style="width:auto;min-width:130px"><option value="">Todos meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
     <div class="date-range">
@@ -545,7 +554,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mi-tbody"></tbody>
     </table>
@@ -565,11 +574,11 @@ body{visibility:visible!important}
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mc-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div></div>
-    <div class="stat rd"><div class="stat-lbl">Atrasados</div><div class="stat-val" id="mc-at">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mc-ca">0</div></div>
+    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mc-rec">R$0</div></div>
   </div>
   <div class="filter-bar" id="mc-filter-bar">
-    <div class="search-wrap"><input type="text" id="mc-search" oninput="filterManut(&#39;cond&#39;)" placeholder="Buscar..."></div>
+    <div class="search-wrap"><input type="text" id="mc-search" oninput="debounceFilterManut(&#39;cond&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mc-ano" onchange="filterManut(&#39;cond&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
     <select class="fc" id="mc-mes" onchange="filterManut(&#39;cond&#39;)" style="width:auto;min-width:130px"><option value="">Todos meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
     <div class="date-range">
@@ -588,7 +597,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mc-tbody"></tbody>
     </table>
@@ -607,10 +616,11 @@ body{visibility:visible!important}
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mo-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
+    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mo-rec">R$0</div></div>
   </div>
 
   <div class="filter-bar" id="mo-filter-bar">
-    <div class="search-wrap"><input type="text" id="mo-search" oninput="filterManut(&#39;ocup&#39;)" placeholder="Buscar..."></div>
+    <div class="search-wrap"><input type="text" id="mo-search" oninput="debounceFilterManut(&#39;ocup&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mo-ano" onchange="filterManut(&#39;ocup&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
     <select class="fc" id="mo-mes" onchange="filterManut(&#39;ocup&#39;)" style="width:auto;min-width:130px"><option value="">Todos meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
     <div class="date-range">
@@ -629,7 +639,7 @@ body{visibility:visible!important}
     <div class="tw"><table class="manut-table"><thead><tr>
     <th>Status</th><th>Data Solic.</th><th>Prev./Conclusão</th><th>Responsável</th>
     <th>Contrato/Cond.</th><th>Prestador</th><th>Descrição Serviço</th>
-    <th>Valor Fechado</th><th>Lanç. Manutenção</th><th>Recibo</th><th>OBS</th><th style="min-width:80px;text-align:right">Ações</th>
+    <th>Valor Fechado</th><th style="color:var(--cyan)">Receita manut. imob.</th><th>Recibo</th><th>OBS</th><th style="min-width:80px;text-align:right">Ações</th>
   </tr></thead><tbody id="mo-tbody"></tbody></table></div>
   <div id="mo-empty" class="empty"><div class="empty-mark"></div><p>Nenhum chamado cadastrado.<br>Clique em "+ Novo Chamado" para começar.</p></div>
 
@@ -820,7 +830,7 @@ body{visibility:visible!important}
     <div>
       <div class="card">
         <div class="card-h"><div class="card-t">Próximos Vencimentos</div></div>
-        <div id="ag-venc" style="display:flex;flex-direction:column;gap:6px"><div class="empty" style="padding:20px"><div class="empty-mark"></div><p style="font-size:12px">Sem vencimentos próximos</p></div></div>
+        <div id="ag-venc" style="display:flex;flex-direction:column;gap:6px"><div class="empty" style="padding:20px"><div class="empty-mark icon-check"></div><p style="font-size:12px">Sem vencimentos próximos</p></div></div>
       </div>
     </div>
   </div>
@@ -867,30 +877,30 @@ body{visibility:visible!important}
         <label class="fl">Módulos (selecione um ou mais)</label>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px" id="rel-tipos">
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="imob" onchange="gerarRel()" style="accent-color:var(--green)"> Executadas pela Imobiliária</label>
+            <input type="checkbox" value="imob" onchange="marcarRelPendente()" style="accent-color:var(--green)"> Executadas pela Imobiliária</label>
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="cond" onchange="gerarRel()" style="accent-color:var(--yellow)"> Condomínios</label>
+            <input type="checkbox" value="cond" onchange="marcarRelPendente()" style="accent-color:var(--yellow)"> Condomínios</label>
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="ocup" onchange="gerarRel()" style="accent-color:var(--cyan)"> Imóveis Ocupados Geral</label>
+            <input type="checkbox" value="ocup" onchange="marcarRelPendente()" style="accent-color:var(--cyan)"> Imóveis Ocupados Geral</label>
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="ager" onchange="gerarRel()" style="accent-color:var(--purple)"> Manutenções — Assistente Gerente</label>
+            <input type="checkbox" value="ager" onchange="marcarRelPendente()" style="accent-color:var(--purple)"> Manutenções — Assistente Gerente</label>
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--s2)">
-            <input type="checkbox" value="proc" onchange="gerarRel()" style="accent-color:var(--blue)"> Processos Administrativos</label>
+            <input type="checkbox" value="proc" onchange="marcarRelPendente()" style="accent-color:var(--blue)"> Processos Administrativos</label>
         </div>
       </div>
       <div class="fg"><label class="fl">Ano</label>
-        <select class="fc" id="rel-ano" onchange="gerarRel()"><option value="">Todos os anos</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
+        <select class="fc" id="rel-ano" onchange="marcarRelPendente()"><option value="">Todos os anos</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
       </div>
       <div class="fg"><label class="fl">Mês</label>
-        <select class="fc" id="rel-mes" onchange="gerarRel()"><option value="">Todos os meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
+        <select class="fc" id="rel-mes" onchange="marcarRelPendente()"><option value="">Todos os meses</option><option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option><option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option><option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
       </div>
-      <div class="fg"><label class="fl">Período Início</label><input type="date" class="fc" id="rel-ini" onchange="gerarRel()"></div>
-      <div class="fg"><label class="fl">Período Fim</label><input type="date" class="fc" id="rel-fim" onchange="gerarRel()"></div>
+      <div class="fg"><label class="fl">Período Início</label><input type="date" class="fc" id="rel-ini" onchange="marcarRelPendente()"></div>
+      <div class="fg"><label class="fl">Período Fim</label><input type="date" class="fc" id="rel-fim" onchange="marcarRelPendente()"></div>
       <div class="fg"><label class="fl">Prestador</label>
-        <select class="fc" id="rel-prest" onchange="gerarRel()"><option value="">Todos</option><option value="Tiago Fermiano">Tiago Fermiano</option><option value="Rafael">Rafael</option><option value="Jeferson">Jeferson</option><option value="Rodrigo">Rodrigo</option><option value="Anderson BH">Anderson BH</option></select>
+        <select class="fc" id="rel-prest" onchange="marcarRelPendente()"><option value="">Todos</option><option value="Tiago Fermiano">Tiago Fermiano</option><option value="Rafael">Rafael</option><option value="Jeferson">Jeferson</option><option value="Rodrigo">Rodrigo</option><option value="Anderson BH">Anderson BH</option></select>
       </div>
       <div class="fg"><label class="fl">Status</label>
-        <select class="fc" id="rel-status" onchange="gerarRel()">
+        <select class="fc" id="rel-status" onchange="marcarRelPendente()">
           <option value="">Todos</option>
           <option value="Em andamento">Em andamento</option><option value="Concluído">Concluído</option>
         </select>
@@ -1176,7 +1186,7 @@ body{visibility:visible!important}
     <div class="mc">
       <input type="hidden" id="nm-tipo">
       <div class="fr">
-        <div class="fg"><label class="fl">Status *</label><select class="fc" id="nm-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option><option>Atrasado</option><option>Cancelado</option></select></div>
+        <div class="fg"><label class="fl">Status *</label><select class="fc" id="nm-status"><option>Em andamento</option><option>Concluído</option><option>Cancelado</option></select></div>
         <div class="fg"><label class="fl">Data da Solicitação</label><input type="date" class="fc" id="nm-dt-sol"></div>
         <div class="fg"><label class="fl">Prev./Finalização</label><input type="date" class="fc" id="nm-dt-prev"></div>
         <div class="fg"><label class="fl">Responsável</label><input class="fc" id="nm-resp" placeholder="Nome do responsável..." autocomplete="off"></div>
@@ -1205,7 +1215,7 @@ body{visibility:visible!important}
     <div class="mc">
       <input type="hidden" id="em-id"><input type="hidden" id="em-tipo">
       <div class="fr">
-        <div class="fg"><label class="fl">Status</label><select class="fc" id="em-status"><option>Aberto</option><option>Em andamento</option><option>Concluído</option><option>Atrasado</option><option>Cancelado</option></select></div>
+        <div class="fg"><label class="fl">Status</label><select class="fc" id="em-status"><option>Em andamento</option><option>Concluído</option><option>Cancelado</option></select></div>
         <div class="fg"><label class="fl">Data da Solicitação</label><input type="date" class="fc" id="em-dt-sol"></div>
         <div class="fg"><label class="fl">Prev./Finalização</label><input type="date" class="fc" id="em-dt-prev"></div>
         <div class="fg"><label class="fl">Responsável</label><input class="fc" id="em-resp" placeholder="Nome do responsável..." autocomplete="off"></div>
@@ -1464,9 +1474,19 @@ function nav(id){
   document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+navHighlight+"'"))n.classList.add('active')});
   document.getElementById('tb-title').textContent=TITLES[id]||TITLES[navHighlight]||'Gestão Administrativa';
   if(id==='condominios')renderConds();
-  if(id==='financeiro'){fillPrestSelects();renderPrestCards();fillRelSelects();if(DB._restoreFinTab!==undefined){restoreFinTab(DB._restoreFinTab);delete DB._restoreFinTab;}}
+  if(id==='financeiro'){
+    fillPrestSelects();
+    fillRelSelects();
+    const tabIdx=DB._restoreFinTab!==undefined?DB._restoreFinTab:(document.getElementById('fin-tab-0')?.style.display==='block'?0:1);
+    restoreFinTab(tabIdx);
+    delete DB._restoreFinTab;
+  }
   if(id==='acesso'){renderUsers();renderLog();renderColabs();renderPrestListAcesso();renderAnos();}
   if(id==='dashboard')updateDashboard();
+  if(id==='manut-imob')renderManut('imob');
+  if(id==='manut-cond')renderManut('cond');
+  if(id==='manut-ocup')renderManut('ocup');
+  if(id==='manut-ager')renderManut('ager');
   if(id==='processos'){renderTasks();renderNotifs();renderProcTab();}
   if(id==='manut-home'){nav('dashboard');return;}
   if(id==='manut-agenda')renderManutAgenda();
@@ -1487,6 +1507,7 @@ function openM(id,tipo){
     document.getElementById('manut-modal-title').textContent=tipo==='imob'?'Novo Chamado — Imobiliária':tipo==='cond'?'Novo Chamado — Condomínio':tipo==='ocup'?'Novo Chamado — Imóveis Ocupados':tipo==='proc'?'Processo em Andamento':'Novo Chamado';
     document.getElementById('nm-dt-sol').value=today();
     setManutStatusOptions(tipo,'nm-status');
+    document.getElementById('nm-status').value='Em andamento';
   }
   if(id==='m-new-task'){
     document.getElementById('nt-titulo').value='';
@@ -1519,8 +1540,16 @@ function finishEditModal(modalId,afterSave){
 }
 function setManutStatusOptions(tipo,selectId){
   const sel=document.getElementById(selectId);if(!sel)return;
-  Array.from(sel.options).forEach(o=>{if(o.value==='Aberto')o.hidden=tipo==='ocup';});
-  if(tipo==='ocup'&&(sel.value==='Aberto'||!sel.value))sel.value='Em andamento';
+  if(!sel.value||sel.value==='Aberto'||sel.value==='Atrasado')sel.value='Em andamento';
+}
+function normManutStatus(s){
+  if(s==='Aberto'||s==='Atrasado')return 'Em andamento';
+  return s||'Em andamento';
+}
+function normalizeManutStatuses(){
+  ['imob','cond','ocup','proc','ager'].forEach(k=>{
+    (DB.manutencoes[k]||[]).forEach(m=>{m.status=normManutStatus(m.status);});
+  });
 }
 document.querySelectorAll('.moverlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
 
@@ -1647,8 +1676,7 @@ function saveManut(){
   if(!cond.trim()){toast('Preencha o contrato / condomínio!');return;}
   const val=parseFloat(document.getElementById('nm-val').value)||0;
   const mat=parseFloat(document.getElementById('nm-mat').value)||0;
-  let status=document.getElementById('nm-status').value;
-  if(tipo==='ocup'&&status==='Aberto')status='Em andamento';
+  let status=normManutStatus(document.getElementById('nm-status').value);
   const m={id:ID(),tipo,status,dtSol:document.getElementById('nm-dt-sol').value,dtPrev:document.getElementById('nm-dt-prev').value,resp:document.getElementById('nm-resp').value,cond:cond.trim(),prest:document.getElementById('nm-prest').value,desc:document.getElementById('nm-desc').value,dtConc:document.getElementById('nm-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:(document.getElementById('nm-loc-deb')||{}).value||'',contas:(document.getElementById('nm-contas')||{}).value||'',recibo:document.getElementById('nm-recibo').value,obs:document.getElementById('nm-obs').value};
   if(!DB.manutencoes[tipo])DB.manutencoes[tipo]=[];
   DB.manutencoes[tipo].unshift(m);
@@ -1658,7 +1686,50 @@ function saveManut(){
   renderManut(tipo);updateDashboard();renderFin();toast('Chamado cadastrado!');logAccess('Criou chamado '+m.tipo,'Manutenções');
   });
 }
-function filterManut(tipo){
+const MANUT_LIST_CAP=300;
+const _manutFilterTimers={};
+
+function debounceFilterManut(tipo){
+  clearTimeout(_manutFilterTimers[tipo]);
+  _manutFilterTimers[tipo]=setTimeout(()=>filterManut(tipo,true),100);
+}
+
+function getActiveGestaoView(){
+  const v=document.querySelector('.view.active');
+  return v?(v.id||'').replace('view-',''):'dashboard';
+}
+
+function activeManutTipo(){
+  const map={'manut-imob':'imob','manut-cond':'cond','manut-ocup':'ocup','manut-ager':'ager'};
+  return map[getActiveGestaoView()]||null;
+}
+
+function updateAllManutStats(){
+  ['imob','cond','ocup','ager'].forEach(updateManutStats);
+}
+
+function sortManutRows(arr,tipo){
+  const hoje=new Date();hoje.setHours(0,0,0,0);
+  const prioridade={'Em andamento':0,'Concluído':1,Cancelado:2};
+  return arr.map(m=>{
+    const st=normManutStatus(m.status);
+    if(st==='Concluído')return {...m,_prio:3,_iminente:false,_dias:999};
+    let _iminente=false,_dias=999;
+    if(m.dtPrev){
+      const dt=new Date(m.dtPrev);
+      _dias=Math.ceil((dt-hoje)/86400000);
+      if(_dias<=14)_iminente=true;
+    }
+    const _prio=_iminente?-1:(prioridade[st]??2);
+    return {...m,_prio,_iminente,_dias,_hoje:_dias===0};
+  }).sort((a,b)=>{
+    if(a._prio!==b._prio)return a._prio-b._prio;
+    if(a.status==='Concluído')return (b.dtConc||b.dtSol||'').localeCompare(a.dtConc||a.dtSol||'');
+    return (a.dtSol||'').localeCompare(b.dtSol||'');
+  });
+}
+
+function filterManut(tipo,immediate){
   if(tipo==='proc'){renderProcTab3();return;}
   const pfx=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
   const q=(document.getElementById(pfx+'-search')?.value||'').toLowerCase();
@@ -1668,7 +1739,7 @@ function filterManut(tipo){
   const mes=document.getElementById(pfx+'-mes')?.value||'';
   const activePills=Array.from(document.querySelectorAll('#'+pfx+'-status-pills .status-pill')).filter(p=>p.classList.length>1).map(p=>p.dataset.s);
   let arr=(DB.manutencoes[tipo]||[]).filter(m=>{
-    if(activePills.length&&!activePills.includes(m.status))return false;
+    if(activePills.length&&!activePills.includes(normManutStatus(m.status)))return false;
     if(q&&!(m.desc+m.cond+m.prest+m.resp).toLowerCase().includes(q))return false;
     // Para concluídos, filtrar por data de conclusão; para outros por data de solicitação
     const dtRef=m.status==='Concluído'?(m.dtConc||m.dtSol||''):(m.dtSol||'');
@@ -1692,41 +1763,19 @@ function toggleStatus(el,cls,tipo){
   filterManut(tipo);
 }
 function renderManutRows(arr,tipo){
-  if(tipo==='ocup')(DB.manutencoes.ocup||[]).forEach(m=>{if(m.status==='Aberto')m.status='Em andamento';});
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
   const tbody=document.getElementById(pf+'-tbody');
   const emp=document.getElementById(pf+'-empty');
-  // Marcar iminentes (dtPrev ≤ 14 dias, status != Concluído)
-  const hoje=new Date();hoje.setHours(0,0,0,0);
-  arr=arr.map(m=>{
-    if(m.status==='Concluído')return m;
-    if(m.dtPrev){
-      const dt=new Date(m.dtPrev);
-      const diff=Math.ceil((dt-hoje)/(1000*60*60*24));
-      if(diff<=14)return {...m,_iminente:true,_dias:diff,_hoje:(diff===0)};
-    }
-    return m;
-  });
-  // Iminentes sobem para o topo (dentro dos pendentes)
-  arr=[...arr.filter(m=>m._iminente),...arr.filter(m=>!m._iminente&&m.status!=='Concluído'&&m.status!=='Cancelado'),...arr.filter(m=>m.status==='Concluído'),...arr.filter(m=>m.status==='Cancelado')];
-  // Ordenar: pendentes primeiro (pela data de solicitação), concluídos depois
-  const prioridade={Aberto:0,'Em andamento':1,Atrasado:2,'Concluído':3,Cancelado:4};
-  arr=[...arr].sort((a,b)=>{
-    const pa=prioridade[a.status]??2, pb=prioridade[b.status]??2;
-    if(pa!==pb)return pa-pb;
-    // concluídos: mais recentes primeiro por dtConc
-    if(a.status==='Concluído'){
-      return (b.dtConc||b.dtSol||'').localeCompare(a.dtConc||a.dtSol||'');
-    }
-    // pendentes: mais antigos primeiro (dtSol asc)
-    return (a.dtSol||'').localeCompare(b.dtSol||'');
-  });
-  if(!arr.length){if(tbody)tbody.innerHTML='';if(emp)emp.style.display='flex';return}
+  arr=sortManutRows(arr,tipo);
+  const total=arr.length;
+  const capped=total>MANUT_LIST_CAP;
+  if(capped)arr=arr.slice(0,MANUT_LIST_CAP);
+  if(!total){if(tbody)tbody.innerHTML='';if(emp)emp.style.display='flex';return}
   if(emp)emp.style.display='none';
   const reciboCell=m=>m.recibo==='Sim'?'<span style="color:var(--t1);font-size:12px">Sim</span>':'<span style="color:var(--t3);font-size:12px">Não</span>';
   const actionsCell=(m,t)=>`<td style="text-align:right"><div class="td-actions" style="justify-content:flex-end">
           ${m.status!=='Concluído'&&m.status!=='Cancelado'?`<div class="btn-icon" onclick="concluirManutDireto('${m.id}','${t}')" title="Concluir" style="color:var(--green);font-weight:700;font-size:15px">✓</div>`:''}
-          <div class="btn-icon btn-act-edit" onclick="editManut('${m.id}','${t}')" title="Editar">Editar</div>
+          <div class="btn-icon btn-act-edit" data-edit-manut="${m.id}" data-manut-tipo="${t}" title="Editar">Editar</div>
           <div class="btn-icon" onclick="reopenManut('${m.id}')" title="Desfazer / Reabrir" style="color:var(--yellow)">↩</div>
         </div></td>`;
   const prevConcCell=m=>m.status==='Concluído'&&m.dtConc?fmtDate(m.dtConc):fmtDate(m.dtPrev);
@@ -1747,7 +1796,7 @@ function renderManutRows(arr,tipo){
     }
     if(tipo==='ocup'){
       return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
-      <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
+      <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
       <td>${fmtDate(m.dtSol)}</td>
       <td>${prevConcCell(m)}</td>
       <td>${fmt(m.resp)}</td>
@@ -1755,13 +1804,13 @@ function renderManutRows(arr,tipo){
       <td>${fmt(m.prest)}</td>
       <td class="td-obs" title="${m.desc}">${fmt(m.desc)}</td>
       <td>${fmtR(m.val)}</td>
-      <td>${fmtR(m.recKenlo)}</td>
+      <td style="color:var(--cyan);font-weight:600">${fmtR(m.recKenlo)}</td>
       <td>${reciboCell(m)}</td>
       <td class="td-obs">${m.obs||'—'}</td>
       ${actionsCell(m,tipo)}</tr>`;
     }
     return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
-      <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
+      <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
       <td>${fmtDate(m.dtSol)}</td>
       <td>${prevConcCell(m)}</td>
       <td>${fmt(m.resp)}</td>
@@ -1770,71 +1819,114 @@ function renderManutRows(arr,tipo){
       <td class="td-obs" title="${m.desc}">${fmt(m.desc)}</td>
       <td>${fmtR(m.val)}</td>
       <td>${fmtR(m.mat)}</td>
+      <td style="color:var(--cyan);font-weight:600">${fmtR(m.recKenlo)}</td>
       <td>${reciboCell(m)}</td>
       <td class="td-obs">${m.obs||'—'}</td>
-      ${actionsCell(m,tipo)}</tr>`;}).join('');
+      ${actionsCell(m,tipo)}</tr>`;}).join('')+(capped?`<tr><td colspan="13" style="text-align:center;padding:12px;font-size:12px;color:var(--t3);background:var(--s2)">Mostrando ${MANUT_LIST_CAP} de ${total} — use filtros para refinar</td></tr>`:'');
 }
 function updateManutStats(tipo){
-  const all=DB.manutencoes[tipo];
+  const all=DB.manutencoes[tipo]||[];
   const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
-  const abEl=document.getElementById(pf+'-ab');
-  if(abEl)abEl.textContent=all.filter(m=>m.status==='Aberto').length;
-  const anEl=document.getElementById(pf+'-an');
-  if(anEl)anEl.textContent=all.filter(m=>m.status==='Em andamento'||(tipo==='ocup'&&m.status==='Aberto')).length;
-  document.getElementById(pf+'-ok')&&(document.getElementById(pf+'-ok').textContent=all.filter(m=>m.status==='Concluído').length);
-  document.getElementById(pf+'-at')&&(document.getElementById(pf+'-at').textContent=all.filter(m=>m.status==='Atrasado').length);
-  document.getElementById(pf+'-ca')&&(document.getElementById(pf+'-ca').textContent=all.filter(m=>m.status==='Cancelado').length);
-  const pend=all.filter(m=>['Em andamento','Aberto','Atrasado'].includes(m.status)).length;
-  const pendEl=document.getElementById(pf+'-pend');
-  if(pendEl)pendEl.textContent=pend;
-  const rec=all.filter(m=>m.status==='Concluído').reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
-  document.getElementById(pf+'-rec')&&(document.getElementById(pf+'-rec').textContent='R$'+rec.toFixed(0));
+  let ab=0,an=0,ok=0,ca=0,rec=0;
+  for(const m of all){
+    const st=normManutStatus(m.status);
+    if(st==='Em andamento')an++;
+    else if(st==='Concluído'){ok++;rec+=parseFloat(m.recKenlo||0);}
+    else if(st==='Cancelado')ca++;
+  }
+  const abEl=document.getElementById(pf+'-ab');if(abEl)abEl.textContent=0;
+  const anEl=document.getElementById(pf+'-an');if(anEl)anEl.textContent=an;
+  const okEl=document.getElementById(pf+'-ok');if(okEl)okEl.textContent=ok;
+  const caEl=document.getElementById(pf+'-ca');if(caEl)caEl.textContent=ca;
+  const pend=an;
+  const pendEl=document.getElementById(pf+'-pend');if(pendEl)pendEl.textContent=pend;
+  const recEl=document.getElementById(pf+'-rec');if(recEl)recEl.textContent='R$'+rec.toFixed(0);
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
   const cnt=document.getElementById(cntMap[tipo]||'mi-cnt');
-  const okCnt=all.filter(m=>m.status==='Concluído').length;
-  const pendCnt=all.filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length;
-  if(cnt)cnt.textContent=(okCnt+pendCnt)+' chamado'+(okCnt+pendCnt!==1?'s':'');
+  const totalCnt=ok+pend;
+  if(cnt)cnt.textContent=totalCnt+' chamado'+(totalCnt!==1?'s':'');
 }
-function editManut(id,tipo){
-  const m=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup,...(DB.manutencoes.proc||[]),...(DB.manutencoes.ager||[])].find(x=>x.id===id);
-  if(!m){toast('Registro não encontrado!');return;}
-  if(!m)return;
-  DB.editingId=id;DB.editingManutTipo=tipo||m.tipo;
-  ['status','resp','prest','recibo'].forEach(f=>{const el=document.getElementById('em-'+f.replace('Prest','prest'));if(el)el.value=m[f]||el.options[0].value});
-  document.getElementById('em-status').value=m.status;
-  document.getElementById('em-dt-sol').value=m.dtSol||'';
-  document.getElementById('em-dt-prev').value=m.dtPrev||'';
-  document.getElementById('em-resp').value=m.resp;
-  document.getElementById('em-cond').value=m.cond||'';
-  document.getElementById('em-prest').value=m.prest;
-  document.getElementById('em-desc').value=m.desc||'';
-  document.getElementById('em-dt-conc').value=m.dtConc||'';
-  document.getElementById('em-val').value=m.val||'';
-  document.getElementById('em-mat').value=m.mat||'';
-  document.getElementById('em-rec-kenlo').value=m.recKenlo||'';
+function setSelectValue(id,val){
+  const el=document.getElementById(id);
+  if(!el) return;
+  val=val==null?'':String(val);
+  if(el.tagName==='SELECT'){
+    if(val&&!Array.from(el.options).some(o=>o.value===val)){
+      const o=document.createElement('option');
+      o.value=val; o.textContent=val;
+      el.insertBefore(o,el.lastChild);
+    }
+    el.value=val||el.options[0]?.value||'';
+  } else {
+    el.value=val;
+  }
+}
 
-  document.getElementById('em-loc-deb').value=m.locDeb||'';
-  document.getElementById('em-contas').value=m.contas||'';
-  document.getElementById('em-recibo').value=m.recibo||'Não';
-  document.getElementById('em-obs').value=m.obs||'';
-  setManutStatusOptions(tipo||m.tipo,'em-status');
+function findManutById(id){
+  for(const k of ['imob','cond','ocup','proc','ager']){
+    const arr=DB.manutencoes[k];
+    if(!arr) continue;
+    const m=arr.find(x=>x.id===id);
+    if(m) return {m,tipo:k};
+  }
+  return null;
+}
+
+function editManut(id,tipoHint){
+  const found=findManutById(id);
+  if(!found){toast('Registro não encontrado!');return;}
+  const {m,tipo}=found;
+  DB.editingId=id;
+  DB.editingManutTipo=tipo;
+  fillPrestSelects();
+  setSelectValue('em-status',normManutStatus(m.status));
+  setSelectValue('em-dt-sol',m.dtSol||'');
+  setSelectValue('em-dt-prev',m.dtPrev||'');
+  setSelectValue('em-resp',m.resp||'');
+  setSelectValue('em-cond',m.cond||'');
+  setSelectValue('em-prest',m.prest||'');
+  setSelectValue('em-desc',m.desc||'');
+  setSelectValue('em-dt-conc',m.dtConc||'');
+  setSelectValue('em-val',m.val||'');
+  setSelectValue('em-mat',m.mat||'');
+  setSelectValue('em-rec-kenlo',m.recKenlo||'');
+  setSelectValue('em-loc-deb',m.locDeb||'');
+  setSelectValue('em-contas',m.contas||'');
+  setSelectValue('em-recibo',m.recibo||'Não');
+  setSelectValue('em-obs',m.obs||'');
+  setManutStatusOptions(tipo,'em-status');
   openM('m-edit-manut');
 }
 function updateManut(){
   const tipo=DB.editingManutTipo;
+  const id=DB.editingId;
+  if(!tipo||!id){toast('Nenhum chamado selecionado!');return;}
+  if(!DB.manutencoes[tipo]) DB.manutencoes[tipo]=[];
   const arr=DB.manutencoes[tipo];
-  const idx=arr.findIndex(m=>m.id===DB.editingId);if(idx<0){toast('Registro não encontrado!');return;}
+  const idx=arr.findIndex(m=>m.id===id);
+  if(idx<0){
+    const found=findManutById(id);
+    if(!found){toast('Registro não encontrado!');return;}
+    if(found.tipo!==tipo){
+      DB.editingManutTipo=found.tipo;
+      return updateManut();
+    }
+    toast('Registro não encontrado!');
+    return;
+  }
   const val=parseFloat(document.getElementById('em-val').value)||0;
   const mat=parseFloat(document.getElementById('em-mat').value)||0;
-  let status=document.getElementById('em-status').value;
-  if(tipo==='ocup'&&status==='Aberto')status='Em andamento';
+  let status=normManutStatus(document.getElementById('em-status').value);
   arr[idx]={...arr[idx],status,dtSol:document.getElementById('em-dt-sol').value,dtPrev:document.getElementById('em-dt-prev').value,resp:document.getElementById('em-resp').value,cond:document.getElementById('em-cond').value,prest:document.getElementById('em-prest').value,desc:document.getElementById('em-desc').value,dtConc:document.getElementById('em-dt-conc').value,val,mat,recKenlo:(val-mat).toFixed(2),manutKenlo:'',locDeb:document.getElementById('em-loc-deb').value,contas:document.getElementById('em-contas').value,recibo:document.getElementById('em-recibo').value,obs:document.getElementById('em-obs').value};
   finishEditModal('m-edit-manut',()=>{renderManut(tipo);updateDashboard();renderFin();toast('Chamado atualizado!');});
 }
 function deleteManut(){
   if(!confirm('Excluir este chamado?'))return;
   const tipo=DB.editingManutTipo;
-  DB.manutencoes[tipo]=DB.manutencoes[tipo].filter(m=>m.id!==DB.editingId);
+  const id=DB.editingId;
+  if(!tipo||!id){toast('Nenhum chamado selecionado!');return;}
+  if(!DB.manutencoes[tipo]) DB.manutencoes[tipo]=[];
+  DB.manutencoes[tipo]=DB.manutencoes[tipo].filter(m=>m.id!==id);
   finishEditModal('m-edit-manut',()=>{renderManut(tipo);updateDashboard();renderFin();toast('Chamado excluído!');});
 }
 
@@ -2514,7 +2606,7 @@ function renderFin(){
   const byPEl=document.getElementById('fin-by-prest');
   const finTb=document.getElementById('fin-tbody');
   const finEmp=document.getElementById('fin-empty');
-  if(!prestArr.length){byPEl.innerHTML='<div class="empty" style="padding:14px"><p style="font-size:12px">Sem dados</p></div>';finTb.innerHTML='';finEmp.style.display='flex';return}
+  if(!prestArr.length){byPEl.innerHTML=emptyHtml('Sem dados');finTb.innerHTML='';finEmp.style.display='flex';return}
   finEmp.style.display='none';
   const colors=['bl','gr','yl','cy','pu'];
   byPEl.innerHTML=prestArr.map((p,i)=>`<div><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:12.5px"><span>${p.nome}</span><span style="color:var(--green);font-weight:600">R$ ${p.total.toFixed(0)}</span></div><div class="pbar"><div class="pfill ${colors[i%5]}" style="width:${(p.total/maxT*100).toFixed(0)}%"></div></div></div>`).join('');
@@ -2539,7 +2631,7 @@ function renderFin(){
         <td>${m.cond||'—'}</td>
         <td>${m.prest||'—'}</td>
         <td>${m.desc||'—'}</td>
-        <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
+        <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
         <td style="color:var(--green);font-weight:500">${fmtR(m.val)}</td>
         <td style="color:var(--cyan)">${fmtR(m.recKenlo)}</td>
         <td style="color:var(--yellow)">${fmtR(pagar.toFixed(2))}</td>
@@ -2552,15 +2644,15 @@ function renderFin(){
 function _fmtChamados(n){return n+' chamado'+(n!==1?'s':'');}
 function _dashModuloStats(arr,dateField){
   const src=arr||[];
-  const ok=_filterByDash(src,dateField||'dtSol').filter(m=>m.status==='Concluído').length;
-  const pend=src.filter(m=>m.status!=='Concluído'&&m.status!=='Cancelado').length;
+  const ok=_filterByDash(src,dateField||'dtSol').filter(m=>normManutStatus(m.status)==='Concluído').length;
+  const pend=src.filter(m=>normManutStatus(m.status)==='Em andamento').length;
   return {ok,pend,total:ok+pend};
 }
 function updateDashboard(){
   try {
   // Imobiliária ativos
   const imobM=DB.manutencoes.imob||[];
-  const imobAtivos=imobM.filter(m=>m.status==='Aberto'||m.status==='Em andamento');
+  const imobAtivos=imobM.filter(m=>normManutStatus(m.status)==='Em andamento');
   const dsManu=document.getElementById('ds-manu');if(dsManu)dsManu.textContent=imobAtivos.length;
   const dsManuBadge=document.getElementById('ds-manu-badge');if(dsManuBadge)dsManuBadge.textContent=imobAtivos.length+' ativos';
   const mlist=document.getElementById('ds-manu-list');
@@ -2568,14 +2660,14 @@ function updateDashboard(){
     mlist.innerHTML=r.length?r.map(m=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)"><div style="flex:1"><div style="font-size:12px;font-weight:500">${m.desc||'—'}</div><div style="font-size:11px;color:var(--t3)">${m.cond||''} · ${m.status}</div></div></div>`).join(''):'<div style="padding:12px;color:var(--t3);font-size:12px;text-align:center">Nenhum chamado ativo</div>';}
   // Imóveis Ocupados Geral
   const ocupM=DB.manutencoes.ocup||[];
-  const ocupAtivos=ocupM.filter(m=>m.status==='Aberto'||m.status==='Em andamento');
+  const ocupAtivos=ocupM.filter(m=>normManutStatus(m.status)==='Em andamento');
   const dsOcup=document.getElementById('ds-ocup');if(dsOcup)dsOcup.textContent=ocupAtivos.length;
   const dsOcupBadge=document.getElementById('ds-ocup-badge');if(dsOcupBadge)dsOcupBadge.textContent=ocupAtivos.length+' ativos';
   const olist=document.getElementById('ds-ocup-list');
   if(olist){const r2=ocupAtivos.slice(0,3);
     olist.innerHTML=r2.length?r2.map(m=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)"><div style="flex:1"><div style="font-size:12px;font-weight:500">${m.desc||'—'}</div><div style="font-size:11px;color:var(--t3)">${m.cond||''} · ${m.status}</div></div></div>`).join(''):'<div style="padding:12px;color:var(--t3);font-size:12px;text-align:center">Nenhuma manutenção ativa</div>';}
   // Tarefas — puxar de TODOS os módulos
-  const allManutPend=[...imobM,...(DB.manutencoes.cond||[]),...ocupM].filter(m=>m.status==='Aberto'||m.status==='Em andamento');
+  const allManutPend=[...imobM,...(DB.manutencoes.cond||[]),...ocupM].filter(m=>normManutStatus(m.status)==='Em andamento');
   const procPend=DB.tasks.filter(t=>t.status!=='Concluída');
   const totalPend=procPend.length+allManutPend.length;
   const dsTaref=document.getElementById('ds-taref');if(dsTaref)dsTaref.textContent=totalPend;
@@ -2697,7 +2789,7 @@ function renderManutAgenda(){
         <div style="font-size:11.5px;color:var(--t3);margin-top:2px">${ev.cond||''} ${ev.prest?'· '+ev.prest:''}</div>
       </div>
       <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:var(--s2);color:${cls[ev.srcTipo]||'var(--t3)'}">${lbl[ev.srcTipo]||ev.srcTipo}</span>
-      <span class="bs ${MANUT_STATUS_CLS[ev.status]||'bs-ab'}">${ev.status||'—'}</span>
+      <span class="bs ${MANUT_STATUS_CLS[normManutStatus(ev.status)]||'bs-an'}">${normManutStatus(ev.status)||'—'}</span>
     </div>`).join('');
 }
 function clearManutAgendaFilter(){
@@ -2756,7 +2848,7 @@ function saveChkVisit(){
     DB.events.unshift(ev);
     // Criar chamado de manut cond
     if(manPrest){
-      const m={id:ID(),tipo:'cond',status:'Aberto',dtSol:dt,dtPrev:manDt,resp,cond:condNome,prest:manPrest,desc:manDesc,dtConc:'',val:0,mat:0,recKenlo:'0',manutKenlo:'',locDeb:'',contas:'',recibo:'Não',obs:'Gerado via checklist'};
+      const m={id:ID(),tipo:'cond',status:'Em andamento',dtSol:dt,dtPrev:manDt,resp,cond:condNome,prest:manPrest,desc:manDesc,dtConc:'',val:0,mat:0,recKenlo:'0',manutKenlo:'',locDeb:'',contas:'',recibo:'Não',obs:'Gerado via checklist'};
       DB.manutencoes.cond.unshift(m);
     }
     toast('Visita registrada e manutenção agendada!');
@@ -2853,7 +2945,7 @@ function gerarRelSemanal(){
   per.textContent=fmtDate(iniStr)+' a '+fmtDate(fimStr);
   const allManut=[...DB.manutencoes.imob,...DB.manutencoes.cond,...DB.manutencoes.ocup];
   const realizados=allManut.filter(m=>{const dt=m.dtConc||m.dtSol||'';return dt>=iniStr&&dt<=fimStr;});
-  const pendentes=allManut.filter(m=>m.status==='Aberto'||m.status==='Em andamento');
+  const pendentes=allManut.filter(m=>normManutStatus(m.status)==='Em andamento');
   const chks=DB.checklists.filter(v=>(v.dt||'')>=iniStr&&(v.dt||'')<=fimStr);
   // Proxima semana
   const proxIni=new Date(fimSem);proxIni.setDate(fimSem.getDate()+1);
@@ -2875,7 +2967,7 @@ function gerarRelSemanal(){
     </div>
     <div style="margin-bottom:14px">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--t3);margin-bottom:8px">Pendentes com dias em aberto</div>
-      ${pendentes.length?pendentes.map(m=>{const dias=diasPendente(m);return`<div style="padding:8px 12px;background:var(--s2);border-radius:var(--rs);margin-bottom:6px;border-left:3px solid ${dias>14?'var(--red)':dias>7?'var(--yellow)':'var(--t3)'}"><div style="font-size:13px;font-weight:500">${m.desc||'—'}</div><div style="font-size:11.5px;color:var(--t3)">${m.cond} · ${fmtDate(m.dtSol)} · <span style="color:${dias>14?'var(--red)':dias>7?'var(--yellow)':'var(--t2)'}">⏳ ${dias} dias</span></div></div>`}).join(''):'<div style="color:var(--t3);font-size:12px;padding:8px">Sem pendências!</div>'}
+      ${pendentes.length?pendentes.map(m=>{const dias=diasPendente(m);return`<div style="padding:8px 12px;background:var(--s2);border-radius:var(--rs);margin-bottom:6px;border-left:3px solid ${dias>14?'var(--red)':dias>7?'var(--yellow)':'var(--t3)'}"><div style="font-size:13px;font-weight:500">${m.desc||'—'}</div><div style="font-size:11.5px;color:var(--t3)">${m.cond} · ${fmtDate(m.dtSol)} · <span style="color:${dias>14?'var(--red)':dias>7?'var(--yellow)':'var(--t2)'}">⏳ ${dias} dias</span></div></div>`}).join(''):emptyHtml('Sem pendências!')}
     </div>
     <div>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--t3);margin-bottom:8px">Próxima semana (${fmtDate(proxIniStr)} – ${fmtDate(proxFimStr)})</div>
@@ -3015,7 +3107,7 @@ function fillPrestSelects(){
   const luma=allPrest.find(n=>n.toLowerCase().includes('luma'));
   if(luma){allPrest.splice(allPrest.indexOf(luma),1);allPrest.unshift(luma);}
   const opts=allPrest.map(n=>`<option value="${n}">${n}</option>`).join('')+'<option value="">— Outro —</option>';
-  ['nm-prest','nchk-man-prest'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
+  ['nm-prest','em-prest','nchk-man-prest'].forEach(id=>{const el=document.getElementById(id);if(el){const cur=el.value;el.innerHTML=opts;if(cur)el.value=cur;}});
   // fin-prest select
   const finP=document.getElementById('fin-prest-sel');if(finP)finP.innerHTML='<option value="">Todos os prestadores</option>'+DB.prestadores.map(p=>`<option value="${p.nome}">${p.nome}</option>`).join('');
   // rel-prest select
@@ -3426,8 +3518,31 @@ function backFromPrestDetail(){
   nav('financeiro');
 }
 
+function marcarRelPendente(){
+  const stats=document.getElementById('rel-result-stats');
+  const tbWrap=document.getElementById('rel-result-table-wrap');
+  const emp=document.getElementById('rel-empty');
+  if(stats)stats.innerHTML='';
+  if(tbWrap)tbWrap.style.display='none';
+  if(emp){emp.style.display='flex';emp.innerHTML='<div class="empty-mark"></div><p>Filtros alterados. Clique em "Gerar Relatório" para atualizar.</p>';}
+}
+
 // ─── RELATÓRIOS: gerarRel atualizado com multi-select ──
+let _gerarRelBusy=false;
 function gerarRel(){
+  if(_gerarRelBusy)return;
+  _gerarRelBusy=true;
+  const btn=document.querySelector('#fin-tab-0 .btn-p[onclick*="gerarRel"]');
+  if(btn){btn.disabled=true;btn.dataset._lbl=btn.textContent;btn.textContent='Gerando…';}
+  requestAnimationFrame(()=>{
+    try{_gerarRelCore();}
+    finally{
+      _gerarRelBusy=false;
+      if(btn){btn.disabled=false;btn.textContent=btn.dataset._lbl||'Gerar Relatório';}
+    }
+  });
+}
+function _gerarRelCore(){
   // Módulos selecionados — TODOS os 5 módulos são suportados
   const checkboxes=document.querySelectorAll('#rel-tipos input[type=checkbox]:checked');
   let tipos=[...checkboxes].map(c=>c.value);
@@ -3437,6 +3552,16 @@ function gerarRel(){
   const mes=document.getElementById('rel-mes')?.value||'';
   const prest=document.getElementById('rel-prest')?.value||'';
   const status=document.getElementById('rel-status')?.value||'';
+  const hasRelFilter=tipos.length||ini||fim||ano||mes||prest||status;
+  if(!hasRelFilter){
+    const stats=document.getElementById('rel-result-stats');
+    const tbWrap=document.getElementById('rel-result-table-wrap');
+    const emp=document.getElementById('rel-empty');
+    if(stats)stats.innerHTML='';
+    if(tbWrap)tbWrap.style.display='none';
+    if(emp){emp.style.display='flex';emp.innerHTML='<div class="empty-mark"></div><p>Selecione pelo menos um módulo ou filtro antes de gerar. Isso evita carregar todos os registros de uma vez.</p>';}
+    return;
+  }
 
   const allModules=['imob','cond','ocup','ager','proc'];
   const selectedModules=tipos.length?tipos:allModules;
@@ -3494,6 +3619,7 @@ function gerarRel(){
   const thead=document.getElementById('rel-thead');
   const tbody=document.getElementById('rel-tbody');
 
+  if(!stats||!emp||!thead||!tbody)return;
   if(!data.length){stats.innerHTML='';if(tbWrap)tbWrap.style.display='none';emp.style.display='flex';return;}
   emp.style.display='none';
 
@@ -3502,25 +3628,29 @@ function gerarRel(){
   const rec=data.reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
   const val=data.reduce((s,m)=>s+parseFloat(m.val||0),0);
 
+  const maxRows=50;
+  const displayData=data.slice(0,maxRows);
+  const limitMsg=data.length>maxRows?`<div class="stat" style="grid-column:1/-1"><div class="stat-lbl">Prévia otimizada</div><div class="stat-val" style="font-size:14px">Mostrando ${maxRows} de ${data.length} registros. Refine os filtros para ver menos itens na tela.</div></div>`:'';
+
   stats.innerHTML=`
     <div class="stat bl"><div class="stat-lbl">Total</div><div class="stat-val">${total}</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val">${conc}</div></div>
     <div class="stat yl"><div class="stat-lbl">Pendentes</div><div class="stat-val">${total-conc}</div></div>
     <div class="stat cy"><div class="stat-lbl" style="color:var(--cyan)">Receita manut. imob.</div><div class="stat-val" style="font-size:18px">R$${rec.toFixed(0)}</div></div>
-    <div class="stat pu"><div class="stat-lbl">Valor Total (material)</div><div class="stat-val" style="font-size:18px">R$${val.toFixed(0)}</div></div>`;
+    <div class="stat pu"><div class="stat-lbl">Valor Total (material)</div><div class="stat-val" style="font-size:18px">R$${val.toFixed(0)}</div></div>
+    ${limitMsg}`;
 
   if(tbWrap)tbWrap.style.display='block';
-  thead.innerHTML='<tr><th>Modulo</th><th>Status</th><th>Data Solic.</th><th>Cond./Imovel</th><th>Prestador/Resp.</th><th>Descricao</th><th>Valor</th><th style="color:var(--cyan)">Receita manut. imob.</th><th>Campos completos</th></tr>';
-  tbody.innerHTML=data.map(m=>`<tr>
+  thead.innerHTML='<tr><th>Modulo</th><th>Status</th><th>Data Solic.</th><th>Cond./Imovel</th><th>Prestador/Resp.</th><th>Descricao</th><th>Valor</th><th style="color:var(--cyan)">Receita manut. imob.</th></tr>';
+  tbody.innerHTML=displayData.map(m=>`<tr>
     <td><span style="font-size:11px;padding:2px 7px;border-radius:20px;background:var(--s2)">${m._modulo||'—'}</span></td>
-    <td><span class="bs ${MANUT_STATUS_CLS[m.status]||'bs-ab'}">${m.status}</span></td>
+    <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span></td>
     <td>${fmtDate(m.dtSol)}</td>
     <td>${m.cond||'—'}</td>
     <td>${m.prest||'—'}</td>
     <td>${m.desc||'—'}</td>
     <td style="color:var(--green);font-weight:500">${fmtR(m.val)}</td>
     <td style="color:var(--cyan)">${fmtR(m.recKenlo)}</td>
-    <td><div class="rel-fields">${gaRelAllFields(m)}</div></td>
   </tr>`).join('');
 }
 
@@ -3651,7 +3781,7 @@ function checarAlertasChk(){
 function gerarRelManut(tipo){
   const titulos={imob:'Executadas pela Imobiliária',cond:'Manutenções Condomínios'};
   const arr=(DB.manutencoes[tipo]||[]);
-  const pend=arr.filter(m=>m.status==='Em andamento'||m.status==='Aberto');
+  const pend=arr.filter(m=>normManutStatus(m.status)==='Em andamento');
   const conc=arr.filter(m=>m.status==='Concluído');
   const rec=arr.reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
   const w=window.open('','_blank');
@@ -3736,54 +3866,120 @@ function removeAno(a){
   renderAnos();toast('Ano removido!');
 }
 
-// ─── SEED MANUTENÇÕES (planilhas PDF) ───────────
-const MANUT_SEED_VER='20260624';
+// ─── SEED MANUTENÇÕES ───
+const MANUT_CLEAR_VER='20260621';
+const AGER_SEED_VER='20260623_ocup_cond_v5';
+let _agerSeedPromise=null;
+
+function applyManutResetIfNeeded(){
+  if(localStorage.getItem('ga_manut_clear')===MANUT_CLEAR_VER) return false;
+  if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+  ['imob','cond','ocup','proc','ager'].forEach(k=>{ DB.manutencoes[k]=[]; });
+  localStorage.setItem('ga_manut_seed','manual');
+  localStorage.removeItem('ga_ager_seed');
+  return true;
+}
+function markManutResetSynced(){
+  localStorage.setItem('ga_manut_clear',MANUT_CLEAR_VER);
+}
+window.applyManutResetIfNeeded=applyManutResetIfNeeded;
+window.normalizeManutStatuses=normalizeManutStatuses;
+window.markManutResetSynced=markManutResetSynced;
+
+function normalizeManutRecord(m){
+  if(!m||typeof m!=='object')return m;
+  if(m.cond&&m.cond!=='-'&&/R\$\s*[\d.,]+/.test(m.cond)){
+    const code=m.cond.match(/\b([A-Z]{2}\d{3,4}(?:\/\d+)?|KN\d+(?:\/\d+)?)\b/i);
+    m.cond=code?code[1].toUpperCase():m.cond.replace(/\s+R\$\s*[\d.,]+.*$/i,'').trim().slice(0,55)||'-';
+  }
+  const val=parseFloat(m.val)||0, mat=parseFloat(m.mat)||0;
+  let rec=parseFloat(m.recKenlo);
+  if(Number.isNaN(rec))rec=0;
+  const expected=Math.max(0,val-mat);
+  if(val>0&&rec===0&&expected>0)m.recKenlo=expected.toFixed(2);
+  else if(val>0&&rec>0&&rec===val&&mat>0)m.recKenlo=expected.toFixed(2);
+  else m.recKenlo=rec.toFixed(2);
+  return m;
+}
 
 function manutTotal(){
   return ['imob','cond','ocup','ager'].reduce((s,k)=>s+((DB.manutencoes[k]||[]).length),0);
 }
 
-function afterManutSeedLoaded(){
-  updateDashboard();
-  ['imob','cond','ocup','ager'].forEach(t=>renderManut(t));
-  renderManutHome();
-  renderFin();
-  if(typeof window.gaCloudSave==='function')window.gaCloudSave();
+async function loadAgerSeed(){
+  if(_agerSeedPromise) return _agerSeedPromise;
+  _agerSeedPromise=(async()=>{
+  try{
+    const hasAger=(DB.manutencoes?.ager||[]).length>=50;
+    if(localStorage.getItem('ga_ager_seed')===AGER_SEED_VER&&hasAger) return false;
+    const r=await fetch('./gestao-ager-seed.json?v='+AGER_SEED_VER);
+    if(!r.ok) return false;
+    const seed=await r.json();
+    const rows=(seed.ager||[]).map(normalizeManutRecord);
+    if(!rows.length) return false;
+    if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+    DB.manutencoes.ager=rows.map(m=>({...m,tipo:'ager',status:normManutStatus(m.status)}));
+    localStorage.setItem('ga_ager_seed',AGER_SEED_VER);
+    markManutResetSynced();
+    try{ localStorage.setItem('gestao_v5', JSON.stringify(DB)); }catch(e){}
+    window._gestaoNeedsManutPush=true;
+    return true;
+  }catch(e){
+    console.warn('loadAgerSeed:',e);
+    return false;
+  }finally{
+    _agerSeedPromise=null;
+  }
+  })();
+  return _agerSeedPromise;
 }
 
 async function loadManutSeed(){
-  try{
-    const stored=localStorage.getItem('ga_manut_seed');
-    const needsReload=stored!==MANUT_SEED_VER||manutTotal()<100;
-    if(!needsReload)return false;
-    const r=await fetch('./gestao-manut-seed.json?v='+MANUT_SEED_VER);
-    if(!r.ok){console.warn('Manut seed HTTP',r.status);return false;}
-    const seed=await r.json();
-    if(!DB.manutencoes)DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
-    ['imob','cond','ocup','ager'].forEach(k=>{
-      if(Array.isArray(seed[k]))DB.manutencoes[k]=seed[k];
-    });
-    localStorage.setItem('ga_manut_seed',MANUT_SEED_VER);
-    console.info('Manut seed OK:',manutTotal(),'registros');
-    afterManutSeedLoaded();
-    return true;
-  }catch(e){console.warn('Manut seed:',e);return false;}
+  return loadAgerSeed();
 }
 window.ensureManutSeed=loadManutSeed;
+window.loadAgerSeed=loadAgerSeed;
 
-function renderGestaoAll(){
+function hydrateGestaoFromCache(){
+  try{
+    const raw=localStorage.getItem('gestao_v5');
+    if(!raw) return false;
+    const cached=JSON.parse(raw);
+    if(!cached||typeof cached!=='object') return false;
+    Object.assign(DB,cached);
+    return true;
+  }catch(e){ return false; }
+}
+
+function renderGestaoCore(){
   fillCondSelects();
   fillChkCondSelects();
   fillPrestSelects();
   fillRelSelects();
-  renderUsers();
   updateDashboard();
-  renderManut('imob');
-  renderManut('cond');
-  renderManut('ocup');
-  renderManut('ager');
+  updateAllManutStats();
+}
+
+function renderGestaoVisible(){
+  renderGestaoCore();
+  const view=getActiveGestaoView();
+  const mt=activeManutTipo();
+  if(mt)renderManut(mt);
+  else if(view==='condominios')renderConds();
+  else if(view==='financeiro'){renderPrestCards();renderFin();}
+  else if(view==='processos'){renderTasks();renderNotifs();renderProcTab();}
+  else if(view==='checklist')renderGlobalChk();
+  else if(view==='acesso'){renderUsers();renderLog();renderColabs();renderPrestListAcesso();renderAnos();}
+  else if(view==='agenda')renderAgenda();
+  if(typeof applyEmptySemIcons==='function')applyEmptySemIcons();
+}
+window.renderGestaoFast=renderGestaoVisible;
+
+function renderGestaoAll(){
+  renderGestaoCore();
+  const mt=activeManutTipo();
+  if(mt)renderManut(mt);
   renderManutHome();
-  renderPrestCards();
   renderGlobalChk();
   renderColabs();
   renderFin();
@@ -3792,6 +3988,8 @@ function renderGestaoAll(){
   renderTasks();
   renderNotifs();
   renderLembretes();
+  renderUsers();
+  if(document.getElementById('view-financeiro')?.classList.contains('active'))renderPrestCards();
 }
 
 (function init(){
@@ -3801,7 +3999,27 @@ function renderGestaoAll(){
     if(ptl) ptl.textContent = fmtDate(td).substring(0,5);
     const atl = document.getElementById('ag-today-lbl');
     if(atl) atl.textContent = fmtDate(td).substring(0,5)+'/'+td.substring(0,4);
-    loadManutSeed().finally(()=>renderGestaoAll());
+    hydrateGestaoFromCache();
+    applyManutResetIfNeeded();
+    normalizeManutStatuses();
+    renderGestaoVisible();
+    let bootDone=false;
+    async function bootGestao(){
+      if(bootDone) return;
+      bootDone=true;
+      if((DB.manutencoes?.ager||[]).length<50) await loadAgerSeed();
+      normalizeManutStatuses();
+      renderGestaoVisible();
+      window._gestaoPendingRender=false;
+    }
+    window._gestaoPendingRender=false;
+    document.addEventListener('ga-cloud-ready',bootGestao,{once:true});
+    setTimeout(bootGestao,8000);
+    if(typeof applyEmptySemIcons==='function')applyEmptySemIcons();
+    document.addEventListener('click',e=>{
+      const btn=e.target.closest('[data-edit-manut]');
+      if(btn) editManut(btn.dataset.editManut, btn.dataset.manutTipo);
+    });
   } catch(e) {
     console.error('Init error:', e);
   }
@@ -3838,7 +4056,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=16"></script>
+<script src="./cloud-sync.js?v=20"></script>
 
 </div></body></html>
 
