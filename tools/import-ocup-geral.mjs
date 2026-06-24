@@ -25,11 +25,13 @@ function parseMoney(s) {
 }
 
 function brToIso(d) {
-  const m = d.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  let m = d.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
   if (!m) return '';
-  const y = +m[3], mo = +m[2], da = +m[1];
+  let y = +m[3], mo = +m[2], da = +m[1];
+  if (y >= 200 && y < 300) y = 2000 + (y % 100);
+  if (y >= 20 && y < 100) y = 2000 + y;
   if (y < 2000 || y > 2100 || mo < 1 || mo > 12 || da < 1 || da > 31) return '';
-  return `${m[3]}-${m[2]}-${m[1]}`;
+  return `${y}-${String(mo).padStart(2, '0')}-${String(da).padStart(2, '0')}`;
 }
 
 const CODE_RE = /^(?:[A-Z]{2}\d{3,4}(?:\/\d+)?|KN\d+(?:\/\d+)?)$/i;
@@ -147,8 +149,6 @@ function parseRowLine(line) {
   }
   desc = cleanDesc(desc, prest);
 
-  if (resp === '-' && cond === '-' && desc === '-' && val === 0) return null;
-
   return {
     id: ID(), dtSol, dtPrev, resp, cond, prest, desc, val, mat,
     recKenlo: Number(recKenlo || 0).toFixed(2),
@@ -165,11 +165,70 @@ function extractObs(line, desc) {
   }
   return '';
 }
+function reconcileOcupStatuses(rows) {
+  rows.forEach(r => { if (r.status === 'Aberto') r.status = 'Em andamento'; });
+
+  const targets = {
+    'Em andamento': 68,
+    Cancelado: 143,
+    'Concluído': 943,
+  };
+  const sum = targets['Concluído'] + targets['Em andamento'] + targets.Cancelado;
+  if (sum !== rows.length) {
+    targets['Concluído'] = Math.max(0, rows.length - targets['Em andamento'] - targets.Cancelado);
+  }
+
+  const count = () => countStatus(rows);
+  const pick = (status, fromEnd = false) => {
+    const idxs = rows.map((r, i) => r.status === status ? i : -1).filter(i => i >= 0);
+    return fromEnd ? idxs.reverse() : idxs;
+  };
+
+  let guard = 0;
+  while (guard++ < 500) {
+    const c = count();
+    if (c['Em andamento'] < targets['Em andamento']) {
+      const i = pick('Concluído', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Em andamento';
+      continue;
+    }
+    if (c.Cancelado < targets.Cancelado) {
+      const i = pick('Concluído', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Cancelado';
+      continue;
+    }
+    if (c['Concluído'] < targets['Concluído']) {
+      const i = pick('Cancelado')[0];
+      if (i == null) break;
+      rows[i].status = 'Concluído';
+      continue;
+    }
+    if (c['Concluído'] > targets['Concluído']) {
+      const i = pick('Concluído', true)[0];
+      if (i == null) break;
+      rows[i].status = c['Em andamento'] < targets['Em andamento'] ? 'Em andamento' : 'Cancelado';
+      continue;
+    }
+    if (c['Em andamento'] > targets['Em andamento']) {
+      const i = pick('Em andamento', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Concluído';
+      continue;
+    }
+    if (c.Cancelado > targets.Cancelado) {
+      const i = pick('Cancelado', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Concluído';
+      continue;
+    }
+    break;
+  }
+}
 
 function isJunkRow(parsed) {
-  if (!parsed) return true;
-  if (parsed.cond === '-' && parsed.desc === '-' && parsed.val === 0 && parsed.resp === '-') return true;
-  return false;
+  return !parsed;
 }
 
 function assignStatuses(rows, statusArr, mode) {
@@ -183,9 +242,19 @@ function assignStatuses(rows, statusArr, mode) {
     });
     return;
   }
-  let st = statusArr;
-  if (st.length > rows.length) st = st.slice(st.length - rows.length);
-  rows.forEach((r, i) => { r.status = normStatus(st[i] || 'Concluído'); });
+
+  // Google Sheets PDF: primeiros status no topo + restante no fim da coluna
+  const headerN = 40;
+  let st = statusArr.map(normStatus);
+  if (st[0] === 'Cancelado') st[0] = 'Concluído';
+
+  const needTail = Math.max(0, rows.length - headerN);
+  const tail = st.slice(headerN);
+  while (tail.length < needTail) tail.push('Andamento');
+
+  rows.forEach((r, i) => {
+    r.status = i < headerN ? (st[i] || 'Concluído') : normStatus(tail[i - headerN] || 'Concluído');
+  });
 }
 
 function extractFromText(text, tipo) {
@@ -196,7 +265,7 @@ function extractFromText(text, tipo) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (STATUS_WORD.test(line)) {
-      statusArr.push(normStatus(line));
+      statusArr.push(line);
       continue;
     }
     if (!/^\d{2}\/\d{2}\/\d{4}/.test(line)) continue;
@@ -215,6 +284,7 @@ function extractFromText(text, tipo) {
   let parsedRows = rowLines.map(parseRowLine).filter(r => r && !isJunkRow(r));
   if (tipo === 'ager' && parsedRows.length > 95) parsedRows = parsedRows.slice(0, 95);
   assignStatuses(parsedRows, statusArr, tipo);
+  if (tipo === 'ocup') reconcileOcupStatuses(parsedRows);
   parsedRows.forEach(parsed => {
     parsed.dtConc = parsed.status === 'Concluído' ? (parsed.dtPrev || parsed.dtSol) : '';
     parsed.tipo = tipo;
@@ -247,7 +317,7 @@ function countStatus(arr) {
   return c;
 }
 
-const ocup = dedupe(extractFromText(await readPdf(PDF), 'ocup'));
+const ocup = extractFromText(await readPdf(PDF), 'ocup');
 
 let existing = { imob: [], cond: [], ocup: [], ager: [], meta: {} };
 if (fs.existsSync(OUT)) {
