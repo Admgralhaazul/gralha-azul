@@ -486,7 +486,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mager-an">0</div></div>
-    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mager-ok">0</div><button class="btn btn-g btn-s" style="margin-top:10px;padding:4px 10px;font-size:11px" onclick="imprimirRealizadas(&#39;ager&#39;)">Imprimir</button></div>
+    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mager-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mager-ca">0</div></div>
   </div>
 
@@ -500,6 +500,7 @@ body{visibility:visible!important}
       <input type="date" id="mager-dt-fim" onchange="filterManut(&#39;ager&#39;)">
     </div>
     <button class="btn btn-g btn-s" onclick="clearManutFilter(&#39;ager&#39;)">✕ Limpar</button>
+    <button class="btn btn-g btn-s" onclick="imprimirManutFiltrada(&#39;ager&#39;)">Imprimir</button>
     <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-manut&#39;,&#39;ager&#39;)">+ Novo Chamado</button>
   </div>
   <div class="status-multi" id="mager-status-pills" style="margin-bottom:14px">
@@ -529,7 +530,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mi-an">0</div></div>
-    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mi-ok">0</div><button class="btn btn-g btn-s" style="margin-top:10px;padding:4px 10px;font-size:11px" onclick="imprimirRealizadas(&#39;imob&#39;)">Imprimir</button></div>
+    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mi-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mi-ca">0</div></div>
     <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mi-rec">R$0</div></div>
   </div>
@@ -544,6 +545,7 @@ body{visibility:visible!important}
       <input type="date" id="mi-dt-fim" onchange="filterManut(&#39;imob&#39;)">
     </div>
     <button class="btn btn-g btn-s" onclick="clearManutFilter(&#39;imob&#39;)">✕ Limpar</button>
+    <button class="btn btn-g btn-s" onclick="imprimirManutFiltrada(&#39;imob&#39;)">Imprimir</button>
     <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-manut&#39;,&#39;imob&#39;)">+ Novo Chamado</button>
   </div>
   <div class="status-multi" id="mi-status-pills" style="margin-bottom:14px">
@@ -573,7 +575,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mc-an">0</div></div>
-    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div><button class="btn btn-g btn-s" style="margin-top:10px;padding:4px 10px;font-size:11px" onclick="imprimirRealizadas(&#39;cond&#39;)">Imprimir</button></div>
+    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mc-ca">0</div></div>
     <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mc-rec">R$0</div></div>
   </div>
@@ -587,6 +589,7 @@ body{visibility:visible!important}
       <input type="date" id="mc-dt-fim" onchange="filterManut(&#39;cond&#39;)">
     </div>
     <button class="btn btn-g btn-s" onclick="clearManutFilter(&#39;cond&#39;)">✕ Limpar</button>
+    <button class="btn btn-g btn-s" onclick="imprimirManutFiltrada(&#39;cond&#39;)">Imprimir</button>
     <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-manut&#39;,&#39;cond&#39;)">+ Novo Chamado</button>
   </div>
   <div class="status-multi" id="mc-status-pills" style="margin-bottom:14px">
@@ -614,7 +617,7 @@ body{visibility:visible!important}
   </div>
   <div class="stats-row">
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mo-an">0</div></div>
-    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div><button class="btn btn-g btn-s" style="margin-top:10px;padding:4px 10px;font-size:11px" onclick="imprimirRealizadas(&#39;ocup&#39;)">Imprimir</button></div>
+    <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
     <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mo-rec">R$0</div></div>
   </div>
@@ -629,6 +632,7 @@ body{visibility:visible!important}
       <input type="date" id="mo-dt-fim" onchange="filterManut(&#39;ocup&#39;)">
     </div>
     <button class="btn btn-g btn-s" onclick="clearManutFilter(&#39;ocup&#39;)">✕ Limpar</button>
+    <button class="btn btn-g btn-s" onclick="imprimirManutFiltrada(&#39;ocup&#39;)">Imprimir</button>
     <button class="btn btn-p btn-s" onclick="openM(&#39;m-new-manut&#39;,&#39;ocup&#39;)">+ Novo Chamado</button>
   </div>
   <div class="status-multi" id="mo-status-pills" style="margin-bottom:14px">
@@ -1729,8 +1733,7 @@ function sortManutRows(arr,tipo){
   });
 }
 
-function filterManut(tipo,immediate){
-  if(tipo==='proc'){renderProcTab3();return;}
+function getFilteredManutItems(tipo){
   const pfx=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
   const q=(document.getElementById(pfx+'-search')?.value||'').toLowerCase();
   const ini=document.getElementById(pfx+'-dt-ini')?.value;
@@ -1738,17 +1741,21 @@ function filterManut(tipo,immediate){
   const ano=document.getElementById(pfx+'-ano')?.value||'';
   const mes=document.getElementById(pfx+'-mes')?.value||'';
   const activePills=Array.from(document.querySelectorAll('#'+pfx+'-status-pills .status-pill')).filter(p=>p.classList.length>1).map(p=>p.dataset.s);
-  let arr=(DB.manutencoes[tipo]||[]).filter(m=>{
+  return (DB.manutencoes[tipo]||[]).filter(m=>{
     if(activePills.length&&!activePills.includes(normManutStatus(m.status)))return false;
-    if(q&&!(m.desc+m.cond+m.prest+m.resp).toLowerCase().includes(q))return false;
+    if(q&&!`${m.desc||''}${m.cond||''}${m.prest||''}${m.resp||''}`.toLowerCase().includes(q))return false;
     // Para concluídos, filtrar por data de conclusão; para outros por data de solicitação
-    const dtRef=m.status==='Concluído'?(m.dtConc||m.dtSol||''):(m.dtSol||'');
+    const dtRef=normManutStatus(m.status)==='Concluído'?(m.dtConc||m.dtSol||''):(m.dtSol||'');
     if(ano&&dtRef&&!dtRef.startsWith(ano))return false;
     if(mes&&dtRef&&dtRef.substring(5,7)!==mes)return false;
     if(ini&&dtRef&&dtRef<ini)return false;
     if(fim&&dtRef&&dtRef>fim)return false;
     return true;
   });
+}
+function filterManut(tipo,immediate){
+  if(tipo==='proc'){renderProcTab3();return;}
+  let arr=getFilteredManutItems(tipo);
   renderManutRows(arr,tipo);
 }
 function renderManut(tipo){filterManut(tipo);updateManutStats(tipo)}
@@ -3890,6 +3897,72 @@ function imprimirRealizadas(tipo){
   </body></html>`);
   w.document.close();
   toast('Lista de realizadas gerada!');
+}
+function manutFilterLabel(tipo){
+  const pfx=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
+  const parts=[];
+  const q=document.getElementById(pfx+'-search')?.value||'';
+  const ano=document.getElementById(pfx+'-ano')?.value||'';
+  const mes=document.getElementById(pfx+'-mes')?.value||'';
+  const ini=document.getElementById(pfx+'-dt-ini')?.value||'';
+  const fim=document.getElementById(pfx+'-dt-fim')?.value||'';
+  const status=Array.from(document.querySelectorAll('#'+pfx+'-status-pills .status-pill')).filter(p=>p.classList.length>1).map(p=>p.dataset.s);
+  if(q)parts.push('Busca: '+q);
+  if(ano)parts.push('Ano: '+ano);
+  if(mes)parts.push('Mês: '+mes);
+  if(ini||fim)parts.push('Período: '+(ini?fmtDate(ini):'início')+' até '+(fim?fmtDate(fim):'fim'));
+  parts.push('Status: '+(status.length?status.join(', '):'Todos'));
+  return parts.join(' · ');
+}
+function imprimirManutFiltrada(tipo){
+  const titulos={
+    imob:'Manutenções — Executadas pela Imobiliária',
+    cond:'Manutenções Condomínios',
+    ocup:'Imóveis Ocupados Geral',
+    ager:'Manut. Assistente'
+  };
+  const items=sortManutRows(getFilteredManutItems(tipo),tipo);
+  const totalRec=items.reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
+  const w=window.open('','_blank');
+  if(!w){toast('Permita pop-ups para imprimir.');return;}
+  const rows=items.map((m,i)=>`<tr>
+    <td style="text-align:center;font-weight:700">${i+1}</td>
+    <td>${gaRelEscape(normManutStatus(m.status))}</td>
+    <td>${gaRelEscape(fmtDate(m.dtSol))}</td>
+    <td>${gaRelEscape(fmtDate(m.dtConc||m.dtPrev))}</td>
+    <td>${gaRelEscape(m.resp||'—')}</td>
+    <td>${gaRelEscape(m.cond||'—')}</td>
+    <td>${gaRelEscape(m.prest||'—')}</td>
+    <td>${gaRelEscape(m.desc||'—')}</td>
+    <td>${gaRelEscape(fmtR(m.val))}</td>
+    <td>${gaRelEscape(fmtR(m.mat))}</td>
+    <td>${gaRelEscape(fmtR(m.recKenlo))}</td>
+    <td>${gaRelEscape(m.recibo||'—')}</td>
+    <td>${gaRelEscape(m.obs||'—')}</td>
+  </tr>`).join('');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>${gaRelEscape(titulos[tipo]||tipo)}</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:28px;color:#111;max-width:1240px;margin:0 auto}
+    h1{font-size:20px;margin:0 0 4px}.sub{color:#666;font-size:12px;margin-bottom:18px;line-height:1.45}
+    .stats{display:flex;gap:10px;margin:14px 0 18px}.stat{background:#f4f7fb;border:1px solid #dbe4ef;border-radius:8px;padding:10px 14px}
+    .stat b{display:block;font-size:18px}table{width:100%;border-collapse:collapse}
+    th{background:#eef2f7;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+    th,td{border:1px solid #dbe4ef;padding:6px 7px;font-size:11px;vertical-align:top}
+    tbody tr:nth-child(even){background:#f8fafc}@media print{button{display:none}body{padding:0}}
+  </style></head><body>
+  <h1>${gaRelEscape(titulos[tipo]||tipo)}</h1>
+  <div class="sub">Filtros: ${gaRelEscape(manutFilterLabel(tipo))}<br>Gerado em ${new Date().toLocaleString('pt-BR')}</div>
+  <div class="stats">
+    <div class="stat"><b>${items.length}</b><span>itens filtrados</span></div>
+    <div class="stat"><b>R$ ${totalRec.toFixed(2).replace('.',',')}</b><span>receita filtrada</span></div>
+  </div>
+  <table><thead><tr><th>#</th><th>Status</th><th>Data sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th>Receita</th><th>Recibo</th><th>Obs</th></tr></thead>
+  <tbody>${rows||'<tr><td colspan="13" style="text-align:center;color:#666">Nenhum item encontrado com os filtros selecionados.</td></tr>'}</tbody></table>
+  <br><button onclick="window.print()">Imprimir</button>
+  </body></html>`);
+  w.document.close();
+  toast('Lista filtrada gerada!');
 }
 
 // ─── Checklist na agenda: verificar iminentes no dashboard ──
