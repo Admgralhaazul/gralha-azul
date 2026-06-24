@@ -2399,7 +2399,7 @@ function ldNow(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()
 function fd(d){if(!d)return'-';try{const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`;}catch{return d;}}
 function cellTag(text,kind){return `<span class="cell-tag cell-${kind||'warn'}">${text}</span>`;}
 function cellTd(text,kind){return `<td>${cellTag(text,kind)}</td>`;}
-function emptyHtml(msg,ic){return window.emptyHtml(msg,ic);}
+function emptyHtml(msg,ic){return `<div class="empty"><div class="empty-mark icon-${ic||'check'}"></div><p>${msg}</p></div>`;}
 function libBtn(id,on){return `<button type="button" class="lib-badge${on?' on':''}" onclick="togManLiberado('${id}')">${on?'Liberado p/ manut.':'Em rescisão'}</button>`;}
 function ynBtn(fn,id,on){return `<button type="button" class="yn-badge${on?' on':''}" onclick="${fn}('${id}')">${on?'Sim':'Não'}</button>`;}
 function fm(v){if(!v&&v!==0)return'-';return'R$'+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
