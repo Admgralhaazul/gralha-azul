@@ -4019,7 +4019,9 @@ function removeAno(a){
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
 const AGER_SEED_VER='20260623_ocup_cond_v5';
+const OCUP_SEED_VER='20260624_geral_v1';
 let _agerSeedPromise=null;
+let _ocupSeedPromise=null;
 
 function applyManutResetIfNeeded(){
   if(localStorage.getItem('ga_manut_clear')===MANUT_CLEAR_VER) return false;
@@ -4027,6 +4029,7 @@ function applyManutResetIfNeeded(){
   ['imob','cond','ocup','proc','ager'].forEach(k=>{ DB.manutencoes[k]=[]; });
   localStorage.setItem('ga_manut_seed','manual');
   localStorage.removeItem('ga_ager_seed');
+  localStorage.removeItem('ga_ocup_seed');
   return true;
 }
 function markManutResetSynced(){
@@ -4084,11 +4087,42 @@ async function loadAgerSeed(){
   return _agerSeedPromise;
 }
 
+async function loadOcupSeed(){
+  if(_ocupSeedPromise) return _ocupSeedPromise;
+  _ocupSeedPromise=(async()=>{
+  try{
+    const hasOcup=(DB.manutencoes?.ocup||[]).length>=500;
+    if(localStorage.getItem('ga_ocup_seed')===OCUP_SEED_VER&&hasOcup) return false;
+    const r=await fetch('./gestao-ocup-seed.json?v='+OCUP_SEED_VER);
+    if(!r.ok) return false;
+    const seed=await r.json();
+    const rows=(seed.ocup||[]).map(normalizeManutRecord);
+    if(!rows.length) return false;
+    if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+    DB.manutencoes.ocup=rows.map(m=>({...m,tipo:'ocup',status:normManutStatus(m.status)}));
+    localStorage.setItem('ga_ocup_seed',OCUP_SEED_VER);
+    markManutResetSynced();
+    try{ localStorage.setItem('gestao_v5', JSON.stringify(DB)); }catch(e){}
+    window._gestaoNeedsManutPush=true;
+    return true;
+  }catch(e){
+    console.warn('loadOcupSeed:',e);
+    return false;
+  }finally{
+    _ocupSeedPromise=null;
+  }
+  })();
+  return _ocupSeedPromise;
+}
+
 async function loadManutSeed(){
-  return loadAgerSeed();
+  const a=await loadAgerSeed();
+  const o=await loadOcupSeed();
+  return a||o;
 }
 window.ensureManutSeed=loadManutSeed;
 window.loadAgerSeed=loadAgerSeed;
+window.loadOcupSeed=loadOcupSeed;
 
 function hydrateGestaoFromCache(){
   try{
@@ -4144,7 +4178,10 @@ function renderGestaoAll(){
     async function bootGestao(){
       if(bootDone) return;
       bootDone=true;
-      if((DB.manutencoes?.ager||[]).length<50) await loadAgerSeed();
+      const loads=[];
+      if((DB.manutencoes?.ager||[]).length<50) loads.push(loadAgerSeed());
+      if((DB.manutencoes?.ocup||[]).length<500) loads.push(loadOcupSeed());
+      if(loads.length) await Promise.all(loads);
       normalizeManutStatuses();
       renderGestaoVisible();
       window._gestaoPendingRender=false;
@@ -4193,7 +4230,7 @@ function concluirLembrete(id,checked){
 }
 </script>
 
-<script src="./cloud-sync.js?v=20"></script>
+<script src="./cloud-sync.js?v=21"></script>
 
 </div></body></html>
 

@@ -1,5 +1,7 @@
 .tools/node_modules/
+node_modules/
 tools/pdf-text/
+tools/geral-pdf-text.txt
 .env
 .env.local
 .DS_Store

@@ -88,10 +88,15 @@
       }
       if(MODULE === 'gestao' && typeof DB !== 'undefined'){
         const prevAger=(DB.manutencoes&&DB.manutencoes.ager)?DB.manutencoes.ager.slice():[];
+        const prevOcup=(DB.manutencoes&&DB.manutencoes.ocup)?DB.manutencoes.ocup.slice():[];
         Object.assign(DB, next || {});
         if((DB.manutencoes?.ager||[]).length===0 && prevAger.length>=50){
           if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
           DB.manutencoes.ager=prevAger;
+        }
+        if((DB.manutencoes?.ocup||[]).length===0 && prevOcup.length>=500){
+          if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+          DB.manutencoes.ocup=prevOcup;
         }
         let needsPush=false;
         if(typeof window.normalizeManutStatuses==='function') window.normalizeManutStatuses();
