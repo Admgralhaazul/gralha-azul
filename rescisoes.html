@@ -2399,7 +2399,7 @@ function ldNow(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()
 function fd(d){if(!d)return'-';try{const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`;}catch{return d;}}
 function cellTag(text,kind){return `<span class="cell-tag cell-${kind||'warn'}">${text}</span>`;}
 function cellTd(text,kind){return `<td>${cellTag(text,kind)}</td>`;}
-function emptyHtml(msg,ic){return window.emptyHtml(msg,ic);}
+function emptyHtml(msg,ic){return `<div class="empty"><div class="empty-mark icon-${ic||'check'}"></div><p>${msg}</p></div>`;}
 function libBtn(id,on){return `<button type="button" class="lib-badge${on?' on':''}" onclick="togManLiberado('${id}')">${on?'Liberado p/ manut.':'Em rescisão'}</button>`;}
 function ynBtn(fn,id,on){return `<button type="button" class="yn-badge${on?' on':''}" onclick="${fn}('${id}')">${on?'Sim':'Não'}</button>`;}
 function fm(v){if(!v&&v!==0)return'-';return'R$'+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2});}
@@ -2593,7 +2593,7 @@ function getAllVenc(){
     if(r.pgto==='boleto'&&r.bolVenc&&r.bolPago!=='Sim'&&isValidDate(r.bolVenc)){
       const dv=ld(r.bolVenc)||ldNow();
       const hoje=ldNow();
-      if(dv>=hoje)res.push({data:r.bolVenc,label:`Boleto: ${r.codigo} ${r.inquilino||''}`,tipo:'Prazo Pagamento',tipo2:'resc'});
+      if(dv>=hoje)res.push({data:r.bolVenc,label:`Boleto: ${r.codigo} ${r.inquilino||''}`,tipo:'Prazo Pagamento',tipo2:'resc',id:'bol_'+r.id,rescId:r.id});
     }
   });
   // Inadimplentes com data de vencimento futura
@@ -2654,7 +2654,7 @@ function rDash(){
         ${vLabel(v.data)}
         <span style="flex:1;font-size:11px;color:${vTColor(v.data)}">${v.label}</span>
         <span class="badge bb" style="font-size:9px">${v.tipo}</span>
-        <button onclick="markAgConcl('${escAttr(k)}','${escAttr(v.cartaId||'')}','${escAttr(v.loftId||'')}');rDash();rAg();" style="border:none;background:#dcfce7;color:#166534;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:10px;font-weight:700;flex-shrink:0">Concluir</button>
+        <button onclick="markAgConcl('${escAttr(k)}','${escAttr(v.cartaId||'')}','${escAttr(v.loftId||'')}','${escAttr(v.rescId||'')}');rDash();rAg();" style="border:none;background:#dcfce7;color:#166534;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:10px;font-weight:700;flex-shrink:0">Concluir</button>
       </div>`;
     }).join(''):emptyHtml('Sem itens');
   }
@@ -2830,8 +2830,11 @@ function salRescEdit(id){
   const updated=buildRescObj();
   // Preserva dataEntrada original
   const origDataEntrada=r.dataEntrada;
+  const origStatus=r.status;
   Object.assign(r,updated);r.id=id;
   if(!r.dataEntrada)r.dataEntrada=origDataEntrada||new Date().toISOString().split('T')[0];
+  if(r.status==='Concluída')markAllAgConclForResc(r.id,true);
+  else if(origStatus==='Concluída')markAllAgConclForResc(r.id,false);
   // Sincroniza TUDO antes de salvar
   syncFromResc(r);
   if(r.pgto==='cartao')syncCartaoFromResc(r);
@@ -2911,6 +2914,7 @@ function salResc(){
   const obj={id:uid(),...buildRescObj()};
   D().rescisoes.push(obj);
   D().checklists[obj.id]={};
+  if(obj.status==='Concluída')markAllAgConclForResc(obj.id,true);
   // Sync ALL linked modules immediately
   syncFromResc(obj);
   if(obj.pgto==='cartao')syncCartaoFromResc(obj);
@@ -3315,19 +3319,62 @@ function genCartParcelasModal(){
 // ============================================================
 function agKey(a){return (a.tipo2||'x')+':'+(a.id||((a.data||'')+':'+(a.label||'').substring(0,20)));}
 function isAgConcl(a){return !!(D().agConcl||{})[agKey(a)];}
-function markAgConcl(key,cartaId,loftId){
+function rescAgendaKeys(r){
+  if(!r)return [];
+  const keys=[];
+  if(r.vis2&&isValidDate(r.vis2))keys.push('resc:vis2_'+r.id);
+  if(r.chaves&&isValidDate(r.chaves))keys.push('resc:chv_'+r.id);
+  if(r.pgto==='boleto'&&r.bolVenc&&isValidDate(r.bolVenc))keys.push('resc:bol_'+r.id);
+  return keys;
+}
+function getRescFromAgKey(key,rescId){
+  if(rescId)return D().rescisoes.find(r=>r.id===rescId);
+  const id=(key||'').replace(/^resc:(vis2_|chv_|bol_)/,'');
+  return id?D().rescisoes.find(r=>r.id===id):null;
+}
+function markAllAgConclForResc(rescId,done=true){
+  const r=D().rescisoes.find(x=>x.id===rescId);if(!r)return;
+  if(!D().agConcl)D().agConcl={};
+  rescAgendaKeys(r).forEach(k=>{if(done)D().agConcl[k]=true;else delete D().agConcl[k];});
+  if(done){
+    if(r.chaves&&(!r.chavesStatus||/pendente/i.test(r.chavesStatus)))r.chavesStatus='Entregue';
+    if(r.pgto==='boleto'&&r.bolVenc)r.bolPago='Sim';
+    if(r.vis2)r.vis2Concl=true;
+  }
+}
+function syncRescStatusFromAgenda(r){
+  if(!r||r.status==='Saiu da Imob')return;
+  const keys=rescAgendaKeys(r);
+  if(!keys.length)return;
+  const concl=D().agConcl||{};
+  const allDone=keys.every(k=>concl[k]);
+  if(allDone)r.status='Concluída';
+  else if(r.status==='Concluída')r.status='Em Andamento';
+}
+function syncRescFromAgendaItem(key,rescId,done){
+  const r=getRescFromAgKey(key,rescId);
+  if(!r)return;
+  if(key.includes(':chv_'))r.chavesStatus=done?'Entregue':'Pendente';
+  if(key.includes(':bol_'))r.bolPago=done?'Sim':'Não';
+  if(key.includes(':vis2_'))r.vis2Concl=!!done;
+  syncRescStatusFromAgenda(r);
+  syncFromResc(r);
+}
+function markAgConcl(key,cartaId,loftId,rescId){
   if(!D().agConcl)D().agConcl={};
   D().agConcl[key]=true;
   // Bridge: if this is a carta item, also mark in cartasConcl
   if(cartaId){if(!D().cartasConcl)D().cartasConcl={};D().cartasConcl[cartaId]=true;}
   // Bridge: if this is a loft item, also mark in loftConcl
   if(loftId){if(!D().loftConcl)D().loftConcl={};D().loftConcl[loftId]=true;}
+  if((key||'').startsWith('resc:'))syncRescFromAgendaItem(key,rescId,true);
   save();renderAll();
 }
-function unmarkAgConcl(key,cartaId,loftId){
+function unmarkAgConcl(key,cartaId,loftId,rescId){
   if(D().agConcl)delete D().agConcl[key];
   if(cartaId&&D().cartasConcl)delete D().cartasConcl[cartaId];
   if(loftId&&D().loftConcl)delete D().loftConcl[loftId];
+  if((key||'').startsWith('resc:'))syncRescFromAgendaItem(key,rescId,false);
   save();renderAll();
 }
 
@@ -3361,8 +3408,8 @@ function rAg(){
       </div>
       <div class="abts">
         ${concl
-          ? `<button class="abt" onclick="unmarkAgConcl('${escAttr(k)}','${escAttr(a.cartaId||'')}','${escAttr(a.loftId||'')}')" title="Reabrir">Reabrir</button>`
-          : `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="markAgConcl('${escAttr(k)}','${escAttr(a.cartaId||'')}','${escAttr(a.loftId||'')}')">Concluir</button>`
+          ? `<button class="abt" onclick="unmarkAgConcl('${escAttr(k)}','${escAttr(a.cartaId||'')}','${escAttr(a.loftId||'')}','${escAttr(a.rescId||'')}')" title="Reabrir">Reabrir</button>`
+          : `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;font-size:10px;padding:3px 7px" onclick="markAgConcl('${escAttr(k)}','${escAttr(a.cartaId||'')}','${escAttr(a.loftId||'')}','${escAttr(a.rescId||'')}')">Concluir</button>`
         }
         ${a.tipo2==='agenda'?`<button class="abt action-edit" onclick="editAg('${a.id}')">Editar</button><button class="abt action-delete" onclick="delR('agenda','${a.id}')">Excluir</button>`:''}
       </div>
@@ -3413,18 +3460,27 @@ function rAgDiaria(){
     </div>`).join('');
 }
 function editAgdSlot(i){
-  document.getElementById('agd-view-'+i).style.display='none';
-  document.getElementById('agd-edit-'+i).style.display='block';
-  document.getElementById('agd-btn-'+i).style.display='none';
+  const view=document.getElementById('agd-view-'+i);
+  const edit=document.getElementById('agd-edit-'+i);
+  const btn=document.getElementById('agd-btn-'+i);
+  if(view)view.style.display='none';
+  if(edit)edit.style.display='block';
+  if(btn)btn.style.display='none';
 }
 function cancelAgdEdit(i){
-  document.getElementById('agd-view-'+i).style.display='block';
-  document.getElementById('agd-edit-'+i).style.display='none';
-  document.getElementById('agd-btn-'+i).style.display='';
+  const view=document.getElementById('agd-view-'+i);
+  const edit=document.getElementById('agd-edit-'+i);
+  const btn=document.getElementById('agd-btn-'+i);
+  if(view)view.style.display='block';
+  if(edit)edit.style.display='none';
+  if(btn)btn.style.display='';
 }
 function saveAgdSlot(i){
   const slots=getAgd();
-  slots[i]={time:document.getElementById('agd-ti-'+i).value,desc:document.getElementById('agd-tx-'+i).value};
+  const ti=document.getElementById('agd-ti-'+i);
+  const tx=document.getElementById('agd-tx-'+i);
+  if(!slots[i]||!ti||!tx)return;
+  slots[i]={time:ti.value,desc:tx.value};
   saveAgd(slots);rAgDiaria();
 }
 function delAgdSlot(i){
@@ -5261,6 +5317,7 @@ function delR(col,id){
       // Clean loftConcl for this code
       const lc=D().loftConcl||{};
       Object.keys(lc).forEach(k=>{const l=D().loft.find(x=>x.id===k);if(!l||l.codigo===cod)delete lc[k];});
+      markAllAgConclForResc(r.id,false);
     }
   }
   if(col==='saiuImob')D().saiuImob=D().saiuImob.filter(x=>x.id!==id);
@@ -5268,7 +5325,7 @@ function delR(col,id){
   // Clean orphaned concluded flags
   if(col==='cartas'&&D().cartasConcl)delete D().cartasConcl[id];
   if(col==='loft'&&D().loftConcl)delete D().loftConcl[id];
-  if(col==='agenda'&&D().agConcl)delete D().agConcl[id];
+  if(col==='agenda'&&D().agConcl)delete D().agConcl['agenda:'+id];
   // Clean stale loftConcl keys
   const lc=D().loftConcl||{};const lids=new Set((D().loft||[]).map(l=>l.id));
   Object.keys(lc).forEach(k=>{if(!lids.has(k))delete lc[k];});
@@ -5278,8 +5335,8 @@ function delR(col,id){
 // ============================================================
 // MODALS
 // ============================================================
-function openM(id){fillSels();document.getElementById(id).style.display='flex';}
-function closeM(id){document.getElementById(id).style.display='none';}
+function openM(id){fillSels();const el=document.getElementById(id);if(el)el.style.display='flex';}
+function closeM(id){const el=document.getElementById(id);if(el)el.style.display='none';}
 
 // ============================================================
 // IMPORT / EXPORT

@@ -410,23 +410,28 @@ body{visibility:visible!important}
       <option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option>
       <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
     </select>
+    <button class="btn btn-g btn-s" onclick="imprimirRealizadas(&#39;todas&#39;)">Imprimir todas realizadas</button>
   </div>
 
   <!-- ─ Panorama: stats por módulo ─ -->
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:20px">
     <div class="stat gr" style="cursor:pointer" onclick="nav(&#39;manut-imob&#39;)">
+      <button class="btn btn-g btn-s" style="position:absolute;top:8px;right:8px;padding:3px 7px;font-size:10px" onclick="event.stopPropagation();imprimirRealizadas(&#39;imob&#39;)">Imprimir</button>
       <div class="stat-lbl">Executadas pela Imobiliária</div><div class="stat-val" id="ds-imob-ok">0</div>
       <div class="stat-sub" id="ds-imob-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat yl" style="cursor:pointer" onclick="nav(&#39;manut-cond&#39;)">
+      <button class="btn btn-g btn-s" style="position:absolute;top:8px;right:8px;padding:3px 7px;font-size:10px" onclick="event.stopPropagation();imprimirRealizadas(&#39;cond&#39;)">Imprimir</button>
       <div class="stat-lbl">Condomínios — Realizadas</div><div class="stat-val" id="ds-cond-ok">0</div>
       <div class="stat-sub" id="ds-cond-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat cy" style="cursor:pointer" onclick="nav(&#39;manut-ocup&#39;)">
+      <button class="btn btn-g btn-s" style="position:absolute;top:8px;right:8px;padding:3px 7px;font-size:10px" onclick="event.stopPropagation();imprimirRealizadas(&#39;ocup&#39;)">Imprimir</button>
       <div class="stat-lbl">Imóveis Ocupados — Realizadas</div><div class="stat-val" id="ds-ocup-ok">0</div>
       <div class="stat-sub" id="ds-ocup-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat pu" style="cursor:pointer" onclick="nav(&#39;manut-ager&#39;)">
+      <button class="btn btn-g btn-s" style="position:absolute;top:8px;right:8px;padding:3px 7px;font-size:10px" onclick="event.stopPropagation();imprimirRealizadas(&#39;ager&#39;)">Imprimir</button>
       <div class="stat-lbl">Manut. Assistente — Realizadas</div><div class="stat-val" id="ds-ager-ok">0</div>
       <div class="stat-sub" id="ds-ager-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
@@ -848,8 +853,8 @@ body{visibility:visible!important}
   </div>
   <!-- Abas -->
   <div class="tabs" style="margin-bottom:18px">
-    <div class="tab active" onclick="switchFinTab(this,1)">Prestadores</div>
-    <div class="tab" onclick="switchFinTab(this,0)">Relatórios</div>
+    <div class="tab active" data-fin-tab="1" onclick="switchFinTab(this,1)">Prestadores</div>
+    <div class="tab" data-fin-tab="0" onclick="switchFinTab(this,0)">Relatórios</div>
   </div>
   <!-- Tab 0: Financeiro (começa escondida) -->
   <div id="fin-tab-0" style="display:none">
@@ -1605,16 +1610,19 @@ function changeUser(){
 function renderUsers(){
   const list=document.getElementById('user-list');
   const sel=document.getElementById('current-user-sel');
-  const opts='<option value="">— Selecione seu perfil —</option>'+DB.users.map(u=>`<option value="${u.id}">${u.nome} — ${u.cargo}</option>`).join('');
-  if(sel)sel.innerHTML=opts;
-  if(!list)return;
-  list.innerHTML=DB.users.map(u=>`
+  const users=Array.isArray(DB.users)?DB.users:[];
+  if(list)list.innerHTML=users.map(u=>`
     <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--s2);border-radius:var(--rs)">
       <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">${u.nome.split(' ').map(w=>w[0]).join('').substr(0,2).toUpperCase()}</div>
       <div style="flex:1"><div style="font-size:13px;font-weight:500">${u.nome}</div><div style="font-size:11.5px;color:var(--t3)">${u.cargo}</div></div>
       <div class="btn-icon" onclick="removeUser('${u.id}')" title="Remover" style="color:var(--red);font-size:12px">✕</div>
     </div>
   `).join('');
+  if(sel){
+    const selected=sel.value;
+    sel.innerHTML='<option value="">— Selecione seu perfil —</option>'+users.map(u=>`<option value="${u.id}">${u.nome} — ${u.cargo}</option>`).join('');
+    if(selected&&users.some(u=>u.id===selected))sel.value=selected;
+  }
 }
 function saveUser(){
   const nome=document.getElementById('nu-nome').value.trim();
@@ -3493,8 +3501,9 @@ function exportCondPDF(id){
 function switchFinTab(el,idx){
   const finView=document.getElementById('view-financeiro');
   if(!finView)return;
-  finView.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
-  if(el)el.classList.add('active');
+  const tabs=Array.from(finView.querySelectorAll('.tabs .tab'));
+  const tabEl=el||tabs.find(t=>t.dataset.finTab===String(idx));
+  tabs.forEach(t=>t.classList.toggle('active',t===tabEl));
   const relTab=document.getElementById('fin-tab-0');
   const prestTab=document.getElementById('fin-tab-1');
   if(relTab)relTab.style.display=idx===0?'block':'none';
@@ -3505,8 +3514,9 @@ function switchFinTab(el,idx){
 function restoreFinTab(idx){
   const finView=document.getElementById('view-financeiro');
   if(!finView)return;
-  const tabs=finView.querySelectorAll('.tabs .tab');
-  if(tabs[idx])switchFinTab(tabs[idx],idx);
+  const tabs=Array.from(finView.querySelectorAll('.tabs .tab'));
+  const tab=tabs.find(t=>t.dataset.finTab===String(idx));
+  switchFinTab(tab,idx);
 }
 function backFromPrestDetail(){
   DB._restoreFinTab=1;
@@ -3816,6 +3826,77 @@ function gerarRelManut(tipo){
   toast('Relatório gerado!');
 }
 
+function dashFilterLabel(){
+  const t=_dashFilter||{tipo:'todos'};
+  const meses={'01':'Janeiro','02':'Fevereiro','03':'Março','04':'Abril','05':'Maio','06':'Junho','07':'Julho','08':'Agosto','09':'Setembro','10':'Outubro','11':'Novembro','12':'Dezembro'};
+  if(t.tipo==='mes')return 'Mês atual';
+  if(t.tipo==='semana')return 'Esta semana';
+  if(t.tipo==='ano'&&t.ano)return 'Ano '+t.ano;
+  if(t.tipo==='mes-sel')return `${meses[t.mes]||'Todos os meses'}${t.ano?' de '+t.ano:''}`;
+  return 'Histórico completo';
+}
+function diasParaFinalizar(m){
+  const ini=parseDate(m.dtSol);
+  const fim=parseDate(m.dtConc||m.dtPrev||m.dtSol);
+  if(!ini||!fim)return 99999;
+  return Math.max(0,Math.ceil((fim-ini)/86400000));
+}
+function imprimirRealizadas(tipo){
+  const titulos={
+    imob:'Executadas pela Imobiliária',
+    cond:'Condomínios — Realizadas',
+    ocup:'Imóveis Ocupados — Realizadas',
+    ager:'Manut. Assistente — Realizadas'
+  };
+  const tipos=tipo==='todas'?['imob','cond','ocup','ager']:[tipo];
+  let items=[];
+  tipos.forEach(t=>{
+    const arr=_filterByDash(DB.manutencoes[t]||[],'dtSol')
+      .filter(m=>normManutStatus(m.status)==='Concluído')
+      .map(m=>({...m,_modulo:titulos[t]||t,_diasFim:diasParaFinalizar(m)}));
+    items.push(...arr);
+  });
+  items.sort((a,b)=>a._diasFim-b._diasFim||(a.dtConc||a.dtPrev||a.dtSol||'').localeCompare(b.dtConc||b.dtPrev||b.dtSol||''));
+  const totalRec=items.reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
+  const titulo=tipo==='todas'?'Todas as manutenções realizadas':(titulos[tipo]||tipo);
+  const w=window.open('','_blank');
+  if(!w){toast('Permita pop-ups para imprimir.');return;}
+  const rows=items.map((m,i)=>`<tr>
+    <td style="text-align:center;font-weight:700">${i+1}</td>
+    <td>${gaRelEscape(m._modulo)}</td>
+    <td>${gaRelEscape(fmtDate(m.dtConc||m.dtPrev||m.dtSol))}</td>
+    <td style="text-align:center">${m._diasFim===99999?'—':m._diasFim}</td>
+    <td>${gaRelEscape(m.cond||'—')}</td>
+    <td>${gaRelEscape(m.prest||m.resp||'—')}</td>
+    <td>${gaRelEscape(m.desc||'—')}</td>
+    <td>${gaRelEscape(fmtR(m.val))}</td>
+    <td>${gaRelEscape(fmtR(m.recKenlo))}</td>
+  </tr>`).join('');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>${gaRelEscape(titulo)}</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:28px;color:#111;max-width:1120px;margin:0 auto}
+    h1{font-size:20px;margin:0 0 4px}.sub{color:#666;font-size:12px;margin-bottom:18px}
+    .stats{display:flex;gap:10px;margin:14px 0 18px}.stat{background:#f4f7fb;border:1px solid #dbe4ef;border-radius:8px;padding:10px 14px}
+    .stat b{display:block;font-size:18px}table{width:100%;border-collapse:collapse}
+    th{background:#eef2f7;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+    th,td{border:1px solid #dbe4ef;padding:7px 8px;font-size:12px;vertical-align:top}
+    tbody tr:nth-child(even){background:#f8fafc}@media print{button{display:none}body{padding:0}}
+  </style></head><body>
+  <h1>${gaRelEscape(titulo)}</h1>
+  <div class="sub">Período: ${gaRelEscape(dashFilterLabel())} · Gerado em ${new Date().toLocaleString('pt-BR')}</div>
+  <div class="stats">
+    <div class="stat"><b>${items.length}</b><span>realizadas</span></div>
+    <div class="stat"><b>R$ ${totalRec.toFixed(2).replace('.',',')}</b><span>receita</span></div>
+  </div>
+  <table><thead><tr><th>#</th><th>Módulo</th><th>Data final</th><th>Dias p/ finalizar</th><th>Contrato/Condomínio</th><th>Prestador/Resp.</th><th>Descrição</th><th>Valor</th><th>Receita</th></tr></thead>
+  <tbody>${rows||'<tr><td colspan="9" style="text-align:center;color:#666">Nenhum item realizado no período selecionado.</td></tr>'}</tbody></table>
+  <br><button onclick="window.print()">Imprimir</button>
+  </body></html>`);
+  w.document.close();
+  toast('Lista de realizadas gerada!');
+}
+
 // ─── Checklist na agenda: verificar iminentes no dashboard ──
 function checkChkAlertas(){
   const alertas=checarAlertasChk();
@@ -3971,20 +4052,7 @@ function renderGestaoVisible(){
 window.renderGestaoFast=renderGestaoVisible;
 
 function renderGestaoAll(){
-  renderGestaoCore();
-  const mt=activeManutTipo();
-  if(mt)renderManut(mt);
-  renderManutHome();
-  renderGlobalChk();
-  renderColabs();
-  renderFin();
-  renderAgenda();
-  renderConds();
-  renderTasks();
-  renderNotifs();
-  renderLembretes();
-  renderUsers();
-  if(document.getElementById('view-financeiro')?.classList.contains('active'))renderPrestCards();
+  renderGestaoVisible();
 }
 
 (function init(){
