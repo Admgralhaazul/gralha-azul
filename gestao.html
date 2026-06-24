@@ -511,7 +511,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>#</th><th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mager-tbody"></tbody>
     </table>
@@ -556,7 +556,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>#</th><th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mi-tbody"></tbody>
     </table>
@@ -600,7 +600,7 @@ body{visibility:visible!important}
   <div class="tw">
     <table class="manut-table">
       <thead><tr>
-        <th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
+        <th>#</th><th>Status</th><th>Data Sol.</th><th>Prev./Conc.</th><th>Responsável</th><th>Cond./Imóvel</th><th>Prestador</th><th>Descrição</th><th>Valor</th><th>Material</th><th style="color:var(--cyan)">Receita</th><th>Recibo</th><th>OBS</th><th style="text-align:right">Ações</th>
       </tr></thead>
       <tbody id="mc-tbody"></tbody>
     </table>
@@ -641,7 +641,7 @@ body{visibility:visible!important}
     <div class="status-pill" onclick="toggleStatus(this,&#39;ca&#39;,&#39;ocup&#39;)" data-s="Cancelado">● Cancelado</div>
   </div>
     <div class="tw"><table class="manut-table"><thead><tr>
-    <th>Status</th><th>Data Solic.</th><th>Prev./Conclusão</th><th>Responsável</th>
+    <th>#</th><th>Status</th><th>Data Solic.</th><th>Prev./Conclusão</th><th>Responsável</th>
     <th>Contrato/Cond.</th><th>Prestador</th><th>Descrição Serviço</th>
     <th>Valor Fechado</th><th style="color:var(--cyan)">Receita manut. imob.</th><th>Recibo</th><th>OBS</th><th style="min-width:80px;text-align:right">Ações</th>
   </tr></thead><tbody id="mo-tbody"></tbody></table></div>
@@ -1717,7 +1717,8 @@ function sortManutRows(arr,tipo){
   const prioridade={'Em andamento':0,'Concluído':1,Cancelado:2};
   return arr.map(m=>{
     const st=normManutStatus(m.status);
-    if(st==='Concluído')return {...m,_prio:3,_iminente:false,_dias:999};
+    const _finalKey=st==='Concluído'?(m.dtConc||m.dtSol||'9999-12-31'):(m.dtPrev||m.dtSol||'9999-12-31');
+    if(st==='Concluído')return {...m,_prio:prioridade[st]??1,_iminente:false,_dias:999,_finalKey};
     let _iminente=false,_dias=999;
     if(m.dtPrev){
       const dt=new Date(m.dtPrev);
@@ -1725,10 +1726,10 @@ function sortManutRows(arr,tipo){
       if(_dias<=14)_iminente=true;
     }
     const _prio=_iminente?-1:(prioridade[st]??2);
-    return {...m,_prio,_iminente,_dias,_hoje:_dias===0};
+    return {...m,_prio,_iminente,_dias,_hoje:_dias===0,_finalKey};
   }).sort((a,b)=>{
+    if(a._finalKey!==b._finalKey)return a._finalKey.localeCompare(b._finalKey);
     if(a._prio!==b._prio)return a._prio-b._prio;
-    if(a.status==='Concluído')return (b.dtConc||b.dtSol||'').localeCompare(a.dtConc||a.dtSol||'');
     return (a.dtSol||'').localeCompare(b.dtSol||'');
   });
 }
@@ -1786,11 +1787,14 @@ function renderManutRows(arr,tipo){
           <div class="btn-icon" onclick="reopenManut('${m.id}')" title="Desfazer / Reabrir" style="color:var(--yellow)">↩</div>
         </div></td>`;
   const prevConcCell=m=>m.status==='Concluído'&&m.dtConc?fmtDate(m.dtConc):fmtDate(m.dtPrev);
-  tbody.innerHTML=arr.map(m=>{
+  const rowNo=i=>`<td style="font-weight:800;color:var(--red);font-size:14px;text-align:center;width:32px">${i+1}</td>`;
+  const colspan=tipo==='ocup'?13:14;
+  tbody.innerHTML=arr.map((m,i)=>{
     // Linha especial para visitas de checklist
     if(m._visita){
       const vcond=m.cond.length>14?m.cond.substring(0,13)+'…':m.cond;
       return `<tr style="background:rgba(251,146,60,.06);border-left:3px solid #fb923c">
+        ${rowNo(i)}
         <td><span style="font-size:10px;padding:2px 6px;border-radius:20px;background:rgba(251,146,60,.2);color:#fb923c;font-weight:700;white-space:nowrap">V.Chk</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:1px">⚠${m._dias===0?'HOJE':m._dias<0?'VEN.':m._dias+'d'}</span>`:''}</td>
         <td style="font-size:11.5px;color:var(--t3)">${fmtDate(m.dtSol)}</td>
         <td style="font-size:11.5px;color:#fb923c;font-weight:600">${fmtDate(m.dtPrev)}</td>
@@ -1803,6 +1807,7 @@ function renderManutRows(arr,tipo){
     }
     if(tipo==='ocup'){
       return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
+      ${rowNo(i)}
       <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
       <td>${fmtDate(m.dtSol)}</td>
       <td>${prevConcCell(m)}</td>
@@ -1817,6 +1822,7 @@ function renderManutRows(arr,tipo){
       ${actionsCell(m,tipo)}</tr>`;
     }
     return `<tr${m._iminente?' style="border-left:3px solid var(--red);background:rgba(240,79,79,.04)"':''}>
+      ${rowNo(i)}
       <td><span class="bs ${MANUT_STATUS_CLS[normManutStatus(m.status)]||'bs-an'}">${normManutStatus(m.status)}</span>${m._iminente?`<span style="font-size:10px;color:var(--red);font-weight:700;display:block;margin-top:2px">⚠ ${m._dias<0?'VENCIDA':m._dias===0?'VENCE HOJE':m._dias+'d'}</span>`:''}</td>
       <td>${fmtDate(m.dtSol)}</td>
       <td>${prevConcCell(m)}</td>
@@ -1829,7 +1835,7 @@ function renderManutRows(arr,tipo){
       <td style="color:var(--cyan);font-weight:600">${fmtR(m.recKenlo)}</td>
       <td>${reciboCell(m)}</td>
       <td class="td-obs">${m.obs||'—'}</td>
-      ${actionsCell(m,tipo)}</tr>`;}).join('')+(capped?`<tr><td colspan="13" style="text-align:center;padding:12px;font-size:12px;color:var(--t3);background:var(--s2)">Mostrando ${MANUT_LIST_CAP} de ${total} — use filtros para refinar</td></tr>`:'');
+      ${actionsCell(m,tipo)}</tr>`;}).join('')+(capped?`<tr><td colspan="${colspan}" style="text-align:center;padding:12px;font-size:12px;color:var(--t3);background:var(--s2)">Mostrando ${MANUT_LIST_CAP} de ${total} — use filtros para refinar</td></tr>`:'');
 }
 function updateManutStats(tipo){
   const all=DB.manutencoes[tipo]||[];
