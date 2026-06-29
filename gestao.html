@@ -4095,8 +4095,10 @@ function removeAno(a){
 const MANUT_CLEAR_VER='20260621';
 const AGER_SEED_VER='20260629_assistente_adm_v2';
 const OCUP_SEED_VER='20260624_geral_v5';
-const IMOB_SEED_VER='20260629_cond_imob_v2';
-const COND_SEED_VER='20260629_cond_imob_v2';
+const IMOB_SEED_VER='20260629_cond_imob_v3';
+const COND_SEED_VER='20260629_cond_imob_v3';
+const IMOB_SEED_MIN=348;
+const COND_SEED_MIN=211;
 let _agerSeedPromise=null;
 let _ocupSeedPromise=null;
 let _imobSeedPromise=null;
@@ -4196,12 +4198,31 @@ async function loadOcupSeed(){
   return _ocupSeedPromise;
 }
 
+function imobCondCombinedStats(){
+  const all=[...(DB.manutencoes?.imob||[]),...(DB.manutencoes?.cond||[])];
+  let concl=0,canc=0,and=0;
+  for(const m of all){
+    const st=normManutStatus(m.status);
+    if(st==='Concluído')concl++;
+    else if(st==='Cancelado')canc++;
+    else and++;
+  }
+  return {concl,canc,and,total:all.length,imob:(DB.manutencoes?.imob||[]).length,cond:(DB.manutencoes?.cond||[]).length};
+}
+function needsImobCondSeedReload(){
+  if(localStorage.getItem('ga_imob_seed')!==IMOB_SEED_VER) return true;
+  if(localStorage.getItem('ga_cond_seed')!==COND_SEED_VER) return true;
+  const s=imobCondCombinedStats();
+  if(s.imob<IMOB_SEED_MIN||s.cond<COND_SEED_MIN) return true;
+  if(s.total<559||s.concl<471||s.canc<56) return true;
+  return false;
+}
+
 async function loadImobSeed(){
   if(_imobSeedPromise) return _imobSeedPromise;
   _imobSeedPromise=(async()=>{
   try{
-    const hasImob=(DB.manutencoes?.imob||[]).length>=100;
-    if(localStorage.getItem('ga_imob_seed')===IMOB_SEED_VER&&hasImob) return false;
+    if(localStorage.getItem('ga_imob_seed')===IMOB_SEED_VER&&(DB.manutencoes?.imob||[]).length>=IMOB_SEED_MIN&&!needsImobCondSeedReload()) return false;
     const r=await fetch('./gestao-imob-seed.json?v='+IMOB_SEED_VER);
     if(!r.ok) return false;
     const seed=await r.json();
@@ -4228,8 +4249,7 @@ async function loadCondSeed(){
   if(_condSeedPromise) return _condSeedPromise;
   _condSeedPromise=(async()=>{
   try{
-    const hasCond=(DB.manutencoes?.cond||[]).length>=50;
-    if(localStorage.getItem('ga_cond_seed')===COND_SEED_VER&&hasCond) return false;
+    if(localStorage.getItem('ga_cond_seed')===COND_SEED_VER&&(DB.manutencoes?.cond||[]).length>=COND_SEED_MIN&&!needsImobCondSeedReload()) return false;
     const r=await fetch('./gestao-cond-seed.json?v='+COND_SEED_VER);
     if(!r.ok) return false;
     const seed=await r.json();
@@ -4320,8 +4340,7 @@ function renderGestaoAll(){
       if(bootDone) return;
       bootDone=true;
       const loads=[];
-      if(localStorage.getItem('ga_imob_seed')!==IMOB_SEED_VER||(DB.manutencoes?.imob||[]).length<100) loads.push(loadImobSeed());
-      if(localStorage.getItem('ga_cond_seed')!==COND_SEED_VER||(DB.manutencoes?.cond||[]).length<50) loads.push(loadCondSeed());
+      if(needsImobCondSeedReload()){loads.push(loadImobSeed());loads.push(loadCondSeed());}
       if(localStorage.getItem('ga_ager_seed')!==AGER_SEED_VER||(DB.manutencoes?.ager||[]).length<50) loads.push(loadAgerSeed());
       if(localStorage.getItem('ga_ocup_seed')!==OCUP_SEED_VER||(DB.manutencoes?.ocup||[]).length<500) loads.push(loadOcupSeed());
       if(loads.length) await Promise.all(loads);

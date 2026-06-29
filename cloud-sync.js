@@ -100,11 +100,11 @@
           if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
           DB.manutencoes.ocup=prevOcup;
         }
-        if((DB.manutencoes?.imob||[]).length===0 && prevImob.length>=100){
+        if((DB.manutencoes?.imob||[]).length===0 && prevImob.length>=340){
           if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
           DB.manutencoes.imob=prevImob;
         }
-        if((DB.manutencoes?.cond||[]).length===0 && prevCond.length>=50){
+        if((DB.manutencoes?.cond||[]).length===0 && prevCond.length>=210){
           if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
           DB.manutencoes.cond=prevCond;
         }
