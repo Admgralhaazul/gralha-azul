@@ -4095,8 +4095,12 @@ function removeAno(a){
 const MANUT_CLEAR_VER='20260621';
 const AGER_SEED_VER='20260629_assistente_adm_v2';
 const OCUP_SEED_VER='20260624_geral_v5';
+const IMOB_SEED_VER='20260629_cond_imob_v1';
+const COND_SEED_VER='20260629_cond_imob_v1';
 let _agerSeedPromise=null;
 let _ocupSeedPromise=null;
+let _imobSeedPromise=null;
+let _condSeedPromise=null;
 
 function applyManutResetIfNeeded(){
   if(localStorage.getItem('ga_manut_clear')===MANUT_CLEAR_VER) return false;
@@ -4105,6 +4109,8 @@ function applyManutResetIfNeeded(){
   localStorage.setItem('ga_manut_seed','manual');
   localStorage.removeItem('ga_ager_seed');
   localStorage.removeItem('ga_ocup_seed');
+  localStorage.removeItem('ga_imob_seed');
+  localStorage.removeItem('ga_cond_seed');
   return true;
 }
 function markManutResetSynced(){
@@ -4190,14 +4196,74 @@ async function loadOcupSeed(){
   return _ocupSeedPromise;
 }
 
+async function loadImobSeed(){
+  if(_imobSeedPromise) return _imobSeedPromise;
+  _imobSeedPromise=(async()=>{
+  try{
+    const hasImob=(DB.manutencoes?.imob||[]).length>=100;
+    if(localStorage.getItem('ga_imob_seed')===IMOB_SEED_VER&&hasImob) return false;
+    const r=await fetch('./gestao-imob-seed.json?v='+IMOB_SEED_VER);
+    if(!r.ok) return false;
+    const seed=await r.json();
+    const rows=(seed.imob||[]).map(normalizeManutRecord);
+    if(!rows.length) return false;
+    if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+    DB.manutencoes.imob=rows.map(m=>({...m,tipo:'imob',status:normManutStatus(m.status)}));
+    localStorage.setItem('ga_imob_seed',IMOB_SEED_VER);
+    markManutResetSynced();
+    try{ localStorage.setItem('gestao_v5', JSON.stringify(DB)); }catch(e){}
+    window._gestaoNeedsManutPush=true;
+    return true;
+  }catch(e){
+    console.warn('loadImobSeed:',e);
+    return false;
+  }finally{
+    _imobSeedPromise=null;
+  }
+  })();
+  return _imobSeedPromise;
+}
+
+async function loadCondSeed(){
+  if(_condSeedPromise) return _condSeedPromise;
+  _condSeedPromise=(async()=>{
+  try{
+    const hasCond=(DB.manutencoes?.cond||[]).length>=50;
+    if(localStorage.getItem('ga_cond_seed')===COND_SEED_VER&&hasCond) return false;
+    const r=await fetch('./gestao-cond-seed.json?v='+COND_SEED_VER);
+    if(!r.ok) return false;
+    const seed=await r.json();
+    const rows=(seed.cond||[]).map(normalizeManutRecord);
+    if(!rows.length) return false;
+    if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+    DB.manutencoes.cond=rows.map(m=>({...m,tipo:'cond',status:normManutStatus(m.status)}));
+    localStorage.setItem('ga_cond_seed',COND_SEED_VER);
+    markManutResetSynced();
+    try{ localStorage.setItem('gestao_v5', JSON.stringify(DB)); }catch(e){}
+    window._gestaoNeedsManutPush=true;
+    return true;
+  }catch(e){
+    console.warn('loadCondSeed:',e);
+    return false;
+  }finally{
+    _condSeedPromise=null;
+  }
+  })();
+  return _condSeedPromise;
+}
+
 async function loadManutSeed(){
+  const i=await loadImobSeed();
+  const c=await loadCondSeed();
   const a=await loadAgerSeed();
   const o=await loadOcupSeed();
-  return a||o;
+  return i||c||a||o;
 }
 window.ensureManutSeed=loadManutSeed;
 window.loadAgerSeed=loadAgerSeed;
 window.loadOcupSeed=loadOcupSeed;
+window.loadImobSeed=loadImobSeed;
+window.loadCondSeed=loadCondSeed;
 
 function hydrateGestaoFromCache(){
   try{
@@ -4254,6 +4320,8 @@ function renderGestaoAll(){
       if(bootDone) return;
       bootDone=true;
       const loads=[];
+      if(localStorage.getItem('ga_imob_seed')!==IMOB_SEED_VER||(DB.manutencoes?.imob||[]).length<100) loads.push(loadImobSeed());
+      if(localStorage.getItem('ga_cond_seed')!==COND_SEED_VER||(DB.manutencoes?.cond||[]).length<50) loads.push(loadCondSeed());
       if(localStorage.getItem('ga_ager_seed')!==AGER_SEED_VER||(DB.manutencoes?.ager||[]).length<50) loads.push(loadAgerSeed());
       if(localStorage.getItem('ga_ocup_seed')!==OCUP_SEED_VER||(DB.manutencoes?.ocup||[]).length<500) loads.push(loadOcupSeed());
       if(loads.length) await Promise.all(loads);

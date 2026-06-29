@@ -89,6 +89,8 @@
       if(MODULE === 'gestao' && typeof DB !== 'undefined'){
         const prevAger=(DB.manutencoes&&DB.manutencoes.ager)?DB.manutencoes.ager.slice():[];
         const prevOcup=(DB.manutencoes&&DB.manutencoes.ocup)?DB.manutencoes.ocup.slice():[];
+        const prevImob=(DB.manutencoes&&DB.manutencoes.imob)?DB.manutencoes.imob.slice():[];
+        const prevCond=(DB.manutencoes&&DB.manutencoes.cond)?DB.manutencoes.cond.slice():[];
         Object.assign(DB, next || {});
         if((DB.manutencoes?.ager||[]).length===0 && prevAger.length>=50){
           if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
@@ -97,6 +99,14 @@
         if((DB.manutencoes?.ocup||[]).length===0 && prevOcup.length>=500){
           if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
           DB.manutencoes.ocup=prevOcup;
+        }
+        if((DB.manutencoes?.imob||[]).length===0 && prevImob.length>=100){
+          if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+          DB.manutencoes.imob=prevImob;
+        }
+        if((DB.manutencoes?.cond||[]).length===0 && prevCond.length>=50){
+          if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+          DB.manutencoes.cond=prevCond;
         }
         let needsPush=false;
         if(typeof window.normalizeManutStatuses==='function') window.normalizeManutStatuses();
