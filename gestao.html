@@ -419,15 +419,15 @@ body{visibility:visible!important}
       <div class="stat-sub" id="ds-imob-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat yl" style="cursor:pointer" onclick="nav(&#39;manut-cond&#39;)">
-      <div class="stat-lbl">Condomínios — Realizadas</div><div class="stat-val" id="ds-cond-ok">0</div>
+      <div class="stat-lbl">Condomínios</div><div class="stat-val" id="ds-cond-ok">0</div>
       <div class="stat-sub" id="ds-cond-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat cy" style="cursor:pointer" onclick="nav(&#39;manut-ocup&#39;)">
-      <div class="stat-lbl">Imóveis Ocupados — Realizadas</div><div class="stat-val" id="ds-ocup-ok">0</div>
+      <div class="stat-lbl">Imóveis Ocupados</div><div class="stat-val" id="ds-ocup-ok">0</div>
       <div class="stat-sub" id="ds-ocup-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
     <div class="stat pu" style="cursor:pointer" onclick="nav(&#39;manut-ager&#39;)">
-      <div class="stat-lbl">Manut. Assistente — Realizadas</div><div class="stat-val" id="ds-ager-ok">0</div>
+      <div class="stat-lbl">Manut. Assistente</div><div class="stat-val" id="ds-ager-ok">0</div>
       <div class="stat-sub" id="ds-ager-pend" style="color:var(--yellow)">0 pendentes</div>
     </div>
 
@@ -532,7 +532,6 @@ body{visibility:visible!important}
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mi-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mi-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mi-ca">0</div></div>
-    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mi-rec">R$0</div></div>
   </div>
   <!-- Status multi-select -->
   <div class="filter-bar" id="mi-filter-bar">
@@ -577,7 +576,6 @@ body{visibility:visible!important}
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mc-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mc-ca">0</div></div>
-    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mc-rec">R$0</div></div>
   </div>
   <div class="filter-bar" id="mc-filter-bar">
     <div class="search-wrap"><input type="text" id="mc-search" oninput="debounceFilterManut(&#39;cond&#39;)" placeholder="Buscar..."></div>
@@ -619,7 +617,6 @@ body{visibility:visible!important}
     <div class="stat yl"><div class="stat-lbl">Em Andamento</div><div class="stat-val" id="mo-an">0</div></div>
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
-    <div class="stat cy"><div class="stat-lbl">Receita (concl.)</div><div class="stat-val" id="mo-rec">R$0</div></div>
   </div>
 
   <div class="filter-bar" id="mo-filter-bar">
@@ -1487,10 +1484,10 @@ function nav(id){
   }
   if(id==='acesso'){renderUsers();renderLog();renderColabs();renderPrestListAcesso();renderAnos();}
   if(id==='dashboard')updateDashboard();
-  if(id==='manut-imob')renderManut('imob');
-  if(id==='manut-cond')renderManut('cond');
-  if(id==='manut-ocup')renderManut('ocup');
-  if(id==='manut-ager')renderManut('ager');
+  if(id==='manut-imob'){applyManutMesAtual('imob');renderManut('imob');}
+  if(id==='manut-cond'){applyManutMesAtual('cond');renderManut('cond');}
+  if(id==='manut-ocup'){applyManutMesAtual('ocup');renderManut('ocup');}
+  if(id==='manut-ager'){applyManutMesAtual('ager');renderManut('ager');}
   if(id==='processos'){renderTasks();renderNotifs();renderProcTab();}
   if(id==='manut-home'){nav('dashboard');return;}
   if(id==='manut-agenda')renderManutAgenda();
@@ -1712,30 +1709,54 @@ function updateAllManutStats(){
   ['imob','cond','ocup','ager'].forEach(updateManutStats);
 }
 
+function manutPrefix(tipo){
+  return tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
+}
+function mesAtualRefs(){
+  const n=new Date();
+  return {ano:String(n.getFullYear()),mes:String(n.getMonth()+1).padStart(2,'0')};
+}
+function applyManutMesAtual(tipo){
+  const pf=manutPrefix(tipo);
+  const {ano,mes}=mesAtualRefs();
+  const a=document.getElementById(pf+'-ano');
+  const m=document.getElementById(pf+'-mes');
+  if(a)a.value=ano;
+  if(m)m.value=mes;
+}
+function manutDateRef(m){
+  const st=normManutStatus(m.status);
+  if(st==='Concluído')return m.dtConc||m.dtSol||'';
+  if(st==='Cancelado')return m.dtConc||m.dtPrev||m.dtSol||'';
+  return m.dtSol||'';
+}
+function manutInMes(m,ano,mes){
+  const st=normManutStatus(m.status);
+  if(st==='Em andamento')return true;
+  const dt=manutDateRef(m);
+  if(ano&&dt&&!dt.startsWith(ano))return false;
+  if(mes&&dt&&dt.substring(5,7)!==mes)return false;
+  return true;
+}
+
 function sortManutRows(arr,tipo){
   const hoje=new Date();hoje.setHours(0,0,0,0);
-  const prioridade={'Em andamento':0,'Concluído':1,Cancelado:2};
-  return arr.map(m=>{
+  const fullList=DB.manutencoes[tipo]||[];
+  const orderMap=new Map(fullList.map((m,i)=>[m.id,i]));
+  return [...arr].map(m=>{
     const st=normManutStatus(m.status);
-    const _finalKey=st==='Concluído'?(m.dtConc||m.dtSol||'9999-12-31'):(m.dtPrev||m.dtSol||'9999-12-31');
-    if(st==='Concluído')return {...m,_prio:prioridade[st]??1,_iminente:false,_dias:999,_finalKey};
     let _iminente=false,_dias=999;
-    if(m.dtPrev){
+    if(st==='Em andamento'&&m.dtPrev){
       const dt=new Date(m.dtPrev);
       _dias=Math.ceil((dt-hoje)/86400000);
       if(_dias<=14)_iminente=true;
     }
-    const _prio=_iminente?-1:(prioridade[st]??2);
-    return {...m,_prio,_iminente,_dias,_hoje:_dias===0,_finalKey};
-  }).sort((a,b)=>{
-    if(a._finalKey!==b._finalKey)return a._finalKey.localeCompare(b._finalKey);
-    if(a._prio!==b._prio)return a._prio-b._prio;
-    return (a.dtSol||'').localeCompare(b.dtSol||'');
-  });
+    return {...m,_iminente,_dias,_hoje:_dias===0};
+  }).sort((a,b)=>(orderMap.get(a.id)??1e9)-(orderMap.get(b.id)??1e9));
 }
 
 function getFilteredManutItems(tipo){
-  const pfx=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
+  const pfx=manutPrefix(tipo);
   const q=(document.getElementById(pfx+'-search')?.value||'').toLowerCase();
   const ini=document.getElementById(pfx+'-dt-ini')?.value;
   const fim=document.getElementById(pfx+'-dt-fim')?.value;
@@ -1745,10 +1766,10 @@ function getFilteredManutItems(tipo){
   return (DB.manutencoes[tipo]||[]).filter(m=>{
     if(activePills.length&&!activePills.includes(normManutStatus(m.status)))return false;
     if(q&&!`${m.desc||''}${m.cond||''}${m.prest||''}${m.resp||''}`.toLowerCase().includes(q))return false;
-    // Para concluídos, filtrar por data de conclusão; para outros por data de solicitação
-    const dtRef=normManutStatus(m.status)==='Concluído'?(m.dtConc||m.dtSol||''):(m.dtSol||'');
-    if(ano&&dtRef&&!dtRef.startsWith(ano))return false;
-    if(mes&&dtRef&&dtRef.substring(5,7)!==mes)return false;
+    if(ano||mes){
+      if(!manutInMes(m,ano,mes))return false;
+    }
+    const dtRef=manutDateRef(m);
     if(ini&&dtRef&&dtRef<ini)return false;
     if(fim&&dtRef&&dtRef>fim)return false;
     return true;
@@ -1761,7 +1782,7 @@ function filterManut(tipo,immediate){
 }
 function renderManut(tipo){filterManut(tipo);updateManutStats(tipo)}
 function clearManutFilter(tipo){
-  const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
+  const pf=manutPrefix(tipo);
   ['search','dt-ini','dt-fim','ano','mes'].forEach(k=>{const el=document.getElementById(pf+'-'+k);if(el)el.value='';});
   document.querySelectorAll('#'+pf+'-status-pills .status-pill').forEach(p=>{p.className='status-pill'});
   filterManut(tipo);
@@ -1771,7 +1792,7 @@ function toggleStatus(el,cls,tipo){
   filterManut(tipo);
 }
 function renderManutRows(arr,tipo){
-  const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
+  const pf=manutPrefix(tipo);
   const tbody=document.getElementById(pf+'-tbody');
   const emp=document.getElementById(pf+'-empty');
   arr=sortManutRows(arr,tipo);
@@ -1838,26 +1859,24 @@ function renderManutRows(arr,tipo){
       ${actionsCell(m,tipo)}</tr>`;}).join('')+(capped?`<tr><td colspan="${colspan}" style="text-align:center;padding:12px;font-size:12px;color:var(--t3);background:var(--s2)">Mostrando ${MANUT_LIST_CAP} de ${total} — use filtros para refinar</td></tr>`:'');
 }
 function updateManutStats(tipo){
+  const pf=manutPrefix(tipo);
+  const ano=document.getElementById(pf+'-ano')?.value||'';
+  const mes=document.getElementById(pf+'-mes')?.value||'';
   const all=DB.manutencoes[tipo]||[];
-  const pf=tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
-  let ab=0,an=0,ok=0,ca=0,rec=0;
+  let an=0,ok=0,ca=0;
   for(const m of all){
+    if((ano||mes)&&!manutInMes(m,ano,mes))continue;
     const st=normManutStatus(m.status);
     if(st==='Em andamento')an++;
-    else if(st==='Concluído'){ok++;rec+=parseFloat(m.recKenlo||0);}
+    else if(st==='Concluído')ok++;
     else if(st==='Cancelado')ca++;
   }
-  const abEl=document.getElementById(pf+'-ab');if(abEl)abEl.textContent=0;
   const anEl=document.getElementById(pf+'-an');if(anEl)anEl.textContent=an;
   const okEl=document.getElementById(pf+'-ok');if(okEl)okEl.textContent=ok;
   const caEl=document.getElementById(pf+'-ca');if(caEl)caEl.textContent=ca;
-  const pend=an;
-  const pendEl=document.getElementById(pf+'-pend');if(pendEl)pendEl.textContent=pend;
-  const recEl=document.getElementById(pf+'-rec');if(recEl)recEl.textContent='R$'+rec.toFixed(0);
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
   const cnt=document.getElementById(cntMap[tipo]||'mi-cnt');
-  const totalCnt=ok+pend;
-  if(cnt)cnt.textContent=totalCnt+' chamado'+(totalCnt!==1?'s':'');
+  if(cnt)cnt.textContent=all.length+' chamado'+(all.length!==1?'s':'');
 }
 function setSelectValue(id,val){
   const el=document.getElementById(id);
@@ -2655,11 +2674,11 @@ function renderFin(){
 
 // ─── DASHBOARD UPDATE ────────────────────────────
 function _fmtChamados(n){return n+' chamado'+(n!==1?'s':'');}
-function _dashModuloStats(arr,dateField){
+function _dashModuloStats(arr){
   const src=arr||[];
-  const ok=_filterByDash(src,dateField||'dtSol').filter(m=>normManutStatus(m.status)==='Concluído').length;
+  const total=src.length;
   const pend=src.filter(m=>normManutStatus(m.status)==='Em andamento').length;
-  return {ok,pend,total:ok+pend};
+  return {total,pend,ok:total};
 }
 function updateDashboard(){
   try {
@@ -2688,30 +2707,20 @@ function updateDashboard(){
   const plist=document.getElementById('ds-proc-list');
   if(plist){const r3=procPend.slice(0,3);
     plist.innerHTML=r3.length?r3.map(t=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)"><div style="flex:1"><div style="font-size:12px;font-weight:500">${t.titulo}</div><div style="font-size:11px;color:var(--t3)">${t.resp||''}${t.dtFim?' · '+fmtDate(t.dtFim):''}</div></div></div>`).join(''):'<div style="padding:12px;color:var(--t3);font-size:12px;text-align:center">Nenhuma tarefa pendente</div>';}
-  // Receita mês
-  const n=new Date();
-  const mesStr=n.getFullYear()+'-'+(String(n.getMonth()+1).padStart(2,'0'));
-  const recMes=imobM.filter(m=>(m.dtConc||m.dtSol||'').startsWith(mesStr)).reduce((s,m)=>s+parseFloat(m.recKenlo||0),0);
-  const dsRec=document.getElementById('ds-rec');if(dsRec)dsRec.textContent='R$'+recMes.toFixed(0);
-  const dsRecBig=document.getElementById('ds-rec-big');if(dsRecBig)dsRecBig.textContent='R$'+recMes.toFixed(2).replace('.',',');
-  const dsRecBadge=document.getElementById('ds-rec-badge');if(dsRecBadge)dsRecBadge.textContent='R$'+recMes.toFixed(0);
-  const dsRecSub=document.getElementById('ds-rec-sub');if(dsRecSub)dsRecSub.textContent=imobM.filter(m=>(m.dtConc||m.dtSol||'').startsWith(mesStr)).length+' serviços este mês';
-  // Prestadores
-  const dsprest=document.getElementById('ds-prest');if(dsprest)dsprest.textContent=DB.prestadores.length;
-  // Panorama por módulo (realizadas + pendentes; cancelados não entram no total)
+  // Panorama por módulo — total geral + pendentes
   const _m={
-    imob:_dashModuloStats(DB.manutencoes.imob,'dtSol'),
-    cond:_dashModuloStats(DB.manutencoes.cond,'dtSol'),
-    ocup:_dashModuloStats(DB.manutencoes.ocup,'dtSol'),
-    ager:_dashModuloStats(DB.manutencoes.ager,'dtSol'),
-    proc:{ok:DB.tasks.filter(t=>t.status==='Concluída').length,pend:DB.tasks.filter(t=>t.status!=='Concluída').length}
+    imob:_dashModuloStats(DB.manutencoes.imob),
+    cond:_dashModuloStats(DB.manutencoes.cond),
+    ocup:_dashModuloStats(DB.manutencoes.ocup),
+    ager:_dashModuloStats(DB.manutencoes.ager),
+    proc:{total:DB.tasks.length,pend:DB.tasks.filter(t=>t.status!=='Concluída').length,ok:DB.tasks.length}
   };
   const setM=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-  setM('ds-imob-ok',_m.imob.ok);setM('ds-imob-pend',_m.imob.pend+' pendentes');
-  setM('ds-cond-ok',_m.cond.ok);setM('ds-cond-pend',_m.cond.pend+' pendentes');
-  setM('ds-ocup-ok',_m.ocup.ok);setM('ds-ocup-pend',_m.ocup.pend+' pendentes');
-  setM('ds-ager-ok',_m.ager.ok);setM('ds-ager-pend',_m.ager.pend+' pendentes');
-  setM('ds-proc-ok',_m.proc.ok);setM('ds-proc-pend',_m.proc.pend+' pendentes');
+  setM('ds-imob-ok',_m.imob.total);setM('ds-imob-pend',_m.imob.pend+' pendentes');
+  setM('ds-cond-ok',_m.cond.total);setM('ds-cond-pend',_m.cond.pend+' pendentes');
+  setM('ds-ocup-ok',_m.ocup.total);setM('ds-ocup-pend',_m.ocup.pend+' pendentes');
+  setM('ds-ager-ok',_m.ager.total);setM('ds-ager-pend',_m.ager.pend+' pendentes');
+  setM('ds-proc-ok',_m.proc.total);setM('ds-proc-pend',_m.proc.pend+' pendentes');
   // Atualizar badges dos cards de manutenção
   renderManutHome();
   setTimeout(checkChkAlertas,200);
@@ -3206,11 +3215,15 @@ function fillRelSelects(){
 
 
 function renderManutHome(){
-  const setCnt=(id,s)=>{const el=document.getElementById(id);if(el)el.textContent=_fmtChamados(s.total);};
-  setCnt('mi-cnt',_dashModuloStats(DB.manutencoes.imob,'dtSol'));
-  setCnt('mc-cnt',_dashModuloStats(DB.manutencoes.cond,'dtSol'));
-  setCnt('mo-cnt',_dashModuloStats(DB.manutencoes.ocup,'dtSol'));
-  setCnt('mager-cnt',_dashModuloStats(DB.manutencoes.ager,'dtSol'));
+  const setCnt=(id,tipo)=>{
+    const el=document.getElementById(id);
+    const n=(DB.manutencoes[tipo]||[]).length;
+    if(el)el.textContent=_fmtChamados(n);
+  };
+  setCnt('mi-cnt','imob');
+  setCnt('mc-cnt','cond');
+  setCnt('mo-cnt','ocup');
+  setCnt('mager-cnt','ager');
   const procOk=DB.tasks.filter(t=>t.status==='Concluída').length;
   const procPend=DB.tasks.filter(t=>t.status!=='Concluída').length;
   const procTot=procOk+procPend;
