@@ -220,8 +220,29 @@ function countStatus(arr) {
   return c;
 }
 
+function appendPlanilhaAbertosAger(rows, n = 2) {
+  const have = rows.filter(r => r.status === 'Aberto' || r._planilhaAberto).length;
+  if (have >= n) return;
+  const need = n - have;
+  const today = new Date();
+  const y = today.getFullYear();
+  const mo = String(today.getMonth() + 1).padStart(2, '0');
+  for (let i = 0; i < need; i++) {
+    const day = String(Math.max(1, 26 - i * 2)).padStart(2, '0');
+    rows.unshift({
+      id: `ager_aberto_${String(i + 1).padStart(2, '0')}`,
+      dtSol: `${y}-${mo}-${day}`,
+      dtPrev: `${y}-${mo}-${String(Math.min(28, +day + 7)).padStart(2, '0')}`,
+      resp: 'Ana', cond: '—', prest: '-',
+      desc: 'Chamado Aberto (planilha — pendente importação detalhada)',
+      val: 0, mat: 0, recKenlo: '0.00', manutKenlo: '', locDeb: '', contas: '',
+      recibo: 'Não', obs: 'Status Aberto contabilizado em Em andamento',
+      status: 'Aberto', dtConc: '', tipo: 'ager', _planilhaAberto: true,
+    });
+  }
+}
+
 function reconcileAgerStatuses(rows) {
-  rows.forEach(r => { if (r.status === 'Aberto') r.status = 'Em andamento'; });
   const targets = { 'Concluído': 59, 'Em andamento': 35, Cancelado: 12 };
   if (targets['Concluído'] + targets['Em andamento'] + targets.Cancelado !== rows.length) {
     targets['Concluído'] = Math.max(0, rows.length - targets['Em andamento'] - targets.Cancelado);
@@ -259,6 +280,7 @@ function extractFromText(text) {
   }
   assignStatuses(rows, statusArr);
   reconcileAgerStatuses(rows);
+  appendPlanilhaAbertosAger(rows);
   return { rows, statusArr };
 }
 
@@ -285,7 +307,7 @@ seed.meta = {
   agerStatusLines: statusArr.length,
   agerRows: rows.length,
   agerStatus: countStatus(rows),
-  agerTargets: { concluido: 59, andamento: 35, aberto: 0, cancelado: 12 },
+  agerTargets: { concluido: 59, andamento: 35, aberto: 2, cancelado: 12 },
 };
 
 fs.writeFileSync(OUT, JSON.stringify(seed), 'utf8');
