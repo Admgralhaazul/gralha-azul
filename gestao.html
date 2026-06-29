@@ -4093,7 +4093,7 @@ function removeAno(a){
 
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
-const AGER_SEED_VER='20260623_ocup_cond_v5';
+const AGER_SEED_VER='20260629_assistente_adm_v1';
 const OCUP_SEED_VER='20260624_geral_v5';
 let _agerSeedPromise=null;
 let _ocupSeedPromise=null;
@@ -4254,7 +4254,7 @@ function renderGestaoAll(){
       if(bootDone) return;
       bootDone=true;
       const loads=[];
-      if((DB.manutencoes?.ager||[]).length<50) loads.push(loadAgerSeed());
+      if(localStorage.getItem('ga_ager_seed')!==AGER_SEED_VER||(DB.manutencoes?.ager||[]).length<50) loads.push(loadAgerSeed());
       if(localStorage.getItem('ga_ocup_seed')!==OCUP_SEED_VER||(DB.manutencoes?.ocup||[]).length<500) loads.push(loadOcupSeed());
       if(loads.length) await Promise.all(loads);
       normalizeManutStatuses();
