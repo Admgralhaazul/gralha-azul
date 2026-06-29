@@ -4095,8 +4095,8 @@ function removeAno(a){
 const MANUT_CLEAR_VER='20260621';
 const AGER_SEED_VER='20260629_assistente_adm_v2';
 const OCUP_SEED_VER='20260624_geral_v5';
-const IMOB_SEED_VER='20260629_cond_imob_v3';
-const COND_SEED_VER='20260629_cond_imob_v3';
+const IMOB_SEED_VER='20260629_cond_imob_v4';
+const COND_SEED_VER='20260629_cond_imob_v4';
 const IMOB_SEED_MIN=348;
 const COND_SEED_MIN=211;
 let _agerSeedPromise=null;
@@ -4214,7 +4214,7 @@ function needsImobCondSeedReload(){
   if(localStorage.getItem('ga_cond_seed')!==COND_SEED_VER) return true;
   const s=imobCondCombinedStats();
   if(s.imob<IMOB_SEED_MIN||s.cond<COND_SEED_MIN) return true;
-  if(s.total<559||s.concl<471||s.canc<56) return true;
+  if(s.total<560||s.concl<471||s.canc<56||s.and<33) return true;
   return false;
 }
 

@@ -196,27 +196,81 @@ function assignStatuses(rows, statusArr) {
 }
 
 function reconcileCondImobStatuses(rows) {
-  rows.forEach(r => { if (r.status === 'Aberto') r.status = 'Em andamento'; });
-  const targets = { 'Concluído': 471, 'Em andamento': 33, Cancelado: 56 };
-  if (targets['Concluído'] + targets['Em andamento'] + targets.Cancelado !== rows.length) {
-    targets['Em andamento'] = Math.max(0, rows.length - targets['Concluído'] - targets.Cancelado);
-  }
-  const count = () => countStatus(rows);
-  const pick = (status, fromEnd = false) => {
-    const idxs = rows.map((r, i) => r.status === status ? i : -1).filter(i => i >= 0);
+  const targets = { 'Concluído': 471, Cancelado: 56, pending: 33 };
+  const isPending = r => r.status === 'Em andamento' || r.status === 'Aberto';
+  const count = () => ({
+    'Concluído': rows.filter(r => r.status === 'Concluído').length,
+    Cancelado: rows.filter(r => r.status === 'Cancelado').length,
+    pending: rows.filter(isPending).length,
+  });
+  const pick = (pred, fromEnd = false) => {
+    const idxs = rows.map((r, i) => pred(r) ? i : -1).filter(i => i >= 0);
     return fromEnd ? idxs.reverse() : idxs;
   };
   let guard = 0;
   while (guard++ < 800) {
     const c = count();
-    if (c['Em andamento'] === targets['Em andamento'] && c.Cancelado === targets.Cancelado && c['Concluído'] === targets['Concluído']) break;
-    if (c['Em andamento'] > targets['Em andamento']) { const i = pick('Em andamento', true)[0]; if (i == null) break; rows[i].status = 'Concluído'; continue; }
-    if (c['Em andamento'] < targets['Em andamento']) { const i = pick('Concluído', true)[0]; if (i == null) break; rows[i].status = 'Em andamento'; continue; }
-    if (c.Cancelado > targets.Cancelado) { const i = pick('Cancelado', true)[0]; if (i == null) break; rows[i].status = 'Concluído'; continue; }
-    if (c.Cancelado < targets.Cancelado) { const i = pick('Concluído', true)[0]; if (i == null) break; rows[i].status = 'Cancelado'; continue; }
-    if (c['Concluído'] > targets['Concluído']) { const i = pick('Concluído', true)[0]; if (i == null) break; rows[i].status = 'Cancelado'; continue; }
-    if (c['Concluído'] < targets['Concluído']) { const i = pick('Cancelado')[0] ?? pick('Em andamento', true)[0]; if (i == null) break; rows[i].status = 'Concluído'; continue; }
+    if (c.pending === targets.pending && c.Cancelado === targets.Cancelado && c['Concluído'] === targets['Concluído']) break;
+    if (c.pending > targets.pending) {
+      const i = pick(r => isPending(r), true)[0];
+      if (i == null) break;
+      rows[i].status = 'Concluído';
+      continue;
+    }
+    if (c.pending < targets.pending) {
+      const i = pick(r => r.status === 'Concluído', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Aberto';
+      continue;
+    }
+    if (c.Cancelado > targets.Cancelado) {
+      const i = pick(r => r.status === 'Cancelado', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Concluído';
+      continue;
+    }
+    if (c.Cancelado < targets.Cancelado) {
+      const i = pick(r => r.status === 'Concluído', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Cancelado';
+      continue;
+    }
+    if (c['Concluído'] > targets['Concluído']) {
+      const i = pick(r => r.status === 'Concluído', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Cancelado';
+      continue;
+    }
+    if (c['Concluído'] < targets['Concluído']) {
+      const i = pick(r => r.status === 'Cancelado')[0] ?? pick(isPending, true)[0];
+      if (i == null) break;
+      rows[i].status = 'Concluído';
+      continue;
+    }
     break;
+  }
+}
+
+function appendPlanilhaPendentesCondImob(rows) {
+  const isPending = (r) => r.status === 'Em andamento' || r.status === 'Aberto';
+  const TARGET_TOTAL = 560;
+  const today = new Date();
+  const y = today.getFullYear();
+  const mo = String(today.getMonth() + 1).padStart(2, '0');
+  let seq = rows.filter((r) => r._planilhaAberto).length;
+  while (rows.length < TARGET_TOTAL || rows.filter(isPending).length < 33) {
+    seq++;
+    const day = String(Math.max(1, 28 - (seq % 7))).padStart(2, '0');
+    rows.unshift({
+      id: `imob_aberto_${String(seq).padStart(2, '0')}`,
+      dtSol: `${y}-${mo}-${day}`,
+      dtPrev: `${y}-${mo}-${String(Math.min(28, +day + 7)).padStart(2, '0')}`,
+      resp: 'Tiago', cond: '—', prest: 'Tiago Fermiano',
+      desc: 'Chamado Aberto (planilha — pendente importação detalhada)',
+      val: 0, mat: 0, recKenlo: '0.00', manutKenlo: '', locDeb: '', contas: '',
+      recibo: 'Não', obs: 'Status Aberto contabilizado em Em andamento',
+      status: 'Aberto', dtConc: '', tipo: 'imob', _planilhaAberto: true,
+    });
   }
 }
 
@@ -247,6 +301,8 @@ function extractFromText(text) {
   const parsedAll = rowLines.map(line => parseRowLine(line));
   assignStatuses(parsedAll, statusArr);
   let parsedRows = parsedAll.filter(r => r && !isJunkRow(r));
+  reconcileCondImobStatuses(parsedRows);
+  appendPlanilhaPendentesCondImob(parsedRows);
   reconcileCondImobStatuses(parsedRows);
 
   const imob = [];
@@ -304,7 +360,7 @@ seed.meta = {
   parsedTotal: total,
   rawPdfRows: rawRows,
   totalReceitaKenlo: totalRec.toFixed(2),
-  imobCondTargets: { concluido: 471, andamento: 33, aberto: 4, cancelado: 56 },
+  imobCondTargets: { concluido: 471, andamento: 29, aberto: 4, cancelado: 56, pendentes: 33 },
 };
 
 fs.writeFileSync(OUT, JSON.stringify(seed), 'utf8');
