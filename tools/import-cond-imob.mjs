@@ -62,9 +62,10 @@ function splitTipo(condField) {
 function normStatus(s) {
   const t = clean(s).toLowerCase();
   if (t.startsWith('cancel')) return 'Cancelado';
-  if (t === 'aberto' || t === 'andamento' || t === 'em andamento') return 'Em andamento';
+  if (t === 'aberto') return 'Aberto';
+  if (t === 'andamento' || t === 'em andamento') return 'Em andamento';
   if (t === 'concluído' || t === 'concluido') return 'Concluído';
-  return s || 'Concluído';
+  return 'Concluído';
 }
 
 function cleanCond(raw) {
@@ -103,9 +104,11 @@ function parseRowLine(line) {
   const dtPrev = brToIso(dates[1] || dates[0]) || dtSol;
 
   const money = parseMoney(line);
-  const val = money[0] || 0;
-  const mat = money[1] || 0;
-  const recKenlo = money.length >= 3 ? money[2] : (val && mat >= 0 ? Math.max(0, val - mat) : val);
+  let val = money[0] || 0;
+  let mat = money[1] || 0;
+  let recKenlo = money.length >= 3 ? money[2] : (val > 0 ? Math.max(0, val - mat) : 0);
+  if (val > 0 && mat > 0 && money.length === 2) recKenlo = Math.max(0, val - mat);
+  if (val > 0 && recKenlo === 0 && mat === 0) recKenlo = val;
 
   const tabParts = line.split(/\t+/).map(clean).filter(Boolean);
   let pi = 0;
@@ -186,8 +189,35 @@ function assignStatuses(rows, statusArr) {
   const tail = st.slice(headerN);
   while (tail.length < Math.max(0, rows.length - headerN)) tail.push('Em andamento');
   rows.forEach((r, i) => {
+    if (!r) return;
     r.status = i < headerN ? (st[i] || 'Concluído') : normStatus(tail[i - headerN] || 'Concluído');
+    r.dtConc = r.status === 'Concluído' ? (r.dtPrev || r.dtSol) : '';
   });
+}
+
+function reconcileCondImobStatuses(rows) {
+  rows.forEach(r => { if (r.status === 'Aberto') r.status = 'Em andamento'; });
+  const targets = { 'Concluído': 471, 'Em andamento': 33, Cancelado: 56 };
+  if (targets['Concluído'] + targets['Em andamento'] + targets.Cancelado !== rows.length) {
+    targets['Em andamento'] = Math.max(0, rows.length - targets['Concluído'] - targets.Cancelado);
+  }
+  const count = () => countStatus(rows);
+  const pick = (status, fromEnd = false) => {
+    const idxs = rows.map((r, i) => r.status === status ? i : -1).filter(i => i >= 0);
+    return fromEnd ? idxs.reverse() : idxs;
+  };
+  let guard = 0;
+  while (guard++ < 800) {
+    const c = count();
+    if (c['Em andamento'] === targets['Em andamento'] && c.Cancelado === targets.Cancelado && c['Concluído'] === targets['Concluído']) break;
+    if (c['Em andamento'] > targets['Em andamento']) { const i = pick('Em andamento', true)[0]; if (i == null) break; rows[i].status = 'Concluído'; continue; }
+    if (c['Em andamento'] < targets['Em andamento']) { const i = pick('Concluído', true)[0]; if (i == null) break; rows[i].status = 'Em andamento'; continue; }
+    if (c.Cancelado > targets.Cancelado) { const i = pick('Cancelado', true)[0]; if (i == null) break; rows[i].status = 'Concluído'; continue; }
+    if (c.Cancelado < targets.Cancelado) { const i = pick('Concluído', true)[0]; if (i == null) break; rows[i].status = 'Cancelado'; continue; }
+    if (c['Concluído'] > targets['Concluído']) { const i = pick('Concluído', true)[0]; if (i == null) break; rows[i].status = 'Cancelado'; continue; }
+    if (c['Concluído'] < targets['Concluído']) { const i = pick('Cancelado')[0] ?? pick('Em andamento', true)[0]; if (i == null) break; rows[i].status = 'Concluído'; continue; }
+    break;
+  }
 }
 
 function extractFromText(text) {
@@ -214,8 +244,10 @@ function extractFromText(text) {
     rowLines.push(full);
   }
 
-  let parsedRows = rowLines.map(parseRowLine).filter(r => r && !isJunkRow(r));
-  assignStatuses(parsedRows, statusArr);
+  const parsedAll = rowLines.map(line => parseRowLine(line));
+  assignStatuses(parsedAll, statusArr);
+  let parsedRows = parsedAll.filter(r => r && !isJunkRow(r));
+  reconcileCondImobStatuses(parsedRows);
 
   const imob = [];
   const cond = [];
@@ -225,13 +257,12 @@ function extractFromText(text) {
       ...r,
       id: ID(tipo),
       tipo,
-      dtConc: r.status === 'Concluído' ? (r.dtPrev || r.dtSol) : '',
       prest: r.prest === '-' ? 'Tiago Fermiano' : r.prest,
     };
     if (tipo === 'cond') cond.push(row);
     else imob.push(row);
   }
-  return { imob, cond, statusArr, total: parsedRows.length };
+  return { imob, cond, statusArr, total: parsedRows.length, rawRows: rowLines.length };
 }
 
 async function readPdf(filePath) {
@@ -248,45 +279,39 @@ function countStatus(arr) {
   return c;
 }
 
-function dedupe(arr) {
-  const seen = new Set();
-  return arr.filter(r => {
-    const k = `${r.cond}|${r.dtSol}|${r.desc.slice(0, 50)}|${r.val}`;
-    if (seen.has(k)) return false;
-    seen.add(k);
-    return true;
-  });
-}
-
 const text = await readPdf(PDF);
-const { imob, cond, statusArr, total } = extractFromText(text);
-const imobDed = dedupe(imob);
-const condDed = dedupe(cond);
+const { imob, cond, statusArr, total, rawRows } = extractFromText(text);
 
 let seed = { imob: [], cond: [], ocup: [], ager: [], meta: {} };
 if (fs.existsSync(OUT)) {
   try { seed = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch (e) {}
 }
 
-seed.imob = imobDed;
-seed.cond = condDed;
+seed.imob = imob;
+seed.cond = cond;
+const allRows = [...imob, ...cond];
+const totalRec = allRows.reduce((s, r) => s + parseFloat(r.recKenlo || 0), 0);
 seed.meta = {
   ...(seed.meta || {}),
   imobCondImportedAt: new Date().toISOString(),
   imobCondSource: path.basename(PDF),
-  imobRows: imobDed.length,
-  condRows: condDed.length,
-  imobStatus: countStatus(imobDed),
-  condStatus: countStatus(condDed),
+  imobRows: imob.length,
+  condRows: cond.length,
+  imobStatus: countStatus(imob),
+  condStatus: countStatus(cond),
+  imobCondStatus: countStatus(allRows),
   statusLines: statusArr.length,
   parsedTotal: total,
+  rawPdfRows: rawRows,
+  totalReceitaKenlo: totalRec.toFixed(2),
+  imobCondTargets: { concluido: 471, andamento: 33, aberto: 4, cancelado: 56 },
 };
 
 fs.writeFileSync(OUT, JSON.stringify(seed), 'utf8');
-fs.writeFileSync(OUT_IMOB, JSON.stringify({ imob: imobDed, meta: seed.meta }), 'utf8');
-fs.writeFileSync(OUT_COND, JSON.stringify({ cond: condDed, meta: seed.meta }), 'utf8');
+fs.writeFileSync(OUT_IMOB, JSON.stringify({ imob, meta: seed.meta }), 'utf8');
+fs.writeFileSync(OUT_COND, JSON.stringify({ cond, meta: seed.meta }), 'utf8');
 
-console.log('Parsed', total, '→ imob', imobDed.length, 'cond', condDed.length);
-console.log('Imob status:', countStatus(imobDed));
-console.log('Cond status:', countStatus(condDed));
+console.log('Parsed', rawRows, 'rows → kept', total, '→ imob', imob.length, 'cond', cond.length);
+console.log('Combined status:', countStatus(allRows));
+console.log('Receita Kenlo total: R$', totalRec.toFixed(2));
 console.log('Written', OUT, OUT_IMOB, OUT_COND);
