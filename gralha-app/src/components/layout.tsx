@@ -12,6 +12,7 @@ const NAV: { href: string; label: string }[] = [
   { href: '/manut/ocup', label: 'Ocupados' },
   { href: '/manut/ager', label: 'Assistente' },
   { href: '/condominios', label: 'Condos (cadastro)' },
+  { href: '/historico', label: 'Histórico (quem alterou)' },
 ];
 
 export function Sidebar() {

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { logLogin } from '@/lib/audit';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,8 +20,10 @@ export default function LoginPage() {
       const sb = createClient();
       // Tenta Supabase Auth (email = usuario@gralha.local ou email real)
       const email = user.includes('@') ? user : `${user.toLowerCase()}@gralha.local`;
-      const { error: authErr } = await sb.auth.signInWithPassword({ email, password: pass });
+      const { error: authErr, data: authData } = await sb.auth.signInWithPassword({ email, password: pass });
       if (!authErr) {
+        const nome = authData.user?.user_metadata?.nome || user;
+        await logLogin(nome, user);
         router.push('/');
         router.refresh();
         return;
@@ -32,6 +35,7 @@ export default function LoginPage() {
         return;
       }
       sessionStorage.setItem('ga_session', JSON.stringify({ nome: data.nome, login: data.login, role: data.role || 'user' }));
+      await logLogin(data.nome, data.login);
       router.push('/');
     } catch {
       setErr('Erro de conexão. Verifique a nuvem.');

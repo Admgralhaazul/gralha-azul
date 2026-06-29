@@ -69,6 +69,8 @@ create table if not exists ga_manutencoes (
   is_from_chk boolean not null default false,
   is_planilha_aberto boolean not null default false,
   legacy_payload jsonb,
+  created_by text,
+  updated_by text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   primary key (org_id, id)
@@ -163,12 +165,21 @@ create table if not exists ga_audit_log (
   id bigserial primary key,
   org_id uuid references ga_organizations(id),
   modulo text not null,
-  usuario_nome text,
-  acao text,
+  usuario_nome text not null,
+  usuario_login text,
+  acao text not null,
   detalhe text,
+  registro_id text,
+  registro_tipo text,
+  campo text,
+  valor_anterior text,
+  valor_novo text,
   dispositivo text,
   created_at timestamptz not null default now()
 );
+
+create index if not exists idx_audit_org_time on ga_audit_log(org_id, created_at desc);
+create index if not exists idx_audit_registro on ga_audit_log(registro_id, created_at desc);
 
 -- View: status normalizado (Aberto → Em andamento)
 create or replace view ga_manutencoes_norm as
@@ -198,6 +209,15 @@ create policy "manut_org_members" on ga_manutencoes for all using (
 create policy "cond_org_members" on ga_condominios for all using (
   org_id in (select org_id from ga_profiles where id = auth.uid())
 );
+
+alter table ga_audit_log enable row level security;
+
+create policy "audit_org_read" on ga_audit_log for select using (
+  org_id in (select org_id from ga_profiles where id = auth.uid())
+  or org_id is null
+);
+
+create policy "audit_insert" on ga_audit_log for insert with check (true);
 
 -- Org padrão Gralha Azul
 insert into ga_organizations (slug, nome)
