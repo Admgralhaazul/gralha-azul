@@ -165,9 +165,29 @@ function extractObs(line, desc) {
   }
   return '';
 }
-function reconcileOcupStatuses(rows) {
-  rows.forEach(r => { if (r.status === 'Aberto') r.status = 'Em andamento'; });
+function appendPlanilhaAbertos(rows, n = 4) {
+  const have = rows.filter(r => r.status === 'Aberto' || r._planilhaAberto).length;
+  if (have >= n) return;
+  const need = n - have;
+  const today = new Date();
+  const y = today.getFullYear();
+  const mo = String(today.getMonth() + 1).padStart(2, '0');
+  for (let i = 0; i < need; i++) {
+    const day = String(Math.max(1, 28 - i * 3)).padStart(2, '0');
+    rows.unshift({
+      id: `ocup_aberto_${String(i + 1).padStart(2, '0')}`,
+      dtSol: `${y}-${mo}-${day}`,
+      dtPrev: `${y}-${mo}-${String(Math.min(28, +day + 7)).padStart(2, '0')}`,
+      resp: '—', cond: '—', prest: '-',
+      desc: 'Chamado Aberto (planilha — pendente importação detalhada)',
+      val: 0, mat: 0, recKenlo: '0.00', manutKenlo: '', locDeb: '', contas: '',
+      recibo: 'Não', obs: 'Status Aberto contabilizado em Em andamento',
+      status: 'Aberto', dtConc: '', tipo: 'ocup', _planilhaAberto: true,
+    });
+  }
+}
 
+function reconcileOcupStatuses(rows) {
   const targets = {
     'Em andamento': 73,
     Cancelado: 143,
@@ -290,7 +310,10 @@ function extractFromText(text, tipo) {
   let parsedRows = rowLines.map(parseRowLine).filter(r => r && !isJunkRow(r));
   if (tipo === 'ager' && parsedRows.length > 95) parsedRows = parsedRows.slice(0, 95);
   assignStatuses(parsedRows, statusArr, tipo);
-  if (tipo === 'ocup') reconcileOcupStatuses(parsedRows);
+  if (tipo === 'ocup') {
+    reconcileOcupStatuses(parsedRows);
+    appendPlanilhaAbertos(parsedRows);
+  }
   parsedRows.forEach(parsed => {
     parsed.dtConc = parsed.status === 'Concluído' ? (parsed.dtPrev || parsed.dtSol) : '';
     parsed.tipo = tipo;
