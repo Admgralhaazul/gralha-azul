@@ -1744,14 +1744,6 @@ function manutDateRef(m){
   if(st==='Cancelado')return m.dtConc||m.dtPrev||m.dtSol||'';
   return m.dtSol||'';
 }
-function isManutMesReferencia(ano,mes){
-  if(!ano&&!mes)return false;
-  const {ano:anoAtual,mes:mesAtual}=mesAtualRefs();
-  const a=ano||anoAtual;
-  if(a!==anoAtual)return false;
-  if(!mes)return true;
-  return mes>=mesAtual;
-}
 function manutInMesStrict(m,ano,mes){
   if(!ano&&!mes)return true;
   const dt=manutDateRef(m);
@@ -1762,7 +1754,7 @@ function manutInMesStrict(m,ano,mes){
 function manutInMes(m,ano,mes){
   if(!ano&&!mes)return true;
   const st=normManutStatus(m.status);
-  if(st==='Em andamento'&&isManutMesReferencia(ano,mes))return true;
+  if(st==='Em andamento')return true;
   return manutInMesStrict(m,ano,mes);
 }
 function formatManutMesRef(ano,mes){
@@ -1834,8 +1826,7 @@ function getFilteredManutItems(tipo){
     }
     const st=normManutStatus(m.status);
     const dtRef=manutDateRef(m);
-    const pendenteRef=st==='Em andamento'&&isManutMesReferencia(ano,mes);
-    if(!pendenteRef){
+    if(st!=='Em andamento'){
       if(ini&&dtRef&&dtRef<ini)return false;
       if(fim&&dtRef&&dtRef>fim)return false;
     }
@@ -1934,10 +1925,10 @@ function updateManutStats(tipo){
   const all=DB.manutencoes[tipo]||[];
   let an=0,ok=0,ca=0;
   for(const m of all){
-    if(!manutInMes(m,ano,mes))continue;
     const st=normManutStatus(m.status);
-    if(st==='Em andamento')an++;
-    else if(st==='Concluído')ok++;
+    if(st==='Em andamento'){an++;continue;}
+    if((ano||mes)&&!manutInMesStrict(m,ano,mes))continue;
+    if(st==='Concluído')ok++;
     else if(st==='Cancelado')ca++;
   }
   const anEl=document.getElementById(pf+'-an');if(anEl)anEl.textContent=an;
