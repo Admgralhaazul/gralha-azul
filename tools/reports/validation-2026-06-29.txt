@@ -1,0 +1,21 @@
+=== VALIDAÇÃO LINHA A LINHA (PDF faithful vs seeds) ===
+
+## imob+cond
+PDF: 559 linhas | Seed: 559 | Matched: 559 | Issues: 0
+PDF status:   {"Concluído":470,"Cancelado":56,"Aberto":4,"Em andamento":29}
+Seed status:  {"Concluído":470,"Cancelado":56,"Em andamento":29,"Aberto":4}
+
+
+## ocup
+PDF: 1170 linhas | Seed: 1170 | Matched: 1170 | Issues: 0
+PDF status:   {"Concluído":952,"Cancelado":141,"Em andamento":77}
+Seed status:  {"Concluído":952,"Cancelado":141,"Em andamento":77}
+
+
+## ager
+PDF: 106 linhas | Seed: 106 | Matched: 106 | Issues: 0
+PDF status:   {"Cancelado":12,"Concluído":59,"Em andamento":35}
+Seed status:  {"Cancelado":12,"Concluído":59,"Em andamento":35}
+
+
+Resumo por tipo: {}

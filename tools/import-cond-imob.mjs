@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 import { PDFParse } from 'pdf-parse';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PDF = process.argv[2] || '/home/ubuntu/.cursor/projects/workspace/uploads/conominio_e_imobilairia_4b1d.pdf';
+const PDF = process.argv.find(a => a.endsWith('.pdf')) || '/home/ubuntu/.cursor/projects/workspace/uploads/conominio_e_imobilairia_4b1d.pdf';
 const OUT = path.join(__dirname, '..', 'gestao-manut-seed.json');
 const OUT_IMOB = path.join(__dirname, '..', 'gestao-imob-seed.json');
 const OUT_COND = path.join(__dirname, '..', 'gestao-cond-seed.json');
@@ -274,7 +274,10 @@ function appendPlanilhaPendentesCondImob(rows) {
   }
 }
 
-function extractFromText(text) {
+function extractFromText(text, opts = {}) {
+  const faithful = opts.faithful === true;
+  idSeq.imob = 1;
+  idSeq.cond = 1;
   const lines = text.replace(/\u0000/g, '').split(/\r?\n/).map(clean).filter(Boolean);
   const statusArr = [];
   const rowLines = [];
@@ -301,9 +304,11 @@ function extractFromText(text) {
   const parsedAll = rowLines.map(line => parseRowLine(line));
   assignStatuses(parsedAll, statusArr);
   let parsedRows = parsedAll.filter(r => r && !isJunkRow(r));
-  reconcileCondImobStatuses(parsedRows);
-  appendPlanilhaPendentesCondImob(parsedRows);
-  reconcileCondImobStatuses(parsedRows);
+  if (!faithful) {
+    reconcileCondImobStatuses(parsedRows);
+    appendPlanilhaPendentesCondImob(parsedRows);
+    reconcileCondImobStatuses(parsedRows);
+  }
 
   const imob = [];
   const cond = [];
@@ -318,7 +323,7 @@ function extractFromText(text) {
     if (tipo === 'cond') cond.push(row);
     else imob.push(row);
   }
-  return { imob, cond, statusArr, total: parsedRows.length, rawRows: rowLines.length };
+  return { imob, cond, statusArr, total: parsedRows.length, rawRows: rowLines.length, allRows: parsedRows.map(r => ({ ...r, tipo: splitTipo(r.cond) })) };
 }
 
 async function readPdf(filePath) {
@@ -335,8 +340,17 @@ function countStatus(arr) {
   return c;
 }
 
+export {
+  readPdf, extractFromText, splitTipo, isCondominio, isContractCode,
+  normStatus, countStatus, reconcileCondImobStatuses,
+};
+
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+const FAITHFUL = process.argv.includes('--faithful');
+
+if (isMain) {
 const text = await readPdf(PDF);
-const { imob, cond, statusArr, total, rawRows } = extractFromText(text);
+const { imob, cond, statusArr, total, rawRows } = extractFromText(text, { faithful: FAITHFUL });
 
 let seed = { imob: [], cond: [], ocup: [], ager: [], meta: {} };
 if (fs.existsSync(OUT)) {
@@ -371,3 +385,5 @@ console.log('Parsed', rawRows, 'rows → kept', total, '→ imob', imob.length, 
 console.log('Combined status:', countStatus(allRows));
 console.log('Receita Kenlo total: R$', totalRec.toFixed(2));
 console.log('Written', OUT, OUT_IMOB, OUT_COND);
+if (FAITHFUL) console.log('(modo faithful — sem reconcile/placeholder)');
+}

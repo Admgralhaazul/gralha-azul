@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import { PDFParse } from 'pdf-parse';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PDF = process.argv[2] || '/home/ubuntu/.cursor/projects/workspace/uploads/assistente_adm_52e9.pdf';
+const PDF = process.argv.find(a => a.endsWith('.pdf')) || '/home/ubuntu/.cursor/projects/workspace/uploads/assistente_adm_52e9.pdf';
 const OUT = path.join(__dirname, '..', 'gestao-manut-seed.json');
 const OUT_AGER = path.join(__dirname, '..', 'gestao-ager-seed.json');
 
@@ -266,7 +266,8 @@ function reconcileAgerStatuses(rows) {
   }
 }
 
-function extractFromText(text) {
+function extractFromText(text, opts = {}) {
+  const faithful = opts.faithful === true;
   const lines = text.replace(/\u0000/g, '').split(/\r?\n/).map(l => l.replace(/\u0000/g, '')).filter(l => l.trim());
   const statusArr = collectStatuses(lines);
   const rows = [];
@@ -279,8 +280,10 @@ function extractFromText(text) {
     if (row) rows.push(row);
   }
   assignStatuses(rows, statusArr);
-  reconcileAgerStatuses(rows);
-  appendPlanilhaAbertosAger(rows);
+  if (!faithful) {
+    reconcileAgerStatuses(rows);
+    appendPlanilhaAbertosAger(rows);
+  }
   return { rows, statusArr };
 }
 
@@ -292,8 +295,14 @@ async function readPdf(filePath) {
   return r.text;
 }
 
+export { readPdf, extractFromText, countStatus, assignStatuses };
+
+const isMainAger = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+
+if (isMainAger) {
+const FAITHFUL = process.argv.includes('--faithful');
 const text = await readPdf(PDF);
-const { rows, statusArr } = extractFromText(text);
+const { rows, statusArr } = extractFromText(text, { faithful: FAITHFUL });
 
 let seed = { imob: [], cond: [], ocup: [], ager: [], meta: {} };
 if (fs.existsSync(OUT)) {
@@ -316,3 +325,5 @@ console.log('Imported', rows.length, 'rows → ager');
 console.log('Status:', countStatus(rows));
 console.log('Written', OUT);
 console.log('Written', OUT_AGER);
+if (FAITHFUL) console.log('(modo faithful — sem reconcile/placeholder)');
+}

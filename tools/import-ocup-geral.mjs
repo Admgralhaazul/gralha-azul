@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import { PDFParse } from 'pdf-parse';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PDF = process.argv[2] || '/home/ubuntu/.cursor/projects/workspace/uploads/manuten__es_geral_b421.pdf';
+const PDF = process.argv.find(a => a.endsWith('.pdf')) || '/home/ubuntu/.cursor/projects/workspace/uploads/manuten__es_geral_b421.pdf';
 const OUT = path.join(__dirname, '..', 'gestao-manut-seed.json');
 const SEED_OCUP = path.join(__dirname, '..', 'gestao-ocup-seed.json');
 
@@ -283,7 +283,8 @@ function assignStatuses(rows, statusArr, mode) {
   });
 }
 
-function extractFromText(text, tipo) {
+function extractFromText(text, tipo, opts = {}) {
+  const faithful = opts.faithful === true;
   const lines = text.replace(/\u0000/g, '').split(/\r?\n/).map(clean).filter(Boolean);
   const statusArr = [];
   const rowLines = [];
@@ -310,7 +311,7 @@ function extractFromText(text, tipo) {
   let parsedRows = rowLines.map(parseRowLine).filter(r => r && !isJunkRow(r));
   if (tipo === 'ager' && parsedRows.length > 95) parsedRows = parsedRows.slice(0, 95);
   assignStatuses(parsedRows, statusArr, tipo);
-  if (tipo === 'ocup') {
+  if (tipo === 'ocup' && !faithful) {
     reconcileOcupStatuses(parsedRows);
     appendPlanilhaAbertos(parsedRows);
   }
@@ -346,7 +347,13 @@ function countStatus(arr) {
   return c;
 }
 
-const ocup = extractFromText(await readPdf(PDF), 'ocup');
+export { readPdf, extractFromText, countStatus, normStatus as normStatusOcup };
+
+const isMainOcup = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+
+if (isMainOcup) {
+const FAITHFUL = process.argv.includes('--faithful');
+const ocup = extractFromText(await readPdf(PDF), 'ocup', { faithful: FAITHFUL });
 
 let existing = { imob: [], cond: [], ocup: [], ager: [], meta: {} };
 if (fs.existsSync(OUT)) {
@@ -372,3 +379,5 @@ console.log('Written', SEED_OCUP);
 const rev = ocup.reduce((s, r) => s + parseFloat(r.recKenlo || 0), 0);
 console.log('Receita R$', rev.toFixed(2));
 console.log('Sample:', JSON.stringify(ocup[10], null, 2));
+if (FAITHFUL) console.log('(modo faithful — sem reconcile/placeholder)');
+}

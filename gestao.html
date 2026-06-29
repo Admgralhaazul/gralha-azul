@@ -4093,12 +4093,14 @@ function removeAno(a){
 
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
-const AGER_SEED_VER='20260629_assistente_adm_v2';
-const OCUP_SEED_VER='20260624_geral_v5';
-const IMOB_SEED_VER='20260629_cond_imob_v4';
-const COND_SEED_VER='20260629_cond_imob_v4';
+const AGER_SEED_VER='20260629_faithful_v5';
+const OCUP_SEED_VER='20260629_faithful_v5';
+const IMOB_SEED_VER='20260629_faithful_v5';
+const COND_SEED_VER='20260629_faithful_v5';
 const IMOB_SEED_MIN=348;
 const COND_SEED_MIN=211;
+const OCUP_SEED_MIN=1170;
+const AGER_SEED_MIN=106;
 let _agerSeedPromise=null;
 let _ocupSeedPromise=null;
 let _imobSeedPromise=null;
@@ -4214,7 +4216,7 @@ function needsImobCondSeedReload(){
   if(localStorage.getItem('ga_cond_seed')!==COND_SEED_VER) return true;
   const s=imobCondCombinedStats();
   if(s.imob<IMOB_SEED_MIN||s.cond<COND_SEED_MIN) return true;
-  if(s.total<560||s.concl<471||s.canc<56||s.and<33) return true;
+  if(s.total<559||s.concl<470||s.canc<56||s.and<33) return true;
   return false;
 }
 
@@ -4341,8 +4343,8 @@ function renderGestaoAll(){
       bootDone=true;
       const loads=[];
       if(needsImobCondSeedReload()){loads.push(loadImobSeed());loads.push(loadCondSeed());}
-      if(localStorage.getItem('ga_ager_seed')!==AGER_SEED_VER||(DB.manutencoes?.ager||[]).length<50) loads.push(loadAgerSeed());
-      if(localStorage.getItem('ga_ocup_seed')!==OCUP_SEED_VER||(DB.manutencoes?.ocup||[]).length<500) loads.push(loadOcupSeed());
+      if(localStorage.getItem('ga_ager_seed')!==AGER_SEED_VER||(DB.manutencoes?.ager||[]).length<AGER_SEED_MIN) loads.push(loadAgerSeed());
+      if(localStorage.getItem('ga_ocup_seed')!==OCUP_SEED_VER||(DB.manutencoes?.ocup||[]).length<OCUP_SEED_MIN) loads.push(loadOcupSeed());
       if(loads.length) await Promise.all(loads);
       normalizeManutStatuses();
       renderGestaoVisible();

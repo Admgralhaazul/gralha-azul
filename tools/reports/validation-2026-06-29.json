@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-06-29T20:56:29.409Z",
+  "mode": "faithful_pdf_vs_current_seeds",
+  "modules": [
+    {
+      "module": "imob+cond",
+      "pdfCount": 559,
+      "seedCount": 559,
+      "matched": 559,
+      "issueCount": 0,
+      "pdfStatus": {
+        "Concluído": 470,
+        "Cancelado": 56,
+        "Aberto": 4,
+        "Em andamento": 29
+      },
+      "seedStatus": {
+        "Concluído": 470,
+        "Cancelado": 56,
+        "Em andamento": 29,
+        "Aberto": 4
+      },
+      "issues": []
+    },
+    {
+      "module": "ocup",
+      "pdfCount": 1170,
+      "seedCount": 1170,
+      "matched": 1170,
+      "issueCount": 0,
+      "pdfStatus": {
+        "Concluído": 952,
+        "Cancelado": 141,
+        "Em andamento": 77
+      },
+      "seedStatus": {
+        "Concluído": 952,
+        "Cancelado": 141,
+        "Em andamento": 77
+      },
+      "issues": []
+    },
+    {
+      "module": "ager",
+      "pdfCount": 106,
+      "seedCount": 106,
+      "matched": 106,
+      "issueCount": 0,
+      "pdfStatus": {
+        "Cancelado": 12,
+        "Concluído": 59,
+        "Em andamento": 35
+      },
+      "seedStatus": {
+        "Cancelado": 12,
+        "Concluído": 59,
+        "Em andamento": 35
+      },
+      "issues": []
+    }
+  ],
+  "summary": {}
+}
