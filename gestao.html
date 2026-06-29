@@ -1744,6 +1744,14 @@ function manutDateRef(m){
   if(st==='Cancelado')return m.dtConc||m.dtPrev||m.dtSol||'';
   return m.dtSol||'';
 }
+function isManutMesReferencia(ano,mes){
+  if(!ano&&!mes)return false;
+  const {ano:anoAtual,mes:mesAtual}=mesAtualRefs();
+  const a=ano||anoAtual;
+  if(a!==anoAtual)return false;
+  if(!mes)return true;
+  return mes>=mesAtual;
+}
 function manutInMesStrict(m,ano,mes){
   if(!ano&&!mes)return true;
   const dt=manutDateRef(m);
@@ -1754,15 +1762,13 @@ function manutInMesStrict(m,ano,mes){
 function manutInMes(m,ano,mes){
   if(!ano&&!mes)return true;
   const st=normManutStatus(m.status);
-  const {ano:anoAtual,mes:mesAtual}=mesAtualRefs();
-  const isMesAtual=(!ano||ano===anoAtual)&&(!mes||mes===mesAtual);
-  if(st==='Em andamento'&&isMesAtual)return true;
+  if(st==='Em andamento'&&isManutMesReferencia(ano,mes))return true;
   return manutInMesStrict(m,ano,mes);
 }
 function formatManutMesRef(ano,mes){
   if(ano&&mes){
     const idx=parseInt(mes,10)-1;
-    return `Mês de referência: ${MANUT_MES_NOMES[idx]||mes}/${ano}`;
+    return `Mês de referência: ${MANUT_MES_NOMES[idx]||mes}/${ano} (pendentes de meses anteriores incluídos)`;
   }
   if(ano)return `Ano de referência: ${ano}`;
   if(mes){
@@ -1826,9 +1832,13 @@ function getFilteredManutItems(tipo){
     if(ano||mes){
       if(!manutInMes(m,ano,mes))return false;
     }
+    const st=normManutStatus(m.status);
     const dtRef=manutDateRef(m);
-    if(ini&&dtRef&&dtRef<ini)return false;
-    if(fim&&dtRef&&dtRef>fim)return false;
+    const pendenteRef=st==='Em andamento'&&isManutMesReferencia(ano,mes);
+    if(!pendenteRef){
+      if(ini&&dtRef&&dtRef<ini)return false;
+      if(fim&&dtRef&&dtRef>fim)return false;
+    }
     return true;
   });
 }
@@ -1924,7 +1934,7 @@ function updateManutStats(tipo){
   const all=DB.manutencoes[tipo]||[];
   let an=0,ok=0,ca=0;
   for(const m of all){
-    if(!manutInMesStrict(m,ano,mes))continue;
+    if(!manutInMes(m,ano,mes))continue;
     const st=normManutStatus(m.status);
     if(st==='Em andamento')an++;
     else if(st==='Concluído')ok++;
