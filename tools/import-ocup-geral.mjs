@@ -169,7 +169,7 @@ function reconcileOcupStatuses(rows) {
   rows.forEach(r => { if (r.status === 'Aberto') r.status = 'Em andamento'; });
 
   const targets = {
-    'Em andamento': 74,
+    'Em andamento': 73,
     Cancelado: 143,
     'Concluído': 954,
   };

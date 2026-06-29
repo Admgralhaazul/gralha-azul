@@ -122,6 +122,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);min-h
 .stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:12px}
 .mes-ref-banner{display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.18);border-radius:var(--rs);font-size:13px;font-weight:600;color:var(--blue)}
 .mes-ref-banner::before{content:'📅';font-size:14px;line-height:1}
+.mes-ref-total{font-size:12px;color:var(--t3);margin:-8px 0 18px;line-height:1.45}
 
 /* ─── SECTION HEADER ─── */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
@@ -492,6 +493,7 @@ body{visibility:visible!important}
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mager-ca">0</div></div>
   </div>
   <div class="mes-ref-banner" id="mager-mes-ref"></div>
+  <div class="mes-ref-total" id="mager-mes-total"></div>
 
   <div class="filter-bar" id="mager-filter-bar">
     <div class="search-wrap"><input type="text" id="mager-search" oninput="debounceFilterManut(&#39;ager&#39;)" placeholder="Buscar..."></div>
@@ -537,6 +539,7 @@ body{visibility:visible!important}
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mi-ca">0</div></div>
   </div>
   <div class="mes-ref-banner" id="mi-mes-ref"></div>
+  <div class="mes-ref-total" id="mi-mes-total"></div>
   <!-- Status multi-select -->
   <div class="filter-bar" id="mi-filter-bar">
     <div class="search-wrap"><input type="text" id="mi-search" oninput="debounceFilterManut(&#39;imob&#39;)" placeholder="Buscar..."></div>
@@ -582,6 +585,7 @@ body{visibility:visible!important}
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mc-ca">0</div></div>
   </div>
   <div class="mes-ref-banner" id="mc-mes-ref"></div>
+  <div class="mes-ref-total" id="mc-mes-total"></div>
   <div class="filter-bar" id="mc-filter-bar">
     <div class="search-wrap"><input type="text" id="mc-search" oninput="debounceFilterManut(&#39;cond&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mc-ano" onchange="filterManut(&#39;cond&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
@@ -624,6 +628,7 @@ body{visibility:visible!important}
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
   </div>
   <div class="mes-ref-banner" id="mo-mes-ref"></div>
+  <div class="mes-ref-total" id="mo-mes-total"></div>
 
   <div class="filter-bar" id="mo-filter-bar">
     <div class="search-wrap"><input type="text" id="mo-search" oninput="debounceFilterManut(&#39;ocup&#39;)" placeholder="Buscar..."></div>
@@ -1550,8 +1555,10 @@ function setManutStatusOptions(tipo,selectId){
   if(!sel.value||sel.value==='Aberto'||sel.value==='Atrasado')sel.value='Em andamento';
 }
 function normManutStatus(s){
-  if(s==='Aberto'||s==='Atrasado')return 'Em andamento';
-  return s||'Em andamento';
+  const t=(s||'').trim();
+  if(t==='Aberto'||t==='Atrasado'||t==='Andamento')return 'Em andamento';
+  if(t==='Concluido')return 'Concluído';
+  return t||'Em andamento';
 }
 function normalizeManutStatuses(){
   ['imob','cond','ocup','proc','ager'].forEach(k=>{
@@ -1774,6 +1781,20 @@ function updateManutMesRef(tipo){
   el.textContent=txt;
   el.style.display=txt?'flex':'none';
 }
+function updateManutGlobalTotal(tipo){
+  const pf=manutPrefix(tipo);
+  const el=document.getElementById(pf+'-mes-total');
+  if(!el)return;
+  const all=DB.manutencoes[tipo]||[];
+  let an=0,ok=0,ca=0;
+  for(const m of all){
+    const st=normManutStatus(m.status);
+    if(st==='Em andamento')an++;
+    else if(st==='Concluído')ok++;
+    else if(st==='Cancelado')ca++;
+  }
+  el.textContent=`Total geral: ${ok} concluídos · ${an} em andamento · ${ca} cancelados (Andamento + Aberto)`;
+}
 
 function sortManutRows(arr,tipo){
   const hoje=new Date();hoje.setHours(0,0,0,0);
@@ -1913,6 +1934,7 @@ function updateManutStats(tipo){
   const okEl=document.getElementById(pf+'-ok');if(okEl)okEl.textContent=ok;
   const caEl=document.getElementById(pf+'-ca');if(caEl)caEl.textContent=ca;
   updateManutMesRef(tipo);
+  updateManutGlobalTotal(tipo);
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
   const cnt=document.getElementById(cntMap[tipo]||'mi-cnt');
   if(cnt)cnt.textContent=all.length+' chamado'+(all.length!==1?'s':'');
@@ -4071,7 +4093,7 @@ function removeAno(a){
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
 const AGER_SEED_VER='20260623_ocup_cond_v5';
-const OCUP_SEED_VER='20260624_geral_v3';
+const OCUP_SEED_VER='20260624_geral_v4';
 let _agerSeedPromise=null;
 let _ocupSeedPromise=null;
 
@@ -4232,7 +4254,7 @@ function renderGestaoAll(){
       bootDone=true;
       const loads=[];
       if((DB.manutencoes?.ager||[]).length<50) loads.push(loadAgerSeed());
-      if((DB.manutencoes?.ocup||[]).length<500) loads.push(loadOcupSeed());
+      if(localStorage.getItem('ga_ocup_seed')!==OCUP_SEED_VER||(DB.manutencoes?.ocup||[]).length<500) loads.push(loadOcupSeed());
       if(loads.length) await Promise.all(loads);
       normalizeManutStatuses();
       renderGestaoVisible();
