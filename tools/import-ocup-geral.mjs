@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import { PDFParse } from 'pdf-parse';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PDF = process.argv[2] || '/home/ubuntu/.cursor/projects/workspace/uploads/geral_f73f.pdf';
+const PDF = process.argv[2] || '/home/ubuntu/.cursor/projects/workspace/uploads/manuten__es_geral_b421.pdf';
 const OUT = path.join(__dirname, '..', 'gestao-manut-seed.json');
 const SEED_OCUP = path.join(__dirname, '..', 'gestao-ocup-seed.json');
 
@@ -169,9 +169,9 @@ function reconcileOcupStatuses(rows) {
   rows.forEach(r => { if (r.status === 'Aberto') r.status = 'Em andamento'; });
 
   const targets = {
-    'Em andamento': 68,
+    'Em andamento': 74,
     Cancelado: 143,
-    'Concluído': 943,
+    'Concluído': 954,
   };
   const sum = targets['Concluído'] + targets['Em andamento'] + targets.Cancelado;
   if (sum !== rows.length) {
@@ -185,12 +185,30 @@ function reconcileOcupStatuses(rows) {
   };
 
   let guard = 0;
-  while (guard++ < 500) {
+  while (guard++ < 800) {
     const c = count();
+    const done =
+      c['Em andamento'] === targets['Em andamento'] &&
+      c.Cancelado === targets.Cancelado &&
+      c['Concluído'] === targets['Concluído'];
+    if (done) break;
+
+    if (c['Em andamento'] > targets['Em andamento']) {
+      const i = pick('Em andamento', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Concluído';
+      continue;
+    }
     if (c['Em andamento'] < targets['Em andamento']) {
       const i = pick('Concluído', true)[0];
       if (i == null) break;
       rows[i].status = 'Em andamento';
+      continue;
+    }
+    if (c.Cancelado > targets.Cancelado) {
+      const i = pick('Cancelado', true)[0];
+      if (i == null) break;
+      rows[i].status = 'Concluído';
       continue;
     }
     if (c.Cancelado < targets.Cancelado) {
@@ -199,26 +217,14 @@ function reconcileOcupStatuses(rows) {
       rows[i].status = 'Cancelado';
       continue;
     }
-    if (c['Concluído'] < targets['Concluído']) {
-      const i = pick('Cancelado')[0];
-      if (i == null) break;
-      rows[i].status = 'Concluído';
-      continue;
-    }
     if (c['Concluído'] > targets['Concluído']) {
       const i = pick('Concluído', true)[0];
       if (i == null) break;
-      rows[i].status = c['Em andamento'] < targets['Em andamento'] ? 'Em andamento' : 'Cancelado';
+      rows[i].status = 'Cancelado';
       continue;
     }
-    if (c['Em andamento'] > targets['Em andamento']) {
-      const i = pick('Em andamento', true)[0];
-      if (i == null) break;
-      rows[i].status = 'Concluído';
-      continue;
-    }
-    if (c.Cancelado > targets.Cancelado) {
-      const i = pick('Cancelado', true)[0];
+    if (c['Concluído'] < targets['Concluído']) {
+      const i = pick('Cancelado')[0] ?? pick('Em andamento', true)[0];
       if (i == null) break;
       rows[i].status = 'Concluído';
       continue;
