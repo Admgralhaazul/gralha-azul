@@ -119,7 +119,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);min-h
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .ga{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:12px}
+.mes-ref-banner{display:flex;align-items:center;gap:8px;margin-bottom:18px;padding:10px 14px;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.18);border-radius:var(--rs);font-size:13px;font-weight:600;color:var(--blue)}
+.mes-ref-banner::before{content:'📅';font-size:14px;line-height:1}
 
 /* ─── SECTION HEADER ─── */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
@@ -489,6 +491,7 @@ body{visibility:visible!important}
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mager-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mager-ca">0</div></div>
   </div>
+  <div class="mes-ref-banner" id="mager-mes-ref"></div>
 
   <div class="filter-bar" id="mager-filter-bar">
     <div class="search-wrap"><input type="text" id="mager-search" oninput="debounceFilterManut(&#39;ager&#39;)" placeholder="Buscar..."></div>
@@ -533,6 +536,7 @@ body{visibility:visible!important}
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mi-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mi-ca">0</div></div>
   </div>
+  <div class="mes-ref-banner" id="mi-mes-ref"></div>
   <!-- Status multi-select -->
   <div class="filter-bar" id="mi-filter-bar">
     <div class="search-wrap"><input type="text" id="mi-search" oninput="debounceFilterManut(&#39;imob&#39;)" placeholder="Buscar..."></div>
@@ -577,6 +581,7 @@ body{visibility:visible!important}
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mc-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mc-ca">0</div></div>
   </div>
+  <div class="mes-ref-banner" id="mc-mes-ref"></div>
   <div class="filter-bar" id="mc-filter-bar">
     <div class="search-wrap"><input type="text" id="mc-search" oninput="debounceFilterManut(&#39;cond&#39;)" placeholder="Buscar..."></div>
     <select class="fc" id="mc-ano" onchange="filterManut(&#39;cond&#39;)" style="width:auto;min-width:80px"><option value="">Todos anos</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
@@ -618,6 +623,7 @@ body{visibility:visible!important}
     <div class="stat gr"><div class="stat-lbl">Concluídos</div><div class="stat-val" id="mo-ok">0</div></div>
     <div class="stat or"><div class="stat-lbl">Cancelados</div><div class="stat-val" id="mo-ca">0</div></div>
   </div>
+  <div class="mes-ref-banner" id="mo-mes-ref"></div>
 
   <div class="filter-bar" id="mo-filter-bar">
     <div class="search-wrap"><input type="text" id="mo-search" oninput="debounceFilterManut(&#39;ocup&#39;)" placeholder="Buscar..."></div>
@@ -1712,6 +1718,7 @@ function updateAllManutStats(){
 function manutPrefix(tipo){
   return tipo==='imob'?'mi':tipo==='cond'?'mc':tipo==='ager'?'mager':'mo';
 }
+const MANUT_MES_NOMES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 function mesAtualRefs(){
   const n=new Date();
   return {ano:String(n.getFullYear()),mes:String(n.getMonth()+1).padStart(2,'0')};
@@ -1730,13 +1737,42 @@ function manutDateRef(m){
   if(st==='Cancelado')return m.dtConc||m.dtPrev||m.dtSol||'';
   return m.dtSol||'';
 }
-function manutInMes(m,ano,mes){
-  const st=normManutStatus(m.status);
-  if(st==='Em andamento')return true;
+function manutInMesStrict(m,ano,mes){
+  if(!ano&&!mes)return true;
   const dt=manutDateRef(m);
-  if(ano&&dt&&!dt.startsWith(ano))return false;
-  if(mes&&dt&&dt.substring(5,7)!==mes)return false;
+  if(ano&&(!dt||!dt.startsWith(ano)))return false;
+  if(mes&&(!dt||dt.substring(5,7)!==mes))return false;
   return true;
+}
+function manutInMes(m,ano,mes){
+  if(!ano&&!mes)return true;
+  const st=normManutStatus(m.status);
+  const {ano:anoAtual,mes:mesAtual}=mesAtualRefs();
+  const isMesAtual=(!ano||ano===anoAtual)&&(!mes||mes===mesAtual);
+  if(st==='Em andamento'&&isMesAtual)return true;
+  return manutInMesStrict(m,ano,mes);
+}
+function formatManutMesRef(ano,mes){
+  if(ano&&mes){
+    const idx=parseInt(mes,10)-1;
+    return `Mês de referência: ${MANUT_MES_NOMES[idx]||mes}/${ano}`;
+  }
+  if(ano)return `Ano de referência: ${ano}`;
+  if(mes){
+    const idx=parseInt(mes,10)-1;
+    return `Mês de referência: ${MANUT_MES_NOMES[idx]||mes}`;
+  }
+  return '';
+}
+function updateManutMesRef(tipo){
+  const pf=manutPrefix(tipo);
+  const el=document.getElementById(pf+'-mes-ref');
+  if(!el)return;
+  const ano=document.getElementById(pf+'-ano')?.value||'';
+  const mes=document.getElementById(pf+'-mes')?.value||'';
+  const txt=formatManutMesRef(ano,mes);
+  el.textContent=txt;
+  el.style.display=txt?'flex':'none';
 }
 
 function sortManutRows(arr,tipo){
@@ -1779,12 +1815,14 @@ function filterManut(tipo,immediate){
   if(tipo==='proc'){renderProcTab3();return;}
   let arr=getFilteredManutItems(tipo);
   renderManutRows(arr,tipo);
+  updateManutStats(tipo);
 }
-function renderManut(tipo){filterManut(tipo);updateManutStats(tipo)}
+function renderManut(tipo){filterManut(tipo)}
 function clearManutFilter(tipo){
   const pf=manutPrefix(tipo);
-  ['search','dt-ini','dt-fim','ano','mes'].forEach(k=>{const el=document.getElementById(pf+'-'+k);if(el)el.value='';});
+  ['search','dt-ini','dt-fim'].forEach(k=>{const el=document.getElementById(pf+'-'+k);if(el)el.value='';});
   document.querySelectorAll('#'+pf+'-status-pills .status-pill').forEach(p=>{p.className='status-pill'});
+  applyManutMesAtual(tipo);
   filterManut(tipo);
 }
 function toggleStatus(el,cls,tipo){
@@ -1865,7 +1903,7 @@ function updateManutStats(tipo){
   const all=DB.manutencoes[tipo]||[];
   let an=0,ok=0,ca=0;
   for(const m of all){
-    if((ano||mes)&&!manutInMes(m,ano,mes))continue;
+    if(!manutInMesStrict(m,ano,mes))continue;
     const st=normManutStatus(m.status);
     if(st==='Em andamento')an++;
     else if(st==='Concluído')ok++;
@@ -1874,6 +1912,7 @@ function updateManutStats(tipo){
   const anEl=document.getElementById(pf+'-an');if(anEl)anEl.textContent=an;
   const okEl=document.getElementById(pf+'-ok');if(okEl)okEl.textContent=ok;
   const caEl=document.getElementById(pf+'-ca');if(caEl)caEl.textContent=ca;
+  updateManutMesRef(tipo);
   const cntMap={imob:'mi-cnt',cond:'mc-cnt',ocup:'mo-cnt',ager:'mager-cnt'};
   const cnt=document.getElementById(cntMap[tipo]||'mi-cnt');
   if(cnt)cnt.textContent=all.length+' chamado'+(all.length!==1?'s':'');
