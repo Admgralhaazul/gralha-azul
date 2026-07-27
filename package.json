@@ -4,7 +4,8 @@
   "scripts": {
     "validate-manut": "node tools/validate-manut-lines.mjs",
     "import-faithful": "node tools/import-cond-imob.mjs --faithful && node tools/import-ocup-geral.mjs --faithful && node tools/import-ager-adm.mjs --faithful",
-    "import-ocup-xlsx": "node tools/import-ocup-xlsx.mjs"
+    "import-ocup-xlsx": "node tools/import-ocup-xlsx.mjs",
+    "import-3-grupos": "node tools/import-3-grupos-xlsx.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",
