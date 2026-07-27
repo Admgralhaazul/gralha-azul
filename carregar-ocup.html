@@ -86,7 +86,7 @@ document.getElementById('btn-copy').onclick = async () => {
   const st = document.getElementById('status');
   try {
     let r = await fetch('./gestao-ocup-seed.json?v=20260727_luma_xlsx_v1');
-    if (!r.ok) r = await fetch('https://admgralhaazul.github.io/gralha-azul/gestao-ocup-seed.json?v=20260727_luma_xlsx_v1');
+    if (!r.ok) r = await fetch('https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/gestao-ocup-seed.json?v=20260727_luma_xlsx_v1');
     const seed = await r.json();
     const c = {};
     (seed.ocup || []).forEach(x => { c[x.status] = (c[x.status] || 0) + 1; });
