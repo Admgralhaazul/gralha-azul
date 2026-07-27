@@ -46,7 +46,7 @@
 <script>
 const SCRIPT = `/* Import Ocup — Luma Oficial (Excel) */
 (async () => {
-  const url = 'https://admgralhaazul.github.io/gralha-azul/gestao-ocup-seed.json?v=20260727_luma_xlsx_v1';
+  const url = 'https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/gestao-ocup-seed.json?v=20260727_luma_xlsx_v1';
   const seed = await fetch(url).then(r => {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     return r.json();
