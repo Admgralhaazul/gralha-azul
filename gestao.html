@@ -475,6 +475,16 @@ body{visibility:visible!important}
     </div>
   </div>
 
+  <div class="card" style="margin-top:4px;margin-bottom:8px">
+    <div class="card-t" style="margin-bottom:8px">Importar planilhas → Lovable</div>
+    <div style="font-size:12.5px;color:var(--t3);margin-bottom:12px;line-height:1.45">
+      1242 Ocupados · 130 Assistente · 581 Executadas pela Imob (condomínios juntos).<br>
+      1) Abra o Lovable logada · 2) Clique no botão · 3) Cole no Console (F12) do Lovable.
+    </div>
+    <button class="btn btn-p" type="button" onclick="copyLovableImportScript()">📋 Copiar script para colar no Lovable</button>
+    <span id="lovable-copy-status-dash" style="font-size:12px;color:var(--green);margin-left:10px"></span>
+  </div>
+
 </div>
 
 <!-- view-manut-home removida: cards integrados no dashboard -->
@@ -1047,6 +1057,33 @@ body{visibility:visible!important}
     <div id="colab-empty" class="empty"><div class="empty-mark"></div><p>Nenhum colaborador cadastrado.</p></div>
   </div>
   <!-- Nuvem / Backup -->
+  <div class="card" style="margin-top:18px;margin-bottom:18px">
+    <div class="card-t" style="margin-bottom:10px">Importar planilhas → Lovable</div>
+    <div style="font-size:12.5px;color:var(--t3);margin-bottom:12px;line-height:1.45">
+      Copie o script aqui e cole no <strong>Console (F12)</strong> do sistema novo
+      (<a href="https://gralha-azul.lovable.app/sistema?modulo=sistema" target="_blank" rel="noopener">gralha-azul.lovable.app</a>).
+      Aberto já vai como Em andamento. Condomínios ficam juntos em Executadas pela Imobiliária.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+      <div style="background:var(--s2);border-radius:10px;padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:var(--t1)">1242</div>
+        <div style="font-size:11px;color:var(--t3)">Imóveis Ocupados</div>
+      </div>
+      <div style="background:var(--s2);border-radius:10px;padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:var(--t1)">130</div>
+        <div style="font-size:11px;color:var(--t3)">Assistente ADM</div>
+      </div>
+      <div style="background:var(--s2);border-radius:10px;padding:10px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:var(--t1)">581</div>
+        <div style="font-size:11px;color:var(--t3)">Executadas pela Imob</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-p" type="button" onclick="copyLovableImportScript()">📋 Copiar script para colar no Lovable</button>
+      <span id="lovable-copy-status" style="font-size:12px;color:var(--t3)"></span>
+    </div>
+  </div>
+
   <div class="card" style="margin-top:18px;margin-bottom:18px">
     <div class="card-t" style="margin-bottom:14px">Anos do Sistema</div>
     <div style="font-size:12.5px;color:var(--t3);margin-bottom:12px">Gerencie os anos disponíveis nos filtros do sistema.</div>
@@ -4102,6 +4139,90 @@ const COND_SEED_MIN=0;
 const OCUP_SEED_MIN=1242;
 const AGER_SEED_MIN=130;
 const SEED_CDN='https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/';
+const LOVABLE_IMPORT_VER='20260727_3grupos_imob_all_v2';
+const LOVABLE_IMPORT_EXPECT={ocup:1242,ager:130,imob:581,cond:0};
+
+function copyLovableImportScript(){
+  const CDN=SEED_CDN;
+  const VER=LOVABLE_IMPORT_VER;
+  const EXPECT=LOVABLE_IMPORT_EXPECT;
+  const script=`/* Gralha Azul — import COMPLETO 3 grupos (copiado do gestao.html) */
+(async () => {
+  const CDN = ${JSON.stringify(CDN)};
+  const VER = ${JSON.stringify(VER)};
+  const EXPECT = ${JSON.stringify(EXPECT)};
+  async function load(file) {
+    const r = await fetch(CDN + file + '?v=' + VER + '&t=' + Date.now());
+    if (!r.ok) throw new Error(file + ' HTTP ' + r.status);
+    return r.json();
+  }
+  const [ocupS, agerS, imobS, condS] = await Promise.all([
+    load('gestao-ocup-seed.json'),
+    load('gestao-ager-seed.json'),
+    load('gestao-imob-seed.json'),
+    load('gestao-cond-seed.json'),
+  ]);
+  let w = window;
+  const iframe = [...document.querySelectorAll('iframe')].find(f => /sistema\\.html/i.test(f.src || ''));
+  if (iframe && iframe.contentWindow && iframe.contentWindow.DB) w = iframe.contentWindow;
+  if (!w.DB) {
+    if (window.DB) w = window;
+    else { alert('Abra o Sistema logado e espere carregar. No Console, escolha o frame sistema.html.'); return; }
+  }
+  if (!w.DB.manutencoes) w.DB.manutencoes = { imob: [], cond: [], ocup: [], proc: [], ager: [] };
+  const map = (arr, tipo) => (arr || []).map(m => ({
+    ...m,
+    tipo,
+    status: (m.status === 'Aberto' || m.status === 'Andamento' || m.status === 'Atrasado') ? 'Em andamento' : m.status
+  }));
+  w.DB.manutencoes.ocup = map(ocupS.ocup, 'ocup');
+  w.DB.manutencoes.ager = map(agerS.ager, 'ager');
+  w.DB.manutencoes.imob = map(imobS.imob, 'imob');
+  w.DB.manutencoes.cond = map(condS.cond || [], 'cond');
+  const got = {
+    ocup: w.DB.manutencoes.ocup.length,
+    ager: w.DB.manutencoes.ager.length,
+    imob: w.DB.manutencoes.imob.length,
+    cond: w.DB.manutencoes.cond.length,
+  };
+  const ok = got.ocup === EXPECT.ocup && got.ager === EXPECT.ager && got.imob === EXPECT.imob && got.cond === EXPECT.cond;
+  if (!ok) {
+    alert('INCOMPLETO.\\nRecebido: ' + JSON.stringify(got) + '\\nEsperado: ' + JSON.stringify(EXPECT));
+    return;
+  }
+  try {
+    w.localStorage.setItem('ga_ocup_seed', VER);
+    w.localStorage.setItem('ga_ager_seed', VER);
+    w.localStorage.setItem('ga_imob_seed', VER);
+    w.localStorage.setItem('ga_cond_seed', VER);
+    w.localStorage.setItem('gestao_v5', JSON.stringify(w.DB));
+  } catch (e) {}
+  if (typeof w.normalizeManutStatuses === 'function') w.normalizeManutStatuses();
+  if (typeof w.gaCloudSave === 'function') w.gaCloudSave();
+  if (typeof w.renderGestaoFast === 'function') w.renderGestaoFast();
+  else if (typeof w.updateDashboard === 'function') w.updateDashboard();
+  try { (window.top || window).postMessage({ type: 'ga-save', key: 'gestao_v5', value: JSON.stringify(w.DB) }, '*'); } catch (e) {}
+  try { parent.postMessage({ type: 'ga-save', key: 'gestao_v5', value: JSON.stringify(w.DB) }, '*'); } catch (e) {}
+  alert('COMPLETO ✓\\n• Ocupados: ' + got.ocup + '\\n• Assistente: ' + got.ager + '\\n• Executadas pela Imob: ' + got.imob + '\\n• Cond (vazio): ' + got.cond);
+})().catch(e => alert('Erro: ' + (e && e.message ? e.message : e)));`;
+  const mark=(txt)=>{
+    ['lovable-copy-status','lovable-copy-status-dash'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el){ el.textContent=txt; el.style.color='var(--green)'; }
+    });
+    if(typeof toast==='function') toast(txt);
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(script).then(()=>mark('Copiado! Cole no Console do Lovable.')).catch(()=>{
+      window.prompt('Copie o script (Ctrl+C):', script);
+      mark('Copie o texto da caixa e cole no Lovable.');
+    });
+  } else {
+    window.prompt('Copie o script (Ctrl+C):', script);
+    mark('Copie o texto da caixa e cole no Lovable.');
+  }
+}
+window.copyLovableImportScript=copyLovableImportScript;
 
 async function fetchSeedJson(file, ver){
   const urls=[
