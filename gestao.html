@@ -4094,12 +4094,12 @@ function removeAno(a){
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
 const AGER_SEED_VER='20260629_faithful_v5';
-const OCUP_SEED_VER='20260629_faithful_v5';
+const OCUP_SEED_VER='20260727_luma_xlsx_v1';
 const IMOB_SEED_VER='20260629_faithful_v5';
 const COND_SEED_VER='20260629_faithful_v5';
 const IMOB_SEED_MIN=348;
 const COND_SEED_MIN=211;
-const OCUP_SEED_MIN=1170;
+const OCUP_SEED_MIN=1242;
 const AGER_SEED_MIN=106;
 let _agerSeedPromise=null;
 let _ocupSeedPromise=null;
@@ -4176,19 +4176,30 @@ async function loadOcupSeed(){
   if(_ocupSeedPromise) return _ocupSeedPromise;
   _ocupSeedPromise=(async()=>{
   try{
-    const hasOcup=(DB.manutencoes?.ocup||[]).length>=500;
+    const hasOcup=(DB.manutencoes?.ocup||[]).length>=OCUP_SEED_MIN;
     if(localStorage.getItem('ga_ocup_seed')===OCUP_SEED_VER&&hasOcup) return false;
-    const r=await fetch('./gestao-ocup-seed.json?v='+OCUP_SEED_VER);
-    if(!r.ok) return false;
-    const seed=await r.json();
+    const urls=[
+      './gestao-ocup-seed.json?v='+OCUP_SEED_VER,
+      'https://admgralhaazul.github.io/gralha-azul/gestao-ocup-seed.json?v='+OCUP_SEED_VER
+    ];
+    let seed=null;
+    for(const u of urls){
+      try{
+        const r=await fetch(u);
+        if(r.ok){ seed=await r.json(); break; }
+      }catch(e){}
+    }
+    if(!seed) return false;
     const rows=(seed.ocup||[]).map(normalizeManutRecord);
     if(!rows.length) return false;
     if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
+    // Planilha Excel = fonte da verdade (substitui, não mescla)
     DB.manutencoes.ocup=rows.map(m=>({...m,tipo:'ocup',status:normManutStatus(m.status)}));
     localStorage.setItem('ga_ocup_seed',OCUP_SEED_VER);
     markManutResetSynced();
     try{ localStorage.setItem('gestao_v5', JSON.stringify(DB)); }catch(e){}
     window._gestaoNeedsManutPush=true;
+    if(typeof window.gaCloudSave==='function') try{ window.gaCloudSave(); }catch(e){}
     return true;
   }catch(e){
     console.warn('loadOcupSeed:',e);

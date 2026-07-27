@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carregar Imóveis Ocupados → Sistema Gralha Azul</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 20px;color:#0f172a;line-height:1.5}
+  h1{font-size:1.4rem;color:#1e3a5f}
+  .box{border:1px solid #e2e8f0;border-radius:12px;padding:16px;background:#f8fafc;margin:16px 0}
+  code,pre{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:12px;display:block;overflow:auto;font-size:12px;white-space:pre-wrap}
+  .ok{color:#166534}.warn{color:#9a3412}
+  button{background:#1e3a5f;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-weight:600;cursor:pointer}
+  button:disabled{opacity:.5}
+  ol{padding-left:1.2rem}
+</style>
+</head>
+<body>
+  <h1>Importar Imóveis Ocupados (planilha Luma)</h1>
+  <p>Fonte: <strong>Manutenções Imóveis Ocupados + Condomínios 2025</strong> → aba <strong>Luma Oficial</strong></p>
+  <div class="box">
+    <strong>Totais importados</strong>
+    <ul>
+      <li>Total: <strong id="t-total">—</strong></li>
+      <li>Concluído: <strong id="t-ok">—</strong></li>
+      <li>Em andamento: <strong id="t-an">—</strong></li>
+      <li>Aberto: <strong id="t-ab">—</strong></li>
+      <li>Cancelado: <strong id="t-ca">—</strong></li>
+    </ul>
+    <p id="status" class="warn">Carregando seed…</p>
+  </div>
+
+  <h2>Como gravar no sistema novo (Lovable)</h2>
+  <ol>
+    <li>Abra o sistema logado: <a href="https://gralha-azul.lovable.app/sistema?modulo=sistema" target="_blank">gralha-azul.lovable.app/sistema</a></li>
+    <li>Abra o DevTools (F12) → Console</li>
+    <li>Cole o script abaixo e pressione Enter</li>
+    <li>Aguarde a mensagem de sucesso — os dados sobem para a nuvem automaticamente</li>
+  </ol>
+
+  <button type="button" id="btn-copy">Copiar script de importação</button>
+  <pre id="script"></pre>
+
+  <p class="box">Também atualizado no GitHub Pages:<br>
+  <a href="https://admgralhaazul.github.io/gralha-azul/gestao.html?v=20260727ocup">gestao.html?v=20260727ocup</a></p>
+
+<script>
+const SEED_URL = './gestao-ocup-seed.json?v=20260727_luma_xlsx_v1';
+const ABS_SEED = 'https://admgralhaazul.github.io/gralha-azul/gestao-ocup-seed.json?v=20260727_luma_xlsx_v1';
+
+function count(arr){
+  const c={};
+  arr.forEach(r=>{ const s=r.status||''; c[s]=(c[s]||0)+1; });
+  return c;
+}
+
+function buildScript(seedJson){
+  const payload = JSON.stringify(seedJson);
+  return `/* Import Ocup — Luma Oficial Excel */\n(async()=>{\n  const seed=${payload};\n  const rows=(seed.ocup||[]).map(m=>({...m,tipo:'ocup'}));\n  const iframe=[...document.querySelectorAll('iframe')].find(f=>/sistema\\.html/.test(f.src||''));\n  const w=iframe?.contentWindow||window;\n  if(!w.DB){ alert('Abra o módulo Sistema e aguarde carregar, depois rode de novo.'); return; }\n  if(!w.DB.manutencoes) w.DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};\n  w.DB.manutencoes.ocup=rows;\n  try{ w.localStorage.setItem('ga_ocup_seed','20260727_luma_xlsx_v1'); }catch(e){}\n  try{ w.localStorage.setItem('gestao_v5', JSON.stringify(w.DB)); }catch(e){}\n  if(typeof w.gaCloudSave==='function') w.gaCloudSave();\n  if(typeof w.normalizeManutStatuses==='function') w.normalizeManutStatuses();\n  if(typeof w.renderGestaoFast==='function') w.renderGestaoFast();\n  else if(typeof w.updateDashboard==='function') w.updateDashboard();\n  parent.postMessage({type:'ga-save',key:'gestao_v5',value:JSON.stringify(w.DB)},'*');\n  console.log('OK ocup importados:', rows.length);\n  alert('Imóveis Ocupados importados: '+rows.length+' chamados. Aguarde sync na nuvem.');\n})();`;
+}
+
+(async()=>{
+  const st=document.getElementById('status');
+  let seed;
+  try{
+    let r=await fetch(SEED_URL);
+    if(!r.ok) r=await fetch(ABS_SEED);
+    seed=await r.json();
+  }catch(e){
+    st.textContent='Falha ao carregar seed: '+e.message;
+    return;
+  }
+  const c=count(seed.ocup||[]);
+  document.getElementById('t-total').textContent=String((seed.ocup||[]).length);
+  document.getElementById('t-ok').textContent=String(c['Concluído']||0);
+  document.getElementById('t-an').textContent=String(c['Em andamento']||0);
+  document.getElementById('t-ab').textContent=String(c['Aberto']||0);
+  document.getElementById('t-ca').textContent=String(c['Cancelado']||0);
+  st.className='ok';
+  st.textContent='Seed pronto (fonte da verdade = planilha Excel).';
+  const script=buildScript(seed);
+  document.getElementById('script').textContent=script.slice(0,500)+'\\n\\n… (script completo ao copiar) …\\n\\nTotal chars: '+script.length;
+  document.getElementById('btn-copy').onclick=async()=>{
+    await navigator.clipboard.writeText(script);
+    alert('Script copiado! Cole no console do sistema Lovable.');
+  };
+  // store full script on button dataset
+  window.__ocupImportScript=script;
+})();
+</script>
+</body>
+</html>
