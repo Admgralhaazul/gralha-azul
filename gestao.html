@@ -4180,6 +4180,7 @@ async function loadOcupSeed(){
     if(localStorage.getItem('ga_ocup_seed')===OCUP_SEED_VER&&hasOcup) return false;
     const urls=[
       './gestao-ocup-seed.json?v='+OCUP_SEED_VER,
+      'https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/gestao-ocup-seed.json?v='+OCUP_SEED_VER,
       'https://admgralhaazul.github.io/gralha-azul/gestao-ocup-seed.json?v='+OCUP_SEED_VER
     ];
     let seed=null;
