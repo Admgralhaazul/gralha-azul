@@ -104,7 +104,8 @@
           if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
           DB.manutencoes.imob=prevImob;
         }
-        if((DB.manutencoes?.cond||[]).length===0 && prevCond.length>=200){
+        // Não restaura cond sozinho: condomínios podem ir todos para imob (lista cond vazia de propósito)
+        if((DB.manutencoes?.cond||[]).length===0 && (DB.manutencoes?.imob||[]).length===0 && prevCond.length>=200){
           if(!DB.manutencoes) DB.manutencoes={imob:[],cond:[],ocup:[],proc:[],ager:[]};
           DB.manutencoes.cond=prevCond;
         }

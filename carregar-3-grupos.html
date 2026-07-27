@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carregar 3 grupos → Sistema Gralha Azul (completo)</title>
+<title>Importar planilhas → Lovable | Gralha Azul</title>
 <style>
   body{font-family:system-ui,sans-serif;max-width:820px;margin:40px auto;padding:0 20px;color:#0f172a;line-height:1.5}
   h1{font-size:1.45rem;color:#1e3a5f;margin-bottom:8px}
@@ -42,7 +42,7 @@
   <div class="grid">
     <div class="card"><h3>1) Imóveis Ocupados</h3><div class="big" id="n-ocup">1242</div><div id="c-ocup" class="note">…</div></div>
     <div class="card"><h3>2) Assistente ADM</h3><div class="big" id="n-ager">130</div><div id="c-ager" class="note">…</div></div>
-    <div class="card"><h3>3) Cond + Imob</h3><div class="big" id="n-ic">581</div><div id="c-ic" class="note">…</div></div>
+    <div class="card"><h3>3) Executadas pela Imob</h3><div class="big" id="n-ic">581</div><div id="c-ic" class="note">tudo em imob (sem split cond)</div></div>
   </div>
   <p id="status" class="warn">Conferindo seeds no GitHub…</p>
 
@@ -59,8 +59,7 @@
       <ul>
         <li>Ocupados: <strong>1242</strong></li>
         <li>Assistente: <strong>130</strong></li>
-        <li>Imob: <strong>304</strong></li>
-        <li>Cond: <strong>277</strong></li>
+        <li>Executadas pela Imob: <strong>581</strong> (condomínios juntos)</li>
       </ul>
     </li>
     <li>No sistema, abra cada módulo e confira os totais. Se bater, está na nuvem.</li>
@@ -84,8 +83,8 @@
 
 <script>
 const CDN = 'https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/';
-const VER = '20260727_3grupos_xlsx_v1';
-const EXPECT = { ocup: 1242, ager: 130, imob: 304, cond: 277 };
+const VER = '20260727_3grupos_imob_all_v2';
+const EXPECT = { ocup: 1242, ager: 130, imob: 581, cond: 0 };
 
 const SCRIPT = `/* Gralha Azul — import COMPLETO 3 grupos (não use o chat do Lovable) */
 (async () => {
@@ -155,8 +154,8 @@ const SCRIPT = `/* Gralha Azul — import COMPLETO 3 grupos (não use o chat do 
 
   const msg = 'COMPLETO ✓\\n• Ocupados: ' + got.ocup +
     '\\n• Assistente: ' + got.ager +
-    '\\n• Imob: ' + got.imob +
-    '\\n• Cond: ' + got.cond +
+    '\\n• Executadas pela Imob: ' + got.imob +
+    '\\n• Módulo Cond (vazio): ' + got.cond +
     '\\n\\nAguarde 2–3s a sync da nuvem e confira os módulos.';
   console.log(msg, got);
   alert(msg);
@@ -168,7 +167,7 @@ document.getElementById('btn-copy').onclick = async () => {
   alert('Script copiado! Cole no Console do Lovable (frame sistema.html).');
 };
 document.getElementById('btn-check').onclick = () => {
-  alert('Totais esperados:\\nOcupados 1242\\nAssistente 130\\nImob 304\\nCond 277\\nTotal 1953');
+  alert('Totais esperados:\\nOcupados 1242\\nAssistente 130\\nImob 581 (sem split cond)\\nTotal 1953');
 };
 
 function fmt(c) {
@@ -191,12 +190,11 @@ function count(arr) {
     ]);
     document.getElementById('n-ocup').textContent = String(ocup.ocup.length);
     document.getElementById('n-ager').textContent = String(ager.ager.length);
-    document.getElementById('n-ic').textContent = String((imob.imob?.length||0)+(cond.cond?.length||0));
+    document.getElementById('n-ic').textContent = String(imob.imob?.length||0);
     document.getElementById('c-ocup').textContent = fmt(count(ocup.ocup));
     document.getElementById('c-ager').textContent = fmt(count(ager.ager));
-    document.getElementById('c-ic').textContent = fmt(count([...(imob.imob||[]),...(cond.cond||[])])) +
-      ` · Imob ${imob.imob?.length||0} / Cond ${cond.cond?.length||0}`;
-    const ok = ocup.ocup.length===1242 && ager.ager.length===130 && imob.imob.length===304 && cond.cond.length===277;
+    document.getElementById('c-ic').textContent = fmt(count(imob.imob||[])) + ' · cond módulo vazio';
+    const ok = ocup.ocup.length===1242 && ager.ager.length===130 && imob.imob.length===581 && (cond.cond||[]).length===0;
     st.className = ok ? 'ok' : 'warn';
     st.textContent = ok
       ? 'Seeds no GitHub estão COMPLETOS (1953 linhas). Use o script — não o chat do Lovable.'

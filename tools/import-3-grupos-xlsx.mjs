@@ -201,11 +201,12 @@ const wbAger = XLSX.readFile(PATH_AGER);
 const agerParsed = parseSheet(wbAger, 'Ana Oficial', 'ager');
 seed.ager = agerParsed.rows;
 
-// 3) IMOB + COND — Tiago Oficial (arquivo 9)
+// 3) Executadas pela Imobiliária — Tiago Oficial (arquivo 9)
+// NÃO divide condomínios: tudo vai para imob
 const wbIC = XLSX.readFile(PATH_IMOBCOND);
-const icParsed = parseSheet(wbIC, 'Tiago Oficial', 'split');
-seed.imob = icParsed.rows.filter((r) => r.tipo === 'imob');
-seed.cond = icParsed.rows.filter((r) => r.tipo === 'cond');
+const icParsed = parseSheet(wbIC, 'Tiago Oficial', 'imob');
+seed.imob = icParsed.rows.map((r) => ({ ...r, tipo: 'imob' }));
+seed.cond = [];
 
 seed.meta = {
   ...(seed.meta || {}),
@@ -227,17 +228,14 @@ seed.meta = {
       status: countStatus(seed.ager),
       abertoConvertidos: agerParsed.abertoConverted,
     },
-    imobCond: {
-      label: 'Condomínio + Imobiliária',
+    imob: {
+      label: 'Executadas pela Imobiliária (inclui condomínios)',
       source: path.basename(PATH_IMOBCOND),
       sheet: 'Tiago Oficial',
-      rows: seed.imob.length + seed.cond.length,
-      imobRows: seed.imob.length,
-      condRows: seed.cond.length,
-      status: countStatus([...seed.imob, ...seed.cond]),
-      imobStatus: countStatus(seed.imob),
-      condStatus: countStatus(seed.cond),
+      rows: seed.imob.length,
+      status: countStatus(seed.imob),
       abertoConvertidos: icParsed.abertoConverted,
+      semSplitCond: true,
     },
   },
   ocupImportedAt: now,
@@ -253,11 +251,12 @@ seed.meta = {
   imobCondImportedAt: now,
   imobCondSource: path.basename(PATH_IMOBCOND),
   imobRows: seed.imob.length,
-  condRows: seed.cond.length,
+  condRows: 0,
   imobStatus: countStatus(seed.imob),
-  condStatus: countStatus(seed.cond),
-  imobCondStatus: countStatus([...seed.imob, ...seed.cond]),
+  condStatus: {},
+  imobCondStatus: countStatus(seed.imob),
   abertoComoAndamento: true,
+  semSplitCond: true,
 };
 
 fs.writeFileSync(OUT, JSON.stringify(seed), 'utf8');
@@ -271,9 +270,7 @@ console.log('1) Imóveis Ocupados (Luma)');
 console.log('   ', seed.ocup.length, 'linhas', countStatus(seed.ocup), '| Aberto→And:', ocupParsed.abertoConverted);
 console.log('2) Assistente ADM (Ana)');
 console.log('   ', seed.ager.length, 'linhas', countStatus(seed.ager), '| Aberto→And:', agerParsed.abertoConverted);
-console.log('3) Condomínio + Imobiliária (Tiago)');
-console.log('   Total', seed.imob.length + seed.cond.length, '→ imob', seed.imob.length, 'cond', seed.cond.length);
-console.log('   Combined', countStatus([...seed.imob, ...seed.cond]), '| Aberto→And:', icParsed.abertoConverted);
-console.log('   imob', countStatus(seed.imob));
-console.log('   cond', countStatus(seed.cond));
+console.log('3) Executadas pela Imobiliária (Tiago — SEM split cond)');
+console.log('   ', seed.imob.length, 'linhas', countStatus(seed.imob), '| Aberto→And:', icParsed.abertoConverted);
+console.log('   cond:', seed.cond.length, '(vazio — tudo em imob)');
 console.log('\nWritten seeds OK');
