@@ -34,7 +34,7 @@
     <li>Abra logada: <a href="https://gralha-azul.lovable.app/sistema?modulo=sistema" target="_blank">gralha-azul.lovable.app/sistema</a></li>
     <li>Espere carregar o sistema</li>
     <li>F12 → Console → cole o script → Enter</li>
-    <li>Deve aparecer alerta com 1242 chamados e sync na nuvem</li>
+    <li>Deve aparecer alerta com 1264 chamados e sync na nuvem</li>
   </ol>
 
   <button type="button" id="btn-copy">Copiar script</button>
@@ -46,7 +46,7 @@
 <script>
 const SCRIPT = `/* Import Ocup — Luma Oficial (Excel) */
 (async () => {
-  const url = 'https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/gestao-ocup-seed.json?v=20260727_luma_xlsx_v1';
+  const url = 'https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/gestao-ocup-seed.json?v=20260807_3grupos_planilhas_v3';
   const seed = await fetch(url).then(r => {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     return r.json();
@@ -85,8 +85,8 @@ document.getElementById('btn-copy').onclick = async () => {
 (async () => {
   const st = document.getElementById('status');
   try {
-    let r = await fetch('./gestao-ocup-seed.json?v=20260727_luma_xlsx_v1');
-    if (!r.ok) r = await fetch('https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/gestao-ocup-seed.json?v=20260727_luma_xlsx_v1');
+    let r = await fetch('./gestao-ocup-seed.json?v=20260807_3grupos_planilhas_v3');
+    if (!r.ok) r = await fetch('https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/gestao-ocup-seed.json?v=20260807_3grupos_planilhas_v3');
     const seed = await r.json();
     const c = {};
     (seed.ocup || []).forEach(x => { c[x.status] = (c[x.status] || 0) + 1; });

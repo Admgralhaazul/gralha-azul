@@ -478,7 +478,7 @@ body{visibility:visible!important}
   <div class="card" style="margin-top:4px;margin-bottom:8px">
     <div class="card-t" style="margin-bottom:8px">Importar planilhas → Lovable</div>
     <div style="font-size:12.5px;color:var(--t3);margin-bottom:12px;line-height:1.45">
-      1242 Ocupados · 130 Assistente · 581 Executadas pela Imob (condomínios juntos).<br>
+      1264 Ocupados · 144 Assistente · 591 Executadas pela Imob (condomínios juntos).<br>
       1) Abra o Lovable logada · 2) Clique no botão · 3) Cole no Console (F12) do Lovable.
     </div>
     <button class="btn btn-p" type="button" onclick="copyLovableImportScript()">📋 Copiar script para colar no Lovable</button>
@@ -1066,15 +1066,15 @@ body{visibility:visible!important}
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
       <div style="background:var(--s2);border-radius:10px;padding:10px;text-align:center">
-        <div style="font-size:20px;font-weight:800;color:var(--t1)">1242</div>
+        <div style="font-size:20px;font-weight:800;color:var(--t1)">1264</div>
         <div style="font-size:11px;color:var(--t3)">Imóveis Ocupados</div>
       </div>
       <div style="background:var(--s2);border-radius:10px;padding:10px;text-align:center">
-        <div style="font-size:20px;font-weight:800;color:var(--t1)">130</div>
+        <div style="font-size:20px;font-weight:800;color:var(--t1)">144</div>
         <div style="font-size:11px;color:var(--t3)">Assistente ADM</div>
       </div>
       <div style="background:var(--s2);border-radius:10px;padding:10px;text-align:center">
-        <div style="font-size:20px;font-weight:800;color:var(--t1)">581</div>
+        <div style="font-size:20px;font-weight:800;color:var(--t1)">591</div>
         <div style="font-size:11px;color:var(--t3)">Executadas pela Imob</div>
       </div>
     </div>
@@ -4130,17 +4130,17 @@ function removeAno(a){
 
 // ─── SEED MANUTENÇÕES ───
 const MANUT_CLEAR_VER='20260621';
-const AGER_SEED_VER='20260727_3grupos_imob_all_v2';
-const OCUP_SEED_VER='20260727_3grupos_imob_all_v2';
-const IMOB_SEED_VER='20260727_3grupos_imob_all_v2';
-const COND_SEED_VER='20260727_3grupos_imob_all_v2';
-const IMOB_SEED_MIN=581;
+const AGER_SEED_VER='20260807_3grupos_planilhas_v3';
+const OCUP_SEED_VER='20260807_3grupos_planilhas_v3';
+const IMOB_SEED_VER='20260807_3grupos_planilhas_v3';
+const COND_SEED_VER='20260807_3grupos_planilhas_v3';
+const IMOB_SEED_MIN=591;
 const COND_SEED_MIN=0;
-const OCUP_SEED_MIN=1242;
-const AGER_SEED_MIN=130;
+const OCUP_SEED_MIN=1264;
+const AGER_SEED_MIN=144;
 const SEED_CDN='https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/';
-const LOVABLE_IMPORT_VER='20260727_3grupos_imob_all_v2';
-const LOVABLE_IMPORT_EXPECT={ocup:1242,ager:130,imob:581,cond:0};
+const LOVABLE_IMPORT_VER='20260807_3grupos_planilhas_v3';
+const LOVABLE_IMPORT_EXPECT={ocup:1264,ager:144,imob:591,cond:0};
 
 function copyLovableImportScript(){
   const CDN=SEED_CDN;
@@ -4353,7 +4353,7 @@ function needsImobCondSeedReload(){
   if(localStorage.getItem('ga_cond_seed')!==COND_SEED_VER) return true;
   const s=imobCondCombinedStats();
   if(s.imob<IMOB_SEED_MIN) return true;
-  if(s.total<581||s.concl<487||s.canc<56||s.and<38) return true;
+  if(s.total<591||s.concl<497||s.canc<56||s.and<38) return true;
   return false;
 }
 

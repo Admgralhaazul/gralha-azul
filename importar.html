@@ -40,9 +40,9 @@
   </div>
 
   <div class="grid">
-    <div class="card"><h3>1) Imóveis Ocupados</h3><div class="big" id="n-ocup">1242</div><div id="c-ocup" class="note">…</div></div>
-    <div class="card"><h3>2) Assistente ADM</h3><div class="big" id="n-ager">130</div><div id="c-ager" class="note">…</div></div>
-    <div class="card"><h3>3) Executadas pela Imob</h3><div class="big" id="n-ic">581</div><div id="c-ic" class="note">tudo em imob (sem split cond)</div></div>
+    <div class="card"><h3>1) Imóveis Ocupados</h3><div class="big" id="n-ocup">1264</div><div id="c-ocup" class="note">…</div></div>
+    <div class="card"><h3>2) Assistente ADM</h3><div class="big" id="n-ager">144</div><div id="c-ager" class="note">…</div></div>
+    <div class="card"><h3>3) Executadas pela Imob</h3><div class="big" id="n-ic">591</div><div id="c-ic" class="note">tudo em imob (sem split cond)</div></div>
   </div>
   <p id="status" class="warn">Conferindo seeds no GitHub…</p>
 
@@ -57,9 +57,9 @@
     <li>Volte nesta página, clique em <strong>Copiar script</strong>, cole no Console e aperte Enter.</li>
     <li>Deve aparecer um alerta com:
       <ul>
-        <li>Ocupados: <strong>1242</strong></li>
-        <li>Assistente: <strong>130</strong></li>
-        <li>Executadas pela Imob: <strong>581</strong> (condomínios juntos)</li>
+        <li>Ocupados: <strong>1264</strong></li>
+        <li>Assistente: <strong>144</strong></li>
+        <li>Executadas pela Imob: <strong>591</strong> (condomínios juntos)</li>
       </ul>
     </li>
     <li>No sistema, abra cada módulo e confira os totais. Se bater, está na nuvem.</li>
@@ -79,12 +79,12 @@
   </div>
 
   <p class="box">Gestão clássica (já com os 3 grupos):<br>
-  <a href="https://admgralhaazul.github.io/gralha-azul/gestao.html?v=20260727g3full">https://admgralhaazul.github.io/gralha-azul/gestao.html?v=20260727g3full</a></p>
+  <a href="https://admgralhaazul.github.io/gralha-azul/gestao.html?v=20260807g3v3">https://admgralhaazul.github.io/gralha-azul/gestao.html?v=20260807g3v3</a></p>
 
 <script>
 const CDN = 'https://raw.githubusercontent.com/Admgralhaazul/gralha-azul/main/';
-const VER = '20260727_3grupos_imob_all_v2';
-const EXPECT = { ocup: 1242, ager: 130, imob: 581, cond: 0 };
+const VER = '20260807_3grupos_planilhas_v3';
+const EXPECT = { ocup: 1264, ager: 144, imob: 591, cond: 0 };
 
 const SCRIPT = `/* Gralha Azul — import COMPLETO 3 grupos (não use o chat do Lovable) */
 (async () => {
@@ -194,10 +194,10 @@ function count(arr) {
     document.getElementById('c-ocup').textContent = fmt(count(ocup.ocup));
     document.getElementById('c-ager').textContent = fmt(count(ager.ager));
     document.getElementById('c-ic').textContent = fmt(count(imob.imob||[])) + ' · cond módulo vazio';
-    const ok = ocup.ocup.length===1242 && ager.ager.length===130 && imob.imob.length===581 && (cond.cond||[]).length===0;
+    const ok = ocup.ocup.length===1264 && ager.ager.length===144 && imob.imob.length===591 && (cond.cond||[]).length===0;
     st.className = ok ? 'ok' : 'warn';
     st.textContent = ok
-      ? 'Seeds no GitHub estão COMPLETOS (1953 linhas). Use o script — não o chat do Lovable.'
+      ? 'Seeds no GitHub estão COMPLETOS (1999 linhas). Use o script — não o chat do Lovable.'
       : 'Atenção: totais do CDN divergem do esperado.';
   } catch (e) {
     st.textContent = 'Falha ao ler CDN: ' + e.message;
